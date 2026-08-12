@@ -28,6 +28,17 @@ decontamination run for one benchmark and not another, the harness named only fo
 the agentic evaluations. Coding "the document as a whole" gives two coders no way
 to agree, and this is the single largest expected source of disagreement.
 
+It also makes the strata incomparable. A system card covers fifty evaluations in
+a release document with a fixed page budget; a third-party report is forty pages
+on one system in one capability domain. Score the whole document and system cards
+lose — not because those labs disclose less *per evaluation*, but because they
+are covering fifty things in the space a third party spends on one. That is a
+genre artifact wearing the costume of a finding, and a reviewer would be right to
+say so.
+
+The focal rule fixes both problems at once: it makes the unit an *evaluation*
+rather than a *document*, and evaluations are commensurable across genres.
+
 So: **code the focal evaluation, chosen mechanically.**
 
 > The focal evaluation is the **first capability benchmark whose score is
@@ -188,7 +199,25 @@ evaluated system could reach during evaluation do.
 
 ### F4 · Regeneration
 
-*Can a reader produce a fresh instance of this benchmark?*
+*Does the document tell its reader whether a fresh instance of the instrument can
+be produced?*
+
+**Cross-genre rule — read this before coding F4.** A third-party evaluator runs
+someone else's benchmark and cannot publish a generation procedure for it. Coding
+that `0` would measure *who built the benchmark*, not disclosure behaviour, and
+would make F4 meaningless in strata A and C.
+
+So F4 codes what the document **states about the instrument it used**, not what
+the reporting organisation owns. A report that says "we evaluated on SWE-bench
+Verified, an artifact-only release with no published generator" scores `2`: it
+told the reader the regeneration status, which is the disclosure act. This
+follows the specification's own logic — the form attaches to a *score*, not to a
+benchmark, and a score reporter can always state the status of the instrument
+they chose.
+
+The rejected alternative was `NA` whenever the reporting organisation did not
+build the benchmark. It is defensible but guts the field: most of strata A and C
+would go `NA` and F4 would only be measurable in stratum B.
 
 - `2` — The generation procedure is published or the generator is released, such
   that new items can be produced; or the benchmark is explicitly a live/rolling
@@ -199,6 +228,12 @@ evaluated system could reach during evaluation do.
 
 **Edge rule.** Releasing the *items* is not regeneration. Releasing the *code that
 makes items* is.
+
+**Edge rule.** For a document reporting on a benchmark it did not build, `2`
+requires an explicit statement of the instrument's regeneration status —
+"procedure published at X", or "no generator exists, this benchmark is static".
+Silence about a third-party instrument is `0`, exactly as silence about one's own
+would be.
 
 ---
 
@@ -255,7 +290,28 @@ genuinely independent. Two consequences:
 
 ---
 
-## 7. Statistics
+## 7. What this design can and cannot say
+
+**The stratum comparison is descriptive, not causal.** First-party versus
+third-party is confounded with document length, breadth of coverage, regulatory
+exposure and commercial incentive, all at once and in the same direction. The
+study can report that disclosure differs by genre. It cannot attribute the
+difference to who wrote the document. Write the findings that way.
+
+**Documents are not independent observations.** Documents from one organisation
+share a house template, an author team and an internal review process, so nine
+Anthropic system cards are much closer to one observation about Anthropic's
+practice than to nine about the field. The frame carries a `cluster` column —
+the publishing organisation for strata A and C, the paper itself for stratum B,
+whose authors differ paper to paper.
+
+The consequence is uncomfortable and must be reported rather than smoothed over:
+**45 of the 65 documents come from 7 organisations**, and stratum C's 26
+documents come from just 3, one of which supplies 15 of them. Rates are therefore
+reported as *"k organisations, n documents"*, never as a bare *n*, with
+organisation-clustered intervals.
+
+## 8. Statistics
 
 Report, per field and per contamination type:
 
@@ -289,7 +345,7 @@ result is likely the contrast between strata, not the grand mean.
 
 ---
 
-## 8. Changelog
+## 9. Changelog
 
 | Version | Date | Change |
 |---|---|---|

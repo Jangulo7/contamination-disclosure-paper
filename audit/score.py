@@ -146,6 +146,38 @@ def pabak(pairs: list[tuple[str, str]]) -> float | None:
     return (k * raw_agreement(pairs) - 1) / (k - 1)
 
 
+def cluster_bootstrap(units, reps: int = 10000, seed: int = 20260812):
+    """Percentile interval for a proportion, resampling CLUSTERS with replacement.
+
+    `units` is a list of (cluster_id, hit) pairs. Documents from one organisation
+    share a house template, an author team and an internal review, so they are far
+    from independent: twenty Anthropic system cards are closer to one observation
+    about Anthropic's practice than to twenty about the field. Resampling
+    documents would ignore that and produce intervals that are too narrow.
+
+    Returns (lo, hi, n_clusters). With few clusters the interval is wide and
+    lumpy -- that is the honest picture, not a defect of the estimator.
+    """
+    by = defaultdict(list)
+    for cid, hit in units:
+        by[cid].append(hit)
+    keys = sorted(by)
+    k = len(keys)
+    if k < 2:
+        return None
+    rng = random.Random(seed)
+    vals = []
+    for _ in range(reps):
+        drawn = [by[keys[rng.randrange(k)]] for _ in range(k)]
+        flat = [h for grp in drawn for h in grp]
+        if flat:
+            vals.append(sum(flat) / len(flat))
+    if not vals:
+        return None
+    vals.sort()
+    return vals[int(0.025 * len(vals))], vals[min(len(vals) - 1, int(0.975 * len(vals)))], k
+
+
 def wilson(successes: int, n: int, z: float = 1.96) -> tuple[float, float] | None:
     """Wilson score interval. Correct at the small n per stratum here, where the
     normal approximation is not."""
@@ -175,11 +207,14 @@ def load_codes(path: Path) -> dict[str, dict[str, str]]:
     return out
 
 
-def load_frame(path: Path) -> dict[str, str]:
+def load_frame(path: Path) -> tuple[dict[str, str], dict[str, str]]:
+    """Returns (stratum by doc id, cluster by doc id)."""
     if not path.is_file():
-        return {}
+        return {}, {}
     with path.open(encoding="utf-8") as fh:
-        return {r["id"]: r["stratum"] for r in csv.DictReader(fh) if r.get("id")}
+        rows = [r for r in csv.DictReader(fh) if r.get("id")]
+    return ({r["id"]: r["stratum"] for r in rows},
+            {r["id"]: r.get("cluster") or r["id"] for r in rows})
 
 
 def validate(codes: dict[str, dict[str, str]], label: str) -> list[str]:
@@ -224,7 +259,7 @@ def agreement_table(a, b) -> list[dict]:
     return rows
 
 
-def rates_table(codes, strata) -> list[dict]:
+def rates_table(codes, strata, clusters) -> list[dict]:
     rows = []
     groups = defaultdict(list)
     for doc in codes:
@@ -232,16 +267,20 @@ def rates_table(codes, strata) -> list[dict]:
     for key, name in FIELDS:
         rec = {"field": name}
         for stratum in sorted(groups) + ["ALL"]:
-            docs = codes.keys() if stratum == "ALL" else groups[stratum]
-            vals = [codes[d][key] for d in docs if codes[d][key] in VALID]
-            denom = [v for v in vals if v != "NA"]
-            n = len(denom)
-            full = sum(v == "2" for v in denom)
-            any_ = sum(v in {"1", "2"} for v in denom)
-            ci = wilson(full, n)
+            docs = list(codes.keys()) if stratum == "ALL" else groups[stratum]
+            units = [(clusters.get(d, d), codes[d][key] == "2")
+                     for d in docs if codes[d][key] in VALID and codes[d][key] != "NA"]
+            n = len(units)
+            full = sum(h for _, h in units)
+            any_ = sum(codes[d][key] in {"1", "2"} for d in docs
+                       if codes[d][key] in VALID and codes[d][key] != "NA")
+            cb = cluster_bootstrap(units)
             rec[stratum] = dict(n=n, reported=full, any=any_,
                                 rate=(full / n if n else None),
-                                any_rate=(any_ / n if n else None), ci=ci)
+                                any_rate=(any_ / n if n else None),
+                                ci=wilson(full, n),
+                                cci=(cb[:2] if cb else None),
+                                k=(cb[2] if cb else len({c for c, _ in units})))
         rows.append(rec)
     return rows
 
@@ -268,7 +307,7 @@ def main(argv=None) -> int:
         if not p.is_file():
             sys.exit(f"no such file: {p}")
     a, b = (load_codes(p) for p in paths)
-    strata = load_frame(Path(args.frame))
+    strata, clusters = load_frame(Path(args.frame))
 
     problems = validate(a, paths[0].name) + validate(b, paths[1].name)
     if problems:
@@ -304,9 +343,13 @@ def main(argv=None) -> int:
               f"and are provisional.")
 
     print("\n" + "=" * 78)
-    print("DISCLOSURE RATES  (proportion coded 'reported'; Wilson 95% interval)")
+    print("DISCLOSURE RATES")
     print("=" * 78)
-    rows = rates_table(src, strata)
+    print("  clustered CI resamples ORGANISATIONS, not documents. Report it, not")
+    print("  the Wilson interval: documents from one lab share a house template and")
+    print("  are not independent observations about the field.")
+    print("  k = number of clusters. Below ~10, read the interval as indicative.\n")
+    rows = rates_table(src, strata, clusters)
     order = [k for k in rows[0] if k != "field"]
     for r in rows:
         print(f"\n{r['field']}")
@@ -314,9 +357,11 @@ def main(argv=None) -> int:
             c = r[s]
             if not c["n"]:
                 continue
-            ci = f"[{c['ci'][0]:.2f}, {c['ci'][1]:.2f}]" if c["ci"] else ""
-            print(f"   {s:<16} {c['reported']:>2}/{c['n']:<3} = {c['rate']:.0%} {ci:<14}"
-                  f" (reported-or-partial {c['any_rate']:.0%})")
+            cci = f"[{c['cci'][0]:.2f}, {c['cci'][1]:.2f}]" if c["cci"] else "n/a"
+            wci = f"[{c['ci'][0]:.2f}, {c['ci'][1]:.2f}]" if c["ci"] else "n/a"
+            warn = "  <- few clusters" if c["k"] and c["k"] < 10 else ""
+            print(f"   {s:<16} {c['reported']:>2}/{c['n']:<3} = {c['rate']:>4.0%}   "
+                  f"clustered {cci:<14} k={c['k']:<3} (Wilson {wci}){warn}")
 
     if args.latex:
         print("\n" + "=" * 78 + "\nLATEX\n" + "=" * 78)
@@ -392,6 +437,20 @@ def selftest() -> int:
     check("raw", raw_agreement(p2), 0.5)
     good = _disagreement("NA", "0") == 1.0 and _disagreement("NA", "NA") == 0.0
     print(f"  {'PASS' if good else 'FAIL'}  NA weights: vs numeric = 1.0, vs NA = 0.0")
+    ok &= good
+
+    print("\nclustering widens the interval when documents cluster by organisation")
+    # Same 20 documents, same 50% rate. First: 20 independent sources. Second: two
+    # organisations of 10, one disclosing and one not -- the real shape of stratum A.
+    indep = [(f"org{i}", i % 2 == 0) for i in range(20)]
+    clust = [("orgA", True)] * 10 + [("orgB", False)] * 10
+    ci_i, ci_c = cluster_bootstrap(indep), cluster_bootstrap(clust)
+    w = wilson(10, 20)
+    print(f"  Wilson (ignores clustering) [{w[0]:.2f}, {w[1]:.2f}]")
+    print(f"  20 independent clusters     [{ci_i[0]:.2f}, {ci_i[1]:.2f}]  k={ci_i[2]}")
+    print(f"  2 organisation clusters     [{ci_c[0]:.2f}, {ci_c[1]:.2f}]  k={ci_c[2]}")
+    good = (ci_c[1] - ci_c[0]) > (ci_i[1] - ci_i[0]) and (ci_c[1] - ci_c[0]) > (w[1] - w[0])
+    print(f"  {'PASS' if good else 'FAIL'}  clustered interval is the widest, as it must be")
     ok &= good
 
     print("\nWilson interval, 0/13 (a rate of zero still has an upper bound)")

@@ -55,10 +55,12 @@ def main() -> int:
     i = text.index("## 1. Unit of analysis")
     body = text[i:]
 
-    # Drop the statistics section: it names the hypothesis and the coder does not
-    # need it. Keep everything after it.
-    body = re.sub(r"## 7\. Statistics.*?(?=^## 8\.)", "", body, flags=re.S | re.M)
-    body = body.replace("## 8. Changelog", "## 7. Changelog")
+    # Drop the statistics section: it names the expected direction of the result
+    # and the coder does not need it. Section 7 (what the design can say) IS kept:
+    # the descriptive-not-causal point is a coding-relevant caution, not a
+    # prediction. Keep everything after the statistics section.
+    body = re.sub(r"## 8\. Statistics.*?(?=^## 9\.)", "", body, flags=re.S | re.M)
+    body = body.replace("## 9. Changelog", "## 8. Changelog")
 
     # Remove the remaining hypothesis-bearing sentence in the procedure section.
     body = body.replace(

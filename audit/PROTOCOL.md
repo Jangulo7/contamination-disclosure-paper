@@ -180,6 +180,12 @@ an appendix. It needs to say:
 
 - how many documents, from where, and how they were chosen;
 - the disclosure rate per field, per stratum, with the intervals;
+- **how many organisations**, not just how many documents — 45 of the 65 come
+  from 7, and stratum C's 26 come from 3. Report "k organisations, n documents"
+  and use the organisation-clustered intervals the script prints, not the Wilson
+  ones beside them;
+- that the stratum comparison is **descriptive, not causal**: first-party versus
+  third-party is confounded with length, breadth and commercial incentive;
 - the agreement scores, **all of them**, not just kappa;
 - that the coders were authors, if they were;
 - the focal-evaluation rule, and that it under-counts documents which disclose

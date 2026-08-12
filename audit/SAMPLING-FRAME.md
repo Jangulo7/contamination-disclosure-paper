@@ -17,6 +17,27 @@ certainly the contrast between them — *"labs disclose harness at X%, academic
 benchmark papers at Y%"* is a finding; a single pooled percentage is an average
 over populations with different incentives and different norms.
 
+## Cluster structure — read before quoting any n
+
+Documents are not independent. One organisation's system cards share a template,
+an author team and a review process, so the effective sample is the number of
+**organisations**, not documents.
+
+| Stratum | Documents | Clusters | Composition |
+|---|---|---|---|
+| A | 19 | 4 | Anthropic 9, OpenAI 4, Google DeepMind 3, Meta 3 |
+| B | 20 | 20 | one per paper — author teams differ |
+| C | 26 | 3 | METR 15, UK AISI 6, Apollo Research 5 |
+| **Total** | **65** | **27** | 45 documents from 7 organisations, plus 20 singletons |
+
+Stratum C is the weak point: 26 documents from three organisations, one supplying
+58% of them. "26 third-party reports" would be a misleading way to describe that,
+and the paper says "three organisations" instead.
+
+`frame.csv` carries a `cluster` column, and every rate is reported with
+organisation-clustered intervals and a *k*. Below about 10 clusters the interval
+is indicative rather than precise — which applies to both census strata.
+
 ---
 
 ## Stratum B — the only one that is sampled

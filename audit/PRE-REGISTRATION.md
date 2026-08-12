@@ -92,9 +92,21 @@ Fixed in advance and implemented in `score.py`, which is written and tested
 before any real data exists.
 
 **Disclosure rate** = proportion coded `2`, per field, per stratum, `NA` excluded
-from the denominator. Reported with Wilson 95% intervals — appropriate at these
-small per-stratum *n*, where the normal approximation is not. The
-reported-or-partial proportion is reported alongside as a secondary measure.
+from the denominator. The reported-or-partial proportion is reported alongside as
+a secondary measure.
+
+**Intervals are organisation-clustered, and that is the primary interval.**
+Documents from one organisation share a house template, an author team and an
+internal review, so they are not independent observations about the field. The
+interval is a percentile bootstrap resampling *clusters* with replacement — the
+publishing organisation for strata A and C, the paper itself for stratum B. A
+Wilson interval is printed beside it for comparison only; it is narrower and it
+is wrong here.
+
+**Every rate is reported as "k organisations, n documents", never as a bare n.**
+45 of the 65 documents come from 7 organisations; stratum C's 26 come from 3, one
+of which supplies 15. Where k < 10 the interval is described as indicative. This
+is a real limitation of the design and is stated in the paper, not smoothed over.
 
 **Agreement**, per field, reported together:
 
@@ -118,11 +130,23 @@ toward zero even at near-perfect agreement, so κ alone would misdescribe the
 result. Where κ and AC1 diverge by more than 0.2, the prevalence driving it is
 named in the text.
 
-**Comparison.** H3 is a between-stratum comparison of F2 rates. Given
-*n*=19 and *n*=20, this is reported as two proportions with intervals and
-described qualitatively. No significance test is planned; the study is not
-powered for one, and reporting a *p*-value here would overstate what 39
-documents can support.
+**Comparison.** H3 is a between-stratum comparison of F2 rates, reported as two
+proportions with organisation-clustered intervals and described qualitatively. No
+significance test is planned: at 4 clusters in stratum A and 20 in stratum B the
+study is not powered for one, and a *p*-value would overstate what the design
+supports.
+
+**The comparison is descriptive, not causal.** First-party versus third-party is
+confounded with document length, breadth of coverage, regulatory exposure and
+commercial incentive simultaneously. The study can report that disclosure differs
+by genre; it cannot attribute the difference to who wrote the document. No causal
+language will be used.
+
+**Genre comparability.** The focal-evaluation rule (§5) is what makes the strata
+comparable at all. A system card covers dozens of evaluations under a fixed page
+budget while a third-party report spends forty pages on one; coding whole
+documents would penalise system cards for breadth and report a genre artifact as
+a finding.
 
 **Precision.** At n=65 a rate near 10% carries roughly ±7 points at 95% and near
 50% roughly ±12; per stratum at n≈20, roughly ±13 and ±22. Claims are written to
@@ -143,6 +167,11 @@ If per-category agreement is poor on a prevalence-robust measure — AC1 below
 about 0.6 on categories that are not vanishingly rare — the taxonomy is not
 reliably applicable by independent coders, which is a finding about the
 taxonomy and is reported as one.
+
+If the organisation-clustered intervals are so wide that no stratum contrast
+survives them, the honest report is that 7 organisations cannot support a claim
+about the field, and the study becomes a documented method with an underpowered
+first application. That is a publishable outcome and will be published as one.
 
 ## 9. Deviations
 

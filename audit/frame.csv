@@ -1,78 +1,78 @@
-id,stratum,source,title,url,status
-A01,A_system_card,Anthropic,Claude Sonnet 5 System Card,https://www-cdn.anthropic.com/9e6a1044980d8c4ed85669faf9c2a8342e2e9f1e/Claude%20Sonnet%205%20System%20Card.pdf,draw
-A02,A_system_card,Anthropic,Claude Opus 4.8 System Card,https://cdn.sanity.io/files/4zrzovbb/website/c886650a2e96fc0925c805a1a7ca77314ccbf4a6.pdf,draw
-A03,A_system_card,Anthropic,Claude Opus 4.7 System Card,https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf,draw
-A04,A_system_card,Anthropic,Claude Sonnet 4.6 System Card,https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf,draw
-A05,A_system_card,Anthropic,Claude Opus 4.6 System Card,https://www-cdn.anthropic.com/0dd865075ad3132672ee0ab40b05a53f14cf5288.pdf,draw
-A06,A_system_card,Anthropic,Claude Opus 4.5 System Card,https://www.anthropic.com/claude-opus-4-5-system-card,draw
-A07,A_system_card,Anthropic,Claude Haiku 4.5 System Card,https://anthropic.com/claude-haiku-4-5-system-card,draw
-A08,A_system_card,Anthropic,Claude Sonnet 4.5 System Card,https://anthropic.com/claude-sonnet-4-5-system-card,draw
-A09,A_system_card,Anthropic,Claude 4 System Card,https://www-cdn.anthropic.com/6d8a8055020700718b0c49369f60816ba2a7c285.pdf,draw
-A10,A_system_card,OpenAI,GPT-5.6 System Card,https://deploymentsafety.openai.com/gpt-5-6,draw
-A11,A_system_card,OpenAI,GPT-5.5 System Card,https://openai.com/index/gpt-5-5-system-card/,draw
-A12,A_system_card,OpenAI,GPT-5.3-Codex System Card,https://openai.com/index/gpt-5-3-codex-system-card/,draw
-A13,A_system_card,OpenAI,Addendum to GPT-5.2 System Card: GPT-5.2-Codex,https://openai.com/index/gpt-5-2-codex-system-card/,draw
-A14,A_system_card,Google DeepMind,Gemini 3.1 Pro Model Card,https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf,draw
-A15,A_system_card,Google DeepMind,Gemini 3.6 Flash Model Card,https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-6-Flash-Model-Card.pdf,draw
-A16,A_system_card,Google DeepMind,Gemini 3 Pro Model Card,https://deepmind.google/models/model-cards/gemini-3-pro/,draw
-A17,A_system_card,Meta,Muse Spark Safety & Preparedness Report,https://arxiv.org/abs/2606.12429,draw
-A18,A_system_card,Meta,Llama 3.3 Model Card,https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/MODEL_CARD.md,draw
-A19,A_system_card,Meta,Llama 3.1 Model Card,https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md,draw
-B01,B_neurips_dnb,NeurIPS 2025 D&B,Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/23ab960082db936f874b171822e0d097-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B02,B_neurips_dnb,NeurIPS 2025 D&B,BountyBench: Dollar Impact of AI Agent Attackers and Defenders on Real-World Cybersecurity Systems,https://proceedings.neurips.cc/paper_files/paper/2025/hash/faed4276b52ef762879db4142655c699-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B03,B_neurips_dnb,NeurIPS 2025 D&B,Measuring what Matters: Construct Validity in Large Language Model Benchmarks,https://proceedings.neurips.cc/paper_files/paper/2025/hash/1967e0fc3aa6cbbace562f5cb8e3954e-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B04,B_neurips_dnb,NeurIPS 2025 D&B,SMMILE: An expert-driven benchmark for multimodal medical in-context learning,https://proceedings.neurips.cc/paper_files/paper/2025/hash/5e0d42bf1eaafd60c03f141eb7ac761b-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B05,B_neurips_dnb,NeurIPS 2025 D&B,Mars-Bench: A Benchmark for Evaluating Foundation Models for Mars Science Tasks,https://proceedings.neurips.cc/paper_files/paper/2025/hash/b21b8e8823034df7de4a8cc2e56891af-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B06,B_neurips_dnb,NeurIPS 2025 D&B,MJ-Bench: Is Your Multimodal Reward Model Really a Good Judge for Text-to-Image Generation?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/59d2eaa5842fa641ff9b8e4c7ff0f6ee-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B07,B_neurips_dnb,NeurIPS 2025 D&B,"BLINK-Twice: You see, but do you observe?  A Reasoning Benchmark on Visual Perception",https://proceedings.neurips.cc/paper_files/paper/2025/hash/2b76873e897f3de3069b2f360c65e0c2-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B08,B_neurips_dnb,NeurIPS 2025 D&B,Toward a Vision-Language Foundation Model for Medical Data: Multimodal Dataset and Benchmarks for Vietnamese PET/CT Report Generation,https://proceedings.neurips.cc/paper_files/paper/2025/hash/a9f5ebadfbf7b6b10d685c385713b35a-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B09,B_neurips_dnb,NeurIPS 2025 D&B,Can LLMs Correct Themselves? A Benchmark of Self-Correction in LLMs,https://proceedings.neurips.cc/paper_files/paper/2025/hash/ec07904adc847a45f53dceb44078f8f0-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B10,B_neurips_dnb,NeurIPS 2025 D&B,Open CaptchaWorld: A Comprehensive Web-based Platform for Testing and Benchmarking Multimodal LLM Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/8196be81e68289d7a9ece21ed7f5750a-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B11,B_neurips_dnb,NeurIPS 2025 D&B,OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/4009bff0cd87ba2203c8e3a2f082aaec-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B12,B_neurips_dnb,NeurIPS 2025 D&B,MIR-Bench: Can Your LLM Recognize Complicated Patterns via Many-Shot In-Context Reasoning?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/796076672b00f54fb01d05a2e5fde363-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B13,B_neurips_dnb,NeurIPS 2025 D&B,MVU-Eval: Towards Multi-Video Understanding Evaluation for Multimodal LLMs,https://proceedings.neurips.cc/paper_files/paper/2025/hash/4dbb159f2c68b359b3b6ed7dd039481c-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B14,B_neurips_dnb,NeurIPS 2025 D&B,GSO: Challenging Software Optimization Tasks for Evaluating SWE-Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/ddd98389004161943e646322a16348c3-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B15,B_neurips_dnb,NeurIPS 2025 D&B,CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays,https://proceedings.neurips.cc/paper_files/paper/2025/hash/7ef1f85b1c93a08274ee388a01381729-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B16,B_neurips_dnb,NeurIPS 2025 D&B,TimE: A Multi-level Benchmark for Temporal Reasoning of LLMs in Real-World Scenarios,https://proceedings.neurips.cc/paper_files/paper/2025/hash/84f1e188c2be52f89f6e206bc37d092d-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B17,B_neurips_dnb,NeurIPS 2025 D&B,WASP: Benchmarking Web Agent Security Against Prompt Injection Attacks,https://proceedings.neurips.cc/paper_files/paper/2025/hash/1c9818387f5dd0a0bc151214660f059d-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B18,B_neurips_dnb,NeurIPS 2025 D&B,Can Large Language Models Help Multimodal Language Analysis? MMLA: A Comprehensive Benchmark,https://proceedings.neurips.cc/paper_files/paper/2025/hash/99e6db87fb42f3c9d2d870984e1319db-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B19,B_neurips_dnb,NeurIPS 2025 D&B,AbstentionBench: Reasoning LLMs Fail on Unanswerable Questions,https://proceedings.neurips.cc/paper_files/paper/2025/hash/fb122bfc3f0127a94ded048b5b03496f-Abstract-Datasets_and_Benchmarks_Track.html,draw
-B20,B_neurips_dnb,NeurIPS 2025 D&B,EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis,https://proceedings.neurips.cc/paper_files/paper/2025/hash/02ff2906a49d985808e7ba8798b9f9cd-Abstract-Datasets_and_Benchmarks_Track.html,draw
-C01,C_third_party,METR,Frontier Risk Report (Feb-Mar 2026),https://metr.org/blog/2026-05-19-frontier-risk-report/,draw
-C02,C_third_party,METR,"Review: automated R&D section, Anthropic Risk Report",https://metr.org/blog/2026-05-08-rd-section-anthropic-risk-report-feb-2026-review/,draw
-C03,C_third_party,METR,Red-Teaming Anthropic's Internal Agent Monitoring,https://metr.org/blog/2026-03-25-red-teaming-anthropic-agent-monitoring/,draw
-C04,C_third_party,METR,"Review: Anthropic Sabotage Risk Report, Claude Opus 4.6",https://metr.org/blog/2026-03-12-sabotage-risk-report-opus-4-6-review/,draw
-C05,C_third_party,METR,Review: Anthropic Summer 2025 Pilot Sabotage Risk Report,https://metr.org/blog/2025-10-28-sabotage-report-review/,draw
-C06,C_third_party,METR,Summary of gpt-oss methodology review,https://metr.org/blog/2025-10-23-gpt-oss-methodology-review/,draw
-C07,C_third_party,METR,GPT-5.6 Sol evaluation,https://metr.org/blog/2026-06-26-gpt-5-6-sol/,draw
-C08,C_third_party,METR,GPT-5.1-Codex-Max evaluation,https://metr.org/evaluations/gpt-5-1-codex-max-report/,draw
-C09,C_third_party,METR,GPT-5 evaluation,https://metr.org/evaluations/gpt-5-report/,draw
-C10,C_third_party,METR,DeepSeek and Qwen evaluation,https://metr.org/evaluations/deepseek-qwen-report/,draw
-C11,C_third_party,METR,OpenAI o3 and o4-mini evaluation,https://metr.org/evaluations/openai-o3-report/,draw
-C12,C_third_party,METR,Claude 3.7 evaluation,https://metr.org/evaluations/claude-3-7-report/,draw
-C13,C_third_party,METR,DeepSeek-R1 evaluation,https://metr.org/evaluations/deepseek-r1-report/,draw
-C14,C_third_party,METR,GPT-4.5 evaluation,https://metr.org/blog/2025-02-27-gpt-4-5-evals/,draw
-C15,C_third_party,METR,Claude 3.5 Sonnet and o1 evaluation,https://metr.org/blog/2025-01-31-update-sonnet-o1-evals/,draw
-C16,C_third_party,UK AISI,Evaluation of OpenAI's GPT-5.5 cyber capabilities,https://www.aisi.gov.uk/blog/our-evaluation-of-openais-gpt-5-5-cyber-capabilities,draw
-C17,C_third_party,UK AISI,Evaluation of Claude Mythos Preview's cyber capabilities,https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities,draw
-C18,C_third_party,UK AISI,Preliminary assessment of Kimi K3's cyber capabilities,https://www.aisi.gov.uk/blog/preliminary-assessment-of-kimi-k3s-cyber-capabilities,draw
-C19,C_third_party,UK AISI,How far behind the frontier are leading open weight models on cyber?,https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber,draw
-C20,C_third_party,UK AISI,Pre-deployment evaluation of OpenAI's o1 model,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model,draw
-C21,C_third_party,UK AISI,Pre-deployment evaluation of Anthropic's upgraded Claude 3.5 Sonnet,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-anthropics-upgraded-claude-3-5-sonnet,draw
-C22,C_third_party,Apollo Research,Measuring reward-seeking via contrastive belief updates,https://www.apolloresearch.ai/science/measuring-reward-seeking-via-contrastivebelief-updates,draw
-C23,C_third_party,Apollo Research,Stress testing deliberative alignment for anti-scheming training,https://www.apolloresearch.ai/science/stress-testing-deliberative-alignment-for-anti-scheming-training,draw
-C24,C_third_party,Apollo Research,Frontier models are capable of in-context scheming,https://www.apolloresearch.ai/science/frontier-models-are-capable-of-incontext-scheming,draw
-C25,C_third_party,Apollo Research,More capable models are better at in-context scheming,https://www.apolloresearch.ai/science/more-capable-models-are-better-at-in-context-scheming,draw
-C26,C_third_party,Apollo Research,Claude Sonnet 3.7 (often) knows when it's in alignment evaluations,https://www.apolloresearch.ai/science/claude-sonnet-37-often-knows-when-its-in-alignment-evaluations,draw
-BR01,B_neurips_dnb,NeurIPS 2025 D&B,DrVD-Bench: Do Vision-Language Models Reason Like Human Doctors in Medical Image Diagnosis?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/12750d99d0faa73763108ff2bbeb54fd-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR02,B_neurips_dnb,NeurIPS 2025 D&B,PAC Bench: Do Foundation Models Understand Prerequisites for Executing Manipulation Policies?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/9ecafb09de180aaad7b7205be7eb24a4-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR03,B_neurips_dnb,NeurIPS 2025 D&B,CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research,https://proceedings.neurips.cc/paper_files/paper/2025/hash/19138f8392f7863f483e90e1c2819fc9-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR04,B_neurips_dnb,NeurIPS 2025 D&B,REOBench: Benchmarking Robustness of Earth Observation Foundation Models,https://proceedings.neurips.cc/paper_files/paper/2025/hash/58af38e2fba04b5e00c3450018c56406-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR05,B_neurips_dnb,NeurIPS 2025 D&B,UMU-Bench: Closing the Modality Gap in Multimodal Unlearning Evaluation,https://proceedings.neurips.cc/paper_files/paper/2025/hash/18b0ee1e95f4007541e57fe507b5167e-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR06,B_neurips_dnb,NeurIPS 2025 D&B,OpenUnlearning: Accelerating LLM Unlearning via Unified Benchmarking of Methods and Metrics,https://proceedings.neurips.cc/paper_files/paper/2025/hash/3e4a38f228427ab819ba7899003a44b1-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR07,B_neurips_dnb,NeurIPS 2025 D&B,MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly,https://proceedings.neurips.cc/paper_files/paper/2025/hash/9c8712a9e6d34d60edb8c4c980d4a0f2-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR08,B_neurips_dnb,NeurIPS 2025 D&B,ThinkBench: Dynamic Out-of-Distribution Evaluation for Robust LLM Reasoning,https://proceedings.neurips.cc/paper_files/paper/2025/hash/4da4f3c0dd1b907c48e2119afb2e2fde-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR09,B_neurips_dnb,NeurIPS 2025 D&B,SWE-rebench: An Automated Pipeline for Task Collection and Decontaminated Evaluation of Software Engineering Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/21bec6ace947b1b58967b945c8ac0f10-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR10,B_neurips_dnb,NeurIPS 2025 D&B,TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks,https://proceedings.neurips.cc/paper_files/paper/2025/hash/0d744742f6fac4d1134c019b7cef3c8a-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR11,B_neurips_dnb,NeurIPS 2025 D&B,MME-VideoOCR: Evaluating OCR-Based Capabilities of Multimodal LLMs in Video Scenarios,https://proceedings.neurips.cc/paper_files/paper/2025/hash/779efd29bc0236b07df1da5a548d0bba-Abstract-Datasets_and_Benchmarks_Track.html,reserve
-BR12,B_neurips_dnb,NeurIPS 2025 D&B,PHYBench: Holistic Evaluation of Physical Perception and Reasoning in Large Language Models,https://proceedings.neurips.cc/paper_files/paper/2025/hash/01e793f8cf5689aa0ea46a1b01071bea-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+id,stratum,source,cluster,title,url,status
+A01,A_system_card,Anthropic,Anthropic,Claude Sonnet 5 System Card,https://www-cdn.anthropic.com/9e6a1044980d8c4ed85669faf9c2a8342e2e9f1e/Claude%20Sonnet%205%20System%20Card.pdf,draw
+A02,A_system_card,Anthropic,Anthropic,Claude Opus 4.8 System Card,https://cdn.sanity.io/files/4zrzovbb/website/c886650a2e96fc0925c805a1a7ca77314ccbf4a6.pdf,draw
+A03,A_system_card,Anthropic,Anthropic,Claude Opus 4.7 System Card,https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf,draw
+A04,A_system_card,Anthropic,Anthropic,Claude Sonnet 4.6 System Card,https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf,draw
+A05,A_system_card,Anthropic,Anthropic,Claude Opus 4.6 System Card,https://www-cdn.anthropic.com/0dd865075ad3132672ee0ab40b05a53f14cf5288.pdf,draw
+A06,A_system_card,Anthropic,Anthropic,Claude Opus 4.5 System Card,https://www.anthropic.com/claude-opus-4-5-system-card,draw
+A07,A_system_card,Anthropic,Anthropic,Claude Haiku 4.5 System Card,https://anthropic.com/claude-haiku-4-5-system-card,draw
+A08,A_system_card,Anthropic,Anthropic,Claude Sonnet 4.5 System Card,https://anthropic.com/claude-sonnet-4-5-system-card,draw
+A09,A_system_card,Anthropic,Anthropic,Claude 4 System Card,https://www-cdn.anthropic.com/6d8a8055020700718b0c49369f60816ba2a7c285.pdf,draw
+A10,A_system_card,OpenAI,OpenAI,GPT-5.6 System Card,https://deploymentsafety.openai.com/gpt-5-6,draw
+A11,A_system_card,OpenAI,OpenAI,GPT-5.5 System Card,https://openai.com/index/gpt-5-5-system-card/,draw
+A12,A_system_card,OpenAI,OpenAI,GPT-5.3-Codex System Card,https://openai.com/index/gpt-5-3-codex-system-card/,draw
+A13,A_system_card,OpenAI,OpenAI,Addendum to GPT-5.2 System Card: GPT-5.2-Codex,https://openai.com/index/gpt-5-2-codex-system-card/,draw
+A14,A_system_card,Google DeepMind,Google DeepMind,Gemini 3.1 Pro Model Card,https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf,draw
+A15,A_system_card,Google DeepMind,Google DeepMind,Gemini 3.6 Flash Model Card,https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-6-Flash-Model-Card.pdf,draw
+A16,A_system_card,Google DeepMind,Google DeepMind,Gemini 3 Pro Model Card,https://deepmind.google/models/model-cards/gemini-3-pro/,draw
+A17,A_system_card,Meta,Meta,Muse Spark Safety & Preparedness Report,https://arxiv.org/abs/2606.12429,draw
+A18,A_system_card,Meta,Meta,Llama 3.3 Model Card,https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/MODEL_CARD.md,draw
+A19,A_system_card,Meta,Meta,Llama 3.1 Model Card,https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md,draw
+B01,B_neurips_dnb,NeurIPS 2025 D&B,B01,Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/23ab960082db936f874b171822e0d097-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B02,B_neurips_dnb,NeurIPS 2025 D&B,B02,BountyBench: Dollar Impact of AI Agent Attackers and Defenders on Real-World Cybersecurity Systems,https://proceedings.neurips.cc/paper_files/paper/2025/hash/faed4276b52ef762879db4142655c699-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B03,B_neurips_dnb,NeurIPS 2025 D&B,B03,Measuring what Matters: Construct Validity in Large Language Model Benchmarks,https://proceedings.neurips.cc/paper_files/paper/2025/hash/1967e0fc3aa6cbbace562f5cb8e3954e-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B04,B_neurips_dnb,NeurIPS 2025 D&B,B04,SMMILE: An expert-driven benchmark for multimodal medical in-context learning,https://proceedings.neurips.cc/paper_files/paper/2025/hash/5e0d42bf1eaafd60c03f141eb7ac761b-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B05,B_neurips_dnb,NeurIPS 2025 D&B,B05,Mars-Bench: A Benchmark for Evaluating Foundation Models for Mars Science Tasks,https://proceedings.neurips.cc/paper_files/paper/2025/hash/b21b8e8823034df7de4a8cc2e56891af-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B06,B_neurips_dnb,NeurIPS 2025 D&B,B06,MJ-Bench: Is Your Multimodal Reward Model Really a Good Judge for Text-to-Image Generation?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/59d2eaa5842fa641ff9b8e4c7ff0f6ee-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B07,B_neurips_dnb,NeurIPS 2025 D&B,B07,"BLINK-Twice: You see, but do you observe?  A Reasoning Benchmark on Visual Perception",https://proceedings.neurips.cc/paper_files/paper/2025/hash/2b76873e897f3de3069b2f360c65e0c2-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B08,B_neurips_dnb,NeurIPS 2025 D&B,B08,Toward a Vision-Language Foundation Model for Medical Data: Multimodal Dataset and Benchmarks for Vietnamese PET/CT Report Generation,https://proceedings.neurips.cc/paper_files/paper/2025/hash/a9f5ebadfbf7b6b10d685c385713b35a-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B09,B_neurips_dnb,NeurIPS 2025 D&B,B09,Can LLMs Correct Themselves? A Benchmark of Self-Correction in LLMs,https://proceedings.neurips.cc/paper_files/paper/2025/hash/ec07904adc847a45f53dceb44078f8f0-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B10,B_neurips_dnb,NeurIPS 2025 D&B,B10,Open CaptchaWorld: A Comprehensive Web-based Platform for Testing and Benchmarking Multimodal LLM Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/8196be81e68289d7a9ece21ed7f5750a-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B11,B_neurips_dnb,NeurIPS 2025 D&B,B11,OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/4009bff0cd87ba2203c8e3a2f082aaec-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B12,B_neurips_dnb,NeurIPS 2025 D&B,B12,MIR-Bench: Can Your LLM Recognize Complicated Patterns via Many-Shot In-Context Reasoning?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/796076672b00f54fb01d05a2e5fde363-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B13,B_neurips_dnb,NeurIPS 2025 D&B,B13,MVU-Eval: Towards Multi-Video Understanding Evaluation for Multimodal LLMs,https://proceedings.neurips.cc/paper_files/paper/2025/hash/4dbb159f2c68b359b3b6ed7dd039481c-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B14,B_neurips_dnb,NeurIPS 2025 D&B,B14,GSO: Challenging Software Optimization Tasks for Evaluating SWE-Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/ddd98389004161943e646322a16348c3-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B15,B_neurips_dnb,NeurIPS 2025 D&B,B15,CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays,https://proceedings.neurips.cc/paper_files/paper/2025/hash/7ef1f85b1c93a08274ee388a01381729-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B16,B_neurips_dnb,NeurIPS 2025 D&B,B16,TimE: A Multi-level Benchmark for Temporal Reasoning of LLMs in Real-World Scenarios,https://proceedings.neurips.cc/paper_files/paper/2025/hash/84f1e188c2be52f89f6e206bc37d092d-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B17,B_neurips_dnb,NeurIPS 2025 D&B,B17,WASP: Benchmarking Web Agent Security Against Prompt Injection Attacks,https://proceedings.neurips.cc/paper_files/paper/2025/hash/1c9818387f5dd0a0bc151214660f059d-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B18,B_neurips_dnb,NeurIPS 2025 D&B,B18,Can Large Language Models Help Multimodal Language Analysis? MMLA: A Comprehensive Benchmark,https://proceedings.neurips.cc/paper_files/paper/2025/hash/99e6db87fb42f3c9d2d870984e1319db-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B19,B_neurips_dnb,NeurIPS 2025 D&B,B19,AbstentionBench: Reasoning LLMs Fail on Unanswerable Questions,https://proceedings.neurips.cc/paper_files/paper/2025/hash/fb122bfc3f0127a94ded048b5b03496f-Abstract-Datasets_and_Benchmarks_Track.html,draw
+B20,B_neurips_dnb,NeurIPS 2025 D&B,B20,EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis,https://proceedings.neurips.cc/paper_files/paper/2025/hash/02ff2906a49d985808e7ba8798b9f9cd-Abstract-Datasets_and_Benchmarks_Track.html,draw
+C01,C_third_party,METR,METR,Frontier Risk Report (Feb-Mar 2026),https://metr.org/blog/2026-05-19-frontier-risk-report/,draw
+C02,C_third_party,METR,METR,"Review: automated R&D section, Anthropic Risk Report",https://metr.org/blog/2026-05-08-rd-section-anthropic-risk-report-feb-2026-review/,draw
+C03,C_third_party,METR,METR,Red-Teaming Anthropic's Internal Agent Monitoring,https://metr.org/blog/2026-03-25-red-teaming-anthropic-agent-monitoring/,draw
+C04,C_third_party,METR,METR,"Review: Anthropic Sabotage Risk Report, Claude Opus 4.6",https://metr.org/blog/2026-03-12-sabotage-risk-report-opus-4-6-review/,draw
+C05,C_third_party,METR,METR,Review: Anthropic Summer 2025 Pilot Sabotage Risk Report,https://metr.org/blog/2025-10-28-sabotage-report-review/,draw
+C06,C_third_party,METR,METR,Summary of gpt-oss methodology review,https://metr.org/blog/2025-10-23-gpt-oss-methodology-review/,draw
+C07,C_third_party,METR,METR,GPT-5.6 Sol evaluation,https://metr.org/blog/2026-06-26-gpt-5-6-sol/,draw
+C08,C_third_party,METR,METR,GPT-5.1-Codex-Max evaluation,https://metr.org/evaluations/gpt-5-1-codex-max-report/,draw
+C09,C_third_party,METR,METR,GPT-5 evaluation,https://metr.org/evaluations/gpt-5-report/,draw
+C10,C_third_party,METR,METR,DeepSeek and Qwen evaluation,https://metr.org/evaluations/deepseek-qwen-report/,draw
+C11,C_third_party,METR,METR,OpenAI o3 and o4-mini evaluation,https://metr.org/evaluations/openai-o3-report/,draw
+C12,C_third_party,METR,METR,Claude 3.7 evaluation,https://metr.org/evaluations/claude-3-7-report/,draw
+C13,C_third_party,METR,METR,DeepSeek-R1 evaluation,https://metr.org/evaluations/deepseek-r1-report/,draw
+C14,C_third_party,METR,METR,GPT-4.5 evaluation,https://metr.org/blog/2025-02-27-gpt-4-5-evals/,draw
+C15,C_third_party,METR,METR,Claude 3.5 Sonnet and o1 evaluation,https://metr.org/blog/2025-01-31-update-sonnet-o1-evals/,draw
+C16,C_third_party,UK AISI,UK AISI,Evaluation of OpenAI's GPT-5.5 cyber capabilities,https://www.aisi.gov.uk/blog/our-evaluation-of-openais-gpt-5-5-cyber-capabilities,draw
+C17,C_third_party,UK AISI,UK AISI,Evaluation of Claude Mythos Preview's cyber capabilities,https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities,draw
+C18,C_third_party,UK AISI,UK AISI,Preliminary assessment of Kimi K3's cyber capabilities,https://www.aisi.gov.uk/blog/preliminary-assessment-of-kimi-k3s-cyber-capabilities,draw
+C19,C_third_party,UK AISI,UK AISI,How far behind the frontier are leading open weight models on cyber?,https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber,draw
+C20,C_third_party,UK AISI,UK AISI,Pre-deployment evaluation of OpenAI's o1 model,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model,draw
+C21,C_third_party,UK AISI,UK AISI,Pre-deployment evaluation of Anthropic's upgraded Claude 3.5 Sonnet,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-anthropics-upgraded-claude-3-5-sonnet,draw
+C22,C_third_party,Apollo Research,Apollo Research,Measuring reward-seeking via contrastive belief updates,https://www.apolloresearch.ai/science/measuring-reward-seeking-via-contrastivebelief-updates,draw
+C23,C_third_party,Apollo Research,Apollo Research,Stress testing deliberative alignment for anti-scheming training,https://www.apolloresearch.ai/science/stress-testing-deliberative-alignment-for-anti-scheming-training,draw
+C24,C_third_party,Apollo Research,Apollo Research,Frontier models are capable of in-context scheming,https://www.apolloresearch.ai/science/frontier-models-are-capable-of-incontext-scheming,draw
+C25,C_third_party,Apollo Research,Apollo Research,More capable models are better at in-context scheming,https://www.apolloresearch.ai/science/more-capable-models-are-better-at-in-context-scheming,draw
+C26,C_third_party,Apollo Research,Apollo Research,Claude Sonnet 3.7 (often) knows when it's in alignment evaluations,https://www.apolloresearch.ai/science/claude-sonnet-37-often-knows-when-its-in-alignment-evaluations,draw
+BR01,B_neurips_dnb,NeurIPS 2025 D&B,BR01,DrVD-Bench: Do Vision-Language Models Reason Like Human Doctors in Medical Image Diagnosis?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/12750d99d0faa73763108ff2bbeb54fd-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR02,B_neurips_dnb,NeurIPS 2025 D&B,BR02,PAC Bench: Do Foundation Models Understand Prerequisites for Executing Manipulation Policies?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/9ecafb09de180aaad7b7205be7eb24a4-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR03,B_neurips_dnb,NeurIPS 2025 D&B,BR03,CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research,https://proceedings.neurips.cc/paper_files/paper/2025/hash/19138f8392f7863f483e90e1c2819fc9-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR04,B_neurips_dnb,NeurIPS 2025 D&B,BR04,REOBench: Benchmarking Robustness of Earth Observation Foundation Models,https://proceedings.neurips.cc/paper_files/paper/2025/hash/58af38e2fba04b5e00c3450018c56406-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR05,B_neurips_dnb,NeurIPS 2025 D&B,BR05,UMU-Bench: Closing the Modality Gap in Multimodal Unlearning Evaluation,https://proceedings.neurips.cc/paper_files/paper/2025/hash/18b0ee1e95f4007541e57fe507b5167e-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR06,B_neurips_dnb,NeurIPS 2025 D&B,BR06,OpenUnlearning: Accelerating LLM Unlearning via Unified Benchmarking of Methods and Metrics,https://proceedings.neurips.cc/paper_files/paper/2025/hash/3e4a38f228427ab819ba7899003a44b1-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR07,B_neurips_dnb,NeurIPS 2025 D&B,BR07,MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly,https://proceedings.neurips.cc/paper_files/paper/2025/hash/9c8712a9e6d34d60edb8c4c980d4a0f2-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR08,B_neurips_dnb,NeurIPS 2025 D&B,BR08,ThinkBench: Dynamic Out-of-Distribution Evaluation for Robust LLM Reasoning,https://proceedings.neurips.cc/paper_files/paper/2025/hash/4da4f3c0dd1b907c48e2119afb2e2fde-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR09,B_neurips_dnb,NeurIPS 2025 D&B,BR09,SWE-rebench: An Automated Pipeline for Task Collection and Decontaminated Evaluation of Software Engineering Agents,https://proceedings.neurips.cc/paper_files/paper/2025/hash/21bec6ace947b1b58967b945c8ac0f10-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR10,B_neurips_dnb,NeurIPS 2025 D&B,BR10,TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks,https://proceedings.neurips.cc/paper_files/paper/2025/hash/0d744742f6fac4d1134c019b7cef3c8a-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR11,B_neurips_dnb,NeurIPS 2025 D&B,BR11,MME-VideoOCR: Evaluating OCR-Based Capabilities of Multimodal LLMs in Video Scenarios,https://proceedings.neurips.cc/paper_files/paper/2025/hash/779efd29bc0236b07df1da5a548d0bba-Abstract-Datasets_and_Benchmarks_Track.html,reserve
+BR12,B_neurips_dnb,NeurIPS 2025 D&B,BR12,PHYBench: Holistic Evaluation of Physical Perception and Reasoning in Large Language Models,https://proceedings.neurips.cc/paper_files/paper/2025/hash/01e793f8cf5689aa0ea46a1b01071bea-Abstract-Datasets_and_Benchmarks_Track.html,reserve
