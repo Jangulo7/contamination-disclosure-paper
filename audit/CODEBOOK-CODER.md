@@ -1,15 +1,17 @@
-# Disclosure audit — coding manual v1.0
+# Disclosure audit — coding manual (coder copy)
 
-Frozen before coding begins. If a rule changes after the pilot, bump the version,
-record what changed in the changelog at the bottom, and recode the pilot
-documents under the new version.
+Generated from `CODEBOOK.md`. All coding rules are identical to the deposited
+version; the framing and the statistical analysis have been removed so that
+coding is not primed by them.
 
-**Research question.** When a benchmark score is published, how often are the four
-disclosure fields reported, and can independent coders agree on what counts?
+**What you are doing.** For each document, record whether it states each of a
+list of things about how a benchmark score was produced. Some documents will
+state many of them, some few. There is no expected answer and no target
+distribution: record what is there.
 
-**Two outputs.** Disclosure rate per field per stratum, and inter-coder agreement
-per category. The second is the one that tests whether the taxonomy is usable by
-anyone other than its authors.
+**Two things to hold on to.** Code what the document *says*, never what you
+know. And when a rule feels ambiguous, write a note rather than guessing — the
+notes are how the rules get fixed after the pilot.
 
 ---
 
@@ -255,41 +257,7 @@ genuinely independent. Two consequences:
 
 ---
 
-## 7. Statistics
-
-Report, per field and per contamination type:
-
-- **raw percentage agreement**
-- **linear-weighted Cohen's κ** — the primary agreement statistic
-- **unweighted Cohen's κ**, alongside
-- **Gwet's AC1 and PABAK**, prevalence-robust
-- **bootstrap 95% intervals** on the weighted κ (10,000 resamples, seed stated)
-
-The scale is **ordinal**: `0` absent, `1` partial, `2` reported. A 0-vs-2
-disagreement is materially worse than a 1-vs-2, and unweighted κ scores them
-identically. Linear weights are therefore primary. Unweighted κ is reported too,
-because it is what most readers expect and the difference between the two is
-itself informative. `NA` participates as an unordered fourth category and is
-given the maximum disagreement weight against any numeric code.
-
-Point estimates alone at *n*≈48 with heavy skew will invite "is that difference
-real?", so intervals are not optional.
-
-Report all of them. This is not padding. Where a category turns out to be rare,
-most cells take the same value, and under that skew κ collapses toward zero even
-when coders agree almost perfectly — the prevalence paradox. A κ of 0.2 alongside
-94% raw agreement means the category is rare, not that the category is unusable,
-and reporting κ alone would state the opposite of what happened. AC1 and PABAK do
-not have this failure mode, which is why they are reported beside it.
-
-Where κ and AC1 diverge by more than 0.2, add a sentence naming the prevalence.
-
-Disclosure rates are reported per stratum, never pooled only. The interesting
-result is likely the contrast between strata, not the grand mean.
-
----
-
-## 8. Changelog
+## 7. Changelog
 
 | Version | Date | Change |
 |---|---|---|

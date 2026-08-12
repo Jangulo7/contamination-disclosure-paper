@@ -8,7 +8,7 @@ scores, and for each one we write down whether it tells the reader four things.
 Then we check whether two people, working separately, wrote down the same
 answers.
 
-**Total effort: about 24–30 person-hours**, i.e. roughly 12–15 hours each for two
+**Total effort: about 26–32 person-hours**, i.e. roughly 13–16 hours each for two
 people. Spread over 10 working days that is a little over an hour a day each.
 
 ---
@@ -39,9 +39,17 @@ you can see how the numbers are coming out. Decide now.
 
 ### Step 2 · Both coders read the codebook — 30 minutes each
 
-Read `CODEBOOK.md` all the way through before opening any document. Pay
-particular attention to §3 (what 0, 1, 2 and NA mean) and the edge rules, which
-are the places where two people usually drift apart.
+Read **`CODEBOOK-CODER.md`** all the way through before opening any document.
+
+Coders get the coder copy, not `CODEBOOK.md`. Every coding rule is identical —
+it is generated from the same file — but the full version states what the study
+expects to find, and a coder who knows the expected answer is not independent in
+the way the agreement statistic assumes. Whoever is running the study reads the
+full version; the coders do not.
+
+Pay particular attention to §1 (which evaluation you are coding), §3 (what 0, 1,
+2 and NA mean) and the edge rules — those are where two people usually drift
+apart.
 
 The one rule to memorise: **write down what the document says, never what you
 know.** If a paper does not name its harness, that is a 0 — even if you happen to
@@ -60,6 +68,11 @@ Work alone. Do not talk to the other coder. Do not look at their sheet.
 For each document, open it and search the text for the keywords listed at the end
 of codebook §5 before deciding anything is absent. A "0" should mean *I searched
 and it is not there*, not *I skimmed and did not notice*.
+
+Record which evaluation you coded in the `focal` column. A system card reports
+dozens of scores under different practice, so the codebook fixes which one counts
+(§1). If you and the other coder pick different focal evaluations, that surfaces
+as a disagreement to reconcile rather than hiding inside the codes.
 
 Save your answers as `codes-<your initials>.csv`, using `coding-sheet.csv` as the
 template. One row per document.
@@ -84,6 +97,17 @@ rule after all 48 are done.
 
 Same rules. Alone. No discussion until you are both completely finished.
 
+**Work in your own order**, printed by:
+
+```bash
+python audit/order.py --coder JA      # your initials
+```
+
+Not frame order. If you both work top-to-bottom you are both fresh on the same
+documents and both tired on the same documents, so your calibration drifts
+together and the agreement number comes out flattering. Different orders break
+that.
+
 Budget 8–12 minutes per document. Some system cards are long; you are not reading
 them for comprehension, you are searching them for six specific things.
 
@@ -94,14 +118,30 @@ a replacement yourself.
 
 Suggested pace: 8 documents a day each, five days.
 
+### Step 5b · Test–retest — 1 hour each
+
+When you have finished everything else, re-code five documents:
+
+```bash
+python audit/order.py --coder JA --retest
+```
+
+Do not look at your earlier sheet. Save as `codes-JA-retest.csv`.
+
+This measures whether you agree with *yourself*. It gives a ceiling: if you and
+the other coder agree 80% of the time but each of you only agrees with yourself
+85% of the time, then 80% is close to the practical maximum and the categories
+are doing better than the raw number suggests.
+
 ### Step 6 · Run the numbers — 15 minutes
 
 ```bash
 python audit/score.py --coder codes-JA.csv --coder codes-HE.csv
 ```
 
-This prints, for each of the eight categories, how often you agreed and three
-agreement scores. It also flags any blank or invalid cells, so run it once early
+This prints, for each of the eight categories, how often you agreed and several
+agreement scores, the headline one being linear-weighted kappa with a bootstrap
+interval. It also flags any blank or invalid cells, so run it once early
 just to check your sheets are well-formed.
 
 **Do this before you reconcile anything.** The agreement number only means
@@ -133,7 +173,16 @@ an appendix. It needs to say:
 - how many documents, from where, and how they were chosen;
 - the disclosure rate per field, per stratum, with the intervals;
 - the agreement scores, **all of them**, not just kappa;
-- that the coders were authors, if they were.
+- that the coders were authors, if they were;
+- the focal-evaluation rule, and that it under-counts documents which disclose
+  well for some evaluations and badly for others.
+
+**Match your claims to your precision.** At *n*≈48 a rate near 10% carries
+roughly ±8 points at 95%, and near 50% roughly ±14. Per stratum, at *n*≈15,
+you are at about ±25. That is enough to support "rarely reported", and enough to
+say F2 is worse than F1 if the gap is large. It is **not** enough to rank the
+five contamination types against each other. Write the sentences the intervals
+can carry, and no more — in this paper of all papers.
 
 **One thing the script will show you that needs explaining in words.** For fields
 that almost nobody discloses, you will see something like *94% agreement but
@@ -161,10 +210,11 @@ Today is 12 August; the deadline is 29 August.
 
 | Days | What | Hours each |
 |---|---|---|
-| 13 Aug | Steps 0–2: pick coders, settle the document list, read the codebook | 2 |
+| 13 Aug | Steps 0–2: pick coders, settle the document list, deposit the frozen manual, read the codebook | 2.5 |
 | 14 Aug | Step 3: pilot, 10 documents | 2 |
 | 15 Aug | Step 4: compare, fix rules, recode the pilot | 1 |
 | 18–22 Aug | Step 5: main pass, 8 documents a day | 1.5/day |
+| 23 Aug | Step 5b: test–retest, 5 documents | 1 |
 | 24 Aug | Steps 6–7: run the script, reconcile | 2 |
 | 25–26 Aug | Step 8: write the section and the table | 2 |
 | 27 Aug | Step 9: update limitations, fit the pages | 1 |
@@ -173,6 +223,26 @@ Today is 12 August; the deadline is 29 August.
 That leaves 29 August as slack. Use it as slack.
 
 ---
+
+## Freezing the manual before you start
+
+Deposit `CODEBOOK.md`, `frame.csv`, `PRE-REGISTRATION.md` and `SAMPLING-FRAME.md`
+somewhere that timestamps them, **before the pilot opens**. A frozen codebook is
+only checkable if the freeze has a date attached.
+
+**One trap.** A public Zenodo deposit under your own name, describing this
+taxonomy, is itself a way for a reviewer to find you — it defeats the anonymised
+mirror you just built. Use one of:
+
+- a Zenodo deposit under **restricted or embargoed** access, which still mints a
+  DOI and timestamps the record without exposing the contents;
+- an **OSF registration with an anonymised view link**, which is designed for
+  exactly this and can be cited in a blind submission;
+- or deposit publicly **after** the notification date, and cite the git commit
+  hash in the submitted version as the timestamp.
+
+Any of the three is fine. Depositing publicly under your name before 22 September
+is not.
 
 ## If you run short of time
 

@@ -51,6 +51,14 @@ C exclusions shrink the denominator. No document is added after coding starts.
 
 ## 5. Measures
 
+**Focal evaluation.** Each document is coded against one evaluation, selected
+mechanically as the first capability benchmark whose score appears in the body
+text (`CODEBOOK.md` §1). Documents reporting many evaluations under heterogeneous
+practice would otherwise have no well-defined denominator. The rule under-counts
+documents that disclose well for some evaluations and badly for others; this
+direction is chosen deliberately and reported as a limitation. The alternative,
+best-practice-anywhere, biases upward and is rejected.
+
 Eight variables per document — F1 strata, F2 elicitation budget, five
 contamination types, F4 regeneration — each on `2` reported / `1` partial / `0`
 absent, with `NA` for not-applicable. Operational definitions and worked examples:
@@ -60,6 +68,13 @@ The codebook may be amended **once**, after the pilot and before the main pass,
 with the amendment recorded in its changelog and all pilot documents recoded.
 
 ## 6. Coding
+
+Coders receive `CODEBOOK-CODER.md`, generated from the deposited codebook with
+the research framing and the statistical section removed. The coding rules are
+identical; the expected direction of the result is not disclosed to them.
+
+Each coder works in an independent randomised document order (`order.py`, seeded
+from their initials) so that calibration drift does not correlate across coders.
 
 Two coders, independently, no discussion until both finish. Ten-document pilot,
 then reconciliation of the rules, then the remaining documents.
@@ -80,14 +95,23 @@ from the denominator. Reported with Wilson 95% intervals — appropriate at thes
 small per-stratum *n*, where the normal approximation is not. The
 reported-or-partial proportion is reported alongside as a secondary measure.
 
-**Agreement**, per field, reported as four numbers together:
+**Agreement**, per field, reported together:
 
 - raw percentage agreement
-- Cohen's κ
-- Gwet's AC1
-- PABAK
+- **linear-weighted Cohen's κ with a bootstrap 95% interval** (10,000 resamples,
+  seed 20260812) — the primary statistic, because the scale is ordinal and a
+  0-vs-2 disagreement is worse than a 1-vs-2, which unweighted κ cannot see
+- unweighted Cohen's κ
+- Gwet's AC1 and PABAK
 
-All four are reported whatever they show. The reason is decided in advance rather
+`NA` participates as an unordered fourth category at maximum disagreement weight
+against any numeric code: coders disagreeing about whether a field applies is a
+genuine reliability problem, not a cell to drop.
+
+**Intra-coder agreement** is reported alongside, from a five-document test-retest
+per coder, as a ceiling against which the inter-coder figure is read.
+
+All are reported whatever they show. The reason is decided in advance rather
 than after seeing which looks better: under the skew H1 predicts, κ collapses
 toward zero even at near-perfect agreement, so κ alone would misdescribe the
 result. Where κ and AC1 diverge by more than 0.2, the prevalence driving it is
@@ -98,6 +122,12 @@ named in the text.
 described qualitatively. No significance test is planned; the study is not
 powered for one, and reporting a *p*-value here would overstate what 33
 documents can support.
+
+**Precision.** At n≈48 a rate near 10% carries roughly ±8 points at 95% and near
+50% roughly ±14; per stratum at n≈15, roughly ±25. Claims are written to match:
+the design can support "rarely reported" and a large F1/F2 gap, and cannot
+support a fine-grained ordering among the five contamination types. No such
+ordering will be claimed.
 
 No other subgroup analysis is planned. Any that appears later is exploratory and
 labelled as such.
