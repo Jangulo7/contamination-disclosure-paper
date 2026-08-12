@@ -39,7 +39,7 @@ limits this design is the number of organisations, not the number of documents.
 coming out is a different and much weaker study. If the frame has to change, the
 change goes in `PRE-REGISTRATION.md` §9 with a date and a reason.
 
-### Step 2 · Both coders read the codebook — 30 minutes each
+### Step 2 · Both coders read the codebook — 45 minutes each
 
 Read **`CODEBOOK-CODER.md`** all the way through before opening any document.
 
@@ -56,6 +56,11 @@ apart.
 The one rule to memorise: **write down what the document says, never what you
 know.** If a paper does not name its harness, that is a 0 — even if you happen to
 know which harness they used.
+
+Then read **"How to code fast"** below before you open the first document. It has
+the per-field search terms, where each genre hides its methods, the PDF-search
+failures that will otherwise cost you an hour, and the specific traps that make
+two coders disagree. Fifteen minutes there saves several later.
 
 ---
 
@@ -75,9 +80,10 @@ papers, 15 third-party reports, plus 12 reserves.
 
 Work alone. Do not talk to the other coder. Do not look at their sheet.
 
-For each document, open it and search the text for the keywords listed at the end
-of codebook §5 before deciding anything is absent. A "0" should mean *I searched
-and it is not there*, not *I skimmed and did not notice*.
+For each document, work through the routine in "How to code fast" below: focal
+evaluation first, thirty-second structural skim, then the per-field searches. A
+"0" should mean *I searched and it is not there*, not *I skimmed and did not
+notice*. Archive a copy of each document as you go.
 
 Record which evaluation you coded in the `focal` column. A system card reports
 dozens of scores under different practice, so the codebook fixes which one counts
@@ -170,6 +176,132 @@ python audit/score.py --coder codes-JA.csv --coder codes-HE.csv \
 Agreement statistics come from the two independent sheets. Disclosure rates come
 from the reconciled sheet. The `--latex` flag prints a table you can paste
 straight into the paper.
+
+---
+
+## How to code fast — practical tips
+
+You are not reading these documents. You are searching them. A system card can
+run to 150 pages; you have about ten minutes. Everything below is about making
+that possible without guessing.
+
+### The order of operations, every time
+
+1. **Find the focal evaluation first** (codebook §1) and write it in the `focal`
+   column. Everything else is coded *about that evaluation*. Do not start
+   searching before you have it — you will collect facts about the wrong thing.
+2. **Skim the structure**, not the prose: table of contents, section headings,
+   appendix titles. Thirty seconds. You are building a map of where methods
+   information would live if it exists.
+3. **Then run the searches below**, field by field, in the same order every time.
+4. **Fill the row, note anything ambiguous, move on.**
+
+Same order every document. Consistency of process is what keeps your codes
+comparable to your own codes from three days earlier.
+
+### Search, don't read
+
+`Ctrl-F` / `Cmd-F` is the primary instrument. A `0` means *I searched for these
+terms and the information is not there*, not *I skimmed and did not see it*.
+
+**Search on stems, not whole words.** `contaminat` catches contamination,
+contaminated, decontaminate, decontamination. `evaluat` catches evaluation,
+evaluated, evaluator. `regenerat`, `stratif`, `reproduc`, `sanitis`/`sanitiz`.
+
+| Field | Search for |
+|---|---|
+| **F1 strata** | `per-task`, `breakdown`, `by subject`, `by category`, `subset`, `stratif`, `subgroup`, `disaggregat`, `split`, `tier`, `difficulty` |
+| **F2 budget** | `harness`, `scaffold`, `framework`, `temperature`, `top-p`, `token`, `context window`, `attempt`, `pass@`, `best-of`, `majority`, `self-consistency`, `sampling`, `greedy`, `seed`, `inference`, `agent loop`, `max steps`, `turns` |
+| **t1 direct** | `contaminat`, `decontaminat`, `overlap`, `n-gram`, `ngram`, `13-gram`, `dedup`, `canary`, `leak`, `held-out`, `heldout`, `memoris`/`memoriz`, `train-test` |
+| **t2 derivative** | `source`, `provenance`, `derived from`, `constructed from`, `underlying`, `corpus`, `publicly available`, `curat` |
+| **t3 temporal** | `cutoff`, `cut-off`, `knowledge cutoff`, `training data`, `released after`, `post-` , `temporal`, `date`, `recent`, `2024`, `2025`, `2026` |
+| **t4 distributional** | `perturb`, `paraphras`, `variant`, `robust`, `template`, `rephras`, `distribution`, `held-out split`, `generalis`/`generaliz` |
+| **t5 acquired** | `network`, `internet`, `web search`, `retrieval`, `browse`, `tool`, `sandbox`, `isolat`, `container`, `egress`, `transcript`, `trajectory`, `logs`, `air-gap` |
+| **F4 regeneration** | `generat`, `regenerat`, `procedure`, `pipeline`, `synthes`, `code is available`, `github`, `reproduc`, `release`, `static`, `refresh`, `rolling`, `live` |
+
+### PDF search will lie to you
+
+- **Ligatures.** Many PDFs encode `fi`, `fl`, `ffi` as single glyphs, so
+  searching `benchmark configuration` or `verified` can silently fail. If a term
+  you expect returns nothing, search a fragment that avoids the ligature —
+  `con guration`, `veri ed`, or just `gurat`.
+- **Hyphenation across line breaks** splits words invisibly: `decontamina-` /
+  `tion`. Search the stem `decontamina`.
+- **Scanned or image-based pages** are not searchable at all. If `Ctrl-F` finds
+  literally nothing anywhere in a document, including common words like "model",
+  the text layer is missing — note it and code from visual inspection, or record
+  it as an exclusion if the document is unusable.
+- **Numbers in figures are invisible to search.** Per-stratum results are often
+  *only* in a bar chart. Look at the figures before coding F1 `0`.
+
+### Where each genre hides its methods
+
+- **System cards** — methods sit in an appendix, or in a "Evaluation details" /
+  "Methodology" box, or in footnotes under the results tables. Check the very end
+  of the document. Many carry an "updated on <date>" note; changes are often
+  additive appendices.
+- **Benchmark papers** — the appendix, the "Experimental setup" section, and the
+  **NeurIPS paper checklist** at the back. The checklist asks directly about
+  reproducibility, compute, and data release; it is the single highest-yield page
+  in a D&B paper and takes thirty seconds to read.
+- **Third-party reports** — a "Methodology", "How we evaluated" or "Limitations"
+  section, often near the end, plus footnotes. These documents tend to be more
+  discursive, so information can be in prose rather than a table.
+
+### Archive what you read
+
+Documents change under you — system cards especially get revised silently, and a
+revision may disclose differently. **Save a local PDF or `Ctrl-P`-to-PDF copy of
+every document as you code it**, named by its ID, and record in `notes` the URL
+and the date you read it. If a coder and an adjudicator later disagree about what
+a document says, the archived copy settles it. This costs ten seconds per
+document and is the difference between a reproducible study and an argument.
+
+### Traps that produce disagreements
+
+These are the specific patterns that split coders. Each is a rule, not a
+judgement call — apply it mechanically.
+
+- **"Standard settings" / "default configuration"** with no reference → `1`, not
+  `2`. It names nothing a third party could reproduce.
+- **`temperature=0` and nothing else** → `1` on F2. Decoding alone is not a
+  harness and not a budget.
+- **A knowledge cutoff stated but never related to the items** → `1` on t3, not
+  `2`. Very common. Stating a date is not a temporal control.
+- **"We took care to avoid contamination"** with no mechanism → `1` on t1 only.
+  Never spread a vague claim across all five types.
+- **Contamination controls described for a *different* benchmark** than your
+  focal evaluation → does not count. This is the trap the focal rule exists to
+  catch, and it is easiest to fall into inside long system cards.
+- **A citation to another paper's method** counts only if it names a specific
+  system, not a family ("we use the standard harness [12]" is `1`).
+- **Reporting several different benchmarks** is not stratification. F1 is about
+  sub-populations *within* the focal evaluation.
+- **Releasing the items** is not regeneration; releasing the generator is.
+
+### Working conditions
+
+- **Time-box to 12 minutes.** If you are over, write what you have, flag it in
+  `notes`, and move on. A perfect code on document 7 that leaves you too tired to
+  code documents 30–40 carefully is a bad trade.
+- **Record `minutes`.** It is the earliest warning that the sample is too large
+  for the time available, and it is worth a sentence in the paper.
+- **Batch four, then break.** Coding accuracy falls off a cliff when tired, and
+  fatigue is exactly what the randomised order and the test-retest exist to
+  measure. Do not code late at night to catch up.
+- **Never code in the same room as the other coder**, and never discuss a
+  document until both of you have finished everything. One overheard "this one's
+  a nightmare" is enough to correlate your codes.
+- **Keep the codebook open in a second window.** Do not code from memory; the
+  edge rules are precisely the parts that are hard to remember correctly.
+- **When you cannot decide, write the note and pick the lower code.** The
+  adjudication pass exists for exactly this, and the disagreement is data. Do not
+  agonise, and do not go looking for outside information to break the tie — that
+  breaks the cardinal rule.
+- **If you realise you have been applying a rule wrongly**, do not silently go
+  back and fix earlier documents. Note it, finish, and raise it at adjudication.
+  Retrospective edits made mid-pass destroy the independence the statistics
+  assume.
 
 ---
 
