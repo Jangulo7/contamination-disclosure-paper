@@ -41,10 +41,11 @@ personal data, no intervention. Documents are public.
 
 ## 4. Sample
 
-48 documents, fixed in `frame.csv` before coding, in three strata: 13 system
-cards (census), 20 NeurIPS 2025 D&B papers (random sample, `seed=20260812`, from
-135 eligible of 497), 15 third-party evaluator reports (census). Construction and
-its known gaps: `SAMPLING-FRAME.md`.
+65 documents, fixed in `frame.csv` before coding, in three strata: 19 system
+cards (census — Anthropic, OpenAI, Google DeepMind, Meta), 20 NeurIPS 2025 D&B
+papers (random sample, `seed=20260812`, from 135 eligible of 497), 26 third-party
+evaluator reports (census — METR, UK AISI, Apollo Research). Construction, the
+2026-08-12 widening, and the residual limitations: `SAMPLING-FRAME.md`.
 
 Stratum B exclusions are replaced from a pre-drawn ordered reserve. Strata A and
 C exclusions shrink the denominator. No document is added after coding starts.
@@ -118,14 +119,14 @@ result. Where κ and AC1 diverge by more than 0.2, the prevalence driving it is
 named in the text.
 
 **Comparison.** H3 is a between-stratum comparison of F2 rates. Given
-*n*≈13 and *n*≈20, this is reported as two proportions with intervals and
+*n*=19 and *n*=20, this is reported as two proportions with intervals and
 described qualitatively. No significance test is planned; the study is not
-powered for one, and reporting a *p*-value here would overstate what 33
+powered for one, and reporting a *p*-value here would overstate what 39
 documents can support.
 
-**Precision.** At n≈48 a rate near 10% carries roughly ±8 points at 95% and near
-50% roughly ±14; per stratum at n≈15, roughly ±25. Claims are written to match:
-the design can support "rarely reported" and a large F1/F2 gap, and cannot
+**Precision.** At n=65 a rate near 10% carries roughly ±7 points at 95% and near
+50% roughly ±12; per stratum at n≈20, roughly ±13 and ±22. Claims are written to
+match: the design can support "rarely reported" and a large F1/F2 gap, and cannot
 support a fine-grained ordering among the five contamination types. No such
 ordering will be claimed.
 

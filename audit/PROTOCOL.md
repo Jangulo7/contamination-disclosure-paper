@@ -3,13 +3,15 @@
 Plain instructions for the two people doing the coding. No statistics knowledge
 needed; the script handles that.
 
-**What we are measuring.** We open 48 published documents that report benchmark
+**What we are measuring.** We open 65 published documents that report benchmark
 scores, and for each one we write down whether it tells the reader four things.
 Then we check whether two people, working separately, wrote down the same
 answers.
 
-**Total effort: about 26–32 person-hours**, i.e. roughly 13–16 hours each for two
-people. Spread over 10 working days that is a little over an hour a day each.
+**Total effort: about 34–42 person-hours**, i.e. roughly 17–21 hours each for two
+people. Over 8 working days that is about two hours a day each. This is a real
+commitment — see "If you run short of time" at the end before you start, not
+after.
 
 ---
 
@@ -24,18 +26,16 @@ fine, but we must say so in the paper.
 
 Write down who the two coders are. Do not change this later.
 
-### Step 1 · Widen the document list — 1 to 2 hours *(do this or decide not to)*
+### Step 1 · The document list is closed — 0 hours
 
-Right now the list leans heavily on Anthropic, OpenAI and METR, because those
-publish tidy index pages. Before coding starts, either:
+The frame was widened on 12 August, before any coding, to add Google DeepMind and
+Meta system cards and UK AISI and Apollo Research reports. It now holds **65
+documents: 19 system cards, 20 benchmark papers, 26 third-party reports**, all
+link-checked.
 
-- **(a)** add Google DeepMind and Meta system cards, and Apollo Research and UK
-  AISI reports, to `frame.csv`; or
-- **(b)** decide not to, and describe the population narrowly in the paper —
-  "Anthropic and OpenAI system cards" rather than "system cards".
-
-Either is defensible. **What is not defensible is adding documents later**, once
-you can see how the numbers are coming out. Decide now.
+**It is now closed.** Adding documents once you can see how the numbers are
+coming out is a different and much weaker study. If the frame has to change, the
+change goes in `PRE-REGISTRATION.md` §9 with a date and a reason.
 
 ### Step 2 · Both coders read the codebook — 30 minutes each
 
@@ -95,13 +95,13 @@ unclear, or did one of us make a mistake?*
 
 Then bump the codebook version to 1.1 and **recode all 10 pilot documents** under
 the new rules. This is not wasted work; it is what stops you discovering a broken
-rule after all 48 are done.
+rule after all 65 are done.
 
 ---
 
 ## The main pass
 
-### Step 5 · Code the remaining 38 documents each, separately — 6 hours each
+### Step 5 · Code the remaining 55 documents each, separately — 8 to 11 hours each
 
 Same rules. Alone. No discussion until you are both completely finished.
 
@@ -124,7 +124,7 @@ the reason in `exclusions.csv`. If it is from stratum B, replace it with the nex
 unused document from the reserve list (`BR01`, `BR02`, …) **in order**. Never pick
 a replacement yourself.
 
-Suggested pace: 8 documents a day each, five days.
+Suggested pace: 8 documents a day each, seven days.
 
 ### Step 5b · Test–retest — 1 hour each
 
@@ -185,9 +185,9 @@ an appendix. It needs to say:
 - the focal-evaluation rule, and that it under-counts documents which disclose
   well for some evaluations and badly for others.
 
-**Match your claims to your precision.** At *n*≈48 a rate near 10% carries
-roughly ±8 points at 95%, and near 50% roughly ±14. Per stratum, at *n*≈15,
-you are at about ±25. That is enough to support "rarely reported", and enough to
+**Match your claims to your precision.** At *n*=65 a rate near 10% carries
+roughly ±7 points at 95%, and near 50% roughly ±12. Per stratum, at *n*≈20,
+about ±13 and ±22. That is enough to support "rarely reported", and enough to
 say F2 is worse than F1 if the gap is large. It is **not** enough to rank the
 five contamination types against each other. Write the sentences the intervals
 can carry, and no more — in this paper of all papers.
@@ -221,14 +221,15 @@ Today is 12 August; the deadline is 29 August.
 | 13 Aug | Steps 0–2: pick coders, settle the document list, deposit the frozen manual, read the codebook | 2.5 |
 | 14 Aug | Step 3: pilot, 10 documents | 2 |
 | 15 Aug | Step 4: compare, fix rules, recode the pilot | 1 |
-| 18–22 Aug | Step 5: main pass, 8 documents a day | 1.5/day |
-| 23 Aug | Step 5b: test–retest, 5 documents | 1 |
-| 24 Aug | Steps 6–7: run the script, reconcile | 2 |
-| 25–26 Aug | Step 8: write the section and the table | 2 |
-| 27 Aug | Step 9: update limitations, fit the pages | 1 |
-| 28 Aug | Anonymity check, compile, submit | 1 |
+| 17–23 Aug | Step 5: main pass, 8 documents a day | 1.5/day |
+| 24 Aug | Step 5b: test–retest, 5 documents | 1 |
+| 25 Aug | Steps 6–7: run the script, reconcile | 2 |
+| 26–27 Aug | Step 8: write the section and the table | 2 |
+| 28 Aug | Step 9: update limitations, fit the pages, anonymity check, submit | 2 |
 
-That leaves 29 August as slack. Use it as slack.
+That leaves 29 August as slack, and there is now less of it than there was at 48
+documents. If both coders are not started by 17 August, cut the sample rather
+than the calibration — see below.
 
 ---
 
@@ -256,8 +257,11 @@ is not.
 
 The study degrades gracefully. In order of what to drop:
 
-1. **Drop stratum A or C, keep B.** A single-stratum result is still a result.
-2. **Cut to 30 documents.** Wider intervals, same structure. Say what n was.
+1. **Cap the census strata.** Take the first 15 of A and the first 15 of C in ID
+   order — a stated, mechanical rule — for 50 documents. Keeps all three strata
+   and the between-stratum contrast, which is the quotable finding.
+2. **Cut to 30 documents**, ten per stratum, same way. Wider intervals, same
+   structure. Say what n was and why.
 3. **Drop to one coder.** You then have disclosure rates but *no* agreement
    statistics — so report the rates and leave the reliability limitation standing.
    Do **not** report an agreement number computed from one person coding twice.

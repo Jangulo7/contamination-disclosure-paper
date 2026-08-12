@@ -4,13 +4,13 @@ Frozen 2026-08-12, before any document was read. `frame.csv` is the operative
 list; this file records how it was built so the draw can be reproduced and
 audited.
 
-**48 documents to code**, across three strata, plus 12 ordered reserves.
+**65 documents to code**, across three strata, plus 12 ordered reserves.
 
 | Stratum | Population | Design | n |
 |---|---|---|---|
-| A · System cards | Frontier developers' published system cards | census of what is publicly enumerable | 13 |
+| A · System cards | Frontier developers' published system cards | census of what is publicly enumerable | 19 |
 | B · Academic benchmarks | NeurIPS 2025 Datasets & Benchmarks track | seeded random sample | 20 |
-| C · Third-party evaluations | Independent evaluator reports | census of the 2025–26 window | 15 |
+| C · Third-party evaluations | Independent evaluator reports | census of the 2025–26 window | 26 |
 
 Three strata rather than one pool, because the interesting result is almost
 certainly the contrast between them — *"labs disclose harness at X%, academic
@@ -65,20 +65,35 @@ nothing. Taking all of them removes selection bias by construction.
 - **C** was enumerated from METR's risk-assessment index on the same date,
   restricted to the 2025–26 window.
 
-**Known gap, and it is a real one.** Stratum A leans Anthropic and OpenAI simply
-because their index pages enumerate cleanly; Google DeepMind and Meta are
-under-represented, and stratum C is entirely METR. This is a convenience census,
-not a complete one, and it should be described that way in the paper rather than
-as "all system cards". Two ways to close it, both cheap:
+**Widened 2026-08-12, before any coding.** The first version of this frame leaned
+on Anthropic, OpenAI and METR, because those publish index pages that enumerate
+cleanly. Four organisations were added to close that gap:
 
-- add Google DeepMind and Meta system cards, and Apollo Research / UK AISI
-  reports, before coding begins — preferred, and it only widens the frame;
-- or narrow the stated population to "Anthropic and OpenAI system cards" and
-  "METR evaluation reports", which is honest and still supports a
-  between-stratum comparison.
+| Added | Stratum | Documents | Enumerated from |
+|---|---|---|---|
+| Google DeepMind | A | 3 Gemini model cards | `deepmind.google/models/model-cards` |
+| Meta | A | Muse Spark safety report, 2 Llama model cards | arXiv, `meta-llama` repository |
+| UK AISI | C | 6 pre-deployment and cyber-capability evaluations | `aisi.gov.uk/blog` |
+| Apollo Research | C | 5 standalone evaluation reports | `apolloresearch.ai/science` |
 
-Do this **before** coding starts. Adding documents afterwards, once the results
-are visible, is a different and much weaker study.
+All 17 were verified to resolve before being added.
+
+Two judgements worth recording. Apollo also lists ~20 per-model "system card
+evaluations", but those are published as sections *inside* the labs' own system
+cards rather than as standalone documents, so including them would double-count
+stratum A; only Apollo's standalone reports are in the frame. And Meta's
+publicly enumerable model cards are older than the rest of stratum A — the Llama
+cards date from 2024 — so stratum A spans a wider period than B or C. Say so in
+the paper rather than implying a single window.
+
+**Residual limitation.** This is still a convenience census of what is publicly
+enumerable, not a complete one: organisations that do not publish an index page
+are absent from both A and C. Describe the population as "system cards and
+third-party reports enumerable from public index pages as of 12 August 2026",
+not as "all system cards".
+
+No further documents may be added. Adding them once results are visible would be
+a different and much weaker study.
 
 ---
 

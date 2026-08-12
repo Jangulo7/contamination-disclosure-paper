@@ -1,6 +1,6 @@
-# Annex — the 48 documents
+# Annex — the 65 documents
 
-Every document in the frame, with a live link. Verified 2026-08-12: **60 of 60 URLs returned HTTP 200**, including the 12 reserves.
+Every document in the frame, with a live link. Verified 2026-08-12: **77 of 77 URLs returned HTTP 200**, including the 12 reserves.
 
 **This is a reference list, not your work order.** Code in your own randomised
 order so that your fatigue does not correlate with the other coder's:
@@ -20,7 +20,7 @@ are calibrated.
 
 ## A · Frontier-developer system cards
 
-*13 documents.* Long documents. You are not reading them end to end — you are locating the focal evaluation (codebook §1) and then searching for six specific things. Expect these to be the *most* disclosed of the three strata.
+*19 documents.* Long documents. You are not reading them end to end — you are locating the focal evaluation (codebook §1) and then searching for six specific things. Expect these to be the *most* disclosed of the three strata.
 
 | ID | Source | Document |
 |---|---|---|
@@ -37,6 +37,12 @@ are calibrated.
 | `A11` | OpenAI | [GPT-5.5 System Card](https://openai.com/index/gpt-5-5-system-card/) |
 | `A12` | OpenAI | [GPT-5.3-Codex System Card](https://openai.com/index/gpt-5-3-codex-system-card/) |
 | `A13` | OpenAI | [Addendum to GPT-5.2 System Card: GPT-5.2-Codex](https://openai.com/index/gpt-5-2-codex-system-card/) |
+| `A14` | Google DeepMind | [Gemini 3.1 Pro Model Card](https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf) |
+| `A15` | Google DeepMind | [Gemini 3.6 Flash Model Card](https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-6-Flash-Model-Card.pdf) |
+| `A16` | Google DeepMind | [Gemini 3 Pro Model Card](https://deepmind.google/models/model-cards/gemini-3-pro/) |
+| `A17` | Meta | [Muse Spark Safety & Preparedness Report](https://arxiv.org/abs/2606.12429) |
+| `A18` | Meta | [Llama 3.3 Model Card](https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/MODEL_CARD.md) |
+| `A19` | Meta | [Llama 3.1 Model Card](https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md) |
 
 
 ## B · NeurIPS 2025 Datasets & Benchmarks papers
@@ -69,7 +75,7 @@ are calibrated.
 
 ## C · Third-party evaluator reports
 
-*15 documents.* Shorter than the system cards. Some are reviews *of* another organisation's report rather than evaluations in their own right — if one reports no score of its own, it is an exclusion (codebook §2).
+*26 documents.* Shorter than the system cards. Some are reviews *of* another organisation's report rather than evaluations in their own right — if one reports no score of its own, it is an exclusion (codebook §2).
 
 | ID | Source | Document |
 |---|---|---|
@@ -88,6 +94,17 @@ are calibrated.
 | `C13` | METR | [DeepSeek-R1 evaluation](https://metr.org/evaluations/deepseek-r1-report/) |
 | `C14` | METR | [GPT-4.5 evaluation](https://metr.org/blog/2025-02-27-gpt-4-5-evals/) |
 | `C15` | METR | [Claude 3.5 Sonnet and o1 evaluation](https://metr.org/blog/2025-01-31-update-sonnet-o1-evals/) |
+| `C16` | UK AISI | [Evaluation of OpenAI's GPT-5.5 cyber capabilities](https://www.aisi.gov.uk/blog/our-evaluation-of-openais-gpt-5-5-cyber-capabilities) |
+| `C17` | UK AISI | [Evaluation of Claude Mythos Preview's cyber capabilities](https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities) |
+| `C18` | UK AISI | [Preliminary assessment of Kimi K3's cyber capabilities](https://www.aisi.gov.uk/blog/preliminary-assessment-of-kimi-k3s-cyber-capabilities) |
+| `C19` | UK AISI | [How far behind the frontier are leading open weight models on cyber?](https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber) |
+| `C20` | UK AISI | [Pre-deployment evaluation of OpenAI's o1 model](https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model) |
+| `C21` | UK AISI | [Pre-deployment evaluation of Anthropic's upgraded Claude 3.5 Sonnet](https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-anthropics-upgraded-claude-3-5-sonnet) |
+| `C22` | Apollo Research | [Measuring reward-seeking via contrastive belief updates](https://www.apolloresearch.ai/science/measuring-reward-seeking-via-contrastivebelief-updates) |
+| `C23` | Apollo Research | [Stress testing deliberative alignment for anti-scheming training](https://www.apolloresearch.ai/science/stress-testing-deliberative-alignment-for-anti-scheming-training) |
+| `C24` | Apollo Research | [Frontier models are capable of in-context scheming](https://www.apolloresearch.ai/science/frontier-models-are-capable-of-incontext-scheming) |
+| `C25` | Apollo Research | [More capable models are better at in-context scheming](https://www.apolloresearch.ai/science/more-capable-models-are-better-at-in-context-scheming) |
+| `C26` | Apollo Research | [Claude Sonnet 3.7 (often) knows when it's in alignment evaluations](https://www.apolloresearch.ai/science/claude-sonnet-37-often-knows-when-its-in-alignment-evaluations) |
 
 
 ---
