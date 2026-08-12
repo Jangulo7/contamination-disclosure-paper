@@ -1,6 +1,13 @@
 # Pre-registration — disclosure audit
 
-**Frozen 2026-08-12, before any document in the frame was read.**
+**Frozen 2026-08-12, before any document in the frame was coded.**
+
+To be precise about what that claim covers, because it is the one a sceptical
+reader should test. Before the freeze, documents were touched in exactly two
+ways: index pages and titles were read in order to build the frame, and each URL
+was requested once to confirm it resolved. No document was opened to inspect what
+it discloses, no field was coded, and no result influenced the frame, the
+codebook or the analysis. Coding begins after this document is deposited.
 
 This document fixes the design and the analysis in advance so that the reported
 numbers cannot be, and cannot be suspected of having been, chosen after seeing

@@ -1,6 +1,7 @@
 # Sampling frame
 
-Frozen 2026-08-12, before any document was read. `frame.csv` is the operative
+Frozen 2026-08-12, before any document was coded (see `PRE-REGISTRATION.md` for
+what that claim covers). `frame.csv` is the operative
 list; this file records how it was built so the draw can be reproduced and
 audited.
 

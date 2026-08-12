@@ -95,6 +95,13 @@ template. One row per document.
 
 ### Step 4 · Compare and fix the codebook — 1 hour together
 
+**Run the script on the pilot before you reconcile.** Ten documents coded
+independently already yield a weighted kappa, and one sentence carrying that
+number moves the paper from "instrument released" to "instrument shown to work".
+There is a commented placeholder in `main.tex` immediately after the limitations
+paragraph; fill it in from the script output. Report it as a calibration result on
+ten documents, not as the study.
+
 Put the two sheets side by side. For every disagreement, ask: *was the rule
 unclear, or did one of us make a mistake?*
 

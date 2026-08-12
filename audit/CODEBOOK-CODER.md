@@ -265,7 +265,7 @@ would be.
 5. Fill one row per document in `coding-sheet.csv`, one sheet per coder, saved as
    `codes-<initials>.csv`.
 
-**Time.** Roughly 8–12 minutes per document once calibrated. 48 documents ≈ 7–9
+**Time.** Roughly 8–12 minutes per document once calibrated. 50 documents ≈ 7–10
 hours per coder.
 
 **Search discipline.** Use full-text search for a fixed keyword list before

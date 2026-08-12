@@ -263,7 +263,7 @@ would be.
 5. Fill one row per document in `coding-sheet.csv`, one sheet per coder, saved as
    `codes-<initials>.csv`.
 
-**Time.** Roughly 8–12 minutes per document once calibrated. 48 documents ≈ 7–9
+**Time.** Roughly 8–12 minutes per document once calibrated. 50 documents ≈ 7–10
 hours per coder.
 
 **Search discipline.** Use full-text search for a fixed keyword list before
@@ -334,7 +334,7 @@ because it is what most readers expect and the difference between the two is
 itself informative. `NA` participates as an unordered fourth category and is
 given the maximum disagreement weight against any numeric code.
 
-Point estimates alone at *n*≈48 with heavy skew will invite "is that difference
+Point estimates alone at *n*=50 with heavy skew will invite "is that difference
 real?", so intervals are not optional.
 
 Report all of them. This is not padding. Where a category turns out to be rare,
