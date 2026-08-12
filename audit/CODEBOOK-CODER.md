@@ -300,6 +300,13 @@ exposure and commercial incentive, all at once and in the same direction. The
 study can report that disclosure differs by genre. It cannot attribute the
 difference to who wrote the document. Write the findings that way.
 
+**The agreement statistics are the load-bearing result.** Whatever the disclosure
+rates turn out to be, the question of whether two independent coders can apply
+these categories reliably is answered by this study and does not depend on how
+many organisations are in the frame. That is why the pilot, the frozen manual and
+the independence rules matter more than the document count — and why coding
+quality is never traded for more documents.
+
 **Documents are not independent observations.** Documents from one organisation
 share a house template, an author team and an internal review process, so nine
 Anthropic system cards are much closer to one observation about Anthropic's

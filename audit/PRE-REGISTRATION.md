@@ -168,10 +168,62 @@ about 0.6 on categories that are not vanishingly rare — the taxonomy is not
 reliably applicable by independent coders, which is a finding about the
 taxonomy and is reported as one.
 
-If the organisation-clustered intervals are so wide that no stratum contrast
-survives them, the honest report is that 7 organisations cannot support a claim
-about the field, and the study becomes a documented method with an underpowered
-first application. That is a publishable outcome and will be published as one.
+## 8a. The framing trigger, fixed in advance
+
+**Trigger.** The primary contrast is H3: elicitation budget (F2) reported, system
+cards (A) minus benchmark papers (B). If the **organisation-clustered 95%
+interval on that difference includes zero**, the paper leads with the instrument
+— the frozen manual, the frame, the agreement statistics — and reports the
+disclosure rates as a first application of it.
+
+Mechanical, one line, and checkable: `score.py` computes exactly this interval
+and prints which branch fired. No judgement is exercised at that point, because
+judgement exercised after seeing the numbers drifts toward whichever framing
+looks better.
+
+**We expect this branch to fire, and are planning for it.** At 4 clusters in
+stratum A and 3 in stratum C, a contrast would have to be enormous to clear a
+clustered interval — a 60-point raw gap carried by two clusters a side produces
+an interval of roughly [-40, +100]. The method framing is therefore the **base
+case**; a surviving contrast is upside.
+
+That has a consequence to budget for now rather than in the write-up week. If the
+instrument is the contribution, then these are the deliverables and they must be
+release-quality, not supporting material:
+
+- `frame.csv` with its cluster column, and `SAMPLING-FRAME.md`
+- `CODEBOOK.md` at its final version, plus the coder-facing derivation
+- both coders' **raw** independent sheets, unedited
+- the adjudication log and `exclusions.csv`
+- `score.py` and its selftest output
+- this pre-registration, with any deviations recorded
+
+Deposited together with a DOI. Under the anonymity constraint in `PROTOCOL.md`,
+that means a restricted or embargoed deposit before submission and a public one
+after notification.
+
+**Reporting an underpowered application as underpowered is not a weak result in
+this paper.** The specification argues that `unknown` is a valid entry and that a
+declared unknown carries real information — it distinguishes a question asked and
+unanswerable from one never asked. "We built the instrument, applied it, and the
+design cannot support the contrast at this sample size" is that same move at the
+level of the study. The paper should say so in one sentence, because it converts
+what reads as a limitation into coherence with its own thesis.
+
+## 8b. What does not depend on any of this
+
+**The agreement statistics are the load-bearing result under either framing.** If
+two independent coders can apply the five types reliably, the taxonomy is usable
+by someone other than its authors — which is exactly what §6 of the paper
+currently concedes is unmeasured. That result does not depend on cluster count,
+on the stratum contrast, or on the disclosure rates. It is why the pilot, the
+frozen manual and the non-author coder matter more than the document count.
+
+Accordingly: **coding quality is never traded for sample size.** Fifty documents
+coded carefully with clean independence beat eighty coded in a rush, because the
+number that survives is κ, not *n*. If time runs short, the sample is cut by the
+mechanical rule in `PROTOCOL.md`; the pilot, the independence and the test-retest
+are not touched.
 
 ## 9. Deviations
 

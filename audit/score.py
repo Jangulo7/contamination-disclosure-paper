@@ -178,6 +178,49 @@ def cluster_bootstrap(units, reps: int = 10000, seed: int = 20260812):
     return vals[int(0.025 * len(vals))], vals[min(len(vals) - 1, int(0.975 * len(vals)))], k
 
 
+def contrast_ci(units_a, units_b, reps: int = 10000, seed: int = 20260812):
+    """Organisation-clustered interval on the DIFFERENCE between two strata.
+
+    Resamples clusters independently within each stratum and recomputes the gap.
+    This is what the pre-registered framing trigger is checked against: if the
+    interval includes zero, the paper leads with the instrument and reports the
+    rates as a first application.
+
+    Returns (diff, lo, hi, k_a, k_b) or None.
+    """
+    def group(units):
+        g = defaultdict(list)
+        for cid, hit in units:
+            g[cid].append(hit)
+        return g
+
+    ga, gb = group(units_a), group(units_b)
+    ka, kb = sorted(ga), sorted(gb)
+    if len(ka) < 2 or len(kb) < 2:
+        return None
+
+    def rate(g, keys, rng):
+        drawn = [g[keys[rng.randrange(len(keys))]] for _ in range(len(keys))]
+        flat = [h for grp in drawn for h in grp]
+        return sum(flat) / len(flat) if flat else None
+
+    obs_a = sum(h for _, h in units_a) / len(units_a)
+    obs_b = sum(h for _, h in units_b) / len(units_b)
+    rng = random.Random(seed)
+    diffs = []
+    for _ in range(reps):
+        ra, rb = rate(ga, ka, rng), rate(gb, kb, rng)
+        if ra is not None and rb is not None:
+            diffs.append(ra - rb)
+    if not diffs:
+        return None
+    diffs.sort()
+    return (obs_a - obs_b,
+            diffs[int(0.025 * len(diffs))],
+            diffs[min(len(diffs) - 1, int(0.975 * len(diffs)))],
+            len(ka), len(kb))
+
+
 def wilson(successes: int, n: int, z: float = 1.96) -> tuple[float, float] | None:
     """Wilson score interval. Correct at the small n per stratum here, where the
     normal approximation is not."""
@@ -363,6 +406,33 @@ def main(argv=None) -> int:
             print(f"   {s:<16} {c['reported']:>2}/{c['n']:<3} = {c['rate']:>4.0%}   "
                   f"clustered {cci:<14} k={c['k']:<3} (Wilson {wci}){warn}")
 
+    # ---- pre-registered framing trigger (PRE-REGISTRATION.md section 8) ----
+    print("\n" + "=" * 78)
+    print("PRIMARY CONTRAST  (H3: elicitation budget, system cards vs benchmark papers)")
+    print("=" * 78)
+    units = {}
+    for st in ("A_system_card", "B_neurips_dnb"):
+        units[st] = [(clusters.get(d, d), src[d]["f2_budget"] == "2")
+                     for d in src if strata.get(d) == st
+                     and src[d]["f2_budget"] in VALID and src[d]["f2_budget"] != "NA"]
+    res = contrast_ci(units["A_system_card"], units["B_neurips_dnb"])
+    if not res:
+        print("  not computable — too few clusters in one stratum")
+    else:
+        diff, lo, hi, ka, kb = res
+        spans = lo <= 0 <= hi
+        print(f"  A - B = {diff:+.0%}   clustered 95% CI [{lo:+.0%}, {hi:+.0%}]"
+              f"   k_A={ka}, k_B={kb}")
+        print()
+        if spans:
+            print("  >> INTERVAL INCLUDES ZERO.")
+            print("  >> Pre-registered consequence: the paper LEADS WITH THE INSTRUMENT")
+            print("     and reports the rates as a first application. This was fixed in")
+            print("     advance; it is not a reaction to the numbers.")
+        else:
+            print("  >> Interval excludes zero: the contrast survives clustering and may")
+            print("     be reported as a finding, in descriptive language only.")
+
     if args.latex:
         print("\n" + "=" * 78 + "\nLATEX\n" + "=" * 78)
         print(r"\begin{tabular}{@{}lrrlrr@{}}\toprule")
@@ -452,6 +522,17 @@ def selftest() -> int:
     good = (ci_c[1] - ci_c[0]) > (ci_i[1] - ci_i[0]) and (ci_c[1] - ci_c[0]) > (w[1] - w[0])
     print(f"  {'PASS' if good else 'FAIL'}  clustered interval is the widest, as it must be")
     ok &= good
+
+    print("\nthe framing trigger fires on a clustered contrast spanning zero")
+    # A genuine 40-point raw gap, but carried by only 2 clusters a side.
+    A = [("orgA", True)] * 8 + [("orgB", False)] * 2
+    B = [("p%d" % i, i < 2) for i in range(10)]
+    r = contrast_ci(A, B)
+    diff, lo, hi, ka, kb = r
+    spans = lo <= 0 <= hi
+    print(f"  raw gap {diff:+.0%}, clustered CI [{lo:+.0%}, {hi:+.0%}], k_A={ka} k_B={kb}")
+    print(f"  {'PASS' if spans else 'FAIL'}  a large raw gap on 2 clusters does NOT survive")
+    ok &= spans
 
     print("\nWilson interval, 0/13 (a rate of zero still has an upper bound)")
     lo, hi = wilson(0, 13)

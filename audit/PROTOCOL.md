@@ -8,7 +8,7 @@ scores, and for each one we write down whether it tells the reader four things.
 Then we check whether two people, working separately, wrote down the same
 answers.
 
-**Total effort: about 34–42 person-hours**, i.e. roughly 17–21 hours each for two
+**Total effort: about 37–45 person-hours**, i.e. roughly 17–21 hours each for two
 people. Over 8 working days that is about two hours a day each. This is a real
 commitment — see "If you run short of time" at the end before you start, not
 after.
@@ -198,6 +198,18 @@ say F2 is worse than F1 if the gap is large. It is **not** enough to rank the
 five contamination types against each other. Write the sentences the intervals
 can carry, and no more — in this paper of all papers.
 
+**If the framing trigger fired**, the script says so in the primary-contrast
+block. Then the section leads with the instrument and reports rates as a first
+application — and includes this sentence, or one like it:
+
+> The specification argues that a declared `unknown` carries information, because
+> it distinguishes a question asked and unanswerable from one never asked. We
+> report the same at the level of this study: the instrument works, and the
+> design cannot support the stratum contrast at seven organisations.
+
+That is not a hedge. It is the paper practising its own thesis, and it reads as
+coherence rather than weakness.
+
 **One thing the script will show you that needs explaining in words.** For fields
 that almost nobody discloses, you will see something like *94% agreement but
 kappa = 0.03*. This looks alarming and is not. When almost every answer is "not
@@ -206,7 +218,20 @@ agree almost perfectly. That is why the script also prints AC1, which does not
 have this problem. Say so in one sentence, or a reviewer will read the low kappa
 as "these categories do not work" — the opposite of what the data shows.
 
-### Step 9 · Update the rest of the paper — 1 hour
+### Step 9 · Deposit the artifacts — 2 to 3 hours
+
+Under the method framing these *are* the contribution, so they ship at release
+quality: the frame with its cluster column, the final codebook and its coder
+derivation, **both coders' raw sheets unedited**, the adjudication log,
+`exclusions.csv`, `score.py` with its selftest output, and the pre-registration
+with any deviations.
+
+Deposit together with a DOI — restricted or embargoed before submission, public
+after notification (see "Freezing the manual" above).
+
+Do not tidy the raw sheets. Their disagreements are the evidence.
+
+### Step 10 · Update the rest of the paper — 1 hour
 
 Rewrite the two admissions in §7 Limitations that this study now answers: "no
 empirical validation of the taxonomy" and "no measurement of current disclosure
@@ -231,7 +256,7 @@ Today is 12 August; the deadline is 29 August.
 | 24 Aug | Step 5b: test–retest, 5 documents | 1 |
 | 25 Aug | Steps 6–7: run the script, reconcile | 2 |
 | 26–27 Aug | Step 8: write the section and the table | 2 |
-| 28 Aug | Step 9: update limitations, fit the pages, anonymity check, submit | 2 |
+| 28 Aug | Steps 9–10: deposit artifacts, update limitations, fit pages, submit | 3 |
 
 That leaves 29 August as slack, and there is now less of it than there was at 48
 documents. If both coders are not started by 17 August, cut the sample rather
@@ -275,3 +300,8 @@ The study degrades gracefully. In order of what to drop:
 
 What you must not do is quietly shrink the sample after seeing the results. If
 you cut, cut before coding, and say in the paper what you cut and why.
+
+**And never cut the calibration to buy documents.** The pilot, the independent
+coding, and the test-retest are what make the agreement statistics mean anything,
+and the agreement statistics are the result that survives whatever happens to the
+rates. Fifty documents coded carefully beat eighty coded in a rush.
