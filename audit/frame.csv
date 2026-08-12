@@ -1,5 +1,5 @@
 id,stratum,source,title,url,status
-A01,A_system_card,Anthropic,Claude Sonnet 5 System Card,https://www.anthropic.com/transparency,draw
+A01,A_system_card,Anthropic,Claude Sonnet 5 System Card,https://www-cdn.anthropic.com/9e6a1044980d8c4ed85669faf9c2a8342e2e9f1e/Claude%20Sonnet%205%20System%20Card.pdf,draw
 A02,A_system_card,Anthropic,Claude Opus 4.8 System Card,https://cdn.sanity.io/files/4zrzovbb/website/c886650a2e96fc0925c805a1a7ca77314ccbf4a6.pdf,draw
 A03,A_system_card,Anthropic,Claude Opus 4.7 System Card,https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf,draw
 A04,A_system_card,Anthropic,Claude Sonnet 4.6 System Card,https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf,draw

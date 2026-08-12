@@ -49,6 +49,8 @@ def main() -> int:
                     help="print the 5 test-retest documents instead")
     ap.add_argument("--pilot", action="store_true",
                     help="print the shared pilot set instead")
+    ap.add_argument("--markdown", action="store_true",
+                    help="emit a tick-list with links, for use as a worklist")
     a = ap.parse_args()
 
     rows = load(Path(a.frame))
@@ -58,7 +60,9 @@ def main() -> int:
     if a.pilot:
         print(f"# Pilot set — the SAME 10 documents for both coders (codebook 5.2)")
         for i, d in enumerate(PILOT, 1):
-            print(f"{i:>3}. {d}  {by_id[d]['title'][:66]}")
+            r = by_id[d]
+            print(f"{i:>3}. {d}  {r['title'][:60]}")
+            print(f"      {r['url']}")
         return 0
 
     main_pass = [r for r in rows if r["id"] not in PILOT]
@@ -72,7 +76,19 @@ def main() -> int:
         print(f"# Test-retest for {a.coder.upper()} — re-code these 5 LAST, without")
         print(f"# looking at your earlier sheet. Save as codes-{a.coder.upper()}-retest.csv")
         for i, r in enumerate(picks, 1):
-            print(f"{i:>3}. {r['id']}  {r['title'][:66]}")
+            print(f"{i:>3}. {r['id']}  {r['title'][:60]}")
+            print(f"      {r['url']}")
+        return 0
+
+    if a.markdown:
+        print(f"# Worklist — {a.coder.upper()}\n")
+        print(f"{len(order)} documents, in your own order. Do the shared pilot first")
+        print(f"(`python audit/order.py --coder {a.coder.upper()} --pilot`).\n")
+        print("Tick each when its row is filled in. Roughly 8-12 minutes each.\n")
+        for i, r in enumerate(order, 1):
+            print(f"- [ ] **{r['id']}** — [{r['title']}]({r['url']})")
+        print(f"\nWhen all are ticked, run the test-retest:")
+        print(f"`python audit/order.py --coder {a.coder.upper()} --retest`")
         return 0
 
     print(f"# Coding order for {a.coder.upper()} — {len(order)} documents")

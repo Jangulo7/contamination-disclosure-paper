@@ -61,7 +61,15 @@ know which harness they used.
 
 ### Step 3 · Code 10 documents each, separately — 2 hours each
 
-Documents `A01`, `B01`–`B04`, `C01`–`C04`.
+Documents `A01`, `B01`–`B04`, `C01`–`C04`. Links:
+
+```bash
+python audit/order.py --coder JA --pilot
+```
+
+Every document in the study, with links, is listed in
+**[`ANNEX-DOCUMENTS.md`](ANNEX-DOCUMENTS.md)** — 13 system cards, 20 benchmark
+papers, 15 third-party reports, plus 12 reserves.
 
 Work alone. Do not talk to the other coder. Do not look at their sheet.
 
@@ -97,10 +105,10 @@ rule after all 48 are done.
 
 Same rules. Alone. No discussion until you are both completely finished.
 
-**Work in your own order**, printed by:
+**Work in your own order.** Generate a tick-list with links and keep it open:
 
 ```bash
-python audit/order.py --coder JA      # your initials
+python audit/order.py --coder JA --markdown > worklist-JA.md
 ```
 
 Not frame order. If you both work top-to-bottom you are both fresh on the same
