@@ -1,0 +1,31 @@
+# Windows alternate-data-stream artifacts, created when files are copied into
+# WSL from Windows. Pure noise — never commit them.
+*:Zone.Identifier
+
+# LaTeX build products. The .bbl is the exception and IS tracked: arXiv does not
+# run BibTeX, so the .bbl is a submission artifact, not a build artifact.
+*.aux
+*.log
+*.out
+*.blg
+*.toc
+*.lot
+*.lof
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
+
+# Compiled output. Rebuildable from source; keep the repo to sources so diffs
+# stay readable. Remove this line if you would rather archive each submitted PDF.
+main.pdf
+contamination-disclosure.pdf
+
+# Editor / OS
+.DS_Store
+*~
+.vscode/
