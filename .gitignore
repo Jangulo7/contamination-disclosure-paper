@@ -30,6 +30,7 @@ contamination-disclosure.pdf
 *~
 .vscode/
 
-# Working document, deliberately untracked: kept beside the paper but not
+# Working documents, deliberately untracked: kept beside the paper but not
 # part of the repository.
 REVIEW-RESPONSE.md
+NEXT-STEPS.md
