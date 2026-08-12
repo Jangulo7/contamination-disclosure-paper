@@ -29,3 +29,7 @@ contamination-disclosure.pdf
 .DS_Store
 *~
 .vscode/
+
+# Working document, deliberately untracked: kept beside the paper but not
+# part of the repository.
+REVIEW-RESPONSE.md
