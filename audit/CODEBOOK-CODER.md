@@ -315,10 +315,9 @@ the publishing organisation for strata A and C, the paper itself for stratum B,
 whose authors differ paper to paper.
 
 The consequence is uncomfortable and must be reported rather than smoothed over:
-**45 of the 65 documents come from 7 organisations**, and stratum C's 26
-documents come from just 3, one of which supplies 15 of them. Rates are therefore
-reported as *"k organisations, n documents"*, never as a bare *n*, with
-organisation-clustered intervals.
+**30 of the 50 documents come from 7 organisations**, and each census stratum
+draws on only 3 or 4. Rates are therefore reported as *"k organisations, n
+documents"*, never as a bare *n*, with organisation-clustered intervals.
 
 ## 8. Changelog
 

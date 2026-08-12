@@ -4,10 +4,10 @@ A02,A_system_card,Anthropic,Anthropic,Claude Opus 4.8 System Card,https://cdn.sa
 A03,A_system_card,Anthropic,Anthropic,Claude Opus 4.7 System Card,https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf,draw
 A04,A_system_card,Anthropic,Anthropic,Claude Sonnet 4.6 System Card,https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf,draw
 A05,A_system_card,Anthropic,Anthropic,Claude Opus 4.6 System Card,https://www-cdn.anthropic.com/0dd865075ad3132672ee0ab40b05a53f14cf5288.pdf,draw
-A06,A_system_card,Anthropic,Anthropic,Claude Opus 4.5 System Card,https://www.anthropic.com/claude-opus-4-5-system-card,draw
-A07,A_system_card,Anthropic,Anthropic,Claude Haiku 4.5 System Card,https://anthropic.com/claude-haiku-4-5-system-card,draw
-A08,A_system_card,Anthropic,Anthropic,Claude Sonnet 4.5 System Card,https://anthropic.com/claude-sonnet-4-5-system-card,draw
-A09,A_system_card,Anthropic,Anthropic,Claude 4 System Card,https://www-cdn.anthropic.com/6d8a8055020700718b0c49369f60816ba2a7c285.pdf,draw
+A06,A_system_card,Anthropic,Anthropic,Claude Opus 4.5 System Card,https://www.anthropic.com/claude-opus-4-5-system-card,capped
+A07,A_system_card,Anthropic,Anthropic,Claude Haiku 4.5 System Card,https://anthropic.com/claude-haiku-4-5-system-card,capped
+A08,A_system_card,Anthropic,Anthropic,Claude Sonnet 4.5 System Card,https://anthropic.com/claude-sonnet-4-5-system-card,capped
+A09,A_system_card,Anthropic,Anthropic,Claude 4 System Card,https://www-cdn.anthropic.com/6d8a8055020700718b0c49369f60816ba2a7c285.pdf,capped
 A10,A_system_card,OpenAI,OpenAI,GPT-5.6 System Card,https://deploymentsafety.openai.com/gpt-5-6,draw
 A11,A_system_card,OpenAI,OpenAI,GPT-5.5 System Card,https://openai.com/index/gpt-5-5-system-card/,draw
 A12,A_system_card,OpenAI,OpenAI,GPT-5.3-Codex System Card,https://openai.com/index/gpt-5-3-codex-system-card/,draw
@@ -43,22 +43,22 @@ C02,C_third_party,METR,METR,"Review: automated R&D section, Anthropic Risk Repor
 C03,C_third_party,METR,METR,Red-Teaming Anthropic's Internal Agent Monitoring,https://metr.org/blog/2026-03-25-red-teaming-anthropic-agent-monitoring/,draw
 C04,C_third_party,METR,METR,"Review: Anthropic Sabotage Risk Report, Claude Opus 4.6",https://metr.org/blog/2026-03-12-sabotage-risk-report-opus-4-6-review/,draw
 C05,C_third_party,METR,METR,Review: Anthropic Summer 2025 Pilot Sabotage Risk Report,https://metr.org/blog/2025-10-28-sabotage-report-review/,draw
-C06,C_third_party,METR,METR,Summary of gpt-oss methodology review,https://metr.org/blog/2025-10-23-gpt-oss-methodology-review/,draw
-C07,C_third_party,METR,METR,GPT-5.6 Sol evaluation,https://metr.org/blog/2026-06-26-gpt-5-6-sol/,draw
-C08,C_third_party,METR,METR,GPT-5.1-Codex-Max evaluation,https://metr.org/evaluations/gpt-5-1-codex-max-report/,draw
-C09,C_third_party,METR,METR,GPT-5 evaluation,https://metr.org/evaluations/gpt-5-report/,draw
-C10,C_third_party,METR,METR,DeepSeek and Qwen evaluation,https://metr.org/evaluations/deepseek-qwen-report/,draw
-C11,C_third_party,METR,METR,OpenAI o3 and o4-mini evaluation,https://metr.org/evaluations/openai-o3-report/,draw
-C12,C_third_party,METR,METR,Claude 3.7 evaluation,https://metr.org/evaluations/claude-3-7-report/,draw
-C13,C_third_party,METR,METR,DeepSeek-R1 evaluation,https://metr.org/evaluations/deepseek-r1-report/,draw
-C14,C_third_party,METR,METR,GPT-4.5 evaluation,https://metr.org/blog/2025-02-27-gpt-4-5-evals/,draw
-C15,C_third_party,METR,METR,Claude 3.5 Sonnet and o1 evaluation,https://metr.org/blog/2025-01-31-update-sonnet-o1-evals/,draw
+C06,C_third_party,METR,METR,Summary of gpt-oss methodology review,https://metr.org/blog/2025-10-23-gpt-oss-methodology-review/,capped
+C07,C_third_party,METR,METR,GPT-5.6 Sol evaluation,https://metr.org/blog/2026-06-26-gpt-5-6-sol/,capped
+C08,C_third_party,METR,METR,GPT-5.1-Codex-Max evaluation,https://metr.org/evaluations/gpt-5-1-codex-max-report/,capped
+C09,C_third_party,METR,METR,GPT-5 evaluation,https://metr.org/evaluations/gpt-5-report/,capped
+C10,C_third_party,METR,METR,DeepSeek and Qwen evaluation,https://metr.org/evaluations/deepseek-qwen-report/,capped
+C11,C_third_party,METR,METR,OpenAI o3 and o4-mini evaluation,https://metr.org/evaluations/openai-o3-report/,capped
+C12,C_third_party,METR,METR,Claude 3.7 evaluation,https://metr.org/evaluations/claude-3-7-report/,capped
+C13,C_third_party,METR,METR,DeepSeek-R1 evaluation,https://metr.org/evaluations/deepseek-r1-report/,capped
+C14,C_third_party,METR,METR,GPT-4.5 evaluation,https://metr.org/blog/2025-02-27-gpt-4-5-evals/,capped
+C15,C_third_party,METR,METR,Claude 3.5 Sonnet and o1 evaluation,https://metr.org/blog/2025-01-31-update-sonnet-o1-evals/,capped
 C16,C_third_party,UK AISI,UK AISI,Evaluation of OpenAI's GPT-5.5 cyber capabilities,https://www.aisi.gov.uk/blog/our-evaluation-of-openais-gpt-5-5-cyber-capabilities,draw
 C17,C_third_party,UK AISI,UK AISI,Evaluation of Claude Mythos Preview's cyber capabilities,https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities,draw
 C18,C_third_party,UK AISI,UK AISI,Preliminary assessment of Kimi K3's cyber capabilities,https://www.aisi.gov.uk/blog/preliminary-assessment-of-kimi-k3s-cyber-capabilities,draw
 C19,C_third_party,UK AISI,UK AISI,How far behind the frontier are leading open weight models on cyber?,https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber,draw
 C20,C_third_party,UK AISI,UK AISI,Pre-deployment evaluation of OpenAI's o1 model,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model,draw
-C21,C_third_party,UK AISI,UK AISI,Pre-deployment evaluation of Anthropic's upgraded Claude 3.5 Sonnet,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-anthropics-upgraded-claude-3-5-sonnet,draw
+C21,C_third_party,UK AISI,UK AISI,Pre-deployment evaluation of Anthropic's upgraded Claude 3.5 Sonnet,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-anthropics-upgraded-claude-3-5-sonnet,capped
 C22,C_third_party,Apollo Research,Apollo Research,Measuring reward-seeking via contrastive belief updates,https://www.apolloresearch.ai/science/measuring-reward-seeking-via-contrastivebelief-updates,draw
 C23,C_third_party,Apollo Research,Apollo Research,Stress testing deliberative alignment for anti-scheming training,https://www.apolloresearch.ai/science/stress-testing-deliberative-alignment-for-anti-scheming-training,draw
 C24,C_third_party,Apollo Research,Apollo Research,Frontier models are capable of in-context scheming,https://www.apolloresearch.ai/science/frontier-models-are-capable-of-incontext-scheming,draw

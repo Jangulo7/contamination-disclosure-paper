@@ -41,11 +41,16 @@ personal data, no intervention. Documents are public.
 
 ## 4. Sample
 
-65 documents, fixed in `frame.csv` before coding, in three strata: 19 system
-cards (census — Anthropic, OpenAI, Google DeepMind, Meta), 20 NeurIPS 2025 D&B
-papers (random sample, `seed=20260812`, from 135 eligible of 497), 26 third-party
-evaluator reports (census — METR, UK AISI, Apollo Research). Construction, the
-2026-08-12 widening, and the residual limitations: `SAMPLING-FRAME.md`.
+50 documents, fixed in `frame.csv` before coding, in three strata: 15 system
+cards (census capped at 5 per organisation — Anthropic, OpenAI, Google DeepMind,
+Meta), 20 NeurIPS 2025 D&B papers (random sample, `seed=20260812`, from 135
+eligible of 497), 15 third-party evaluator reports (census capped the same way —
+METR, UK AISI, Apollo Research).
+
+30 documents from 7 organisations plus 20 singleton clusters: **27 clusters
+total**, unchanged by the cap, because the cap removes documents and not
+organisations. Construction, the widening, the cap and the residual limitations:
+`SAMPLING-FRAME.md`.
 
 Stratum B exclusions are replaced from a pre-drawn ordered reserve. Strata A and
 C exclusions shrink the denominator. No document is added after coding starts.
@@ -104,8 +109,8 @@ Wilson interval is printed beside it for comparison only; it is narrower and it
 is wrong here.
 
 **Every rate is reported as "k organisations, n documents", never as a bare n.**
-45 of the 65 documents come from 7 organisations; stratum C's 26 come from 3, one
-of which supplies 15. Where k < 10 the interval is described as indicative. This
+30 of the 50 documents come from 7 organisations; each census stratum has 3 or 4.
+Where k < 10 the interval is described as indicative. This
 is a real limitation of the design and is stated in the paper, not smoothed over.
 
 **Agreement**, per field, reported together:
@@ -134,7 +139,7 @@ named in the text.
 proportions with organisation-clustered intervals and described qualitatively. No
 significance test is planned: at 4 clusters in stratum A and 20 in stratum B the
 study is not powered for one, and a *p*-value would overstate what the design
-supports.
+supports. Note the cap does not weaken this — cluster count is unchanged.
 
 **The comparison is descriptive, not causal.** First-party versus third-party is
 confounded with document length, breadth of coverage, regulatory exposure and
@@ -148,8 +153,10 @@ budget while a third-party report spends forty pages on one; coding whole
 documents would penalise system cards for breadth and report a genre artifact as
 a finding.
 
-**Precision.** At n=65 a rate near 10% carries roughly ±7 points at 95% and near
-50% roughly ±12; per stratum at n≈20, roughly ±13 and ±22. Claims are written to
+**Precision.** At n=50 a rate near 10% carries roughly ±8 points at 95% and near
+50% roughly ±14; per census stratum at n=15, roughly ±15 and ±25. Those are the
+*unclustered* figures and are optimistic; the organisation-clustered intervals
+are wider and are the ones reported. Claims are written to
 match: the design can support "rarely reported" and a large F1/F2 gap, and cannot
 support a fine-grained ordering among the five contamination types. No such
 ordering will be claimed.

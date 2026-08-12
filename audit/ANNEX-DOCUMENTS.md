@@ -1,4 +1,4 @@
-# Annex — the 65 documents
+# Annex — the 50 documents
 
 Every document in the frame, with a live link. Verified 2026-08-12: **77 of 77 URLs returned HTTP 200**, including the 12 reserves.
 
@@ -20,7 +20,7 @@ are calibrated.
 
 ## A · Frontier-developer system cards
 
-*19 documents.* Long documents. You are not reading them end to end — you are locating the focal evaluation (codebook §1) and then searching for six specific things. Expect these to be the *most* disclosed of the three strata.
+*15 documents.* Long documents. You are not reading them end to end — you are locating the focal evaluation (codebook §1) and then searching for six specific things. Expect these to be the *most* disclosed of the three strata.
 
 | ID | Source | Document |
 |---|---|---|
@@ -29,10 +29,6 @@ are calibrated.
 | `A03` | Anthropic | [Claude Opus 4.7 System Card](https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf) |
 | `A04` | Anthropic | [Claude Sonnet 4.6 System Card](https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf) |
 | `A05` | Anthropic | [Claude Opus 4.6 System Card](https://www-cdn.anthropic.com/0dd865075ad3132672ee0ab40b05a53f14cf5288.pdf) |
-| `A06` | Anthropic | [Claude Opus 4.5 System Card](https://www.anthropic.com/claude-opus-4-5-system-card) |
-| `A07` | Anthropic | [Claude Haiku 4.5 System Card](https://anthropic.com/claude-haiku-4-5-system-card) |
-| `A08` | Anthropic | [Claude Sonnet 4.5 System Card](https://anthropic.com/claude-sonnet-4-5-system-card) |
-| `A09` | Anthropic | [Claude 4 System Card](https://www-cdn.anthropic.com/6d8a8055020700718b0c49369f60816ba2a7c285.pdf) |
 | `A10` | OpenAI | [GPT-5.6 System Card](https://deploymentsafety.openai.com/gpt-5-6) |
 | `A11` | OpenAI | [GPT-5.5 System Card](https://openai.com/index/gpt-5-5-system-card/) |
 | `A12` | OpenAI | [GPT-5.3-Codex System Card](https://openai.com/index/gpt-5-3-codex-system-card/) |
@@ -75,7 +71,7 @@ are calibrated.
 
 ## C · Third-party evaluator reports
 
-*26 documents.* Shorter than the system cards. Some are reviews *of* another organisation's report rather than evaluations in their own right — if one reports no score of its own, it is an exclusion (codebook §2).
+*15 documents.* Shorter than the system cards. Some are reviews *of* another organisation's report rather than evaluations in their own right — if one reports no score of its own, it is an exclusion (codebook §2).
 
 | ID | Source | Document |
 |---|---|---|
@@ -84,22 +80,11 @@ are calibrated.
 | `C03` | METR | [Red-Teaming Anthropic's Internal Agent Monitoring](https://metr.org/blog/2026-03-25-red-teaming-anthropic-agent-monitoring/) |
 | `C04` | METR | [Review: Anthropic Sabotage Risk Report, Claude Opus 4.6](https://metr.org/blog/2026-03-12-sabotage-risk-report-opus-4-6-review/) |
 | `C05` | METR | [Review: Anthropic Summer 2025 Pilot Sabotage Risk Report](https://metr.org/blog/2025-10-28-sabotage-report-review/) |
-| `C06` | METR | [Summary of gpt-oss methodology review](https://metr.org/blog/2025-10-23-gpt-oss-methodology-review/) |
-| `C07` | METR | [GPT-5.6 Sol evaluation](https://metr.org/blog/2026-06-26-gpt-5-6-sol/) |
-| `C08` | METR | [GPT-5.1-Codex-Max evaluation](https://metr.org/evaluations/gpt-5-1-codex-max-report/) |
-| `C09` | METR | [GPT-5 evaluation](https://metr.org/evaluations/gpt-5-report/) |
-| `C10` | METR | [DeepSeek and Qwen evaluation](https://metr.org/evaluations/deepseek-qwen-report/) |
-| `C11` | METR | [OpenAI o3 and o4-mini evaluation](https://metr.org/evaluations/openai-o3-report/) |
-| `C12` | METR | [Claude 3.7 evaluation](https://metr.org/evaluations/claude-3-7-report/) |
-| `C13` | METR | [DeepSeek-R1 evaluation](https://metr.org/evaluations/deepseek-r1-report/) |
-| `C14` | METR | [GPT-4.5 evaluation](https://metr.org/blog/2025-02-27-gpt-4-5-evals/) |
-| `C15` | METR | [Claude 3.5 Sonnet and o1 evaluation](https://metr.org/blog/2025-01-31-update-sonnet-o1-evals/) |
 | `C16` | UK AISI | [Evaluation of OpenAI's GPT-5.5 cyber capabilities](https://www.aisi.gov.uk/blog/our-evaluation-of-openais-gpt-5-5-cyber-capabilities) |
 | `C17` | UK AISI | [Evaluation of Claude Mythos Preview's cyber capabilities](https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities) |
 | `C18` | UK AISI | [Preliminary assessment of Kimi K3's cyber capabilities](https://www.aisi.gov.uk/blog/preliminary-assessment-of-kimi-k3s-cyber-capabilities) |
 | `C19` | UK AISI | [How far behind the frontier are leading open weight models on cyber?](https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber) |
 | `C20` | UK AISI | [Pre-deployment evaluation of OpenAI's o1 model](https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model) |
-| `C21` | UK AISI | [Pre-deployment evaluation of Anthropic's upgraded Claude 3.5 Sonnet](https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-anthropics-upgraded-claude-3-5-sonnet) |
 | `C22` | Apollo Research | [Measuring reward-seeking via contrastive belief updates](https://www.apolloresearch.ai/science/measuring-reward-seeking-via-contrastivebelief-updates) |
 | `C23` | Apollo Research | [Stress testing deliberative alignment for anti-scheming training](https://www.apolloresearch.ai/science/stress-testing-deliberative-alignment-for-anti-scheming-training) |
 | `C24` | Apollo Research | [Frontier models are capable of in-context scheming](https://www.apolloresearch.ai/science/frontier-models-are-capable-of-incontext-scheming) |

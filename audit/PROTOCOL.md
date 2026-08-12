@@ -3,15 +3,13 @@
 Plain instructions for the two people doing the coding. No statistics knowledge
 needed; the script handles that.
 
-**What we are measuring.** We open 65 published documents that report benchmark
+**What we are measuring.** We open 50 published documents that report benchmark
 scores, and for each one we write down whether it tells the reader four things.
 Then we check whether two people, working separately, wrote down the same
 answers.
 
-**Total effort: about 37–45 person-hours**, i.e. roughly 17–21 hours each for two
-people. Over 8 working days that is about two hours a day each. This is a real
-commitment — see "If you run short of time" at the end before you start, not
-after.
+**Total effort: about 30–36 person-hours**, i.e. roughly 15–18 hours each for two
+people. Over 8 working days that is under two hours a day each.
 
 ---
 
@@ -28,10 +26,14 @@ Write down who the two coders are. Do not change this later.
 
 ### Step 1 · The document list is closed — 0 hours
 
-The frame was widened on 12 August, before any coding, to add Google DeepMind and
-Meta system cards and UK AISI and Apollo Research reports. It now holds **65
-documents: 19 system cards, 20 benchmark papers, 26 third-party reports**, all
-link-checked.
+The frame was widened on 12 August to add Google DeepMind and Meta system cards
+and UK AISI and Apollo Research reports, then capped at 5 documents per
+organisation. It holds **50 documents: 15 system cards, 20 benchmark papers, 15
+third-party reports**, all link-checked, drawn from 7 organisations plus 20
+independent author teams.
+
+The cap keeps all 27 clusters while cutting a third of the reading, because what
+limits this design is the number of organisations, not the number of documents.
 
 **It is now closed.** Adding documents once you can see how the numbers are
 coming out is a different and much weaker study. If the frame has to change, the
@@ -101,7 +103,7 @@ rule after all 65 are done.
 
 ## The main pass
 
-### Step 5 · Code the remaining 55 documents each, separately — 8 to 11 hours each
+### Step 5 · Code the remaining 40 documents each, separately — 6 to 8 hours each
 
 Same rules. Alone. No discussion until you are both completely finished.
 
@@ -124,7 +126,7 @@ the reason in `exclusions.csv`. If it is from stratum B, replace it with the nex
 unused document from the reserve list (`BR01`, `BR02`, …) **in order**. Never pick
 a replacement yourself.
 
-Suggested pace: 8 documents a day each, seven days.
+Suggested pace: 8 documents a day each, five days.
 
 ### Step 5b · Test–retest — 1 hour each
 
@@ -191,9 +193,10 @@ an appendix. It needs to say:
 - the focal-evaluation rule, and that it under-counts documents which disclose
   well for some evaluations and badly for others.
 
-**Match your claims to your precision.** At *n*=65 a rate near 10% carries
-roughly ±7 points at 95%, and near 50% roughly ±12. Per stratum, at *n*≈20,
-about ±13 and ±22. That is enough to support "rarely reported", and enough to
+**Match your claims to your precision.** At *n*=50 a rate near 10% carries
+roughly ±8 points at 95%, and near 50% roughly ±14; per census stratum at *n*=15,
+about ±15 and ±25. And those are the *unclustered* figures — the clustered
+intervals you will actually report are wider still. That is enough to support "rarely reported", and enough to
 say F2 is worse than F1 if the gap is large. It is **not** enough to rank the
 five contamination types against each other. Write the sentences the intervals
 can carry, and no more — in this paper of all papers.
@@ -252,15 +255,13 @@ Today is 12 August; the deadline is 29 August.
 | 13 Aug | Steps 0–2: pick coders, settle the document list, deposit the frozen manual, read the codebook | 2.5 |
 | 14 Aug | Step 3: pilot, 10 documents | 2 |
 | 15 Aug | Step 4: compare, fix rules, recode the pilot | 1 |
-| 17–23 Aug | Step 5: main pass, 8 documents a day | 1.5/day |
+| 18–22 Aug | Step 5: main pass, 8 documents a day | 1.5/day |
 | 24 Aug | Step 5b: test–retest, 5 documents | 1 |
 | 25 Aug | Steps 6–7: run the script, reconcile | 2 |
 | 26–27 Aug | Step 8: write the section and the table | 2 |
 | 28 Aug | Steps 9–10: deposit artifacts, update limitations, fit pages, submit | 3 |
 
-That leaves 29 August as slack, and there is now less of it than there was at 48
-documents. If both coders are not started by 17 August, cut the sample rather
-than the calibration — see below.
+That leaves 29 August as slack. Use it as slack.
 
 ---
 
@@ -288,11 +289,14 @@ is not.
 
 The study degrades gracefully. In order of what to drop:
 
-1. **Cap the census strata.** Take the first 15 of A and the first 15 of C in ID
-   order — a stated, mechanical rule — for 50 documents. Keeps all three strata
-   and the between-stratum contrast, which is the quotable finding.
-2. **Cut to 30 documents**, ten per stratum, same way. Wider intervals, same
-   structure. Say what n was and why.
+1. **Lower the per-organisation cap** from 5 to 3, taking earliest IDs within
+   each organisation. That gives roughly 30 documents and — crucially — keeps all
+   27 clusters, so nothing about the design changes except interval width.
+2. **Drop stratum B to 10** by taking the first 10 of the seeded permutation,
+   which is already a random draw. Say what n was and why.
+
+Never cut an organisation. Organisations are the clusters, and the cluster count
+is what the design rests on.
 3. **Drop to one coder.** You then have disclosure rates but *no* agreement
    statistics — so report the rates and leave the reliability limitation standing.
    Do **not** report an agreement number computed from one person coding twice.

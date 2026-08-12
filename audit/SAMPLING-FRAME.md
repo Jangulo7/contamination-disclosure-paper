@@ -4,13 +4,13 @@ Frozen 2026-08-12, before any document was read. `frame.csv` is the operative
 list; this file records how it was built so the draw can be reproduced and
 audited.
 
-**65 documents to code**, across three strata, plus 12 ordered reserves.
+**50 documents to code**, across three strata, plus 12 ordered reserves.
 
 | Stratum | Population | Design | n |
 |---|---|---|---|
-| A · System cards | Frontier developers' published system cards | census of what is publicly enumerable | 19 |
+| A · System cards | Frontier developers' published system cards | census, capped at 5 per organisation | 15 |
 | B · Academic benchmarks | NeurIPS 2025 Datasets & Benchmarks track | seeded random sample | 20 |
-| C · Third-party evaluations | Independent evaluator reports | census of the 2025–26 window | 26 |
+| C · Third-party evaluations | Independent evaluator reports | census, capped at 5 per organisation | 15 |
 
 Three strata rather than one pool, because the interesting result is almost
 certainly the contrast between them — *"labs disclose harness at X%, academic
@@ -25,14 +25,31 @@ an author team and a review process, so the effective sample is the number of
 
 | Stratum | Documents | Clusters | Composition |
 |---|---|---|---|
-| A | 19 | 4 | Anthropic 9, OpenAI 4, Google DeepMind 3, Meta 3 |
+| A | 15 | 4 | Anthropic 5, OpenAI 4, Google DeepMind 3, Meta 3 |
 | B | 20 | 20 | one per paper — author teams differ |
-| C | 26 | 3 | METR 15, UK AISI 6, Apollo Research 5 |
-| **Total** | **65** | **27** | 45 documents from 7 organisations, plus 20 singletons |
+| C | 15 | 3 | METR 5, UK AISI 5, Apollo Research 5 |
+| **Total** | **50** | **27** | 30 documents from 7 organisations, plus 20 singletons |
 
-Stratum C is the weak point: 26 documents from three organisations, one supplying
-58% of them. "26 third-party reports" would be a misleading way to describe that,
-and the paper says "three organisations" instead.
+### The per-organisation cap
+
+Documents are capped at **5 per organisation** in the two census strata, taking
+the earliest IDs within each organisation. Applied 2026-08-12, before any coding.
+
+This was chosen over capping by ID order, which was the rule originally written
+down. Checked against the widened frame, the ID rule would have taken the first
+15 of stratum C and produced **15 METR documents and nothing else**, and would
+have dropped Meta from stratum A entirely — cutting precisely the organisations
+added to fix the diversity problem. The per-organisation cap does the opposite:
+it removes METR's dominance of stratum C, from 15 of 26 documents to 5 of 15.
+
+The cap costs almost nothing that matters. Cluster count is **unchanged at 27**,
+because clusters are organisations and no organisation was removed. What falls is
+document count, and with it the interval width on the rates — which were
+underpowered at either size, because it is the 7 organisations that bind, not the
+50 or 65 documents.
+
+The 15 capped documents stay in `frame.csv` with status `capped`, so the record
+shows what was set aside and why.
 
 `frame.csv` carries a `cluster` column, and every rate is reported with
 organisation-clustered intervals and a *k*. Below about 10 clusters the interval
