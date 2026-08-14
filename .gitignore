@@ -35,3 +35,18 @@ contamination-disclosure.pdf
 REVIEW-RESPONSE.md
 NEXT-STEPS.md
 OSF-Instructions.md
+
+# ---------------------------------------------------------------------
+# Manuscript sources, deliberately UNTRACKED for the duration of the
+# double-blind review. The submitted version lives outside version control
+# at .private/Paper_Contamination_Disclosure/. Re-track at camera-ready.
+#
+# NOTE: untracking removes these from the index going forward. It does NOT
+# remove them from the existing history — earlier commits still contain the
+# full manuscript and the author block.
+# ---------------------------------------------------------------------
+main.tex
+references.bib
+main.bbl
+contamination-disclosure.bbl
+README-arxiv.txt
