@@ -50,3 +50,16 @@ references.bib
 main.bbl
 contamination-disclosure.bbl
 README-arxiv.txt
+
+# Anonymity check patterns. UNTRACKED ON PURPOSE: a tracked file listing the
+# strings that identify you is itself the leak it is meant to prevent. Copy
+# .anon-patterns.example to .anon-patterns and fill it in locally.
+.anon-patterns
+
+# Retired assets and working copies, kept outside the repo.
+.private/
+
+# Saved copies of the audit/state-of-play report. Working documents, not part
+# of the submission or the released artifact.
+Contamination Disclosure Audit.pdf
+*Audit*.pdf

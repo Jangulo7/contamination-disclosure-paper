@@ -1,0 +1,57 @@
+# Patterns for check-anonymity.sh -- one extended regex per line.
+#
+# COPY THIS TO .anon-patterns AND FILL IT IN. That file is gitignored, because a
+# tracked file listing the strings that identify you is itself the leak.
+#
+# Case-insensitive. Include every form a string can take: the surname alone, the
+# handle, the handle with digits, the email local part, the ORCID digits with and
+# without hyphens, and the institution in both languages.
+#
+# A line reading exactly
+#
+#     [review]
+#
+# splits the file in two. Patterns ABOVE it are hard failures: a hit is a leak
+# and the script exits non-zero. Patterns BELOW it are reported but do not fail,
+# for strings that are usually innocent in prose -- the word "Zenodo" in a
+# sentence about where to deposit is not a leak, but you still want to see every
+# place it occurs before you mint a DOI under your own name.
+#
+# Put anything that names a person, an account or an institution above the
+# marker. Put archive and platform names below it. A checker that always fails
+# gets ignored, and a checker that is ignored is worse than none.
+
+# --- people -------------------------------------------------------------
+# surname
+# firstname
+# surname-of-each-coauthor
+
+# --- accounts and hosts -------------------------------------------------
+# your-github-handle
+# your-github-handle[0-9]+
+# the public specification repository name
+
+# --- identifiers --------------------------------------------------------
+# [0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}   # any ORCID at all
+# your-student-or-staff-number
+# your-email-local-part
+
+# --- institutions -------------------------------------------------------
+# university name
+# university name in its other language
+# campus city, if it narrows to one group
+
+# --- things that leak the artifact's provenance -------------------------
+# a personal domain used in a figure footer
+# a lab or project name that appears in only one group's work
+
+# ========================================================================
+[review]
+# Below here: reported, but does not fail the check.
+# ========================================================================
+
+# --- archives that would carry your name if you deposit under it --------
+zenodo
+figshare
+osf\.io
+orcid
