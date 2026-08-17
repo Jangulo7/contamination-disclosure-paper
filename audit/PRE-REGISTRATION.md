@@ -257,8 +257,7 @@ Each deviation is recorded here with its date and reason. The codebook carries
 the same history in its own changelog; this table is the authoritative record of
 what changed relative to the frozen design.
 
-All of the entries below were made **before any document in the main pass was
-coded**. None is a response to a result.
+All of the entries below were made **before any document was coded**, pilot included. None is a response to a result.
 
 | Date | Deviation | Reason |
 |---|---|---|
