@@ -2,17 +2,20 @@
 """
 Per-coder coding order, and the test-retest draw.
 
-    python audit/order.py --coder JA
-    python audit/order.py --coder HE --retest
+    python audit/order.py --coder CD
+    python audit/order.py --coder IC --retest
 
 Why not just work down frame.csv: if both coders take the documents in the same
 order they are equally fresh on document 1 and equally tired on document 48, so
 their calibration drift correlates and inter-coder agreement comes out higher
 than it should. Independent orders decorrelate the drift.
 
-The order is derived from the coder's initials plus a fixed seed, so it is
+The order is derived from the coder's LABEL plus a fixed seed, so it is
 reproducible and can be regenerated if a sheet is lost, but is not something the
-coder chose.
+coder chose. The labels are roles, not initials: CD is the coder drawn from the
+design team, IC is the independent coder. Keeping them identity-free is what
+lets a third party regenerate either order without being told who coded what
+(CODEBOOK.md section 6).
 
 --retest prints the five documents to re-code at the very end, blind to the
 earlier codes, for intra-coder agreement.
@@ -43,7 +46,7 @@ def coder_seed(initials: str) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--coder", required=True, help="coder initials, e.g. JA")
+    ap.add_argument("--coder", required=True, help="coder label, e.g. CD (team coder) or IC (independent coder)")
     ap.add_argument("--frame", default=str(HERE / "frame.csv"))
     ap.add_argument("--retest", action="store_true",
                     help="print the 5 test-retest documents instead")
@@ -58,7 +61,9 @@ def main() -> int:
     rng = random.Random(coder_seed(a.coder))
 
     if a.pilot:
-        print(f"# Pilot set — the SAME 10 documents for both coders (codebook 5.2)")
+        print(f"# Pilot set — the SAME {len(PILOT)} documents for both coders (codebook 5.2)")
+        print(f"# These are EXCLUDED from the primary kappa: you will discuss every")
+        print(f"# disagreement on them, so agreement here measures the discussion.")
         for i, d in enumerate(PILOT, 1):
             r = by_id[d]
             print(f"{i:>3}. {d}  {r['title'][:60]}")

@@ -75,7 +75,8 @@ best-practice-anywhere, biases upward and is rejected.
 Eight variables per document — F1 strata, F2 elicitation budget, five
 contamination types, F4 regeneration — each on `2` reported / `1` partial / `0`
 absent, with `NA` for not-applicable. Operational definitions and worked examples:
-`CODEBOOK.md`, frozen at v1.0.
+`CODEBOOK.md`, frozen at v1.0 and since amended to v1.3 under the stated
+amendment procedure; every change is in that file's changelog and in §9 below.
 
 The codebook may be amended **once**, after the pilot and before the main pass,
 with the amendment recorded in its changelog and all pilot documents recoded.
@@ -87,16 +88,27 @@ the research framing and the statistical section removed. The coding rules are
 identical; the expected direction of the result is not disclosed to them.
 
 Each coder works in an independent randomised document order (`order.py`, seeded
-from their initials) so that calibration drift does not correlate across coders.
+from their coder label) so that calibration drift does not correlate across
+coders. *(Amended — see §9, 2026-08-17. As frozen this read "seeded from their
+initials".)*
 
-Two coders, independently, no discussion until both finish. Ten-document pilot,
-then reconciliation of the rules, then the remaining documents.
+Two coders, independently, no discussion until both finish. Nine-document pilot,
+then reconciliation of the rules, then the remaining documents. *(Amended — see
+§9, 2026-08-16. As frozen this read "Ten-document pilot"; the enumerated set
+`A01`, `B01`–`B04`, `C01`–`C04` has always been nine documents, so the figure
+was a miscount rather than a design change.)*
 
 Agreement is computed from the independent sheets **before** any reconciliation.
-Disclosure rates are computed from the reconciled sheet. Both are reported.
+Disclosure rates are computed from the reconciled sheet. Both are reported. The
+**primary** agreement statistic is computed on the main pass only: the pilot
+documents are discussed and recoded, so agreement on them is a property of that
+discussion rather than of the codebook. A pilot-inclusive figure is reported as
+a secondary. *(Clarified — see §9, 2026-08-16.)*
 
 Coder independence is a stated threat to validity: if both coders are authors of
-the taxonomy, the paper says so in its limitations.
+the taxonomy, the paper says so in its limitations. *(Strengthened to a
+requirement — see §9, 2026-08-16. As run, one coder is drawn from the design
+team and one is an independent researcher external to it who is not an author.)*
 
 ## 7. Analysis
 
@@ -241,8 +253,21 @@ are not touched.
 
 ## 9. Deviations
 
-None yet. Each deviation recorded here with its date and reason.
+Each deviation is recorded here with its date and reason. The codebook carries
+the same history in its own changelog; this table is the authoritative record of
+what changed relative to the frozen design.
+
+All of the entries below were made **before any document in the main pass was
+coded**. None is a response to a result.
 
 | Date | Deviation | Reason |
 |---|---|---|
-| — | — | — |
+| 2026-08-16 | Pilot count corrected from "ten documents" to **nine**. | Arithmetic. The enumerated pilot set `A01`, `B01`–`B04`, `C01`–`C04` is nine documents and always was; the frozen text miscounted it. No document was added or removed. |
+| 2026-08-16 | The **primary** weighted κ is computed on main-pass documents only, with a pilot-inclusive figure reported as a secondary. | The frozen design did not say which. Both coders discuss every pilot disagreement and recode those texts, so agreement there measures the calibration discussion. Fixing the rule before coding removes the choice; leaving it open would have let it be made after seeing both numbers. |
+| 2026-08-16 | Boundary monitoring added to the `t5` row as a codeable element, scored on **any of** the four Type 5 elements with the elements stated recorded in `notes`. | The taxonomy argues hardest for boundary monitoring, and an instrument that could not record it would not test the claim being made. Requiring all four would send almost every document to `0` and measure the state of the practice rather than the coders' agreement about it; recording the elements separately keeps the stricter reading recoverable from the released sheets. |
+| 2026-08-16 | Adjudication tie-break fixed: a third adjudicator where available, otherwise the cell defaults to the **lower** code. | The frozen design said to adjudicate but not how. Choosing the rule once the contested cells are known would let the disclosure rate be tuned; choosing it now cannot. |
+| 2026-08-16 | Expected bootstrap half-width of 0.15–0.20 stated in advance, and "powered for" replaced with **"sized for"**. | The design was never powered to separate adjacent agreement bands, and saying so before the interval is computed is worth more than conceding it afterwards. |
+| 2026-08-16 | Per-organisation disclosure rates reported descriptively rather than through cluster-bootstrap intervals. | At seven clusters, cluster-bootstrap intervals are badly downward-biased. A visible list of organisation-level rates is more honest than an interval that looks tighter than the design supports. |
+| 2026-08-16 | `evidence` and `codebook_version` columns added to the coding sheet; the sheet made authoritative for exclusions, with `exclusions.csv` generated from it by `score.py --write-exclusions`. | `evidence` lets a third party spot-check any non-zero code against its source, which is the property the specification demands of everyone else. Two hand-maintained copies of the exclusion list drift, and the drift is invisible until someone recomputes a denominator. |
+| 2026-08-16 | Coder independence changed from a preference to a **requirement**, and recorded as met. | A preference that might not be met is worth much less than a requirement that was. As run: one coder from the design team, one independent researcher external to it who took no part in designing the taxonomy or the codebook, and who is not an author. |
+| 2026-08-17 | Coder labels changed from initials to roles: `CD` (design-team coder) and `IC` (independent coder); sheets and `order.py` seeds use these. | Initials of a real person are identifying, both in a public release and in a double-blind submission. Role labels are identity-free, and because `order.py` seeds the document order from the label, a third party can now regenerate either coder's order without being told who coded what. Naming only: no coding rule, scale or analysis decision changed. |

@@ -52,6 +52,32 @@ underpowered at either size, because it is the 7 organisations that bind, not th
 The 15 capped documents stay in `frame.csv` with status `capped`, so the record
 shows what was set aside and why.
 
+#### The gaps in the document identifiers are the cap, not missing data
+
+Because the cap was applied *after* the window was enumerated, the drawn set has
+holes in its ID sequence. A reader who opens `coding-sheet.csv` and sees `A05`
+followed by `A10` should read that as a document set aside by a stated rule, not
+as attrition, a coding failure, or a document quietly dropped after someone saw
+what was in it. Every one of the 15 is listed below and every one is still in
+`frame.csv`:
+
+| Missing IDs | Organisation | Why |
+|---|---|---|
+| `A06`–`A09` | Anthropic | 9 system cards in the stratum A window; the 5 earliest are drawn, these 4 are capped |
+| `C06`–`C15` | METR | 15 third-party evaluations in the stratum C window; the 5 earliest are drawn, these 10 are capped |
+| `C21` | UK AISI | 6 evaluations in the window; the 5 earliest are drawn, this one is capped |
+
+Nothing else is absent. Stratum B is contiguous (`B01`–`B20`) because the cap
+does not apply to it: stratum B clusters on the *paper*, not the organisation,
+and it is sampled rather than censused, so an excluded document is replaced from
+the `BR01`–`BR12` reserve rather than leaving a hole.
+
+To regenerate the list rather than trust this table:
+
+```bash
+python3 -c "import csv; print(sorted(r['id'] for r in csv.DictReader(open('audit/frame.csv')) if r['status']=='capped'))"
+```
+
 `frame.csv` carries a `cluster` column, and every rate is reported with
 organisation-clustered intervals and a *k*. Below about 10 clusters the interval
 is indicative rather than precise — which applies to both census strata.

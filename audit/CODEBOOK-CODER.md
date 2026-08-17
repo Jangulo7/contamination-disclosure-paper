@@ -182,13 +182,14 @@ control, and `0` means the type is not addressed.
 | `t2` | Derivative | attention to whether the *source material* the items were built from is public, provenance tracking, or item construction requiring integration across sources |
 | `t3` | Temporal | a training cutoff is stated **and** related to item dates; temporal splitting; items constructed from post-cutoff events |
 | `t4` | Distributional | perturbation/paraphrase robustness, score distributions across item variants, template or distributional novelty controls |
-| `t5` | Acquired | network access during evaluation stated, environment sanitisation, or transcript/trajectory review for retrieval of answers |
+| `t5` | Acquired | any of: network access during evaluation stated, environment sanitisation, transcript/trajectory review for retrieval of answers, or **boundary monitoring** — egress watched at the network edge, canaries/honeytokens placed in the answer key, or the isolation boundary verified intact after the run |
 
 > **t1 `2`:** "We ran 13-gram overlap against the pretraining corpus and removed 41 items."
 > **t1 `1`:** "Contamination is a risk for this benchmark." (named, uncontrolled)
 > **t1 `0`:** contamination never mentioned.
 > **t3 `1`:** a cutoff date is stated but never related to the items — very common; do not upgrade it to `2`.
 > **t5 `2`:** "The agent had no network access during scoring; trajectories were reviewed for tool calls to dataset hosts."
+> **t5 boundary monitoring** is coded within `t5`, not as a separate variable, but record in `notes` which of the four elements the document actually stated. The taxonomy treats boundary monitoring as the distinguishing element of the Type 5 field — at level 5c the boundary is what fails and the system's own trace is no witness that it held — so a `t5` code that rests only on transcript review should say so in `notes`.
 
 **Edge rule — the most important one.** A generic sentence such as "we took care
 to avoid contamination" with no mechanism is `1` on `t1` and `0` on `t2`–`t5`. Do
@@ -242,28 +243,55 @@ would be.
 ## 5. Procedure
 
 1. Both coders read this document in full before opening any paper.
-2. **Pilot:** each codes documents `A01`, `B01`–`B04`, `C01`–`C04` (10) alone.
-   Compare, discuss every disagreement, amend this codebook where a rule was
-   genuinely ambiguous. Bump the version. Recode all ten under the new version.
+2. **Pilot:** each codes documents `A01`, `B01`–`B04`, `C01`–`C04` — **nine
+   documents** — alone. Compare, discuss every disagreement, amend this codebook
+   where a rule was genuinely ambiguous. Bump the version. Recode all nine under
+   the new version.
+
+   **These nine do not enter the primary agreement statistic.** Both coders have
+   been explicitly calibrated on those exact texts, so agreement on them measures
+   the discussion rather than the codebook. The primary linear-weighted κ is
+   computed on the **main-pass documents only** (*n* ≈ 41); a pilot-inclusive
+   figure is reported as a secondary, labelled as such.
 3. **Main pass:** each codes the remaining documents alone. No discussion until
    both are finished. Do not look at the other coder's sheet.
 
    **Work in your own randomised order.** `order.py` prints a per-coder document
-   order from a stated seed. Coding in frame order means both coders hit the same
+   order from the seed fixed here: **`seed = 20260812`**. The number lives in the
+   manual, in `order.py` and in the paper, and all three must carry the same
+   value — a seed announced after the fact is not a registration. Coding in frame order means both coders hit the same
    documents while equally fresh and equally tired, so their calibration drift
    correlates and agreement is inflated. Independent orders decorrelate it.
 
    **Test–retest.** At the very end, each coder re-codes five documents drawn by
    the same script, without looking at their earlier sheet, saved as
-   `codes-<initials>-retest.csv`. This yields *intra*-coder agreement: a ceiling
+   `codes-CD-retest.csv` and `codes-IC-retest.csv`. This yields *intra*-coder agreement: a ceiling
    against which the inter-coder number can be read. If one coder cannot even
    agree with themselves, the inter-coder figure was never the binding
    constraint. Costs about an hour.
 4. Adjudicate disagreements only *after* the agreement statistics are computed
    from the independent codes. Report the pre-adjudication statistics; use the
    adjudicated codes for the disclosure rates.
+
+   **Tie-break, fixed in advance.** Where a third adjudicator is available, they
+   resolve the cell. Where one is not, an unresolved cell defaults to the
+   **lower** code. Choosing this rule after seeing which cells are contested
+   would let the disclosure rate be tuned; choosing it now cannot.
 5. Fill one row per document in `coding-sheet.csv`, one sheet per coder, saved as
-   `codes-<initials>.csv`.
+   `codes-CD.csv` and `codes-IC.csv`.
+
+   **Two columns beyond the codes.** `evidence` carries a locator — section,
+   page, or a short quoted phrase — for **every non-zero code**, so that
+   adjudication is auditable and a third party can spot-check the audit. That is
+   the property the specification demands of everyone else, and it would be
+   awkward to omit here. `codebook_version` carries the version each row was
+   coded under, since the pilot is expected to bump the version mid-study.
+
+   **Exclusions live in one place.** `coding-sheet.csv` is authoritative for
+   `excluded` and `exclusion_reason`. `exclusions.csv` is a *generated* artifact,
+   rebuilt from the sheet by `score.py`, and must not be hand-edited: two
+   maintained copies of the same fact drift, and the drift is invisible until
+   someone recomputes a denominator.
 
 **Time.** Roughly 8–12 minutes per document once calibrated. 50 documents ≈ 7–10
 hours per coder.
@@ -282,10 +310,24 @@ sandbox, transcript, trajectory*.
 Inter-coder agreement is only evidence about the taxonomy if the coders are
 genuinely independent. Two consequences:
 
-- Prefer that **at least one coder did not design the taxonomy.** The designer
-  agreeing with themselves is the weakest possible test of usability. If both
-  coders are authors, say so plainly in the limitations — it is a real threat to
-  validity and stating it costs less than being caught not stating it.
+- **At least one coder must not have designed the taxonomy.** The designer
+  agreeing with themselves is the weakest possible test of usability. This study
+  meets the requirement: of the two coders, one is a member of the research team
+  and one is an independent coder external to it. Had it not been met, the
+  limitations section would have had to say so plainly.
+- **The independent coder is briefed by the manual and nothing else.** They work
+  from `CODEBOOK-CODER.md`, generated mechanically from this codebook by
+  `make-coder-manual.py`, plus the documents annex. No verbal calibration, no
+  worked examples beyond those in the manual, no discussion of the hypothesis.
+  Anything a coder needs to know belongs in the manual, where a reader can see
+  it; anything said out loud is invisible to everyone assessing the result.
+- **Coder identity is not data.** Sheets are saved as `codes-CD.csv` and
+  `codes-IC.csv` — role labels, not initials or names. `CD` is the coder drawn
+  from the design team; `IC` is the independent coder. Nothing about either is
+  recorded beyond the codes, timings and notes they enter, and the mapping from
+  label to person is not part of the released materials. The labels are also
+  what `order.py` seeds each coder's document order from, so the randomisation
+  is reproducible by anyone without knowing who either coder is.
 - No machine pre-annotation may be used as, or shown to, either coder before
   their independent pass. If a tool is used to locate candidate passages, it must
   be used identically by both, and disclosed.
@@ -319,8 +361,16 @@ The consequence is uncomfortable and must be reported rather than smoothed over:
 draws on only 3 or 4. Rates are therefore reported as *"k organisations, n
 documents"*, never as a bare *n*, with organisation-clustered intervals.
 
+**The document-ID gaps are not missing data.** `A06`–`A09`, `C06`–`C15` and `C21`
+are absent because a per-organisation cap was applied after the window was
+enumerated. This is recorded in `SAMPLING-FRAME.md`; a reader of the released
+frame will otherwise read the gaps as attrition.
+
 ## 8. Changelog
 
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 2026-08-12 | Initial version, frozen before pilot. |
+| 1.1 | 2026-08-16 | Pre-pilot amendments, made before any document was coded. Corrected the pilot count from "10" to nine (`A01`, `B01`–`B04`, `C01`–`C04`). Added boundary monitoring to the `t5` row, so the element the taxonomy argues hardest for is codeable. Stated that the primary κ excludes pilot documents, with a pilot-inclusive secondary. Stated the `order.py` seed (`20260812`) in the manual. Added the adjudication tie-break (third adjudicator, else default to the lower code). Added the expected bootstrap half-width (0.15–0.20) and changed "powered for" to "sized for". Specified descriptive per-organisation rates instead of cluster-bootstrap intervals at seven clusters. Added `evidence` and `codebook_version` columns to the coding sheet and made the sheet authoritative for exclusions. Documented the document-ID gaps. Reworded "frozen" as registration-with-amendment-procedure. |
+| 1.2 | 2026-08-16 | Coder independence stated as a requirement rather than a preference, and recorded as met: one team coder, one independent coder external to the team. Added the briefing rule (the independent coder works from the generated coder manual and nothing else). Coder sheets renamed from initials to `coder1`/`coder2`, so that no coder identity enters the released materials. `exclusions.csv` marked as generated by `score.py` and not to be hand-edited. |
+| 1.3 | 2026-08-17 | Post-pilot amendment. Coder sheet labels changed from `coder1`/`coder2` to `CD` (the coder drawn from the design team) and `IC` (the independent coder), so that the label is self-documenting and identity-free, and so that the `order.py` seed — which is derived from the label — is reproducible by a third party. Naming only: no coding rule, scale, edge rule or analysis decision changed, and no code assigned under 1.2 is affected. The paper's Appendix A was corrected in the same pass to state the `t5` threshold as **any of** the four Type 5 elements rather than all four, matching section 4 of this manual; the manual is authoritative and was not changed. Documented the document-ID gaps in `SAMPLING-FRAME.md` itself rather than only pointing at it, and made `score.py` generate `exclusions.csv` from the coding sheets rather than reading it as a hand-maintained input. |

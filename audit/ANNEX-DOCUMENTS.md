@@ -1,12 +1,12 @@
 # Annex — the 50 documents
 
-Every document in the frame, with a live link. Verified 2026-08-12: **77 of 77 URLs returned HTTP 200**, including the 12 reserves.
+Every document in the frame, with a live link. Verified 2026-08-12: all 77 URLs returned HTTP 200, including the 12 reserves.
 
 **This is a reference list, not your work order.** Code in your own randomised
 order so that your fatigue does not correlate with the other coder's:
 
 ```bash
-python audit/order.py --coder JA --markdown > worklist-JA.md
+python audit/order.py --coder CD --markdown > worklist-CD.md
 ```
 
 That produces the same links as a tick-list in your own sequence. Do the shared

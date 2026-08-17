@@ -95,7 +95,7 @@ def main() -> int:
         "**This is a reference list, not your work order.** Code in your own randomised",
         "order so that your fatigue does not correlate with the other coder's:", "",
         "```bash",
-        "python audit/order.py --coder JA --markdown > worklist-JA.md",
+        "python audit/order.py --coder CD --markdown > worklist-CD.md",
         "```", "",
         "That produces the same links as a tick-list in your own sequence. Do the shared",
         "pilot first (`--pilot`).", "",

@@ -2,8 +2,8 @@
 """
 Score the disclosure audit.
 
-    python audit/score.py --coder codes-JA.csv --coder codes-HE.csv
-    python audit/score.py --coder codes-JA.csv --coder codes-HE.csv \
+    python audit/score.py --coder codes-CD.csv --coder codes-IC.csv
+    python audit/score.py --coder codes-CD.csv --coder codes-IC.csv \
                           --adjudicated codes-final.csv --latex
 
 Emits, per field and per contamination type:
@@ -24,6 +24,18 @@ that it is unusable. See CODEBOOK.md section 7.
 Agreement is computed from the two INDEPENDENT sheets. Disclosure rates are
 computed from the adjudicated sheet when one is supplied, per the protocol:
 adjudicate only after agreement has been measured.
+
+The PRIMARY agreement statistic excludes the nine pilot documents (CODEBOOK.md
+section 5.2): both coders discussed every disagreement on those texts and
+recoded them, so agreement there is a property of the discussion rather than of
+the manual. A pilot-inclusive figure is printed alongside as a secondary, which
+is what the registration commits to reporting. Pass --pilot-inclusive to make
+the pilot-inclusive figure the primary one; do not do that quietly.
+
+This script is also what writes `exclusions.csv`. The coding sheets are the
+authoritative record of which documents were dropped and why; maintaining a
+second copy by hand lets the two drift, and the drift is invisible until someone
+recomputes a denominator. Run with --write-exclusions after coding.
 
 Standard library only. Run --selftest to verify the statistics before trusting
 them on real data.
@@ -50,6 +62,11 @@ FIELDS = [
     ("f4_regeneration", "F4 Regeneration"),
 ]
 VALID = {"0", "1", "2", "NA"}
+
+# The nine calibration-pilot documents (CODEBOOK.md section 5.2). Kept identical
+# to PILOT in order.py -- if these two lists ever diverge, the primary kappa is
+# computed over a different set than the manual says it is.
+PILOT = ["A01", "B01", "B02", "B03", "B04", "C01", "C02", "C03", "C04"]
 
 
 # --------------------------------------------------------------------------
@@ -250,6 +267,57 @@ def load_codes(path: Path) -> dict[str, dict[str, str]]:
     return out
 
 
+def load_exclusions(path: Path) -> list[dict[str, str]]:
+    """Exclusions as recorded in a coder's sheet.
+
+    The sheet is authoritative (CODEBOOK.md section 2). exclusions.csv is
+    derived from it by --write-exclusions, never edited by hand.
+    """
+    out = []
+    with path.open(encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            doc = (row.get("doc_id") or "").strip()
+            if not doc:
+                continue
+            if (row.get("excluded") or "").strip().lower() in {"1", "y", "yes", "true"}:
+                out.append({
+                    "doc_id": doc,
+                    "coder": (row.get("coder") or "").strip(),
+                    "reason": (row.get("exclusion_reason") or "").strip(),
+                    "replaced_by": "",
+                })
+    return out
+
+
+def write_exclusions(sheets: list[tuple[str, Path]], dest: Path) -> int:
+    """Regenerate exclusions.csv from the coding sheets.
+
+    A document excluded by one coder and not the other is a disagreement about
+    inclusion, which is a reportable result rather than something to resolve
+    silently -- so both rows are written and the divergence is flagged.
+    """
+    rows: list[dict[str, str]] = []
+    for label, path in sheets:
+        for r in load_exclusions(path):
+            r["coder"] = r["coder"] or label
+            rows.append(r)
+    rows.sort(key=lambda r: (r["doc_id"], r["coder"]))
+
+    by_doc = defaultdict(set)
+    for r in rows:
+        by_doc[r["doc_id"]].add(r["coder"])
+    split = [d for d, cs in by_doc.items() if len(cs) < len(sheets)]
+
+    with dest.open("w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=["doc_id", "coder", "reason", "replaced_by"])
+        w.writeheader()
+        w.writerows(rows)
+    print(f"wrote {dest} — {len(rows)} exclusion row(s) over {len(by_doc)} document(s)")
+    if split:
+        print(f"!! excluded by one coder only, reconcile before reporting: {sorted(split)}")
+    return len(rows)
+
+
 def load_frame(path: Path) -> tuple[dict[str, str], dict[str, str]]:
     """Returns (stratum by doc id, cluster by doc id)."""
     if not path.is_file():
@@ -337,6 +405,11 @@ def main(argv=None) -> int:
                     help="reconciled codes, used for disclosure rates")
     ap.add_argument("--frame", default=str(Path(__file__).parent / "frame.csv"))
     ap.add_argument("--latex", action="store_true", help="also emit LaTeX tables")
+    ap.add_argument("--pilot-inclusive", action="store_true",
+                    help="report the pilot-inclusive kappa as PRIMARY (the "
+                         "registration makes it a secondary; say so if you use it)")
+    ap.add_argument("--write-exclusions", action="store_true",
+                    help="regenerate exclusions.csv from the coding sheets")
     ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args(argv)
 
@@ -366,12 +439,30 @@ def main(argv=None) -> int:
         print(f"!! coded by one coder only — excluded from agreement: "
               f"{paths[0].name}: {only_a or 'none'}; {paths[1].name}: {only_b or 'none'}\n")
 
+    if args.write_exclusions:
+        write_exclusions(list(zip(("coder1", "coder2"), paths)),
+                         Path(args.frame).parent / "exclusions.csv")
+        print()
+
+    # PRIMARY = main pass only. Both coders discussed every disagreement on the
+    # nine pilot documents and recoded them, so agreement there is a property of
+    # the discussion rather than of the manual (CODEBOOK.md section 5.2).
+    main_a = {d: v for d, v in a.items() if d not in PILOT}
+    main_b = {d: v for d, v in b.items() if d not in PILOT}
+    if args.pilot_inclusive:
+        primary, secondary = (a, b), (main_a, main_b)
+        plabel, slabel = "PILOT-INCLUSIVE", "main pass only"
+    else:
+        primary, secondary = (main_a, main_b), (a, b)
+        plabel, slabel = "main pass, pilot excluded", "pilot-inclusive"
+
     print("=" * 78)
-    print(f"INTER-CODER AGREEMENT  ({len(set(a) & set(b))} documents coded by both)")
+    print(f"INTER-CODER AGREEMENT — PRIMARY ({plabel}; "
+          f"{len(set(primary[0]) & set(primary[1]))} documents coded by both)")
     print("=" * 78)
     print(f"{'field':<26}{'n':>4}{'raw':>7}{'kw':>7}{'95% CI':>16}"
           f"{'k':>7}{'AC1':>7}{'PABAK':>7}   note")
-    for r in agreement_table(a, b):
+    for r in agreement_table(*primary):
         ci = f"[{r['ci'][0]:.2f}, {r['ci'][1]:.2f}]" if r["ci"] else "n/a"
         print(f"{r['field']:<26}{r['n']:>4}{fmt(r['raw'],2):>7}{fmt(r['kw'],2):>7}{ci:>16}"
               f"{fmt(r['kappa'],2):>7}{fmt(r['ac1'],2):>7}{fmt(r['pabak'],2):>7}   {r['note']}")
@@ -379,6 +470,17 @@ def main(argv=None) -> int:
     print("  k  = unweighted kappa, for readers who expect it")
     print("  Report all columns. Where kappa and AC1 diverge the note names the")
     print("  prevalence driving it (CODEBOOK.md section 7).")
+    if args.pilot_inclusive:
+        print("\n  !! --pilot-inclusive: the registration makes this the SECONDARY")
+        print("     figure. If you report it as primary, say so in the paper.")
+
+    print("\n" + "-" * 78)
+    print(f"SECONDARY ({slabel}) — report alongside, never instead")
+    print("-" * 78)
+    print(f"{'field':<26}{'n':>4}{'raw':>7}{'kw':>7}{'95% CI':>16}")
+    for r in agreement_table(*secondary):
+        ci = f"[{r['ci'][0]:.2f}, {r['ci'][1]:.2f}]" if r["ci"] else "n/a"
+        print(f"{r['field']:<26}{r['n']:>4}{fmt(r['raw'],2):>7}{fmt(r['kw'],2):>7}{ci:>16}")
 
     src = load_codes(Path(args.adjudicated)) if args.adjudicated else a
     if not args.adjudicated:

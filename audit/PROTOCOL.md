@@ -17,12 +17,21 @@ people. Over 8 working days that is under two hours a day each.
 
 ### Step 0 · Decide who codes — 15 minutes
 
-Two people. **Ideally at least one of them did not invent the taxonomy.** If the
-person who designed the categories is the only one testing whether the categories
-are usable, the test proves very little. If both coders are authors, that is
-fine, but we must say so in the paper.
+Two people, and **at least one of them must not have invented the taxonomy.**
+This is a requirement, not a preference: if the person who designed the
+categories is the only one testing whether the categories are usable, the test
+proves very little. As run, coder `CD` is drawn from the design team and coder
+`IC` is an independent researcher external to it who took no part in designing
+the taxonomy or this manual, and who is not an author. If you cannot meet the
+split, the paper must say so in the sentence that reports the agreement figure.
 
-Write down who the two coders are. Do not change this later.
+Coders are referred to by label throughout — `CD` and `IC` — and sheets are
+saved under those labels, never under initials or names. The mapping from label
+to person is not part of the released materials, and `order.py` seeds each
+coder's document order from the label, so a third party can regenerate either
+order without being told who coded what.
+
+Write down which person holds which label. Do not change this later.
 
 ### Step 1 · The document list is closed — 0 hours
 
@@ -66,12 +75,16 @@ two coders disagree. Fifteen minutes there saves several later.
 
 ## The pilot
 
-### Step 3 · Code 10 documents each, separately — 2 hours each
+### Step 3 · Code 9 documents each, separately — 2 hours each
 
-Documents `A01`, `B01`–`B04`, `C01`–`C04`. Links:
+The nine pilot documents are `A01`, `B01`–`B04`, `C01`–`C04`. They are
+**excluded from the primary kappa**: in Step 4 you discuss every disagreement on
+them and recode them, so agreement here is a property of that discussion rather
+than of the manual. `score.py` drops them automatically and prints a
+pilot-inclusive figure as a secondary. Links:
 
 ```bash
-python audit/order.py --coder JA --pilot
+python audit/order.py --coder CD --pilot
 ```
 
 Every document in the study, with links, is listed in
@@ -98,9 +111,10 @@ template. One row per document.
 **Run the script on the pilot before you reconcile.** Ten documents coded
 independently already yield a weighted kappa, and one sentence carrying that
 number moves the paper from "instrument released" to "instrument shown to work".
-There is a commented placeholder in `main.tex` immediately after the limitations
-paragraph; fill it in from the script output. Report it as a calibration result on
-ten documents, not as the study.
+Every number in the paper comes from the macro block at the top of `main.tex`
+(the `\r...` commands): fill those from the script output and the results
+sections follow. Report a pilot figure as a calibration result on nine
+documents, never as the study.
 
 Put the two sheets side by side. For every disagreement, ask: *was the rule
 unclear, or did one of us make a mistake?*
@@ -116,14 +130,14 @@ rule after all 65 are done.
 
 ## The main pass
 
-### Step 5 · Code the remaining 40 documents each, separately — 6 to 8 hours each
+### Step 5 · Code the remaining 41 documents each, separately — 6 to 8 hours each
 
 Same rules. Alone. No discussion until you are both completely finished.
 
 **Work in your own order.** Generate a tick-list with links and keep it open:
 
 ```bash
-python audit/order.py --coder JA --markdown > worklist-JA.md
+python audit/order.py --coder CD --markdown > worklist-CD.md
 ```
 
 Not frame order. If you both work top-to-bottom you are both fresh on the same
@@ -135,9 +149,20 @@ Budget 8–12 minutes per document. Some system cards are long; you are not read
 them for comprehension, you are searching them for six specific things.
 
 If a document turns out not to report any score at all, mark `excluded` and write
-the reason in `exclusions.csv`. If it is from stratum B, replace it with the next
-unused document from the reserve list (`BR01`, `BR02`, …) **in order**. Never pick
-a replacement yourself.
+the reason in the `exclusion_reason` column **of your own coding sheet**. Your
+sheet is the authoritative record; `exclusions.csv` is generated from the two
+sheets by `score.py --write-exclusions` and must never be edited by hand. Two
+hand-maintained copies of the same fact drift, and the drift stays invisible
+until someone recomputes a denominator.
+
+If the excluded document is from stratum B, replace it with the next unused
+document from the reserve list (`BR01`, `BR02`, …) **in order**. Never pick a
+replacement yourself. Strata A and C are a census: an excluded document there is
+simply dropped and the denominator shrinks.
+
+A document excluded by one coder and not the other is a disagreement about
+inclusion. `score.py` flags it rather than resolving it; settle it in Step 7
+adjudication and record the outcome.
 
 Suggested pace: 8 documents a day each, five days.
 
@@ -146,10 +171,10 @@ Suggested pace: 8 documents a day each, five days.
 When you have finished everything else, re-code five documents:
 
 ```bash
-python audit/order.py --coder JA --retest
+python audit/order.py --coder CD --retest
 ```
 
-Do not look at your earlier sheet. Save as `codes-JA-retest.csv`.
+Do not look at your earlier sheet. Save as `codes-CD-retest.csv`.
 
 This measures whether you agree with *yourself*. It gives a ceiling: if you and
 the other coder agree 80% of the time but each of you only agrees with yourself
@@ -159,13 +184,20 @@ are doing better than the raw number suggests.
 ### Step 6 · Run the numbers — 15 minutes
 
 ```bash
-python audit/score.py --coder codes-JA.csv --coder codes-HE.csv
+python audit/score.py --coder codes-CD.csv --coder codes-IC.csv --write-exclusions
 ```
 
 This prints, for each of the eight categories, how often you agreed and several
 agreement scores, the headline one being linear-weighted kappa with a bootstrap
 interval. It also flags any blank or invalid cells, so run it once early
 just to check your sheets are well-formed.
+
+Two things it does that are easy to miss. It reports the **primary** figure on
+the main pass alone and the pilot-inclusive figure as a clearly labelled
+secondary, because the pilot documents were discussed and recoded — report both,
+and never quote the secondary as the headline. And `--write-exclusions`
+regenerates `exclusions.csv` from your two sheets, which is the only way that
+file should ever be written.
 
 **Do this before you reconcile anything.** The agreement number only means
 something if it comes from two genuinely independent sheets. Save the output.
@@ -176,7 +208,7 @@ Now go through the disagreements and agree a final answer for each. Save it as
 `codes-final.csv`.
 
 ```bash
-python audit/score.py --coder codes-JA.csv --coder codes-HE.csv \
+python audit/score.py --coder codes-CD.csv --coder codes-IC.csv \
                       --adjudicated codes-final.csv --latex
 ```
 
@@ -392,7 +424,7 @@ Today is 12 August; the deadline is 29 August.
 | Days | What | Hours each |
 |---|---|---|
 | 13 Aug | Steps 0–2: pick coders, settle the document list, deposit the frozen manual, read the codebook | 2.5 |
-| 14 Aug | Step 3: pilot, 10 documents | 2 |
+| 14 Aug | Step 3: pilot, 9 documents | 2 |
 | 15 Aug | Step 4: compare, fix rules, recode the pilot | 1 |
 | 18–22 Aug | Step 5: main pass, 8 documents a day | 1.5/day |
 | 24 Aug | Step 5b: test–retest, 5 documents | 1 |
