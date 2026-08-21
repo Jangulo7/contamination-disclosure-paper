@@ -278,6 +278,40 @@ def main() -> int:
         print(f"wrote {d.relative_to(HERE.parent)}/  "
               f"({len(wl)} main-pass + {len(order.PILOT)} pilot, codebook {version})")
 
+    # Provenance. The kit is a build product and is deliberately not tracked --
+    # every byte of it derives from tracked files, so a tracked copy would add
+    # no information and would invite someone editing the copy instead of the
+    # source. But "regenerable from the tracked files" is only a useful claim if
+    # you can say WHICH VERSION of them. So print the commit and the hashes;
+    # paste them into the record when you send the packs. They are printed
+    # rather than written into the kit, because embedding a commit hash would
+    # make the output differ every commit and destroy the determinism that makes
+    # this argument work in the first place.
+    import hashlib
+    import subprocess
+    try:
+        commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=HERE.parent,
+                                capture_output=True, text=True,
+                                check=True).stdout.strip()
+        dirty = subprocess.run(["git", "status", "--porcelain"], cwd=HERE.parent,
+                               capture_output=True, text=True,
+                               check=True).stdout.strip()
+    except Exception:
+        commit, dirty = "unknown (not a git checkout)", ""
+
+    print("\n" + "-" * 68)
+    print("PROVENANCE — record this alongside the date you sent the packs")
+    print("-" * 68)
+    print(f"  generated from commit  {commit}")
+    if dirty:
+        print("  !! WORKING TREE NOT CLEAN — the packs do not correspond to any")
+        print("     commit. Commit first, then regenerate, or the record of what")
+        print("     the coders received cannot be reconstructed.")
+    for coder in CODERS:
+        for f in sorted((OUT / coder).iterdir()):
+            h = hashlib.sha256(f.read_bytes()).hexdigest()[:16]
+            print(f"  {h}  {f.relative_to(HERE.parent)}")
+    print("-" * 68)
     print("\nSend each coder their own folder and nothing else.")
     print("Do NOT send CODEBOOK.md, PRE-REGISTRATION.md or PROTOCOL.md.")
     return 0
