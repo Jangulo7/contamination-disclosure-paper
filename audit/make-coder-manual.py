@@ -221,32 +221,153 @@ def build_cheatsheet(text: str) -> str:
         out.append(f"> {e}")
     out.append("")
 
-    # F3: five types, from the codebook's own table
+    # F3: five types. The NORMATIVE "2 when" text is pulled from the codebook's
+    # own table so it cannot drift. The teaching around it -- the plain-terms
+    # line, the picture, the search strings, the illustrations -- is authored
+    # here. It explains the rules; it never adds one. Where teaching and rule
+    # could ever seem to differ, section 4 governs, and the manual says so.
     rows = re.findall(r"^\| `(t[1-5])` \| (\w+) \| (.+?) \|$", text, re.M)
     if len(rows) != 5:
         raise SystemExit(f"!! expected 5 contamination types, found {len(rows)}")
+
+    TEACH = {
+        "t1": dict(
+            plain="The test questions themselves — with their answers — were "
+                  "already sitting somewhere the system could have read.",
+            picture="A benchmark is published as one file with questions and "
+                    "answers together. It gets copied to a dataset site, quoted "
+                    "in tutorials, and swept up in a later web crawl. The model "
+                    "may simply remember it.",
+            find="`decontaminat` · `contaminat` · `n-gram` · `overlap` · "
+                 "`canary` · `held-out` · `dedup` · `leak`",
+            two='"We ran 13-gram overlap against the pretraining corpus and '
+                'removed 41 items."',
+            one='"Contamination is a risk for this benchmark." '
+                "— named, but nothing was done",
+            zero="the word contamination never appears"),
+        "t2": dict(
+            plain="The test itself never leaked, but the material it was "
+                  "*built from* was public.",
+            picture="Curators write exam questions from published medical case "
+                    "reports. The questions are new and private; every case "
+                    "report they came from is in the crawl.",
+            find="`source` · `provenance` · `derived from` · `built from` · "
+                 "`underlying` · `corpus`",
+            two='"Items were built from case reports published before 2019; we '
+                'checked which of those reports appear in common pretraining '
+                'corpora."',
+            one='"Some of the underlying literature may be in training data."',
+            zero="nothing about where the items came from"),
+        "t3": dict(
+            plain="The system knows what happened *after* the moment the "
+                  "question is asking about — so recall is being scored as "
+                  "prediction.",
+            picture="A question asks which of several candidate answers was "
+                    "correct as of 2022. The answer was settled in 2024. The "
+                    "model's training runs to 2025, so it does not need to "
+                    "reason — it can remember.",
+            find="`cutoff` · `knowledge cutoff` · `training data up to` · "
+                 "`temporal` · `forecast` · `as of`",
+            two='"All items derive from events occurring after the stated '
+                'training cutoff of March 2025."',
+            one='"The model\'s training cutoff is March 2025." '
+                "— stated, but never connected to when the items are about. "
+                "**Very common. Do not upgrade it to `2`.**",
+            zero="no cutoff, no dates, nothing"),
+        "t4": dict(
+            plain="Every question is genuinely new, but they are all built to "
+                  "the same recipe — and the system can key on the recipe "
+                  "instead of doing the task.",
+            picture="Fresh word problems, never published. Rename the people "
+                    "and change the numbers and the score drops. Nothing "
+                    "leaked: the item is new, the template is not.",
+            find="`perturb` · `paraphrase` · `robustness` · `variant` · "
+                 "`template` · `symbolic` · `renamed`",
+            two='"We report scores on the original items and on paraphrased '
+                'variants; the gap is 3 points."',
+            one='"Models may have seen similar problems during training."',
+            zero="only one set of items, no variants, nothing said"),
+        "t5": dict(
+            plain="The system went and *got* the answers during the test — by "
+                  "searching, using a tool, or reading the files around it.",
+            picture="An agent doing a coding task can run commands. It searches "
+                    "the web, finds the benchmark hosted with its answer key, "
+                    "and reads it. Nothing leaked beforehand; it reached out "
+                    "during the run.",
+            find="`network` · `internet` · `sandbox` · `isolat` · `air-gap` · "
+                 "`transcript` · `trajectory` · `tool`",
+            two='"The agent had no network access during scoring; trajectories '
+                'were reviewed for tool calls to dataset hosts."',
+            one='"The evaluation environment was restricted." '
+                "— restricted how? no mechanism given",
+            zero="nothing about what the system could reach"),
+    }
+
     out.append("### `t1`–`t5` — F3 Contamination controls\n")
-    out.append("**Did the document say it did anything about this kind of "
-               "contamination, and say what?**\n")
-    out.append("Answer all five, separately. For every one of them: "
-               "**`2`** = a control is stated *and* what it was; "
-               "**`1`** = contamination is acknowledged but no specific control; "
-               "**`0`** = not addressed.\n")
-    out.append("| Column | Type | `2` when the document states … |")
-    out.append("|---|---|---|")
-    for tag, name, when in rows:
-        out.append(f"| `{tag}_{name.lower()}` | {name} | {when} |")
-    tex = [" ".join(l.split()) for l in
-           re.findall(r"^> (\*\*t[1-5] `?[012]`?.+)$", text, re.M)]
-    if tex:
-        out.append("\n*Examples:*\n")
-        for e in tex:
-            out.append(f"> {e}")
-    out.append("\n> **The mistake to avoid.** A vague sentence like *\"we took "
-               "care to avoid contamination\"* with no mechanism is `1` on `t1` "
-               "and `0` on `t2`–`t5`. Do not spread one vague claim across all "
-               "five — that is the single easiest way for two coders to "
-               "diverge. See §4.\n")
+    out.append("**These five are the hardest part of the job.** Everything "
+               "below is here to make them quick. The rules themselves are in "
+               "§4; if this summary and §4 ever seem to disagree, §4 is what "
+               "counts.\n")
+    out.append("#### The one idea behind all five\n")
+    out.append("A benchmark score is only meaningful if the system had to "
+               "*work out* the answers. **Contamination** is anything that let "
+               "it get them another way — because it had already seen them, or "
+               "because it could go and fetch them. The five types are five "
+               "different routes to the same problem.\n")
+    out.append("> **You are not judging whether contamination happened.** You "
+               "could not, from the document alone, and nobody is asking you "
+               "to. You are recording **whether the document said it did "
+               "anything about the risk, and whether it said what.**\n")
+    out.append("#### The same three questions decide all five\n")
+    out.append("Ask them in order. Stop at the first *no*.\n")
+    out.append("```\n"
+               "1. Does the document mention this kind of risk at all?\n"
+               "      no  ->  0\n"
+               "      yes ->  keep going\n"
+               "\n"
+               "2. Does it say it actually DID something about it?\n"
+               "      no  ->  1     (worry mentioned, nothing done)\n"
+               "      yes ->  keep going\n"
+               "\n"
+               "3. Does it say WHAT it did, specifically enough to picture?\n"
+               "      no  ->  1     (a claim without a mechanism)\n"
+               "      yes ->  2\n"
+               "```\n")
+    out.append("Run that once per type, five times per document. Most of the "
+               "time you will stop at question 1.\n")
+
+    when = {tag: w for tag, _, w in rows}
+    names = {tag: n for tag, n, _ in rows}
+    for tag in ("t1", "t2", "t3", "t4", "t5"):
+        d = TEACH[tag]
+        out.append(f"#### `{tag}_{names[tag].lower()}` — {names[tag]}\n")
+        out.append(f"**In plain terms.** {d['plain']}\n")
+        out.append(f"*Picture it:* {d['picture']}\n")
+        out.append(f"**Ctrl-F for:** {d['find']}\n")
+        out.append("| | |")
+        out.append("|---|---|")
+        out.append(f"| **`2`** | the document states {when[tag]} |")
+        out.append(f"| | *e.g.* {d['two']} |")
+        out.append(f"| **`1`** | the risk is acknowledged, but no specific "
+                   f"control is described |")
+        out.append(f"| | *e.g.* {d['one']} |")
+        out.append(f"| **`0`** | not addressed — {d['zero']} |")
+        out.append("")
+
+    out.append("#### Two traps, and they account for most disagreements\n")
+    out.append("**1. One vague sentence is not five controls.** A line like "
+               "*\"we took care to avoid contamination\"* with no mechanism is "
+               "**`1` on `t1` and `0` on `t2`–`t5`**. Do not spread it across "
+               "all five. This is the single easiest way for two coders to "
+               "diverge.\n")
+    out.append("**2. A stated cutoff is not a temporal control.** *\"Training "
+               "data up to March 2025\"* on its own is **`1` on `t3`**, not "
+               "`2`. It becomes `2` only when the document connects the cutoff "
+               "to *when the test items are about*. Very common, and easy to "
+               "over-credit.\n")
+    out.append("> **When you cannot decide between two codes, take the lower "
+               "one and write why in `notes`.** That note is useful data. A "
+               "guess you did not flag is not.\n")
 
     simple_field("F4", "f4_regeneration")
     return "\n".join(out)

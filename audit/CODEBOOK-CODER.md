@@ -144,27 +144,121 @@ slot 5  (v)    Y  present          -  absent
 
 ### `t1`–`t5` — F3 Contamination controls
 
-**Did the document say it did anything about this kind of contamination, and say what?**
+**These five are the hardest part of the job.** Everything below is here to make them quick. The rules themselves are in §4; if this summary and §4 ever seem to disagree, §4 is what counts.
 
-Answer all five, separately. For every one of them: **`2`** = a control is stated *and* what it was; **`1`** = contamination is acknowledged but no specific control; **`0`** = not addressed.
+#### The one idea behind all five
 
-| Column | Type | `2` when the document states … |
-|---|---|---|
-| `t1_direct` | Direct | overlap/decontamination checking against training data, canary strings, or a genuinely held-out private set |
-| `t2_derivative` | Derivative | attention to whether the *source material* the items were built from is public, provenance tracking, or item construction requiring integration across sources |
-| `t3_temporal` | Temporal | a training cutoff is stated **and** related to item dates; temporal splitting; items constructed from post-cutoff events |
-| `t4_distributional` | Distributional | perturbation/paraphrase robustness, score distributions across item variants, template or distributional novelty controls |
-| `t5_acquired` | Acquired | any of: network access during evaluation stated, environment sanitisation, transcript/trajectory review for retrieval of answers, or **boundary monitoring** — egress watched at the network edge, canaries/honeytokens placed in the answer key, or the isolation boundary verified intact after the run |
+A benchmark score is only meaningful if the system had to *work out* the answers. **Contamination** is anything that let it get them another way — because it had already seen them, or because it could go and fetch them. The five types are five different routes to the same problem.
 
-*Examples:*
+> **You are not judging whether contamination happened.** You could not, from the document alone, and nobody is asking you to. You are recording **whether the document said it did anything about the risk, and whether it said what.**
 
-> **t1 `2`:** "We ran 13-gram overlap against the pretraining corpus and removed 41 items."
-> **t1 `1`:** "Contamination is a risk for this benchmark." (named, uncontrolled)
-> **t1 `0`:** contamination never mentioned.
-> **t3 `1`:** a cutoff date is stated but never related to the items — very common; do not upgrade it to `2`.
-> **t5 `2`:** "The agent had no network access during scoring; trajectories were reviewed for tool calls to dataset hosts."
+#### The same three questions decide all five
 
-> **The mistake to avoid.** A vague sentence like *"we took care to avoid contamination"* with no mechanism is `1` on `t1` and `0` on `t2`–`t5`. Do not spread one vague claim across all five — that is the single easiest way for two coders to diverge. See §4.
+Ask them in order. Stop at the first *no*.
+
+```
+1. Does the document mention this kind of risk at all?
+      no  ->  0
+      yes ->  keep going
+
+2. Does it say it actually DID something about it?
+      no  ->  1     (worry mentioned, nothing done)
+      yes ->  keep going
+
+3. Does it say WHAT it did, specifically enough to picture?
+      no  ->  1     (a claim without a mechanism)
+      yes ->  2
+```
+
+Run that once per type, five times per document. Most of the time you will stop at question 1.
+
+#### `t1_direct` — Direct
+
+**In plain terms.** The test questions themselves — with their answers — were already sitting somewhere the system could have read.
+
+*Picture it:* A benchmark is published as one file with questions and answers together. It gets copied to a dataset site, quoted in tutorials, and swept up in a later web crawl. The model may simply remember it.
+
+**Ctrl-F for:** `decontaminat` · `contaminat` · `n-gram` · `overlap` · `canary` · `held-out` · `dedup` · `leak`
+
+| | |
+|---|---|
+| **`2`** | the document states overlap/decontamination checking against training data, canary strings, or a genuinely held-out private set |
+| | *e.g.* "We ran 13-gram overlap against the pretraining corpus and removed 41 items." |
+| **`1`** | the risk is acknowledged, but no specific control is described |
+| | *e.g.* "Contamination is a risk for this benchmark." — named, but nothing was done |
+| **`0`** | not addressed — the word contamination never appears |
+
+#### `t2_derivative` — Derivative
+
+**In plain terms.** The test itself never leaked, but the material it was *built from* was public.
+
+*Picture it:* Curators write exam questions from published medical case reports. The questions are new and private; every case report they came from is in the crawl.
+
+**Ctrl-F for:** `source` · `provenance` · `derived from` · `built from` · `underlying` · `corpus`
+
+| | |
+|---|---|
+| **`2`** | the document states attention to whether the *source material* the items were built from is public, provenance tracking, or item construction requiring integration across sources |
+| | *e.g.* "Items were built from case reports published before 2019; we checked which of those reports appear in common pretraining corpora." |
+| **`1`** | the risk is acknowledged, but no specific control is described |
+| | *e.g.* "Some of the underlying literature may be in training data." |
+| **`0`** | not addressed — nothing about where the items came from |
+
+#### `t3_temporal` — Temporal
+
+**In plain terms.** The system knows what happened *after* the moment the question is asking about — so recall is being scored as prediction.
+
+*Picture it:* A question asks which of several candidate answers was correct as of 2022. The answer was settled in 2024. The model's training runs to 2025, so it does not need to reason — it can remember.
+
+**Ctrl-F for:** `cutoff` · `knowledge cutoff` · `training data up to` · `temporal` · `forecast` · `as of`
+
+| | |
+|---|---|
+| **`2`** | the document states a training cutoff is stated **and** related to item dates; temporal splitting; items constructed from post-cutoff events |
+| | *e.g.* "All items derive from events occurring after the stated training cutoff of March 2025." |
+| **`1`** | the risk is acknowledged, but no specific control is described |
+| | *e.g.* "The model's training cutoff is March 2025." — stated, but never connected to when the items are about. **Very common. Do not upgrade it to `2`.** |
+| **`0`** | not addressed — no cutoff, no dates, nothing |
+
+#### `t4_distributional` — Distributional
+
+**In plain terms.** Every question is genuinely new, but they are all built to the same recipe — and the system can key on the recipe instead of doing the task.
+
+*Picture it:* Fresh word problems, never published. Rename the people and change the numbers and the score drops. Nothing leaked: the item is new, the template is not.
+
+**Ctrl-F for:** `perturb` · `paraphrase` · `robustness` · `variant` · `template` · `symbolic` · `renamed`
+
+| | |
+|---|---|
+| **`2`** | the document states perturbation/paraphrase robustness, score distributions across item variants, template or distributional novelty controls |
+| | *e.g.* "We report scores on the original items and on paraphrased variants; the gap is 3 points." |
+| **`1`** | the risk is acknowledged, but no specific control is described |
+| | *e.g.* "Models may have seen similar problems during training." |
+| **`0`** | not addressed — only one set of items, no variants, nothing said |
+
+#### `t5_acquired` — Acquired
+
+**In plain terms.** The system went and *got* the answers during the test — by searching, using a tool, or reading the files around it.
+
+*Picture it:* An agent doing a coding task can run commands. It searches the web, finds the benchmark hosted with its answer key, and reads it. Nothing leaked beforehand; it reached out during the run.
+
+**Ctrl-F for:** `network` · `internet` · `sandbox` · `isolat` · `air-gap` · `transcript` · `trajectory` · `tool`
+
+| | |
+|---|---|
+| **`2`** | the document states any of: network access during evaluation stated, environment sanitisation, transcript/trajectory review for retrieval of answers, or **boundary monitoring** — egress watched at the network edge, canaries/honeytokens placed in the answer key, or the isolation boundary verified intact after the run |
+| | *e.g.* "The agent had no network access during scoring; trajectories were reviewed for tool calls to dataset hosts." |
+| **`1`** | the risk is acknowledged, but no specific control is described |
+| | *e.g.* "The evaluation environment was restricted." — restricted how? no mechanism given |
+| **`0`** | not addressed — nothing about what the system could reach |
+
+#### Two traps, and they account for most disagreements
+
+**1. One vague sentence is not five controls.** A line like *"we took care to avoid contamination"* with no mechanism is **`1` on `t1` and `0` on `t2`–`t5`**. Do not spread it across all five. This is the single easiest way for two coders to diverge.
+
+**2. A stated cutoff is not a temporal control.** *"Training data up to March 2025"* on its own is **`1` on `t3`**, not `2`. It becomes `2` only when the document connects the cutoff to *when the test items are about*. Very common, and easy to over-credit.
+
+> **When you cannot decide between two codes, take the lower one and write why in `notes`.** That note is useful data. A guess you did not flag is not.
 
 ### `f4_regeneration` — F4 Regeneration
 

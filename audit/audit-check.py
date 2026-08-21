@@ -497,6 +497,34 @@ check("the record states the authored-template caveat rather than glossing it",
 check("the cheat sheet is generated, not hand-written",
       "build_cheatsheet" in (A/"make-coder-manual.py").read_text(encoding="utf-8")
       and "`f1_strata` — F1" in cc and "`f4_regeneration` — F4" in cc)
+# F3 is the hardest part of the coder's job, so the manual teaches it. The
+# teaching must EXPLAIN the rules and never add one: the normative text stays
+# traceable to the codebook, and the block defers to section 4 explicitly.
+_flat_cb = " ".join(cb.split())
+_f3rule = ("`2` means the document states a control was applied and says what "
+           "it was, `1` means contamination is acknowledged without a specific "
+           "control, and `0` means the type is not addressed")
+check("the codebook's F3 three-point rule is where the manual's flow comes from",
+      _f3rule in _flat_cb)
+_rows = re.findall(r"^\| `(t[1-5])` \| (\w+) \| (.+?) \|$", cb, re.M)
+check("all five contamination types carry the codebook's own '2 when' text",
+      len(_rows) == 5
+      and all(f"the document states {w}" in cc for _, _, w in _rows),
+      f"{len(_rows)} types")
+if "### `t1`–`t5`" in cc and "### `f4_regeneration`" in cc:
+    _blk = cc[cc.index("### `t1`–`t5`"):cc.index("### `f4_regeneration`")]
+    check("every type has a plain-terms line, a picture and search strings",
+          all(_blk.count(x) >= 5 for x in ("**In plain terms.**", "*Picture it:*",
+                                           "**Ctrl-F for:**")),
+          f"{_blk.count('**In plain terms.**')} of 5")
+    check("the teaching defers to the rules rather than replacing them",
+          "§4 is what counts" in _blk)
+    check("the scope guard is stated: coders do not judge whether contamination happened",
+          "You are not judging whether contamination happened" in _blk)
+    check("both known traps are taught",
+          "One vague sentence is not five controls" in _blk
+          and "A stated cutoff is not a temporal control" in _blk)
+
 check("the worked example was hoisted, not duplicated",
       cc.count("### A worked example — one document") == 0
       and "PART 3 · Your first document" in cc)
