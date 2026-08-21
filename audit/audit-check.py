@@ -566,6 +566,29 @@ check("no deposit file claims a different licence",
 # CC BY and CC BY-NC are one dropdown entry apart and are not the same licence.
 # NonCommercial would forbid the adoption this paper argues for, since the
 # parties publishing the scores in stratum A are commercial labs.
+# The deposit must assert its own licence: none of the five files does, so a
+# LICENSE.txt travels with them and the OSF dropdown is a secondary signal.
+zp = A.parent / ".private" / "disclosure-audit-v1.4-frozen.zip"
+if zp.is_file():
+    import zipfile
+    names = zipfile.ZipFile(zp).namelist()
+    check("the deposit bundle carries its own LICENSE.txt",
+          any(n.endswith("LICENSE.txt") for n in names))
+    lic = zipfile.ZipFile(zp).read(
+        next(n for n in names if n.endswith("LICENSE.txt"))).decode()
+    flat = " ".join(lic.split())
+    check("the bundle's licence is CC BY 4.0 with no NC or ND clause",
+          "CC BY 4.0" in flat
+          and "NonCommercial clause would prohibit" in flat
+          and "NoDerivatives clause would prohibit" in flat
+          and not re.search(r"^Creative Commons Attribution-(Non|No)", lic, re.M))
+    check("the bundle matches the working tree byte for byte",
+          all(zipfile.ZipFile(zp).read(n) == (A / Path(n).name).read_bytes()
+              for n in names
+              if not n.endswith(("/", "MANIFEST.txt", "LICENSE.txt"))))
+else:
+    print("  SKIP  deposit bundle not built yet")
+
 check("the released instrument is CC BY, not a NonCommercial variant",
       "CC BY 4.0" in rd
       and not re.search(r"NonCommercial|CC[ -]BY[ -]NC|\bNC\b", rd),
