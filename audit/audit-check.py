@@ -563,6 +563,13 @@ check("no deposit file claims a different licence",
       not any(re.search(r"\bGPL\b|General Public License|MIT License|Apache License",
                         (A/f).read_text(encoding="utf-8", errors="ignore"))
               for f in DEPOSIT))
+# CC BY and CC BY-NC are one dropdown entry apart and are not the same licence.
+# NonCommercial would forbid the adoption this paper argues for, since the
+# parties publishing the scores in stratum A are commercial labs.
+check("the released instrument is CC BY, not a NonCommercial variant",
+      "CC BY 4.0" in rd
+      and not re.search(r"NonCommercial|CC[ -]BY[ -]NC|\bNC\b", rd),
+      "audit/README.md")
 check("frame.csv is the 50-document frame plus capped and reserve rows",
       len(frame) == 77 and len(draw) == 50)
 
