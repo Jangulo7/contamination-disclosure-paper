@@ -469,7 +469,56 @@ check("the pilot is named as the one synchronisation point",
 check("the coder manual carries all of this too",
       "never compare sheets, in either phase" in cc and "settles no codes" in cc)
 
-print("\n== 15. Ready to deposit on OSF ==")
+print("\n== 15. Research practice ==")
+# The things a pre-registration is FOR. Each is a degree of freedom that, left
+# open, would let the result be chosen after the fact.
+PRACTICE = [
+    ("hypotheses are stated in advance, and numbered",
+     lambda: all(f"**{h}.**" in pr for h in ("H1", "H2", "H3"))),
+    ("a single PRIMARY statistic is named, so it cannot be chosen later",
+     lambda: "the primary statistic" in pr and "primary" in cb),
+    ("falsification conditions are stated: what result would sink the claim",
+     lambda: "## 8. What would falsify" in pr and "H1 fails" in pr),
+    ("a decision rule that can go AGAINST the authors is pre-committed",
+     lambda: "framing trigger" in pr and "INTERVAL INCLUDES ZERO" in score_txt),
+    ("the sample size is justified, and its limits stated in advance",
+     lambda: "sized for" in pr and "half-width" in pr),
+    ("what is exploratory is labelled exploratory in advance",
+     lambda: "exploratory and labelled as such" in pr),
+    ("unplanned subgroup analysis is forbidden in advance",
+     lambda: "No other subgroup analysis is planned" in pr),
+    ("every deviation is dated, with a reason, in one table",
+     lambda: "## 9. Deviations" in pr and pr.count("| 2026-08-") >= 15),
+    ("the standing claim about timing is present and unqualified",
+     lambda: "before any document was coded, pilot" in pr),
+    ("coders are blind to the hypotheses, by construction not by promise",
+     lambda: "CODEBOOK-CODER.md" in cb and "generated" in cb
+             and "priming" in (A/"make-coder-manual.py").read_text(encoding="utf-8")),
+    ("the residual that CANNOT be engineered away is stated, not hidden",
+     lambda: "is an author and knows the hypotheses"
+             in " ".join(cb.split())),
+    ("an amendment that moves AGAINST the authors' own hypotheses is recorded",
+     lambda: "easier to falsify" in cb and "harder to confirm" in cb),
+    ("the data-sharing plan is stated, including the raw sheets",
+     lambda: "raw sheets" in pro or "both coders' raw sheets unedited" in pro),
+    ("limitations are pre-stated rather than discovered afterwards",
+     lambda: "## 7. What this design can and cannot say" in cb),
+    ("the design says plainly what it CANNOT support",
+     lambda: "descriptive, not causal" in cb and "cannot attribute" in cb),
+    ("clustering is acknowledged: documents are not independent observations",
+     lambda: "not independent observations" in cb),
+    ("the instrument is released, not merely described",
+     lambda: (A/"score.py").is_file() and (A/"frame.csv").is_file()
+             and (A/"coding-sheet.csv").is_file()),
+    ("the analysis code is testable by a third party before trusting it",
+     lambda: "--selftest" in score_txt),
+]
+for name, fn in PRACTICE:
+    try: ok_ = bool(fn())
+    except Exception as e: ok_ = False; name += f" [{e}]"
+    check(name, ok_)
+
+print("\n== 16. Ready to deposit on OSF ==")
 DEPOSIT = ["CODEBOOK.md", "PROTOCOL.md", "PRE-REGISTRATION.md",
            "SAMPLING-FRAME.md", "frame.csv"]
 check("all five deposit files exist", all((A/f).is_file() for f in DEPOSIT),
@@ -500,10 +549,16 @@ for f in DEPOSIT:
                 r"\b[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]\b"):
         if re.search(pat, d): ident.append(f"{f}:{pat}")
 check("no deposit file carries a path, username or email", not ident, str(ident))
+# a promise inside the deposit must be dated and must have a step behind it
+promised = re.search(r"date_published[^.]{0,120}?by (\d{1,2} August 2026)", sf)
+check("the date_published commitment in the deposit carries a date",
+      promised is not None, promised.group(1) if promised else "no date found")
+check("the same date is given in the registration",
+      promised is not None and promised.group(1) in pr)
 check("frame.csv is the 50-document frame plus capped and reserve rows",
       len(frame) == 77 and len(draw) == 50)
 
-print("\n== 16. score.py selftest ==")
+print("\n== 17. score.py selftest ==")
 import io, contextlib
 buf=io.StringIO()
 with contextlib.redirect_stdout(buf): rc=score.selftest()
