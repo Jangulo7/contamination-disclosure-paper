@@ -423,8 +423,10 @@ else:
     print("  SKIP  coder-kit/ not built yet — run audit/make-coder-kit.py")
 
 print("\n== 14. The pilot and the adjudicator are described consistently ==")
-check("the codebook says discussion is required in the pilot and forbidden in the main pass",
-      "opposite rules about talking" in cb)
+check("the codebook says the coders never compare sheets, in either phase",
+      "never compare sheets, in either phase" in cb)
+check("the codebook says what does pass between them, and when",
+      "reasoning** is exchanged, blind" in cb and "justifications* must meet" in cb)
 check("the codebook says the pilot comparison settles no codes",
       "settles no codes" in cb)
 check("unresolved pilot cells go to the same adjudication as the main pass",
@@ -439,12 +441,22 @@ check("the rule for answering coders' questions is stated in both phases",
       and "never about *cases*" in cb)
 check("the coder manual carries the question rule too",
       "Answering coders' questions" in cc)
+# The pilot was a meeting until 21 Aug. Nothing may still describe it as one.
+MEETING = ["1 hour together", "both coders present", "convened and chaired",
+           "sit down together", "in the same room as the other coder about",
+           "every disagreement in it is discussed",
+           "both code and then discuss", "the two coders discussed them",
+           "coded after discussion", "opposite rules about talking"]
+stale = [(n, m) for n, d in DOCS.items() for m in MEETING if m in d]
+check("no file still describes the pilot as a meeting", not stale, str(stale))
+check("the protocol's step 4 is headed as a written reconciliation",
+      "Reconcile the pilot and fix the codebook" in pro and "in writing" in pro)
 check("condition 2 distinguishes administering the instrument from deciding a code",
       "administering the instrument" in cb)
 check("the pilot is named as the one synchronisation point",
       "must be in step" in cb or "first day of the window" in cb)
 check("the coder manual carries all of this too",
-      "opposite rules about talking" in cc and "settles no codes" in cc)
+      "never compare sheets, in either phase" in cc and "settles no codes" in cc)
 
 print("\n== 15. Ready to deposit on OSF ==")
 DEPOSIT = ["CODEBOOK.md", "PROTOCOL.md", "PRE-REGISTRATION.md",

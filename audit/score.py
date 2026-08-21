@@ -992,7 +992,7 @@ def main(argv=None) -> int:
     print("  Rates use ALL included documents, pilot included, from the adjudicated")
     print("  sheet: a purposive pilot cannot bias a rate, because agreement is what")
     print("  the pilot changes and agreement is not a population estimate. But the")
-    print("  pilot rows were coded after the coders discussed them and the main-pass")
+    print("  pilot rows were coded after the coders were calibrated on them and the main-pass")
     print("  rows were not, so the pooling is worth a line of evidence.\n")
     print(f"{'field':<26}{'all':>10}{'main only':>12}{'delta':>9}")
     for key, name in FIELDS:

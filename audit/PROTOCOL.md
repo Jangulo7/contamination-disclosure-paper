@@ -199,10 +199,10 @@ Save your answers as **`codes-R1.csv`** or **`codes-R2.csv`** — your label, ne
 your initials or your name (step 0) — using `coding-sheet.csv` as the template.
 One row per document.
 
-### Step 4 · Compare and fix the codebook — 1 hour together
+### Step 4 · Reconcile the pilot and fix the codebook — 1 hour, in writing
 
-**Run the script on the pilot before you reconcile.** Nine documents coded
-independently already yield a weighted kappa, and one sentence carrying that
+**Run the script on the pilot before you reconcile anything.** Nine documents
+coded independently already yield a weighted kappa, and one sentence carrying that
 number moves the paper from "instrument released" to "instrument shown to work".
 Every number in the paper comes from the macro block at the top of `main.tex`
 (the `\r...` commands): fill those from the script output and the results

@@ -73,7 +73,7 @@ right.
 | **Cluster** | The organisation that published a document. Used only in the analysis; nothing you do depends on it. |
 | **Code** (as a verb) | To read a document and fill in its row on your sheet. |
 | **Cell** | One box on your sheet: one document, one field. |
-| **Pilot** | The first nine documents, which you both code and then discuss, to find where the rules are unclear before the other 41. |
+| **Pilot** | The first nine documents. You both code them, then — through the person running the study, never directly and never seeing each other's codes — each of you says which rule you applied where the two sheets differed. The point is to find where the rules are unclear before the other 41. |
 | **Test–retest** | Re-coding five documents at the very end without looking at what you put the first time, to see how well you agree with *yourself*. |
 | **Adjudicator** | The person who settles disagreements between the two of you, afterwards. Not either of you. |
 | **Agreement** | How often the two of you gave the same answer. It is a headline result of this study, which is why you must not compare notes until you have both finished. |
@@ -661,10 +661,10 @@ Elapsed time: about nine minutes.
    figure is reported as a secondary, labelled as such.
 
    **The pilot rows are measured differently from the main-pass rows**, because
-   they were coded after the two coders discussed them. They are included in the
-   rates for the reason above, and the rates are additionally reported with the
-   nine excluded, as a one-line robustness check computed from data already in
-   hand.
+   they were coded after the coders had been calibrated on them. They are
+   included in the rates for the reason above, and the rates are additionally
+   reported with the nine excluded, as a one-line robustness check computed from
+   data already in hand.
 
    **If no rule was at fault, the codebook does not move.** A pilot that produces
    disagreements which all trace to coder error rather than rule ambiguity is a
@@ -676,15 +676,24 @@ Elapsed time: about nine minutes.
 3. **Main pass:** each codes the remaining documents alone. No discussion until
    both are finished. Do not look at the other coder's sheet.
 
-   **The two phases have opposite rules about talking, and this is deliberate.**
-   In the **pilot** the two coders are *required* to compare sheets and discuss
-   every disagreement, because the pilot's whole purpose is to find out where the
-   rules are unclear, and a rule defect only shows up when two readings of it are
-   put side by side. In the **main pass** discussion is *forbidden* until both
-   have finished, because how often two people independently agree is one of this
-   study's results, and a conversation part-way through would destroy it. The
-   pilot is calibration; the main pass is measurement. Neither rule leaks into
-   the other phase.
+   **The two coders never compare sheets, in either phase.** What differs between
+   the phases is not how much they may talk to each other — the answer to that is
+   never — but **what passes between them through the study runner, and whether
+   the rules may still change.**
+
+   | | Pilot | Main pass |
+   |---|---|---|
+   | Coders exchange sheets or codes | never | never |
+   | Coders talk to each other about the coding | never | never |
+   | Their **reasoning** is exchanged, blind, via the study runner | **yes**, that is the point | no |
+   | The codebook may still change | **yes**, if a rule was at fault | no |
+
+   The pilot's purpose is to find out where the rules are unclear, and a rule
+   defect only shows up when two readings of the same rule are put side by side —
+   so the *justifications* must meet, even though the coders do not. The main pass
+   measures how often two people independently agree, so nothing passes between
+   them at all until both have finished. The pilot is calibration; the main pass
+   is measurement. Neither rule leaks into the other phase.
 
    **Work in your own randomised order.** `order.py` prints a per-coder document
    order from the seed fixed here: **`seed = 20260812`**. The number lives in the
@@ -1132,8 +1141,9 @@ with the direction of a hypothesis under test.
 ### 8.11 Robustness lines, computed from data already in hand
 
 - Rates **with and without the nine pilot documents**. The pilot rows were coded
-  after discussion and the main-pass rows were not, so the pooling is worth one
-  line of evidence rather than one line of assertion (§5.2).
+  after the coders had been calibrated on those texts and the main-pass rows were
+  not, so the pooling is worth one line of evidence rather than one line of
+  assertion (§5.2).
 - The primary κ **pilot-inclusive** as well as pilot-exclusive, labelled as the
   secondary it is.
 - Rates **per organisation**, descriptively (§8.6).
