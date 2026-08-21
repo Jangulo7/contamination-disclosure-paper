@@ -1,87 +1,310 @@
-# Disclosure audit — coding manual (coder copy), v1.4
+# Disclosure audit — coding manual, v1.4
 
-**You are coding under version v1.4.** Put `v1.4` in the
-`codebook_version` column of every row you fill in. If the version changes after
-the pilot you will be told, and the rows you recode carry the new number.
+**Put `v1.4` in the `codebook_version` column of every row.**
 
 ---
 
-## Start here — the whole job in one page
+# PART 1 · Read this first — five minutes
 
-**What you are doing.** You will read 50 published documents. Each one reports a
-score for an AI system on some test. For each document you record, in eight
-boxes, whether the document *told its reader* certain specific things about how
-that score was produced. That is all. You are not judging whether the score is
-correct, whether the system is good, or whether the authors did a good job.
+## What you are doing
 
-**No background is assumed.** Section 0 is a glossary that defines every term
-used anywhere in this manual, starting from what a benchmark is. Read it once
-before you read anything else. If you meet a word that is not in it, that is a
-defect in this manual — write it in the `notes` column and carry on.
+You will read 50 published documents. Each reports a score for an AI system on
+some test. For each document you answer **eight yes/no-ish questions** about
+whether the document *told its reader* certain things about how that score was
+produced.
 
-**Where the documents are.** All 50, each with a working link, are listed in
-`ANNEX-DOCUMENTS.md`. That is the complete list. You never have to find a
-document yourself, and nothing may be added to it. Your own worklist — the same
-documents, in your own randomised order, as a tick-list you can tick off — comes
-from the `order.py` command in Section 5.
+**You are not** judging whether the score is right, whether the system is good,
+or whether the authors did a decent job. You are recording what is on the page.
 
-**When.** 22–24 August 2026, roughly 9 to 11 hours in total. **You arrange your
-own hours across the three days** — Section 5 gives the breakdown per stage. Two
-things only are fixed: the pilot comes first, and the test--retest comes last.
+## The scale
 
-### What you do for each document, in order
+| | |
+|---|---|
+| **`2`** | Stated clearly enough that a reader could act on it |
+| **`1`** | Mentioned but vague — a claim without the value, a value without units |
+| **`0`** | Not there |
+| **`NA`** | The question does not apply to this evaluation |
 
-1. **Open the document** from your worklist and skim its shape for thirty
-   seconds — where are the tables, is there an appendix, how long is it.
-2. **Find the focal evaluation** (Section 1). This is the *one* score in the
-   document that you will code. There is a mechanical rule for picking it and a
-   set of numbered edge rules for the awkward cases. Write its name in the
-   `focal` column. **Everything else you record is about that one evaluation.**
-3. **Answer eight questions** about it, each one on the same simple scale
-   (Section 3): F1, F2, five contamination types `t1`–`t5`, and F4. Section 4
-   defines each one with examples.
-4. **For every answer that is not `0`, write where you found it** in the
-   `evidence` column — a section number, a page, or a short quoted phrase. This
-   is what lets somebody else check your work later.
-5. **Fill in `f2_notes`** — five characters in the fixed format of Section 4 —
-   on *every* row, including rows where you answered `0`.
+**`NA` is not "I could not find it".** That is `0`.
 
-### The scale, in one line
+## The six steps, for every document
 
-`2` it is stated clearly enough to act on · `1` it is mentioned but vague ·
-`0` it is not there · `NA` the question does not apply to this evaluation.
+1. **Open it** from your worklist. Skim its shape for thirty seconds — where are
+   the tables, is there an appendix, how long is it.
+2. **Find the focal evaluation.** The **first capability benchmark whose score is
+   reported in the body text**, reading front to back. Not the first benchmark
+   *named* — the first one with a number. Write its name in `focal`.
+   *Everything else you record is about that one evaluation and nothing else.*
+   Awkward cases: PART 2, and the rules in §1.
+3. **Search before you answer.** Use Ctrl-F for these, every time:
+   *contaminat, decontaminat, overlap, n-gram, canary, cutoff, held-out, leak,
+   harness, scaffold, temperature, token, attempt, pass@, best-of, per-task,
+   breakdown, subset, stratif, generat, regenerat, network, sandbox, transcript,
+   trajectory*
+4. **Answer the eight questions** using the cheat sheet in PART 2.
+5. **Write where you found it** in `evidence`, for every answer that is not `0`.
+   A section number, a page, or a short quoted phrase.
+6. **Fill `f2_notes`** — five characters, format in PART 2 under F2. On **every**
+   row, including rows you answer `0`.
 
-`NA` is **not** for "I could not find it". That is `0`.
+About 8–12 minutes per document once you are warmed up.
 
-### If you get stuck
-
-- **A rule seems not to cover your case.** Write what you did and why in
-  `notes`, pick the reading you think is intended, and move on. Do not spend ten
-  minutes on it. The pilot exists to find exactly these.
-- **You are not sure whether something counts.** Re-read the relevant "Edge
-  rule" box in Section 4. If it is still unclear, code the *lower* value and
-  note it.
-- **The document will not open, or has no score in it at all.** That is an
-  exclusion — Section 2 tells you what to record.
-- **You want to ask the other coder.** Do not, until you have both finished.
-  How often the two of you independently agree is one of the results of this
-  study, so a conversation part-way through destroys it. Ask the person running
-  the study instead.
-
-### Three rules that override everything
+## Three rules that beat everything else
 
 1. **Record what the document says, never what you know.** If it does not name
-   its harness, that is `0`, even if you know which one they used.
-2. **`0` means "I searched and it is not there".** Section 5 gives you a keyword
-   list. Search before you write `0`.
-3. **Write a note rather than guessing.** A flagged uncertainty is useful data;
-   an unflagged guess is not.
+   its harness, that is `0` — even if you happen to know which one they used.
+2. **`0` means "I searched and it is not there"**, not "I did not notice". That
+   is what step 3 is for.
+3. **When a rule feels unclear, write a note instead of guessing.** Use the
+   `notes` column. A flagged uncertainty is useful; an unflagged guess is not.
 
 ---
 
-Generated from `CODEBOOK.md`. Every coding rule below is identical to the
-deposited version; the framing and the statistical analysis have been removed so
-that coding is not primed by them.
+# PART 2 · The cheat sheet
+
+One block per column of your sheet, in the order they appear. Each says what the
+question is and what `2`, `1` and `0` look like. **Keep this open while you
+code.** The full rules and the edge cases are in §4 of PART 6.
+
+### `f1_strata` — F1 Strata reported
+
+**Does the document report performance broken down by sub-population, rather than a single aggregate?**
+
+| | |
+|---|---|
+| **`2`** | Per-stratum scores are given for a defined stratification (by subject, difficulty tier, language, subgroup, task family), **and** the strata are named. Per-task breakdowns of a multi-task benchmark count. |
+| **`1`** | Stratification is mentioned or a breakdown is gestured at but numbers are not given per stratum; or a breakdown appears only in an unlabelled figure from which values cannot be read. |
+| **`0`** | Aggregate numbers only. |
+
+*Examples:*
+
+> **`2`:** a table of accuracy per subject area with *n* per cell.
+> **`1`:** "performance varied across domains" with no per-domain figures.
+> **`0`:** "Model X scores 71.2% on Benchmark Y."
+
+### `f2_budget` — F2 Elicitation budget
+
+**Could a competent third party reproduce the conditions under which the score was elicited?**
+
+
+The five sub-elements:
+
+| | Sub-element | Satisfied when the document states … |
+|---|---|---|
+| (i) | **Elicitation system identity** | any one of the three routes below |
+| (ii) | **Version or commit** | a version number, commit, tag or release for the elicitation system |
+| (iii) | **Token or step budget** | a token cap, step cap, wall-clock or compute budget per item or per run |
+| (iv) | **Attempts allowed** | how many attempts the system was given |
+| (v) | **Attempt resolution** | how attempts were combined — best-of-*n*, majority vote, single, pass@*k* |
+
+Sub-element **(i)** counts if **any one** of these is true:
+
+- **H — a named harness or scaffold.** "Inspect", "lm-evaluation-harness", "the
+  METR task standard", "HELM". A name a reader could look up.
+- **R — a public code artifact pinned to a specific version.** A repository plus
+  a commit, tag or release. The pin is what makes it a route: a bare repository
+  URL with no version is not (i), it is (ii)-eligible at best.
+- **S — a bespoke scaffold described in rebuildable detail.** Satisfied **only
+  when the document explicitly states all three** of: (a) the control loop or
+  agent architecture, (b) the tool set available to the system, and (c) the
+  stopping condition. Three of three, stated, not implied. Two of three is not
+  (i). This is a checklist, not an assessment of whether you personally could
+  rebuild it.
+
+| | |
+|---|---|
+| **`2`** | (i) is satisfied by any route **and** at least two of (ii)–(v) are specified. |
+| **`1`** | Some sub-element is present but the set falls short of that; or settings are named only as "default"/"standard" with no reference to what the default is. |
+| **`0`** | Nothing about elicitation conditions. |
+
+*Examples:*
+
+> **`2` via H:** "Evaluated with Inspect v0.3.42, temperature 0, single attempt, 100k token cap."
+> **`2` via R:** "Code at `github.com/x/y` at commit `a1b2c3d`; 3 attempts; 100k token cap."
+> **`2` via S:** "A ReAct loop with bash and a file editor, stopped at 40 steps or on submit; 1 attempt."
+> **`1`:** "We use greedy decoding." (decoding only, no (i), no budget)
+> **`1`:** "Code at `github.com/x/y`." (repository with no pin, nothing else)
+> **`0`:** Scores with no methods statement.
+
+#### `f2_notes` — five characters, on EVERY row
+
+```
+slot 1  (i)    H  named harness    R  pinned artifact    S  scaffold, 3 of 3    -  none
+slot 2  (ii)   Y  present          -  absent
+slot 3  (iii)  Y  present          -  absent
+slot 4  (iv)   Y  present          -  absent
+slot 5  (v)    Y  present          -  absent
+```
+
+*Examples:*
+
+> `HY-YY  Inspect v0.3.42, 1 attempt, single, sec. 4.2`
+> `R-YY-  repo pinned a1b2c3d, 100k cap, 3 attempts, appendix C`
+> `-----  no methods statement anywhere`
+
+### `t1`–`t5` — F3 Contamination controls
+
+**Did the document say it did anything about this kind of contamination, and say what?**
+
+Answer all five, separately. For every one of them: **`2`** = a control is stated *and* what it was; **`1`** = contamination is acknowledged but no specific control; **`0`** = not addressed.
+
+| Column | Type | `2` when the document states … |
+|---|---|---|
+| `t1_direct` | Direct | overlap/decontamination checking against training data, canary strings, or a genuinely held-out private set |
+| `t2_derivative` | Derivative | attention to whether the *source material* the items were built from is public, provenance tracking, or item construction requiring integration across sources |
+| `t3_temporal` | Temporal | a training cutoff is stated **and** related to item dates; temporal splitting; items constructed from post-cutoff events |
+| `t4_distributional` | Distributional | perturbation/paraphrase robustness, score distributions across item variants, template or distributional novelty controls |
+| `t5_acquired` | Acquired | any of: network access during evaluation stated, environment sanitisation, transcript/trajectory review for retrieval of answers, or **boundary monitoring** — egress watched at the network edge, canaries/honeytokens placed in the answer key, or the isolation boundary verified intact after the run |
+
+*Examples:*
+
+> **t1 `2`:** "We ran 13-gram overlap against the pretraining corpus and removed 41 items."
+> **t1 `1`:** "Contamination is a risk for this benchmark." (named, uncontrolled)
+> **t1 `0`:** contamination never mentioned.
+> **t3 `1`:** a cutoff date is stated but never related to the items — very common; do not upgrade it to `2`.
+> **t5 `2`:** "The agent had no network access during scoring; trajectories were reviewed for tool calls to dataset hosts."
+
+> **The mistake to avoid.** A vague sentence like *"we took care to avoid contamination"* with no mechanism is `1` on `t1` and `0` on `t2`–`t5`. Do not spread one vague claim across all five — that is the single easiest way for two coders to diverge. See §4.
+
+### `f4_regeneration` — F4 Regeneration
+
+**Does the document tell its reader whether a fresh instance of the instrument can be produced?**
+
+| | |
+|---|---|
+| **`2`** | The generation procedure is published or the generator is released, such that new items can be produced; or the benchmark is explicitly a live/rolling instrument with a stated refresh mechanism. |
+| **`1`** | The construction process is described in prose but not operationalised; data released without a generator. |
+| **`0`** | Artifact only, or nothing said about construction. |
+
+
+---
+
+# PART 3 · Your first document, worked end to end
+
+Nothing here is a real document. It shows the routine, and which decisions are easy and which are not.
+
+Nothing in this example is a real document. It is written to show the routine and
+to show which decisions are easy and which are not.
+
+**The document.** A 60-page system card for a fictional system, "Corvid 2".
+Stratum A. You open it from your worklist.
+
+**Step 1 — thirty-second skim.** Title page, contents, a two-page executive
+summary, then sections on capabilities, safety, and a 12-page appendix of tables.
+
+**Step 2 — find the focal evaluation.** Reading front to back from the first page
+after the contents:
+
+> *Executive summary, page 3:* "Corvid 2 improves substantially on reasoning and
+> coding. On **GPQA Diamond** it reaches **68.4%**, against 61.2% for Corvid 1."
+
+- The executive summary counts as body text — **rule E1**.
+- It is a capability benchmark, and a number is given, so this qualifies.
+- 61.2% is the previous generation, not the system under test — **rule E2** says
+  skip it, but we are taking the 68.4% figure anyway, which is Corvid 2's.
+
+So `focal` = **GPQA Diamond**. Write it down. **From here on, every one of the
+eight answers is about GPQA Diamond and nothing else.**
+
+Note what you did *not* do. On page 41 there is a much more thoroughly documented
+agentic evaluation, with a named harness and a token budget. **Rule E5 says the
+focal evaluation does not change once chosen.** You keep GPQA Diamond. If you
+were allowed to switch, everyone would drift towards the best-documented
+evaluation in each document, and the study would measure best practice rather
+than typical practice.
+
+**Step 3 — search before answering.** Search the PDF for the terms in §5's list.
+Two hits matter:
+
+> *Page 8, "Evaluation methodology":* "Unless otherwise noted, all evaluations in
+> this report were run with network access disabled and with the standard
+> internal evaluation stack."
+>
+> *Appendix B, page 52:* "GPQA Diamond: 198 items, single attempt, temperature 0.
+> Per-subject accuracy is given in Table B4." Table B4 lists accuracy for physics,
+> chemistry and biology separately.
+
+**Step 4 — the eight answers.**
+
+| Field | Answer | Why |
+|---|---|---|
+| `f1_strata` | **`2`** | Table B4 gives accuracy per subject, and the subjects are named. That is a real breakdown of the focal score, not a list of different benchmarks. |
+| `f2_budget` | **`1`** | Sub-element (i) is not satisfied: "the standard internal evaluation stack" is a phrase, not a name a reader could look up, and there is no repository and no described scaffold. Two other sub-elements *are* there: (iv) attempts, "single attempt", and (v) resolution, also "single". So some sub-elements are present but (i) is missing, which is `1`. In the five-slot record that is slot 1 `-`, slot 2 `-`, slot 3 `-`, slot 4 `Y`, slot 5 `Y` — **`---YY`** — followed by a space and a note. |
+| `t1_direct` | **`0`** | Search for *contaminat*, *decontaminat*, *overlap*, *n-gram*, *canary*, *held-out*, *leak*. Nothing. Not "I did not see it" — searched, absent. |
+| `t2_derivative` | **`0`** | Nothing about where the items came from. |
+| `t3_temporal` | **`1`** | The card states a training cutoff of March 2026 on page 2, but never relates it to when the GPQA items were written. A stated cutoff with no connection to the items is `1`, never `2`. This is very common. |
+| `t4_distributional` | **`0`** | No perturbation, paraphrase or robustness testing mentioned. |
+| `t5_acquired` | **`2`** | The page-8 statement is scoped to *all* evaluations, so **rule E6** applies it to GPQA Diamond even though it is 44 pages earlier. "Network access disabled" is a stated control on what the system could reach during the run. |
+| `f4_regeneration` | **`0`** | The card says nothing about whether GPQA items can be regenerated. Silence about somebody else's benchmark is `0`, exactly as silence about your own would be. |
+
+**Step 5 — evidence.** For every answer above `0`:
+`f1=Table B4 p.52; f2=App. B p.52 "single attempt"; t3=p.2 cutoff Mar 2026, not related to items; t5=p.8 "network access disabled", global scope (E6)`
+
+**The three judgement calls in this document, and why they went as they did.**
+
+1. **`t5` = `2` from a statement 44 pages away.** Correct, because the statement
+   says *all evaluations*. Had it said "for the agentic evaluations", **rule E7**
+   would apply and the answer would be `0`, because the card never says GPQA
+   Diamond is an agentic evaluation.
+2. **`t3` = `1`, not `2`.** The temptation is to reason "they stated a cutoff of
+   March 2026 and GPQA predates that, so they must have known" — that is exactly
+   the inference the cardinal rule forbids. Code what is written.
+3. **`f2` = `1`, not `2`.** "The standard internal evaluation stack" feels like it
+   ought to count. It does not: a reader cannot act on it. Naming something a
+   reader could look up is the whole point of the field.
+
+**What the row looks like.**
+
+```
+doc_id, coder, codebook_version, focal,        f1, f2, f2_notes,        t1,t2,t3,t4,t5, f4
+A0X,    R1,    v1.4,             GPQA Diamond, 2,  1,  "---YY  attempts+resolution only, App. B p.52",
+                                                                        0, 0, 1, 0, 2,  0
+```
+
+Elapsed time: about nine minutes.
+
+---
+
+# PART 4 · When you get stuck
+
+| Situation | What to do |
+|---|---|
+| The rule does not seem to cover your case | Write what you did and why in `notes`, pick the reading you think is intended, move on. Do not spend ten minutes. |
+| You cannot decide between two codes | Code the **lower** one and note it. |
+| The document will not open, or has no score at all | Put `yes` in `excluded` and say why in `exclusion_reason`. Test in §2. |
+| You want to ask the other coder | **Don't** — ask me instead, any time. How often the two of you agree independently is one of the results, so a conversation part-way through would undo it. |
+| You want to know what the other coder put | I will say no. Same reason. It is not personal. |
+| A word here means nothing to you | §0 is a glossary that assumes no background. |
+
+**Ask me anything, in either phase.** I would much rather answer than have you
+guess. Two things about how I answer, so it does not seem evasive: I answer about
+**rules**, not about particular documents — *"what counts as a named harness?"*
+yes, *"is A03 a 1 or a 2?"* no, that one is yours. And every answer I give one of
+you, I give the other, in the same words.
+
+---
+
+# PART 5 · Where to look things up
+
+| If you need … | Go to |
+|---|---|
+| what a word means | **§0** glossary |
+| which score is the focal one, and the nine edge rules E1–E9 | **§1** |
+| whether a document should be excluded | **§2** |
+| what `2` / `1` / `0` / `NA` mean in general | **§3** |
+| the full rule for any one of the eight columns | **§4** |
+| how the pilot and the main pass work, and the order to do things in | **§5** |
+| why the two of you must not compare notes | **§6** |
+| what this design can and cannot show | **§7** |
+
+---
+
+# PART 6 · The full rules
+
+Everything below is the complete coding manual. It is generated from the
+deposited codebook, so every rule here is identical to the registered version.
+PARTS 1–5 above are a way in, not a substitute: where the two ever seem to
+differ, the sections below are what counts.
 
 ---
 
@@ -527,88 +750,6 @@ requires an explicit statement of the instrument's regeneration status —
 "procedure published at X", or "no generator exists, this benchmark is static".
 Silence about a third-party instrument is `0`, exactly as silence about one's own
 would be.
-
-### A worked example — one document, from opening it to a filled-in row
-
-Nothing in this example is a real document. It is written to show the routine and
-to show which decisions are easy and which are not.
-
-**The document.** A 60-page system card for a fictional system, "Corvid 2".
-Stratum A. You open it from your worklist.
-
-**Step 1 — thirty-second skim.** Title page, contents, a two-page executive
-summary, then sections on capabilities, safety, and a 12-page appendix of tables.
-
-**Step 2 — find the focal evaluation.** Reading front to back from the first page
-after the contents:
-
-> *Executive summary, page 3:* "Corvid 2 improves substantially on reasoning and
-> coding. On **GPQA Diamond** it reaches **68.4%**, against 61.2% for Corvid 1."
-
-- The executive summary counts as body text — **rule E1**.
-- It is a capability benchmark, and a number is given, so this qualifies.
-- 61.2% is the previous generation, not the system under test — **rule E2** says
-  skip it, but we are taking the 68.4% figure anyway, which is Corvid 2's.
-
-So `focal` = **GPQA Diamond**. Write it down. **From here on, every one of the
-eight answers is about GPQA Diamond and nothing else.**
-
-Note what you did *not* do. On page 41 there is a much more thoroughly documented
-agentic evaluation, with a named harness and a token budget. **Rule E5 says the
-focal evaluation does not change once chosen.** You keep GPQA Diamond. If you
-were allowed to switch, everyone would drift towards the best-documented
-evaluation in each document, and the study would measure best practice rather
-than typical practice.
-
-**Step 3 — search before answering.** Search the PDF for the terms in §5's list.
-Two hits matter:
-
-> *Page 8, "Evaluation methodology":* "Unless otherwise noted, all evaluations in
-> this report were run with network access disabled and with the standard
-> internal evaluation stack."
->
-> *Appendix B, page 52:* "GPQA Diamond: 198 items, single attempt, temperature 0.
-> Per-subject accuracy is given in Table B4." Table B4 lists accuracy for physics,
-> chemistry and biology separately.
-
-**Step 4 — the eight answers.**
-
-| Field | Answer | Why |
-|---|---|---|
-| `f1_strata` | **`2`** | Table B4 gives accuracy per subject, and the subjects are named. That is a real breakdown of the focal score, not a list of different benchmarks. |
-| `f2_budget` | **`1`** | Sub-element (i) is not satisfied: "the standard internal evaluation stack" is a phrase, not a name a reader could look up, and there is no repository and no described scaffold. Two other sub-elements *are* there: (iv) attempts, "single attempt", and (v) resolution, also "single". So some sub-elements are present but (i) is missing, which is `1`. In the five-slot record that is slot 1 `-`, slot 2 `-`, slot 3 `-`, slot 4 `Y`, slot 5 `Y` — **`---YY`** — followed by a space and a note. |
-| `t1_direct` | **`0`** | Search for *contaminat*, *decontaminat*, *overlap*, *n-gram*, *canary*, *held-out*, *leak*. Nothing. Not "I did not see it" — searched, absent. |
-| `t2_derivative` | **`0`** | Nothing about where the items came from. |
-| `t3_temporal` | **`1`** | The card states a training cutoff of March 2026 on page 2, but never relates it to when the GPQA items were written. A stated cutoff with no connection to the items is `1`, never `2`. This is very common. |
-| `t4_distributional` | **`0`** | No perturbation, paraphrase or robustness testing mentioned. |
-| `t5_acquired` | **`2`** | The page-8 statement is scoped to *all* evaluations, so **rule E6** applies it to GPQA Diamond even though it is 44 pages earlier. "Network access disabled" is a stated control on what the system could reach during the run. |
-| `f4_regeneration` | **`0`** | The card says nothing about whether GPQA items can be regenerated. Silence about somebody else's benchmark is `0`, exactly as silence about your own would be. |
-
-**Step 5 — evidence.** For every answer above `0`:
-`f1=Table B4 p.52; f2=App. B p.52 "single attempt"; t3=p.2 cutoff Mar 2026, not related to items; t5=p.8 "network access disabled", global scope (E6)`
-
-**The three judgement calls in this document, and why they went as they did.**
-
-1. **`t5` = `2` from a statement 44 pages away.** Correct, because the statement
-   says *all evaluations*. Had it said "for the agentic evaluations", **rule E7**
-   would apply and the answer would be `0`, because the card never says GPQA
-   Diamond is an agentic evaluation.
-2. **`t3` = `1`, not `2`.** The temptation is to reason "they stated a cutoff of
-   March 2026 and GPQA predates that, so they must have known" — that is exactly
-   the inference the cardinal rule forbids. Code what is written.
-3. **`f2` = `1`, not `2`.** "The standard internal evaluation stack" feels like it
-   ought to count. It does not: a reader cannot act on it. Naming something a
-   reader could look up is the whole point of the field.
-
-**What the row looks like.**
-
-```
-doc_id, coder, codebook_version, focal,        f1, f2, f2_notes,        t1,t2,t3,t4,t5, f4
-A0X,    R1,    v1.4,             GPQA Diamond, 2,  1,  "---YY  attempts+resolution only, App. B p.52",
-                                                                        0, 0, 1, 0, 2,  0
-```
-
-Elapsed time: about nine minutes.
 
 
 ---

@@ -466,6 +466,35 @@ check("condition 2 distinguishes administering the instrument from deciding a co
       "administering the instrument" in cb)
 check("the pilot is named as the one synchronisation point",
       "must be in step" in cb or "first day of the window" in cb)
+# The manual is a build product, but PART 6 must be the codebook verbatim.
+# The front matter is a way in; it must never become a second set of rules.
+_cc_lines = cc.splitlines()
+_p6 = next((n for n, l in enumerate(_cc_lines) if l.startswith("# PART 6")), None)
+check("the coder manual has a quick-start front matter and a full-rules part",
+      _p6 is not None and cc.startswith("# Disclosure audit — coding manual")
+      and "# PART 1" in cc and "# PART 2 · The cheat sheet" in cc)
+if _p6 is not None:
+    _src = {l.strip() for l in cb.splitlines()}
+    _allowed = ("## 8. Version history", "You are coding under",
+                "the deposited codebook; they are analysis notes",
+                "they are left out here so that nothing", "answer.",
+                "# PART 6", "Everything below is the complete coding manual",
+                "deposited codebook, so every rule here", "PARTS 1–5 above",
+                "differ, the sections below are what counts.")
+    _stray = [l.strip() for l in _cc_lines[_p6:]
+              if l.strip() and l.strip() not in _src
+              and not any(l.strip().startswith(a) for a in _allowed)
+              and not re.fullmatch(r"\| [0-9.]+ \| [0-9-]+ \|", l.strip())
+              and not re.fullmatch(r"\|-*\|-*\||\| Version \| Date \|", l.strip())]
+    check("every rule line in PART 6 appears verbatim in CODEBOOK.md",
+          not _stray, f"{len(_stray)} stray: {_stray[:2]}")
+check("the cheat sheet is generated, not hand-written",
+      "build_cheatsheet" in (A/"make-coder-manual.py").read_text(encoding="utf-8")
+      and "`f1_strata` — F1" in cc and "`f4_regeneration` — F4" in cc)
+check("the worked example was hoisted, not duplicated",
+      cc.count("### A worked example — one document") == 0
+      and "PART 3 · Your first document" in cc)
+
 check("the coder manual carries all of this too",
       "never compare sheets, in either phase" in cc and "settles no codes" in cc)
 
