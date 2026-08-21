@@ -4,7 +4,7 @@
 Checks every number the instrument asserts about itself against the artifacts,
 and re-derives each agreement statistic from an independent implementation.
 """
-import csv, math, re, sys, itertools
+import csv, hashlib, math, re, sys, itertools
 from collections import Counter
 from pathlib import Path
 sys.path.insert(0, str(Path("audit").resolve()))
@@ -488,6 +488,12 @@ if _p6 is not None:
               and not re.fullmatch(r"\|-*\|-*\||\| Version \| Date \|", l.strip())]
     check("every rule line in PART 6 appears verbatim in CODEBOOK.md",
           not _stray, f"{len(_stray)} stray: {_stray[:2]}")
+# The deposit references the coder manual in several places, so a change to it
+# after registration is a recordable deviation even when no rule moves.
+check("the manual's restructuring is recorded in the deviations table",
+      "coder-facing manual" in pr and "restructured after this registration" in pr)
+check("the record states the authored-template caveat rather than glossing it",
+      "authored template text held in" in pr and "presentation effects are real" in pr)
 check("the cheat sheet is generated, not hand-written",
       "build_cheatsheet" in (A/"make-coder-manual.py").read_text(encoding="utf-8")
       and "`f1_strata` — F1" in cc and "`f4_regeneration` — F4" in cc)
@@ -611,10 +617,38 @@ if zp.is_file():
           and "NonCommercial clause would prohibit" in flat
           and "NoDerivatives clause would prohibit" in flat
           and not re.search(r"^Creative Commons Attribution-(Non|No)", lic, re.M))
-    check("the bundle matches the working tree byte for byte",
-          all(zipfile.ZipFile(zp).read(n) == (A / Path(n).name).read_bytes()
-              for n in names
-              if not n.endswith(("/", "MANIFEST.txt", "LICENSE.txt"))))
+    # The bundle is the FROZEN record of what was registered on 21 Aug 2026.
+    # The working tree is the LIVING document. From the first deviation onward
+    # they diverge by design -- a deviations table that could never be appended
+    # to after freezing would be useless. So the invariant is not that they stay
+    # identical; it is that the frozen record never moves, and that the drift is
+    # confined to added deviation rows.
+    FROZEN_SHA = "80f8bc97eba185b6ba15bfda23affe1e4e72226384dd6a329fed427fc0064c38"
+    check("the deposited bundle has not been rebuilt or altered since registration",
+          hashlib.sha256(zp.read_bytes()).hexdigest() == FROZEN_SHA,
+          "sha256 pinned to the copy uploaded to OSF")
+    import difflib
+    drift = {}
+    for n in names:
+        if n.endswith(("/", "MANIFEST.txt", "LICENSE.txt")):
+            continue
+        frozen = zipfile.ZipFile(zp).read(n).decode("utf-8").splitlines()
+        live = (A / Path(n).name).read_text(encoding="utf-8").splitlines()
+        if frozen == live:
+            continue
+        d = list(difflib.unified_diff(frozen, live, lineterm="", n=0))
+        removed = [l for l in d if l.startswith("-") and not l.startswith("---")]
+        added = [l for l in d if l.startswith("+") and not l.startswith("+++")]
+        drift[Path(n).name] = (added, removed)
+    check("nothing has been removed from or rewritten in a deposited file",
+          not any(rem for _, rem in drift.values()),
+          str({k: len(v[1]) for k, v in drift.items() if v[1]}) or "no removals")
+    bad_add = {k: [a for a in add if not a.startswith("+| 2026-")]
+               for k, (add, _) in drift.items()}
+    bad_add = {k: v for k, v in bad_add.items() if v}
+    check("every change to a deposited file is a dated deviation row",
+          not bad_add, str({k: v[:1] for k, v in bad_add.items()}) or
+          f"drift confined to {sum(len(a) for a, _ in drift.values())} deviation row(s)")
 else:
     print("  SKIP  deposit bundle not built yet")
 
