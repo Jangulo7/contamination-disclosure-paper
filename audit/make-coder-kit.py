@@ -278,6 +278,14 @@ def main() -> int:
         print(f"wrote {d.relative_to(HERE.parent)}/  "
               f"({len(wl)} main-pass + {len(order.PILOT)} pilot, codebook {version})")
 
+    # One zip per coder, built here rather than by hand. This function starts by
+    # deleting coder-kit/ wholesale, so a zip made by hand inside it survives
+    # exactly until the next run -- which is how the first pair went missing.
+    # Building them here means they always exist and always match the folders.
+    import shutil as _sh
+    for coder in CODERS:
+        _sh.make_archive(str(OUT / f"coder-pack-{coder}"), "zip", str(OUT), coder)
+
     # Provenance. The kit is a build product and is deliberately not tracked --
     # every byte of it derives from tracked files, so a tracked copy would add
     # no information and would invite someone editing the copy instead of the
@@ -311,6 +319,10 @@ def main() -> int:
         for f in sorted((OUT / coder).iterdir()):
             h = hashlib.sha256(f.read_bytes()).hexdigest()[:16]
             print(f"  {h}  {f.relative_to(HERE.parent)}")
+    for coder in CODERS:
+        z = OUT / f"coder-pack-{coder}.zip"
+        print(f"  {hashlib.sha256(z.read_bytes()).hexdigest()[:16]}  "
+              f"{z.relative_to(HERE.parent)}  ({z.stat().st_size / 1000:.1f} kB)")
     print("-" * 68)
     print("\nSend each coder their own folder and nothing else.")
     print("Do NOT send CODEBOOK.md, PRE-REGISTRATION.md or PROTOCOL.md.")
