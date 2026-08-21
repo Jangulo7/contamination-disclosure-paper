@@ -280,6 +280,17 @@ if tracked is not None:
         if re.search(r"/home/[a-z0-9_-]+/", s) and f != ".anon-patterns.example":
             bad.append(f)
     check("no tracked file contains a local home-directory path", not bad, str(bad))
+    # A released script must not hardcode the strings it searches for.
+    self_leak = []
+    for f in tracked:
+        if not f.endswith((".py", ".sh")): continue
+        try: s = Path(f).read_text(encoding="utf-8", errors="ignore")
+        except Exception: continue
+        for pat in (r"/home/[a-z0-9_-]+/", r"/Users/[A-Za-z0-9_-]+/",
+                    r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"):
+            if re.search(pat, s): self_leak.append(f)
+    check("no released script hardcodes an identity it is searching for",
+          not self_leak, str(sorted(set(self_leak))))
 
 print("\n== 12. Cross-document consistency ==")
 # A fact stated in more than one file must be stated the same way in all of
@@ -480,7 +491,13 @@ check("PROTOCOL.md is inside its own freeze list",
 ident = []
 for f in DEPOSIT:
     d = (A/f).read_text(encoding="utf-8", errors="ignore")
-    for pat in (r"/home/[a-z0-9_-]+/", r"\bhana77\b", r"@[a-z]+\.(?:com|es|org)\b"):
+    # Generic patterns only. A released check must not hardcode the very strings
+    # it is looking for -- a script naming its author's login is the leak it
+    # exists to catch. Identity-specific patterns live in .anon-patterns, which
+    # is untracked for exactly this reason; check-anonymity.sh reads them.
+    for pat in (r"/home/[a-z0-9_-]+/", r"/Users/[A-Za-z0-9_-]+/",
+                r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",
+                r"\b[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]\b"):
         if re.search(pat, d): ident.append(f"{f}:{pat}")
 check("no deposit file carries a path, username or email", not ident, str(ident))
 check("frame.csv is the 50-document frame plus capped and reserve rows",
