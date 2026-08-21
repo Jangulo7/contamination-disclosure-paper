@@ -555,6 +555,14 @@ check("the date_published commitment in the deposit carries a date",
       promised is not None, promised.group(1) if promised else "no date found")
 check("the same date is given in the registration",
       promised is not None and promised.group(1) in pr)
+# The licence the deposit is registered under must be the one the materials and
+# the paper claim. A registration under a different licence contradicts both.
+check("the released instrument states CC BY 4.0",
+      "CC BY 4.0" in rd, "audit/README.md")
+check("no deposit file claims a different licence",
+      not any(re.search(r"\bGPL\b|General Public License|MIT License|Apache License",
+                        (A/f).read_text(encoding="utf-8", errors="ignore"))
+              for f in DEPOSIT))
 check("frame.csv is the 50-document frame plus capped and reserve rows",
       len(frame) == 77 and len(draw) == 50)
 
