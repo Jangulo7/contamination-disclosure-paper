@@ -33,8 +33,49 @@ an author team and a review process, so the effective sample is the number of
 
 ### The per-organisation cap
 
-Documents are capped at **5 per organisation** in the two census strata, taking
-the earliest IDs within each organisation. Applied 2026-08-12, before any coding.
+Documents are capped at **5 per organisation** in the two census strata. Applied
+2026-08-12, before any coding.
+
+**The rule, stated exactly** (v1.4; the v1.3 wording said "taking the earliest
+IDs within each organisation", which did not say *earliest of what*):
+
+> Within each organisation, retain the five documents with the **lowest
+> identifiers in `frame.csv`**. Identifiers were assigned in the order each
+> organisation's own public index enumerated its documents on 2026-08-12. That is
+> the index's display order. **It is not chronological for every organisation**,
+> and it is not claimed to be.
+
+**Two known skews, reported rather than removed.** A reader is entitled to know
+that "the five lowest identifiers" is not "the five most recent", because if the
+retained documents were systematically older the rates would describe an earlier
+state of the practice than the paper claims to describe.
+
+- **METR's index is near-chronological with one inversion.** `C01`–`C06` run in
+  descending date order (2026-05-19, 2026-05-08, 2026-03-25, 2026-03-12,
+  2025-10-28, 2025-10-23), so the cap retains the five most recent of those six
+  — but `C07` (`metr.org/blog/2026-06-26-…`), which is METR's **most recent**
+  document in the window, sits at position seven in the index and is therefore
+  **capped**. One document, named here so nobody has to find it.
+- **Google DeepMind's index has a smaller inversion**: `A14` Gemini 3.1 Pro,
+  `A15` Gemini 3.6 Flash, `A16` Gemini 3 Pro. All three are retained, so the cap
+  is unaffected; it is recorded because it is the same phenomenon.
+- **Meta's retained documents are the oldest in stratum A.** `A18` and `A19` are
+  the Llama 3.3 and Llama 3.1 model cards, which date from 2024. All three of
+  Meta's documents are retained — the cap does not bind for Meta — so this is a
+  property of the census window rather than of the cap, but it has the same
+  consequence for interpretation and belongs in the same place.
+
+**`date_published` — pre-declared, added by 23 August 2026.** A
+`date_published` column is being added to `frame.csv` for every row, capped and
+reserve rows included, so that the skews above are *data* rather than prose and
+any reader can re-analyse under a date-based alternative to the cap. It is
+declared here, dated, rather than added quietly later. It affects **no inclusion
+decision, no cap, no code and no hypothesis**; it is metadata. Per stratum, the
+median and range of publication date will be reported alongside the rates.
+
+**Any analysis by date is exploratory and must be labelled as such.** At *n* = 50
+over 27 clusters it will not support an inference, and it must not become a
+fourth hypothesis.
 
 This was chosen over capping by ID order, which was the rule originally written
 down. Checked against the widened frame, the ID rule would have taken the first
@@ -63,9 +104,9 @@ what was in it. Every one of the 15 is listed below and every one is still in
 
 | Missing IDs | Organisation | Why |
 |---|---|---|
-| `A06`–`A09` | Anthropic | 9 system cards in the stratum A window; the 5 earliest are drawn, these 4 are capped |
-| `C06`–`C15` | METR | 15 third-party evaluations in the stratum C window; the 5 earliest are drawn, these 10 are capped |
-| `C21` | UK AISI | 6 evaluations in the window; the 5 earliest are drawn, this one is capped |
+| `A06`–`A09` | Anthropic | 9 system cards in the stratum A window; the 5 lowest-identifier documents are drawn, these 4 are capped |
+| `C06`–`C15` | METR | 15 third-party evaluations in the stratum C window; the 5 lowest-identifier documents are drawn, these 10 are capped — including `C07`, METR's most recent, see the cap rule above |
+| `C21` | UK AISI | 6 evaluations in the window; the 5 lowest-identifier documents are drawn, this one is capped |
 
 Nothing else is absent. Stratum B is contiguous (`B01`–`B20`) because the cap
 does not apply to it: stratum B clusters on the *paper*, not the organisation,

@@ -75,8 +75,9 @@ best-practice-anywhere, biases upward and is rejected.
 Eight variables per document — F1 strata, F2 elicitation budget, five
 contamination types, F4 regeneration — each on `2` reported / `1` partial / `0`
 absent, with `NA` for not-applicable. Operational definitions and worked examples:
-`CODEBOOK.md`, frozen at v1.0 and since amended to v1.3 under the stated
+`CODEBOOK.md`, frozen at v1.0 and since amended to **v1.4** under the stated
 amendment procedure; every change is in that file's changelog and in §9 below.
+Every amendment to date was made before any document was coded.
 
 The codebook may be amended **once**, after the pilot and before the main pass,
 with the amendment recorded in its changelog and all pilot documents recoded.
@@ -92,11 +93,14 @@ from their coder label) so that calibration drift does not correlate across
 coders. *(Amended — see §9, 2026-08-17. As frozen this read "seeded from their
 initials".)*
 
-Two coders, independently, no discussion until both finish. Nine-document pilot,
-then reconciliation of the rules, then the remaining documents. *(Amended — see
-§9, 2026-08-16. As frozen this read "Ten-document pilot"; the enumerated set
-`A01`, `B01`–`B04`, `C01`–`C04` has always been nine documents, so the figure
-was a miscount rather than a design change.)*
+Two coders, independently, no discussion until both finish. Nine-document pilot
+— `A01`, `A10`, `A14`, `B01`, `B02`, `B03`, `C01`, `C16`, `C22` — then
+reconciliation of the rules **if a rule was at fault**, then the remaining 41
+documents. *(Amended twice. See §9, 2026-08-16: as frozen this read
+"Ten-document pilot"; the enumerated set `A01`, `B01`–`B04`, `C01`–`C04` has
+always been nine documents, so the figure was a miscount rather than a design
+change. And §9, 2026-08-21: the set was rebalanced to three documents per
+stratum by a stated mechanical rule, the count unchanged at nine.)*
 
 Agreement is computed from the independent sheets **before** any reconciliation.
 Disclosure rates are computed from the reconciled sheet. Both are reported. The
@@ -107,8 +111,13 @@ a secondary. *(Clarified — see §9, 2026-08-16.)*
 
 Coder independence is a stated threat to validity: if both coders are authors of
 the taxonomy, the paper says so in its limitations. *(Strengthened to a
-requirement — see §9, 2026-08-16. As run, one coder is drawn from the design
-team and one is an independent researcher external to it who is not an author.)*
+requirement — see §9, 2026-08-16. **As run the study exceeds the requirement —
+see §9, 2026-08-21:** both coders, `R1` and `R2`, are external to the design
+team, neither designed the taxonomy or the codebook they applied, neither is an
+author, and both were briefed from `CODEBOOK-CODER.md` and nothing else.
+Adjudication is performed by a member of the design team who does not code and
+who acts only after the agreement statistics have been computed; the role and its
+four conditions are registered in `CODEBOOK.md` §5.4.)*
 
 ## 7. Analysis
 
@@ -139,11 +148,25 @@ is a real limitation of the design and is stated in the paper, not smoothed over
   seed 20260812) — the primary statistic, because the scale is ordinal and a
   0-vs-2 disagreement is worse than a 1-vs-2, which unweighted κ cannot see
 - unweighted Cohen's κ
-- Gwet's AC1 and PABAK
+- **Gwet's AC2** — the prevalence-robust companion, computed under the *same*
+  weight matrix as the primary κ
+- Gwet's AC1 and PABAK, unweighted, retained for continuity
+- the full 4×4 confusion matrix per variable
+- the proportion of bootstrap resamples on which κ was defined
 
 `NA` participates as an unordered fourth category at maximum disagreement weight
 against any numeric code: coders disagreeing about whether a field applies is a
-genuine reliability problem, not a cell to drop.
+genuine reliability problem, not a cell to drop. The full matrix is
+`w(0,1) = w(1,2) = 0.5`, `w(0,2) = 1.0`, `w(NA, numeric) = 1.0`, `w(NA,NA) = 0`,
+and it can only depress the reported agreement, never inflate it. The category
+count *Q* is fixed at 4 for AC1, AC2 and PABAK and is never counted from the
+observed codes. *(Both stated explicitly — see §9, 2026-08-21.)*
+
+**Denominators.** Agreement is computed on documents **both** coders included;
+disclosure rates on the adjudicated inclusion decision, over all included
+documents, pilot included; per-field rates additionally exclude `NA`. Documents
+the two coders disagreed about including are the hardest in the frame, so the
+reported κ is an **upper bound** and is described as one.
 
 **Intra-coder agreement** is reported alongside, from a five-document test-retest
 per coder, as a ceiling against which the inter-coder figure is read.
@@ -151,8 +174,10 @@ per coder, as a ceiling against which the inter-coder figure is read.
 All are reported whatever they show. The reason is decided in advance rather
 than after seeing which looks better: under the skew H1 predicts, κ collapses
 toward zero even at near-perfect agreement, so κ alone would misdescribe the
-result. Where κ and AC1 diverge by more than 0.2, the prevalence driving it is
-named in the text.
+result. **Where κ_w and AC2 diverge by more than 0.2**, the prevalence driving it
+is named in the text. *(Restated from "κ and AC1" — see §9, 2026-08-21: a
+weighted κ and an unweighted AC1 are not comparable, so the trigger was firing
+partly on the weighting rather than on prevalence.)*
 
 **Comparison.** H3 is a between-stratum comparison of F2 rates, reported as two
 proportions with organisation-clustered intervals and described qualitatively. No
@@ -180,8 +205,28 @@ match: the design can support "rarely reported" and a large F1/F2 gap, and canno
 support a fine-grained ordering among the five contamination types. No such
 ordering will be claimed.
 
+**Reported alongside every rate, fixed in advance:**
+
+- **the tie-break band** — each rate under both directions of the unresolved-cell
+  default, which is directional and is therefore neutralised rather than merely
+  declared;
+- **the adjudication envelope** — each rate under `R1`'s sheet, under `R2`'s
+  sheet, and adjudicated, plus a directional tally of every cell adjudication
+  moved and the extremal pair bounding what any adjudicator could have done;
+- **the inclusion-agreement rate**, with every one-sided exclusion named;
+- **the focal-evaluation agreement rate**, with every disagreement named and the
+  numbered edge rule that resolved it;
+- **rates with and without the nine pilot documents**;
+- **F2 recomputed** under the v1.3 named-harness threshold and under every cut
+  point of the sub-element count.
+
+All of these are computed by `score.py` from data already collected; none is a
+new analysis and none may be added or dropped after the numbers are seen.
+
 No other subgroup analysis is planned. Any that appears later is exploratory and
-labelled as such.
+labelled as such — including anything using `date_published`, which at *n* = 50
+over 27 clusters cannot support an inference and must not become a fourth
+hypothesis.
 
 ## 8. What would falsify the paper's premise
 
@@ -189,7 +234,7 @@ If F2 and F4 are reported at 50% or more across strata, H1 fails and the claim
 that these fields are "rarely reported" is wrong. That result gets reported in
 the abstract, not buried.
 
-If per-category agreement is poor on a prevalence-robust measure — AC1 below
+If per-category agreement is poor on a prevalence-robust measure — **AC2** below
 about 0.6 on categories that are not vanishingly rare — the taxonomy is not
 reliably applicable by independent coders, which is a finding about the
 taxonomy and is reported as one.
@@ -222,6 +267,8 @@ release-quality, not supporting material:
 - both coders' **raw** independent sheets, unedited
 - the adjudication log and `exclusions.csv`
 - `score.py` and its selftest output
+- `PROTOCOL.md`, which this registration depends on for the sample-cut rule
+  (§8b) and which is therefore frozen and deposited with the rest
 - this pre-registration, with any deviations recorded
 
 Deposited together with a DOI. Under the anonymity constraint in `PROTOCOL.md`,
@@ -257,7 +304,11 @@ Each deviation is recorded here with its date and reason. The codebook carries
 the same history in its own changelog; this table is the authoritative record of
 what changed relative to the frozen design.
 
-All of the entries below were made **before any document was coded**, pilot included. None is a response to a result.
+All of the entries below were made **before any document was coded, pilot
+included**. None is a response to a result. That sentence is the entire defence of
+these amendments, and it stops being true the moment a coder opens the first
+document — which is why v1.4 was completed in a single pass before the worklists
+were generated.
 
 | Date | Deviation | Reason |
 |---|---|---|
@@ -270,3 +321,23 @@ All of the entries below were made **before any document was coded**, pilot incl
 | 2026-08-16 | `evidence` and `codebook_version` columns added to the coding sheet; the sheet made authoritative for exclusions, with `exclusions.csv` generated from it by `score.py --write-exclusions`. | `evidence` lets a third party spot-check any non-zero code against its source, which is the property the specification demands of everyone else. Two hand-maintained copies of the exclusion list drift, and the drift is invisible until someone recomputes a denominator. |
 | 2026-08-16 | Coder independence changed from a preference to a **requirement**, and recorded as met. | A preference that might not be met is worth much less than a requirement that was. As run: one coder from the design team, one independent researcher external to it who took no part in designing the taxonomy or the codebook, and who is not an author. |
 | 2026-08-17 | Coder labels changed from initials to roles: `CD` (design-team coder) and `IC` (independent coder); sheets and `order.py` seeds use these. | Initials of a real person are identifying, both in a public release and in a double-blind submission. Role labels are identity-free, and because `order.py` seeds the document order from the label, a third party can now regenerate either coder's order without being told who coded what. Naming only: no coding rule, scale or analysis decision changed. |
+| 2026-08-21 | **Codebook v1.4**, a single pre-pilot pass closing every open rule. The rows below itemise it. | Collaborator review raised eight operational ambiguities and one analysis inconsistency. A rule settled after the documents or the first disagreements have been seen invites the question of whether the result influenced it; settling all of them in one dated pass, before any coding, forecloses that question. Loose amendments are what this paper argues against. |
+| 2026-08-21 | Nine numbered **focal-evaluation edge rules** (E1–E9), covering front matter, comparison models, aggregate rows, unlabelled figures, ties, **irrevocability once chosen**, and global versus partial versus conflicting scope. Focal disagreements are resolved by naming the rule that decides them, and the count is reported. | The frozen rule box decided most documents and none of the three cases the reviewers raised, in the genre where the coders were most likely to diverge. Irrevocability is not in the reviewers' list: without it a coder who finds a well-documented evaluation on page 40 has a standing reason to re-designate, and every code drifts upward invisibly. The focal choice decides what every other code in the row is about, so it is the largest discretionary lever in the study and is closed by rule rather than by preference. |
+| 2026-08-21 | **One-sided exclusion** rule and denominators fixed: inclusion coded on both sheets and reported as a statistic; agreement computed on documents both coders included; unresolvable one-sided exclusions default to **include**. | The frozen design deferred this to adjudication, which is a denominator settled after the fact. The default runs opposite to the code-level tie-break on purpose: exclusion is the decision with more latitude, since a coder who finds nothing can make a document disappear rather than code it `0`. Each default closes the looser option. |
+| 2026-08-21 | Stated that documents dropped from agreement for inclusion disagreement make the reported κ an **upper bound**, with the count and identifiers printed. | These are by construction the hardest documents in the frame. Stating the direction is worth more than leaving a reader to derive it. |
+| 2026-08-21 | **`t5` scope** stated: it codes what the system could reach during the run, whatever the resource and whenever it was assembled. | Without it the instrument and the taxonomy's prior-access/acquired-access axis disagree about a retrieval index built before the run — the instrument would send it to `t5`, the taxonomy to Types 1–4. Coders now need decide nothing about where information was stored. |
+| 2026-08-21 | **F2 sub-element (i) broadened** to a named harness, **or** a version-pinned public code artifact, **or** a bespoke scaffold stating all three of loop, tool set and stopping condition. All five sub-elements recorded in `f2_notes` for every document in a fixed format; `score.py --f2-threshold` recomputes under the v1.3 rule or any other. | The frozen rule required a named harness, so a paper releasing a repository pinned to a commit with attempts and budget scored `1` while a system card writing "evaluated with Inspect, single attempt" scored `2` — the more reproducible document scoring lower. The two genres under comparison have different idioms for the same information, so that is differential measurement error aligned with the direction of H3. **The amendment makes H1 easier to falsify and H3 harder to confirm, and is adopted for that reason as well as on the merits.** The three-of-three scaffold checklist is deliberate: "enough detail to rebuild it" would be a coder's judgement about a counterfactual, introduced days before the pilot into the field the primary contrast depends on. |
+| 2026-08-21 | **Pilot rebalanced** from `A01`, `B01`–`B04`, `C01`–`C04` to `A01 A10 A14`, `B01 B02 B03`, `C01 C16 C22`, by a stated mechanical rule. Count unchanged at nine. | Two reasons. The frozen set held one system card, the genre where the focal rule does the most work; the new set holds three, across three genres and six of the seven organisations. And the frozen set placed **four of METR's five documents** in the pilot, which would have left that cluster with one document in the main pass and rested part of the primary κ on a cluster that had all but vanished from it. The new set leaves every organisation at least two main-pass documents. A calibration pilot is purposive by design — its job is to stress the rules, not to estimate — and the selection rule is stated so that anyone can regenerate it. |
+| 2026-08-21 | Stated that **disclosure rates use all included documents**, pilot included, from the adjudicated sheet, and that only the primary agreement statistic excludes the pilot; rates additionally reported with the pilot excluded. | A purposive pilot could otherwise be read as biasing a rate. It cannot: agreement is not a population estimate, and the rates never excluded the pilot. This was implicit and is now explicit, because it is the first thing a careful reader will ask about a non-random pilot. The robustness line is added because pilot rows were coded after discussion and main-pass rows were not. |
+| 2026-08-21 | A pilot that surfaces **no rule defect leaves the version unmoved**, recorded as a dated line here; the test is whether a rule was at fault, never whether the schedule is tight. | Written before the pilot so that it cannot be decided under time pressure after it. |
+| 2026-08-21 | **The first author acts as adjudicator and does not code.** Registered with four conditions: does not code; acts only after the agreement statistics are computed; resolves cells in randomised order blind to running totals; and publishes the envelope — rates under each coder's sheet and adjudicated, a directional tally of adjudicated cells, and the extremal pair. | A second external coder became available, so the design-team member is no longer needed as a coder and is better used where a judgement with an audit trail beats a mechanical default. The registered fallback — every unresolved cell to the lower code — is *directional*, and low disclosure rates are what H1 predicts; an informed adjudicator whose every move is published is less biased than a rule that pushes all ambiguity toward the predicted answer. The headline result is untouched by construction: the primary κ is computed before adjudication begins. The residual is that the adjudicator is an author who knows the hypotheses; that is stated rather than engineered away, and conditions 2–4 are the mitigations. |
+| 2026-08-21 | **Both coders are external to the design team**, neither is an author, and **both** are briefed from `CODEBOOK-CODER.md` and nothing else; the full codebook is read by the adjudicator. | The registered requirement was that *at least one* coder must not have designed the taxonomy. The study now exceeds it. Under v1.3 the design-team coder could read the full codebook, hypotheses included; extending the briefing rule to both closes the last channel by which the expected result could reach someone assigning codes. This strengthens the claim the agreement statistic supports and is reported as such. |
+| 2026-08-21 | Coder labels changed from `CD`/`IC` to **`R1`/`R2`**; sheets, `order.py` seeds and both coding orders change with them. | `CD` abbreviated "the coder drawn from the design team", a role that no longer exists, so the label could not simply be redefined — a false label is worse than an ugly one. The coders are now symmetric and `R1`/`R2` are the reliability literature's own symmetric terms; `R` rather than `C` avoids visual collision with document identifiers `C01`–`C26`. Free before worklists are generated, impossible afterwards. |
+| 2026-08-21 | **Weight matrix stated in full** with its direction of bias, and the category count *Q* **fixed at 4** rather than counted from the observed codes. | `w(NA, numeric) = 1.0` can only depress agreement, never inflate it, and is chosen for that reason. Counting observed categories made chance agreement depend on which codes happened to appear, so two variables in the same table were assessed against different chance models and were not comparable; it also made a prevalence-robust statistic move when a single cell changed. Fixing *Q* runs the flattering way — it raises AC1 and AC2 — and that direction is stated; the primary κ is unaffected either way. |
+| 2026-08-21 | **Gwet's AC2** added under the same weight matrix as the primary κ, as the prevalence-robust companion; the divergence rule restated as **κ_w versus AC2**. AC1 and PABAK retained for continuity. | If weighted κ is primary because the scale is ordinal, its prevalence-robust companion must be weighted too. The v1.3 rule compared a weighted κ against an unweighted AC1, so the registered 0.2 divergence trigger fired partly on the weighting difference rather than on prevalence. That was a defect in the analysis plan, not a preference. |
+| 2026-08-21 | Full **4×4 confusion matrices** released; the bootstrap reports the **proportion of resamples on which κ was defined**. | A reader who disputes the `NA` weighting can recompute from the matrix rather than disbelieve. κ is undefined whenever a resample lands on one category, which is exactly the skew case this study expects; discarding those resamples silently conditions the interval on κ being defined, and the proportion is itself evidence about the skew. |
+| 2026-08-21 | Every rate reported under **both tie-break directions**. | The lower-code default is kept — changing it now would be worse — and neutralised. Choosing the rule in advance answers the charge of tuning; it does not answer the charge of direction. |
+| 2026-08-21 | **`date_published` pre-declared** for `frame.csv`, to be added as a metadata column by 23 August 2026. The per-organisation cap wording is made exact in `SAMPLING-FRAME.md` in this pass. | Declared here rather than deferred silently. The column affects no inclusion decision, no cap, no code and no hypothesis; it exists so that the two known date skews — Meta's Llama cards dating from 2024, and METR's identifiers not being chronological — are reportable as data rather than as prose, and so that any reader can re-analyse under a date-based alternative to the cap. Any analysis by date is exploratory and labelled as such: at *n* = 50 over 27 clusters it will not support an inference and must not become a fourth hypothesis. |
+| 2026-08-21 | `PROTOCOL.md` added to the **frozen deposit** and to the freeze list; its stale document counts and its coder-sheet naming instruction corrected. | §8b of this registration leans on `PROTOCOL.md` for the sample-cut rule, and a registration that leans on an unfrozen document is the exact defect this instrument exists to avoid. The naming instruction told coders to save sheets under their own initials, contradicting the identity-free labelling rule adopted at 1.2 and restated at 1.3. |
+| 2026-08-21 | The 1.3 changelog row's description of itself as a "post-pilot amendment" corrected to **pre-pilot**. | The pilot had not run at 1.3 and has not run at 1.4. The claim standing at the head of this table is that no entry followed any coding; a row describing itself as post-pilot contradicted it. |
+| 2026-08-21 | **The coding window is fixed at 22–24 August 2026.** The v1.4 freeze and the timestamped deposit both precede the first coded document. | Recorded so that the claim standing at the head of this table is dateable rather than asserted: the deposit carries a timestamp, and every document was coded after it. Three days rather than six finishes the coding on the 24th and leaves four clear days before the 29 August deadline for adjudication, scoring, the page-budget compile and the anonymised mirror — the two failure modes that historically arrive too late to fix. **How each coder distributes their 9.3–10.8 hours across the window is left to them**, since nothing in the design depends on it; only the ordering is fixed, and only where the design depends on it — the pilot precedes the comparison in `PROTOCOL.md` step 4, and the test–retest follows the main pass. Both coders are told in advance to say on the 22nd rather than the 24th if three days proves insufficient. The documents are a closed list of 50, enumerated with links in `ANNEX-DOCUMENTS.md`, closed on 12 August 2026 and unchanged. |

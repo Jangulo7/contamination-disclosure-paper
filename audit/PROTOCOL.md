@@ -8,8 +8,47 @@ scores, and for each one we write down whether it tells the reader four things.
 Then we check whether two people, working separately, wrote down the same
 answers.
 
-**Total effort: about 30–36 person-hours**, i.e. roughly 15–18 hours each for two
-people. Over 8 working days that is under two hours a day each.
+## The dates
+
+**The coding runs 22–24 August 2026.** The codebook is frozen and deposited
+before either coder opens a document, and it does not change after that except by
+the pilot rule in Step 4.
+
+**Total effort per coder: 9.3–10.8 hours** — 0.75 h reading the manual, 1.5 h on
+the nine-document pilot, 6.8 h on the 41-document main pass, 1 h on the
+test–retest, and 1.5 h more only if the pilot bumps the codebook version.
+
+**How you spread those hours across the three days is yours to decide.** Only two
+things are fixed, and they are fixed because the design depends on them, not for
+scheduling reasons:
+
+1. **The pilot comes first**, and both coders finish it before either looks at
+   the comparison in Step 4. Everything else waits on that, because the pilot is
+   what settles whether the manual needs amending.
+2. **The test–retest is last**, after your main pass is complete.
+
+Beyond that, work when it suits you.
+
+**One caution, which is about quality rather than about time.** Coding tired is
+how a `0` starts to mean *I did not notice* instead of *I searched and it is not
+there*, and that is the one failure this design cannot recover from. Prefer
+shorter sittings to long ones. **If three days turns out not to be enough, say so
+on the 22nd rather than on the 24th** — the deadline is the 29th and there is
+room, but only if we know early.
+
+Everything after the 24th — adjudication, scoring, writing up — belongs to the
+person running the study, not to the coders.
+
+## Where the documents are
+
+**All 50 documents, with a working link for each, are listed in
+[`ANNEX-DOCUMENTS.md`](ANNEX-DOCUMENTS.md).** That file is the complete list.
+You do not have to find anything yourself, and you must not add anything to it:
+the list was closed on 12 August and is part of the registration.
+
+`ANNEX-DOCUMENTS.md` is a reference list in identifier order. Your personal
+worklist — the same documents, in *your* randomised order, as a tick-list — comes
+from `order.py` in Step 5.
 
 ---
 
@@ -17,23 +56,41 @@ people. Over 8 working days that is under two hours a day each.
 
 ### Step 0 · Decide who codes — 15 minutes
 
-Two people, and **at least one of them must not have invented the taxonomy.**
-This is a requirement, not a preference: if the person who designed the
-categories is the only one testing whether the categories are usable, the test
-proves very little. As run, coder `CD` is drawn from the design team and coder
-`IC` is an independent researcher external to it who took no part in designing
-the taxonomy or this manual, and who is not an author. If you cannot meet the
-split, the paper must say so in the sentence that reports the agreement figure.
+**Three roles: two coders and one adjudicator.** All three are fixed now, in
+writing, before anything is coded.
 
-Coders are referred to by label throughout — `CD` and `IC` — and sheets are
-saved under those labels, never under initials or names. The mapping from label
-to person is not part of the released materials, and `order.py` seeds each
+**The two coders.** The requirement is that **at least one of them must not have
+invented the taxonomy** — not a preference, because if the person who designed
+the categories is the only one testing whether the categories are usable, the
+test proves very little. **As run the study exceeds the requirement: both coders,
+`R1` and `R2`, are external to the design team.** Neither designed the taxonomy
+or this manual, neither is an author, and both are briefed from
+`CODEBOOK-CODER.md` and nothing else (step 2). If you cannot meet the split, the
+paper must say so in the sentence that reports the agreement figure.
+
+**The adjudicator.** A member of the design team, who **does not code**. They
+resolve disagreements at step 7, only after the agreement statistics have already
+been computed at step 6, so the headline result is untouched by them. They are
+the one person on the study who reads the full `CODEBOOK.md`. Their four
+conditions are in `CODEBOOK.md` §5.4 and they are checkable from the released
+materials, not taken on trust. Name the adjudicator now: naming them once you can
+see which cells are contested is the same defect as choosing a tie-break rule
+then.
+
+Coders are referred to by label throughout — `R1` and `R2` — and sheets are
+saved under those labels, **never under initials or names**. The mapping from
+label to person is not part of the released materials, and `order.py` seeds each
 coder's document order from the label, so a third party can regenerate either
 order without being told who coded what.
 
-Write down which person holds which label. Do not change this later.
+Write down which person holds which label, and who adjudicates. Do not change
+this later.
 
 ### Step 1 · The document list is closed — 0 hours
+
+> **The list is [`ANNEX-DOCUMENTS.md`](ANNEX-DOCUMENTS.md).** All 50 documents,
+> each with a link that was checked on 12 August 2026. Nothing else is in the
+> study and nothing may be added.
 
 The frame was widened on 12 August to add Google DeepMind and Meta system cards
 and UK AISI and Apollo Research reports, then capped at 5 documents per
@@ -47,6 +104,24 @@ limits this design is the number of organisations, not the number of documents.
 **It is now closed.** Adding documents once you can see how the numbers are
 coming out is a different and much weaker study. If the frame has to change, the
 change goes in `PRE-REGISTRATION.md` §9 with a date and a reason.
+
+### Step 1b · Build and send the coder packs — 10 minutes
+
+After the freeze, never before:
+
+```bash
+python3 audit/make-coder-kit.py
+```
+
+This writes `coder-kit/R1/` and `coder-kit/R2/`. **Send each coder their whole
+folder and nothing else.** Each pack is self-contained — the coder installs
+nothing and runs no commands. It carries `START-HERE.md` (with the nine pilot
+documents listed in full), the coder manual, the documents annex with the pilot
+rows marked, their own randomised worklist, and their answer sheet already
+labelled and versioned.
+
+Do **not** send `CODEBOOK.md`, `PRE-REGISTRATION.md`, this protocol, or
+`frame.csv` — see step 2.
 
 ### Step 2 · Both coders read the codebook — 45 minutes each
 
@@ -77,18 +152,23 @@ two coders disagree. Fifteen minutes there saves several later.
 
 ### Step 3 · Code 9 documents each, separately — 2 hours each
 
-The nine pilot documents are `A01`, `B01`–`B04`, `C01`–`C04`. They are
+The nine pilot documents are `A01`, `A10`, `A14`, `B01`, `B02`, `B03`, `C01`,
+`C16`, `C22` — three system cards, three benchmark papers, three third-party
+reports, from six of the seven organisations. The rule that generates them
+(`CODEBOOK.md` §5.2) is the lowest-numbered document from each of the first three
+organisations in each census stratum, plus the first three stratum-B documents,
+so anyone can regenerate the set from `frame.csv`. They are
 **excluded from the primary kappa**: in Step 4 you discuss every disagreement on
 them and recode them, so agreement here is a property of that discussion rather
 than of the manual. `score.py` drops them automatically and prints a
 pilot-inclusive figure as a secondary. Links:
 
 ```bash
-python audit/order.py --coder CD --pilot
+python audit/order.py --coder R1 --pilot
 ```
 
 Every document in the study, with links, is listed in
-**[`ANNEX-DOCUMENTS.md`](ANNEX-DOCUMENTS.md)** — 13 system cards, 20 benchmark
+**[`ANNEX-DOCUMENTS.md`](ANNEX-DOCUMENTS.md)** — 15 system cards, 20 benchmark
 papers, 15 third-party reports, plus 12 reserves.
 
 Work alone. Do not talk to the other coder. Do not look at their sheet.
@@ -100,15 +180,28 @@ notice*. Archive a copy of each document as you go.
 
 Record which evaluation you coded in the `focal` column. A system card reports
 dozens of scores under different practice, so the codebook fixes which one counts
-(§1). If you and the other coder pick different focal evaluations, that surfaces
-as a disagreement to reconcile rather than hiding inside the codes.
+(§1, rule box plus edge rules E1–E9). If you and the other coder pick different
+focal evaluations, that surfaces as a disagreement to reconcile rather than
+hiding inside the codes — and it is not one cell, it means the two rows describe
+different evaluations, so it is reported as its own count.
 
-Save your answers as `codes-<your initials>.csv`, using `coding-sheet.csv` as the
-template. One row per document.
+Fill in **`f2_notes` on every row**, including rows you code `0`. It is five
+characters in the fixed format of `CODEBOOK.md` §4 (F2) — the sub-element record
+— optionally followed by a space and any note. `score.py` refuses a sheet where
+it is missing or malformed, because without it the F2 threshold is not
+recomputable.
+
+Fill in **`evidence` for every non-zero code**: a section, a page, or a short
+quoted phrase. `score.py` refuses a sheet without it. It is the column that lets
+a third party spot-check the audit.
+
+Save your answers as **`codes-R1.csv`** or **`codes-R2.csv`** — your label, never
+your initials or your name (step 0) — using `coding-sheet.csv` as the template.
+One row per document.
 
 ### Step 4 · Compare and fix the codebook — 1 hour together
 
-**Run the script on the pilot before you reconcile.** Ten documents coded
+**Run the script on the pilot before you reconcile.** Nine documents coded
 independently already yield a weighted kappa, and one sentence carrying that
 number moves the paper from "instrument released" to "instrument shown to work".
 Every number in the paper comes from the macro block at the top of `main.tex`
@@ -122,9 +215,17 @@ unclear, or did one of us make a mistake?*
 - Rule unclear → change the codebook, and write the change in its changelog.
 - Simple mistake → leave the codebook alone.
 
-Then bump the codebook version to 1.1 and **recode all 10 pilot documents** under
-the new rules. This is not wasted work; it is what stops you discovering a broken
-rule after all 65 are done.
+**If — and only if — a rule was at fault**, bump the codebook version to 1.5 and
+**recode all nine pilot documents** under the new rules. This is not wasted work;
+it is what stops you discovering a broken rule after all 50 are done.
+
+**If no rule was at fault**, the codebook stays at 1.4, nothing is recoded, and
+the pilot codes stand. Record that outcome as a dated line in
+`PRE-REGISTRATION.md` §9 — *"pilot conducted <date>; all disagreements traced to
+coder error rather than rule ambiguity; no amendment"*. It is a legitimate and
+reportable result, not a shortcut. **The test is whether a rule was at fault,
+never whether the schedule is tight.** That distinction is written down here,
+before the pilot, precisely so it cannot be made under time pressure afterwards.
 
 ---
 
@@ -137,7 +238,8 @@ Same rules. Alone. No discussion until you are both completely finished.
 **Work in your own order.** Generate a tick-list with links and keep it open:
 
 ```bash
-python audit/order.py --coder CD --markdown > worklist-CD.md
+python audit/order.py --coder R1 --markdown > worklist-R1.md
+python audit/order.py --coder R2 --markdown > worklist-R2.md
 ```
 
 Not frame order. If you both work top-to-bottom you are both fresh on the same
@@ -171,10 +273,10 @@ Suggested pace: 8 documents a day each, five days.
 When you have finished everything else, re-code five documents:
 
 ```bash
-python audit/order.py --coder CD --retest
+python audit/order.py --coder R1 --retest
 ```
 
-Do not look at your earlier sheet. Save as `codes-CD-retest.csv`.
+Do not look at your earlier sheet. Save as `codes-R1-retest.csv` (or `codes-R2-retest.csv`).
 
 This measures whether you agree with *yourself*. It gives a ceiling: if you and
 the other coder agree 80% of the time but each of you only agrees with yourself
@@ -184,7 +286,7 @@ are doing better than the raw number suggests.
 ### Step 6 · Run the numbers — 15 minutes
 
 ```bash
-python audit/score.py --coder codes-CD.csv --coder codes-IC.csv --write-exclusions
+python audit/score.py --coder codes-R1.csv --coder codes-R2.csv --write-exclusions
 ```
 
 This prints, for each of the eight categories, how often you agreed and several
@@ -192,29 +294,60 @@ agreement scores, the headline one being linear-weighted kappa with a bootstrap
 interval. It also flags any blank or invalid cells, so run it once early
 just to check your sheets are well-formed.
 
-Two things it does that are easy to miss. It reports the **primary** figure on
-the main pass alone and the pilot-inclusive figure as a clearly labelled
-secondary, because the pilot documents were discussed and recoded — report both,
-and never quote the secondary as the headline. And `--write-exclusions`
-regenerates `exclusions.csv` from your two sheets, which is the only way that
-file should ever be written.
+Four things it does that are easy to miss.
+
+- It reports the **primary** figure on the main pass alone and the
+  pilot-inclusive figure as a clearly labelled secondary, because the pilot
+  documents were discussed and recoded — report both, and never quote the
+  secondary as the headline.
+- It reports **inclusion agreement** and names every document one of you
+  excluded and the other did not, before anything else, because that is what
+  sets the denominator.
+- It reports **focal agreement** separately, because a focal disagreement means
+  the two rows describe different evaluations rather than differing on one cell.
+- `--write-exclusions` regenerates `exclusions.csv` from your two sheets, which
+  is the only way that file should ever be written.
 
 **Do this before you reconcile anything.** The agreement number only means
 something if it comes from two genuinely independent sheets. Save the output.
 
-### Step 7 · Reconcile — 2 hours together
+### Step 7 · Adjudicate — 2 hours, adjudicator alone
 
-Now go through the disagreements and agree a final answer for each. Save it as
-`codes-final.csv`.
+The **adjudicator** named in step 0 — not either coder — goes through the
+disagreements and settles a final answer for each. Save it as `codes-final.csv`.
+
+Four rules govern how, all of them from `CODEBOOK.md` §5.4 and all of them
+checkable afterwards from the released sheets:
+
+1. **Only after step 6.** The agreement statistics must already be computed and
+   saved. That is what keeps the headline result untouched by adjudication.
+2. **In randomised cell order, blind to running totals.** Shuffle the disputed
+   cells; do not work through them grouped by stratum or by field, and do not
+   compute a rate part-way. No stratum-level or field-level number should be
+   visible while cells are being resolved.
+3. **Focal disagreements are resolved by rule.** Apply the §1 rule box and
+   E1–E9, and write the number of the rule that decided it into `notes`. A focal
+   resolution changes what the whole row is about, so it is not settled by
+   preference.
+4. **One-sided exclusions are resolved by reading the document** against the §2
+   inclusion test. If it cannot be settled, the document is **included and
+   coded**.
+
+Where a cell genuinely cannot be settled from the document, the registered
+tie-break applies: it takes the **lower** code. Count how often that happens.
 
 ```bash
-python audit/score.py --coder codes-CD.csv --coder codes-IC.csv \
+python audit/score.py --coder codes-R1.csv --coder codes-R2.csv \
                       --adjudicated codes-final.csv --latex
 ```
 
 Agreement statistics come from the two independent sheets. Disclosure rates come
-from the reconciled sheet. The `--latex` flag prints a table you can paste
-straight into the paper.
+from the adjudicated sheet. The script also prints the **tie-break band** — every
+rate under both directions — the **directional tally** of what adjudication
+moved, and the rates under each coder's sheet separately. All three go in the
+paper: they are what make the adjudicator's influence visible rather than
+asserted. The `--latex` flag prints a table you can paste straight into the
+paper.
 
 ---
 
@@ -353,8 +486,8 @@ an appendix. It needs to say:
 
 - how many documents, from where, and how they were chosen;
 - the disclosure rate per field, per stratum, with the intervals;
-- **how many organisations**, not just how many documents — 45 of the 65 come
-  from 7, and stratum C's 26 come from 3. Report "k organisations, n documents"
+- **how many organisations**, not just how many documents — 30 of the 50 come
+  from 7, and stratum C's 15 come from 3. Report "k organisations, n documents"
   and use the organisation-clustered intervals the script prints, not the Wilson
   ones beside them;
 - that the stratum comparison is **descriptive, not causal**: first-party versus
@@ -388,17 +521,23 @@ coherence rather than weakness.
 that almost nobody discloses, you will see something like *94% agreement but
 kappa = 0.03*. This looks alarming and is not. When almost every answer is "not
 disclosed", kappa mathematically collapses towards zero even when two coders
-agree almost perfectly. That is why the script also prints AC1, which does not
-have this problem. Say so in one sentence, or a reviewer will read the low kappa
-as "these categories do not work" — the opposite of what the data shows.
+agree almost perfectly. That is why the script also prints AC2 — Gwet's
+coefficient under the same weights as the primary kappa — which does not have
+this problem. Say so in one sentence, or a reviewer will read the low kappa as
+"these categories do not work" — the opposite of what the data shows. The script
+also prints the proportion of bootstrap resamples on which kappa was defined at
+all; if that is below 100%, quote it, because it is the same fact about skew
+seen from another angle.
 
 ### Step 9 · Deposit the artifacts — 2 to 3 hours
 
 Under the method framing these *are* the contribution, so they ship at release
 quality: the frame with its cluster column, the final codebook and its coder
-derivation, **both coders' raw sheets unedited**, the adjudication log,
-`exclusions.csv`, `score.py` with its selftest output, and the pre-registration
-with any deviations.
+derivation, **this protocol**, **both coders' raw sheets unedited**, the
+adjudication log — including the randomised cell order it was worked in, and the
+rule number recorded against every focal resolution — `exclusions.csv`,
+`score.py` with its selftest output, and the pre-registration with any
+deviations.
 
 Deposit together with a DOI — restricted or embargoed before submission, public
 after notification (see "Freezing the manual" above).
@@ -419,18 +558,40 @@ likely candidate.
 
 ## Suggested schedule
 
-Today is 12 August; the deadline is 29 August.
+The deadline is 29 August. This schedule is the one in force from the v1.4
+freeze; it replaces the 12 August draft.
 
-| Days | What | Hours each |
+**The coding is 22–24 August.** Everything else is arranged around it. The
+deadline is 29 August; this schedule replaces the 12 August draft.
+
+| Date | What | Who |
 |---|---|---|
-| 13 Aug | Steps 0–2: pick coders, settle the document list, deposit the frozen manual, read the codebook | 2.5 |
-| 14 Aug | Step 3: pilot, 9 documents | 2 |
-| 15 Aug | Step 4: compare, fix rules, recode the pilot | 1 |
-| 18–22 Aug | Step 5: main pass, 8 documents a day | 1.5/day |
-| 24 Aug | Step 5b: test–retest, 5 documents | 1 |
-| 25 Aug | Steps 6–7: run the script, reconcile | 2 |
-| 26–27 Aug | Step 8: write the section and the table | 2 |
-| 28 Aug | Steps 9–10: deposit artifacts, update limitations, fit pages, submit | 3 |
+| **21 Aug** | Freeze codebook v1.4 and this protocol. **Deposit both with a timestamp, before anything is coded.** Then generate the worklists (Step 5) — never before the freeze | running the study |
+| **22–24 Aug** | Steps 2–5b: read the manual, the nine-document pilot, Step 4 compare, the 41-document main pass, the test–retest. **Coders arrange their own hours**; the pilot comes first and the test–retest last | both coders |
+| **24 Aug** eve | Step 6: run the script. **Before anyone reconciles anything** | running the study |
+| **25 Aug** | Step 7: adjudicate, alone, in randomised cell order | adjudicator |
+| **25–26 Aug** | Step 8: fill the macros, write the results section and the table | running the study |
+| **26 Aug** | Mirror push, registration, logged-out verification, URL back into the paper | running the study |
+| **26 Aug** | **Full trial compile.** Re-measure the page budget with the real numbers in place | running the study |
+| **27 Aug** | Step 9: deposit the artifacts. Step 10: update the limitations | running the study |
+| **28 Aug** | Final compile, anonymity check, log check | running the study |
+| **29 Aug** | Submit | |
+
+Finishing the coding on the 24th rather than the 27th is the point of this
+arrangement: it buys four clear days between the last code and the deadline. Two
+of the three things that historically go wrong at the end — a page overflow found
+too late, and a mirror link that turns out to be dead or de-anonymising — need a
+browser and a compile, and both now have room.
+
+**Do not leave the browser work to the last day.** The anonymised mirror, its
+registration and the logged-out verification need an OAuth grant and a private
+window, and the resulting URL has to go back into the paper and be recompiled.
+
+**Re-measure the page budget on the 26th** once the numeric placeholders carry
+real values. As frozen, the body plus the Ethics Statement ends on page 8 of 8
+with four to five typeset lines of headroom; the trim order in
+`PENDING-STEPS.md` §D3 is there to be applied against a measurement rather than
+improvised at midnight.
 
 That leaves 29 August as slack. Use it as slack.
 
@@ -438,9 +599,16 @@ That leaves 29 August as slack. Use it as slack.
 
 ## Freezing the manual before you start
 
-Deposit `CODEBOOK.md`, `frame.csv`, `PRE-REGISTRATION.md` and `SAMPLING-FRAME.md`
-somewhere that timestamps them, **before the pilot opens**. A frozen codebook is
-only checkable if the freeze has a date attached.
+Deposit **`CODEBOOK.md`, `PROTOCOL.md`, `frame.csv`, `PRE-REGISTRATION.md` and
+`SAMPLING-FRAME.md`** somewhere that timestamps them, **before the pilot opens**.
+A frozen codebook is only checkable if the freeze has a date attached.
+
+**`PROTOCOL.md` — this file — is in the freeze list, and that is not a
+formality.** `PRE-REGISTRATION.md` §8b leans on the graceful-degradation rule
+below for the sample-cut decision, and a registration that leans on an unfrozen
+document is exactly the defect this instrument was built to avoid. Freeze it with
+the rest, deposit it with the rest, and list it in the mirror manifest with the
+rest. It was omitted from this list until v1.4.
 
 **One trap.** A public Zenodo deposit under your own name, describing this
 taxonomy, is itself a way for a reviewer to find you — it defeats the anonymised
@@ -460,11 +628,18 @@ is not.
 
 The study degrades gracefully. In order of what to drop:
 
-1. **Lower the per-organisation cap** from 5 to 3, taking earliest IDs within
-   each organisation. That gives roughly 30 documents and — crucially — keeps all
-   27 clusters, so nothing about the design changes except interval width.
+1. **Lower the per-organisation cap** from 5 to 3, retaining the three documents
+   with the **lowest identifiers in `frame.csv`** within each organisation (see
+   `SAMPLING-FRAME.md` for exactly what the identifier order is, and what it is
+   not). That gives **41 documents — 12 in stratum A, 20 in B, 9 in C** — and,
+   crucially, keeps all 27 clusters, so nothing about the design changes except
+   interval width. **Every pilot document survives this cut**, because each is
+   the lowest-numbered document in its organisation, so the pilot never has to be
+   redone.
 2. **Drop stratum B to 10** by taking the first 10 of the seeded permutation,
-   which is already a random draw. Say what n was and why.
+   which is already a random draw — but **keep `B01`, `B02` and `B03`
+   regardless**, because they are pilot documents and the pilot is never cut. Say
+   what n was and why.
 
 Never cut an organisation. Organisations are the clusters, and the cluster count
 is what the design rests on.

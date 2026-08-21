@@ -30,11 +30,22 @@ contamination-disclosure.pdf
 *~
 .vscode/
 
-# Working documents, deliberately untracked: kept beside the paper but not
-# part of the repository.
+# Working documents, deliberately untracked: kept in .private/ and not part of
+# the repository. The rule is simple — this repository tracks only what is
+# useful to a reviewer, which is the released audit instrument and the README
+# that points at it. Everything that is an operational note to ourselves lives
+# in .private/.
+#
+# PENDING-STEPS.md   our own to-do list; names dates, judgement calls and the
+#                    private mirror. Nothing a reviewer needs.
+# MIRROR-MANIFEST.md how the anonymisation is done — which, as its own text
+#                    says, is itself a signal. It also contained a local home
+#                    directory path, i.e. a username, in a tracked file.
 REVIEW-RESPONSE.md
 NEXT-STEPS.md
 OSF-Instructions.md
+PENDING-STEPS.md
+MIRROR-MANIFEST.md
 
 # ---------------------------------------------------------------------
 # Manuscript sources, deliberately UNTRACKED for the duration of the
@@ -63,3 +74,15 @@ README-arxiv.txt
 # of the submission or the released artifact.
 Contamination Disclosure Audit.pdf
 *Audit*.pdf
+__pycache__/
+
+# Archive snapshots taken by hand. `.private.zip` contains the whole private
+# directory and `.git.zip` the whole history including the author block — both
+# would be catastrophic to commit, and neither is reviewer-useful.
+*.zip
+
+# Per-coder packs, built by audit/make-coder-kit.py after the freeze. Derived
+# entirely from tracked files, and operational rather than reviewer-facing —
+# each folder is addressed to one named person and is sent to them directly.
+coder-kit/
+worklist-*.md

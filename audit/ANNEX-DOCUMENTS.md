@@ -6,7 +6,8 @@ Every document in the frame, with a live link. Verified 2026-08-12: all 77 URLs 
 order so that your fatigue does not correlate with the other coder's:
 
 ```bash
-python audit/order.py --coder CD --markdown > worklist-CD.md
+python audit/order.py --coder R1 --markdown > worklist-R1.md
+python audit/order.py --coder R2 --markdown > worklist-R2.md
 ```
 
 That produces the same links as a tick-list in your own sequence. Do the shared

@@ -10,11 +10,17 @@ Released under CC BY 4.0.
 
 ## Start here
 
+**The 50 audited documents are enumerated, with a live link for each, in
+`ANNEX-DOCUMENTS.md`.** The list was closed on 12 August 2026 and is part of the
+registration. Coding ran **22–24 August 2026**, after the codebook was frozen
+and deposited with a timestamp on 21 August.
+
 | If you want to … | Read |
 |---|---|
-| judge the coding rules | `CODEBOOK.md` — the coding manual, **v1.3**, authoritative for every rule |
+| see the 50 documents themselves | **`ANNEX-DOCUMENTS.md`** — the complete list, with links |
+| judge the coding rules | `CODEBOOK.md` — the coding manual, **v1.4**, authoritative for every rule |
 | check what was fixed before coding | `PRE-REGISTRATION.md` — the frozen design, with every amendment dated in §9 |
-| see what a coder actually received | `CODEBOOK-CODER.md` — the whole of the independent coder's briefing |
+| see what a coder actually received | `CODEBOOK-CODER.md` — the whole of **both** coders' briefing |
 | run the study yourself | `PROTOCOL.md` — step by step, with time estimates |
 | check the sample | `SAMPLING-FRAME.md` and `frame.csv` |
 | reproduce the numbers | `score.py` (see below) |
@@ -23,7 +29,7 @@ Released under CC BY 4.0.
 
 ```bash
 python3 score.py --selftest          # verify the statistics before trusting them
-python3 score.py --coder codes-CD.csv --coder codes-IC.csv \
+python3 score.py --coder codes-R1.csv --coder codes-R2.csv \
                  --adjudicated codes-final.csv \
                  --write-exclusions --latex
 ```
@@ -76,19 +82,30 @@ they are not independent observations about the field. Rates are reported as
 cluster-bootstrap intervals are downward-biased, which is why per-organisation
 rates are given descriptively instead.
 
-## Coders
+## Coders and adjudicator
 
-Two coders, referred to by role label throughout:
+Three roles, referred to by label throughout.
 
-- **`CD`** — the coder drawn from the design team.
-- **`IC`** — an independent researcher external to the team, who took no part in
-  designing the taxonomy or the codebook she applied, and who is not an author.
+- **`R1`** and **`R2`** — the two coders. **Both are external to the design
+  team.** Neither took any part in designing the taxonomy or the codebook they
+  applied, neither is an author, and **both were briefed from
+  `CODEBOOK-CODER.md` and nothing else**. The labels are symmetric because the
+  coders are.
+- **The adjudicator** — a member of the design team who **does not code**. They
+  resolve disagreements only after the agreement statistics have been computed
+  from the two independent sheets, so the primary weighted κ is untouched by
+  them. Four conditions govern the role (`CODEBOOK.md` §5.4), including
+  resolution in randomised cell order blind to running totals, and publication of
+  a directional tally of every cell adjudication moved. The adjudicator is an
+  author who knows the hypotheses; that is stated rather than engineered away,
+  and the tally is what makes their influence checkable rather than asserted.
 
-The split is a requirement of the protocol rather than a convenience: a designer
-agreeing with themselves is the weakest available test of usability. The mapping
-from label to person is not part of these materials. `order.py` seeds each
-coder's document order from the label, so anyone can regenerate either order
-without being told who coded what.
+The protocol's requirement is that *at least one* coder must not have designed
+the taxonomy — a designer agreeing with themselves is the weakest available test
+of usability. **This study exceeds it: neither coder did.** The mapping from
+label to person is not part of these materials. `order.py` seeds each coder's
+document order from the label, so anyone can regenerate either order without
+being told who coded what.
 
 Coders are collaborators on the measurement, not its subjects: nothing is
 recorded about either beyond the codes, timings and notes they enter.

@@ -55,3 +55,9 @@ zenodo
 figshare
 osf\.io
 orcid
+
+# Local filesystem paths. A tracked file containing /home/<username>/ leaks a
+# username as surely as a surname does, and it is easy to paste in by accident
+# when documenting a working copy. Add your own login name here.
+# your-login-name
+/home/[a-z0-9_-]+/

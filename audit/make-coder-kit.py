@@ -1,0 +1,252 @@
+#!/usr/bin/env python3
+"""
+Build a self-contained pack for each coder.
+
+    python3 audit/make-coder-kit.py
+
+Writes coder-kit/R1/ and coder-kit/R2/, each containing everything that coder
+needs and nothing they must not have. Run it AFTER the codebook is frozen and
+deposited -- the worklists are derived from the frozen files, and generating
+them earlier would mean a coder worked from something still moving.
+
+Why a kit rather than four loose files. The coders are unpaid collaborators, not
+engineers on this project. Before this script existed, the generated worklist
+ended with "do the shared pilot first (python audit/order.py --coder R1
+--pilot)", which asks somebody to install Python and run a command to find out
+which nine documents to start with. That is a real barrier at exactly the moment
+the study most needs them not to improvise. Everything they need is now written
+out in front of them.
+
+What each coder gets, and why:
+
+  START-HERE.md      what to do, in order, with the nine pilot documents listed
+                     in full so nothing has to be looked up or run
+  CODEBOOK-CODER.md  the rules. Generated from CODEBOOK.md with the framing and
+                     the analysis removed, so coding is not primed by them
+  ANNEX-DOCUMENTS.md all 50 documents with links, pilot rows marked
+  worklist-RX.md     their own 41 main-pass documents, in their own randomised
+                     order, as a tick-list
+  codes-RX.csv       their sheet, already named for them and already carrying
+                     doc_id, coder and codebook_version on every row, so three
+                     columns cannot be mistyped
+
+What each coder does NOT get: CODEBOOK.md (it states the analysis), the
+pre-registration, the protocol, the other coder's anything.
+"""
+
+from __future__ import annotations
+
+import csv
+import re
+import shutil
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+OUT = HERE.parent / "coder-kit"
+CODERS = ("R1", "R2")
+
+import importlib.util
+spec = importlib.util.spec_from_file_location("order", HERE / "order.py")
+order = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(order)
+
+
+def codebook_version() -> str:
+    first = (HERE / "CODEBOOK.md").read_text(encoding="utf-8").splitlines()[0]
+    m = re.search(r"(v[0-9.]+)\s*$", first)
+    if not m:
+        raise SystemExit("!! cannot read the version from CODEBOOK.md line 1")
+    return m.group(1)
+
+
+def frame_rows() -> list[dict]:
+    with (HERE / "frame.csv").open(encoding="utf-8") as fh:
+        return [r for r in csv.DictReader(fh) if r["status"] == "draw"]
+
+
+START = """# Start here — {coder}
+
+You are **{coder}**. Everything you need is in this folder. You do not need to
+install anything, and you do not need to run any command.
+
+## What you are doing, in one paragraph
+
+You will read 50 published documents. Each one reports a score for an AI system
+on some test. For each document you record, in eight boxes, whether the document
+*told its reader* certain specific things about how that score was produced.
+That is all. You are not judging whether the score is correct, whether the system
+is good, or whether the authors did a good job.
+
+## Your four files
+
+| File | What it is |
+|---|---|
+| `CODEBOOK-CODER.md` | **The rules.** Read Section 0 first — it is a glossary that assumes you know nothing about this topic. |
+| `ANNEX-DOCUMENTS.md` | All 50 documents, with a link for each. The nine pilot documents are marked. |
+| `worklist-{coder}.md` | Your 41 main-pass documents, in your own order, as a tick-list. |
+| `codes-{coder}.csv` | **Your answer sheet.** One row per document, already filled in with the document id and your label. |
+
+## Do it in this order
+
+**1. Read `CODEBOOK-CODER.md`.** All of it, before you open any document. About
+45 minutes. Section 0 is the glossary; read it even if you think you know the
+terms, because a few of them are used here in a narrower sense than usual.
+
+**2. Code these nine documents first — the pilot.** They are the same nine for
+both coders. **Do these on the first day**, because we compare them before
+either of you goes any further.
+
+{pilot_table}
+
+**3. Stop and tell me when the nine are done.** Do not start the main pass yet.
+We three will sit down together, put the two sheets side by side, and go through
+every disagreement — asking, for each one, *was the rule unclear, or did one of
+us simply make a mistake?* If a rule was unclear we fix the rule and you both
+re-code the nine. If not, nothing changes and we carry on. **This is the one
+moment in the study where you two are supposed to talk to each other about the
+coding.**
+
+**4. Then work through `worklist-{coder}.md`** — your 41 documents, in the order
+given. From this point on, **do not discuss the coding with the other coder at
+all** until you have both finished. How often the two of you independently agree
+is one of the results of this study, so a conversation part-way through would
+destroy it. Ask me instead, any time.
+
+**5. Last of all, the re-check.** When your 41 are done, tell me and I will send
+you five documents to code a second time, without looking at what you put the
+first time. This measures whether you agree with *yourself*, which is the
+yardstick your agreement with the other coder is read against. It takes about an
+hour and the study does not work without it.
+
+## Filling in the sheet
+
+Open `codes-{coder}.csv` in Excel, LibreOffice or Google Sheets. Three columns
+are already filled in for you: `doc_id`, `coder` and `codebook_version`. Leave
+those alone.
+
+For each document, fill in:
+
+- **`focal`** — the name of the one evaluation you are coding. Section 1 of the
+  manual tells you how to pick it. Everything else on the row is about that one
+  evaluation.
+- **the eight code columns** — `f1_strata`, `f2_budget`, `t1_direct`,
+  `t2_derivative`, `t3_temporal`, `t4_distributional`, `t5_acquired`,
+  `f4_regeneration`. Each is `2`, `1`, `0` or `NA`.
+- **`f2_notes`** — five characters, on **every** row including rows you code
+  `0`. The format is in Section 4 of the manual under F2.
+- **`evidence`** — where you found it, for **every** code that is not `0`. A
+  section number, a page, or a short quoted phrase.
+- **`minutes`** — roughly how long the document took. A guess is fine.
+- **`notes`** — anything that felt unclear. **Please use this column.** A rule
+  you flagged as ambiguous is useful data; a guess you did not flag is not.
+
+If a document cannot be opened, or turns out to report no score at all, put `yes`
+in `excluded` and say why in `exclusion_reason`. Section 2 of the manual has the
+test.
+
+## The three rules that override everything
+
+1. **Record what the document says, never what you know.** If it does not name
+   its harness, that is `0` — even if you happen to know which one they used.
+2. **`0` means "I searched and it is not there", not "I did not notice".**
+   Section 5 of the manual gives you a keyword list. Search before you write `0`.
+3. **Write a note rather than guessing.**
+
+## Timing
+
+The window is **{window}**. About 9 to 11 hours in total. **You arrange your own
+hours** — the only fixed points are that the nine pilot documents are done on the
+first day, and the re-check comes last. If the window turns out not to be enough,
+tell me on the first day rather than the last. There is room, but only if I know
+early.
+
+## When you are finished
+
+Send me `codes-{coder}.csv`. Nothing else. Your name appears nowhere in the
+released materials — the sheets are identified as `R1` and `R2` and nothing about
+either of you is recorded beyond the codes, timings and notes you enter.
+"""
+
+
+def main() -> int:
+    version = codebook_version()
+    rows = {r["id"]: r for r in frame_rows()}
+    manual = HERE / "CODEBOOK-CODER.md"
+    annex = HERE / "ANNEX-DOCUMENTS.md"
+    if not manual.is_file():
+        raise SystemExit("!! run make-coder-manual.py first")
+
+    window = "22–24 August 2026"
+
+    # the pilot, written out in full so nobody has to run anything
+    pilot_lines = ["| # | Id | Document |", "|---|---|---|"]
+    for i, d in enumerate(order.PILOT, 1):
+        r = rows[d]
+        pilot_lines.append(f"| {i} | `{d}` | [{r['title']}]({r['url']}) |")
+    pilot_table = "\n".join(pilot_lines)
+
+    # annex with the pilot rows marked
+    annex_txt = annex.read_text(encoding="utf-8")
+    for d in order.PILOT:
+        annex_txt = annex_txt.replace(f"| `{d}` |", f"| `{d}` **(pilot)** |", 1)
+    annex_txt = annex_txt.replace(
+        "**This is a reference list, not your work order.**",
+        "**This is a reference list, not your work order.** The nine documents "
+        "marked **(pilot)** are the ones both coders do first.\n\n"
+        "**This is a reference list, not your work order.**", 1)
+
+    if OUT.exists():
+        shutil.rmtree(OUT)
+
+    header = None
+    with (HERE / "coding-sheet.csv").open(encoding="utf-8") as fh:
+        reader = csv.DictReader(fh)
+        header = reader.fieldnames
+        sheet_rows = list(reader)
+
+    for coder in CODERS:
+        d = OUT / coder
+        d.mkdir(parents=True)
+
+        (d / "START-HERE.md").write_text(
+            START.format(coder=coder, pilot_table=pilot_table, window=window),
+            encoding="utf-8")
+        shutil.copy2(manual, d / "CODEBOOK-CODER.md")
+        (d / "ANNEX-DOCUMENTS.md").write_text(annex_txt, encoding="utf-8")
+
+        # worklist, without the "go and run python" instruction
+        wl = []
+        rng = order.random.Random(order.coder_seed(coder))
+        main_pass = [r for r in frame_rows() if r["id"] not in order.PILOT]
+        for i, r in enumerate(rng.sample(main_pass, len(main_pass)), 1):
+            wl.append(f"- [ ] **{r['id']}** — [{r['title']}]({r['url']})")
+        (d / f"worklist-{coder}.md").write_text(
+            f"# Main-pass worklist — {coder}\n\n"
+            f"{len(wl)} documents, in your own order. **Do the nine pilot "
+            f"documents first** — they are listed in `START-HERE.md`, and they "
+            f"are not in this list.\n\n"
+            f"Tick each one when its row in `codes-{coder}.csv` is filled in. "
+            f"Roughly 8 to 12 minutes each.\n\n" + "\n".join(wl) + "\n\n"
+            f"When every box is ticked, tell me — the five-document re-check "
+            f"comes last.\n", encoding="utf-8")
+
+        # pre-filled sheet
+        with (d / f"codes-{coder}.csv").open("w", newline="", encoding="utf-8") as fh:
+            w = csv.DictWriter(fh, fieldnames=header)
+            w.writeheader()
+            for r in sheet_rows:
+                row = dict(r)
+                row["coder"] = coder
+                row["codebook_version"] = version
+                w.writerow(row)
+
+        print(f"wrote {d.relative_to(HERE.parent)}/  "
+              f"({len(wl)} main-pass + {len(order.PILOT)} pilot, codebook {version})")
+
+    print("\nSend each coder their own folder and nothing else.")
+    print("Do NOT send CODEBOOK.md, PRE-REGISTRATION.md or PROTOCOL.md.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
