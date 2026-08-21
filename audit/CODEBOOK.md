@@ -560,31 +560,85 @@ Elapsed time: about nine minutes.
    organisations in each census stratum, plus the first three stratum-B
    documents.*
 
-   Then compare, discuss every disagreement, amend this codebook where a rule was
-   genuinely ambiguous, bump the version, and recode all nine under the new
-   version.
+   Then reconcile the pilot **in writing**, by the three-round procedure below,
+   amend this codebook where a rule was genuinely ambiguous, bump the version,
+   and recode all nine under the new version.
 
-   **Who runs the comparison, and what it does and does not settle.** The
-   comparison is convened by the person running the study — in this design, the
-   adjudicator (§5.4) — with both coders present. Its only question is
-   *was a rule at fault?* It is **not** adjudication, and it settles no codes:
+   #### The pilot reconciliation — written, asynchronous, three rounds
 
-   - The comparison decides whether the **codebook** changes. If a rule was at
-     fault, it is amended, the version is bumped and all nine are recoded. If no
-     rule was at fault, nothing changes and the pilot codes stand.
-   - **Cells on which the two coders still differ after the comparison are not
-     resolved here.** They go forward to adjudication at §5.4 step 7, together
-     with the main-pass cells, under exactly the same four conditions and in the
-     same shuffled order. There is one route to a final code, and this is it.
-   - The adjudicator's presence at the comparison is therefore not an exception
-     to condition 2 below. Condition 2 governs *when codes are settled*, and no
-     code is settled at the comparison.
+   The two coders never meet and never see each other's sheet. Everything passes
+   through the person running the study, who is the hub and keeps the record.
+   This is not a concession to scheduling; see "why writing beats a meeting"
+   below.
+
+   **Round 1 — collect.** Both coders finish the nine and send their sheets in.
+   Neither begins the main pass. The study runner runs `score.py` on the two
+   pilot sheets and lists every cell on which they differ, plus every difference
+   in `focal` and in `excluded`.
+
+   **Round 2 — ask, blind.** The study runner sends **both coders the same
+   list**, in this form and no other:
+
+   > `A01` · `t3_temporal` — the two sheets differ.
+   > Which rule did you apply, and was it clear? Quote the passage you coded from.
+
+   **The list does not say who coded what, and does not give either code.** A
+   coder learns only that a cell was contested, never in which direction. Each
+   answers independently, in writing, without seeing the other's answer.
+
+   **Round 3 — decide.** The study runner reads both justifications against the
+   manual and applies one test per cell:
+
+   | What the two justifications look like | What it means | What happens |
+   |---|---|---|
+   | Both cite the **same rule** and reach different codes | the rule is ambiguous | **amend** |
+   | Neither can name a governing rule | the manual has a gap | **amend** |
+   | They cite **different rules**, and one is plainly the wrong rule under the manual | coder error | no amendment |
+   | Both cite the same rule and one has simply misread the document | coder error | no amendment |
+
+   The outcome is then circulated to both coders identically: either *"rule X now
+   reads Y; please re-code the nine"*, or *"no rule changed; for your own use,
+   here is what the manual already says"*. One further round is permitted if the
+   first leaves a cell undecided; more than two rounds means the rule is broken
+   and should be amended rather than argued about.
+
+   **Why writing beats a meeting, and this is not a rationalisation.** In a live
+   discussion the more confident coder frequently talks the other round. When
+   that happens the evidence about *whether the rule was ambiguous* is destroyed
+   — you can no longer tell an ambiguous rule from a persuasive colleague, and
+   the pilot's entire purpose is exactly that distinction. Independent written
+   justifications preserve it, and they leave a record that goes into the deposit.
+
+   **Why the coders are not shown each other's codes.** What calibrates a coder
+   is learning which rule governs a case, not learning what another person put.
+   Showing the codes adds nothing to the first and opens the second: a coder who
+   learns *"the other one tends to score a stated cutoff as 1"* may imitate that
+   on the main pass, and imitation would **inflate the main-pass agreement
+   statistic**, which is this study's headline result. The pilot is excluded from
+   that statistic precisely because calibration happened on those texts; there is
+   no reason to let the calibration leak past them. If a coder asks what the
+   other one put, the answer is no, and the reason is this paragraph.
+
+   **What this does and does not settle.** Its only question is *was a rule at
+   fault?* It is **not** adjudication and it settles no codes:
+
+   - It decides whether the **codebook** changes. If a rule was at fault, it is
+     amended, the version is bumped and all nine are recoded. If not, nothing
+     changes and the pilot codes stand.
+   - **Cells on which the two coders still differ afterwards are not resolved
+     here.** They go forward to adjudication at §5.4 step 7, together with the
+     main-pass cells, under exactly the same four conditions and in the same
+     shuffled order. There is one route to a final code, and this is it.
+   - So the study runner's part in the reconciliation is not an exception to
+     condition 2 below. Condition 2 governs *when codes are settled*, and no code
+     is settled here.
 
    **The pilot is the one point where both coders must be in step.** Neither may
-   begin the main pass until the comparison has happened, because a codebook
+   begin the main pass until round 3 has been circulated, because a codebook
    amendment after main-pass coding had started would mean recoding main-pass
-   documents too. So both coders finish the nine pilot documents on the **first
-   day of the window**, and the comparison happens before either continues.
+   documents too. This is a **deadline, not a meeting**: both coders send their
+   nine by the end of the first day of the window, and rounds 2 and 3 run by
+   message.
 
    **The pilot is purposive, and that is the correct design.** A calibration
    pilot's job is to stress the rules, not to estimate anything, so it selects for
@@ -668,12 +722,45 @@ Elapsed time: about nine minutes.
 
       *What this condition does and does not forbid.* It forbids **settling any
       code** before the agreement statistics are computed and saved. It does not
-      forbid the adjudicator from running the study: convening the pilot
-      comparison (§5.2), deciding whether a rule was at fault, answering a
-      coder's question about what a rule means, or reading the script's output.
-      Those are the job of whoever runs the study, and someone has to do them.
-      The line is between *administering the instrument* and *deciding a code*,
-      and only the second is adjudication.
+      forbid the adjudicator from running the study: running the pilot
+      reconciliation (§5.2), deciding whether a rule was at fault, answering a
+      coder's question, or reading the script's output. Those are the job of
+      whoever runs the study, and someone has to do them. The line is between
+      *administering the instrument* and *deciding a code*, and only the second
+      is adjudication.
+
+      #### Answering coders' questions — the rule, in both phases
+
+      **You may always answer. Silence is not neutrality: a coder left guessing
+      produces a code that measures the guess.** Two constraints apply, and they
+      are the whole of it.
+
+      **Constraint 1 — every answer goes to both coders, in the same words, and
+      is logged.** An answer given to one coder and not the other is an
+      asymmetric calibration: it makes the two sheets more alike for a reason
+      that has nothing to do with the manual, and the agreement statistic can no
+      longer be read as evidence about the manual. Keep the questions and answers
+      in one file, dated; it goes into the deposit with everything else.
+
+      **Constraint 2 — answer about *rules*, never about *cases*.**
+
+      | Question | Answer? |
+      |---|---|
+      | *"What counts as a named harness?"* | **Yes.** Quote the manual. |
+      | *"Does front matter really count as body text?"* | **Yes.** Quote rule E1. |
+      | *"Which rule covers a score in a footnote?"* | **Yes**, if the manual covers it. If it does not, say so — that is a gap, and it is recorded. |
+      | *"Is `A03`'s harness sentence a 1 or a 2?"* | **No.** That is a code. |
+      | *"What did the other coder put for `B07`?"* | **No**, ever. |
+      | *"I think rule E5 is wrong."* | **Note it, do not act on it** mid-pass. |
+
+      **During the main pass a rule question is answered only with what the
+      manual already says.** If the honest answer is *"the manual does not cover
+      this"*, then you have found a rule gap after coding has begun, and you may
+      not quietly invent a rule: documents coded before your answer would have
+      been coded under a different instrument from those coded after. Tell both
+      coders to code it as best they can and write the difficulty in `notes`, log
+      the gap, and let adjudication and the limitations section carry it. The
+      pilot exists to catch these before this becomes the situation.
 
       *The residual this leaves.* The adjudicator sees nine documents' worth of
       codes at the pilot comparison, before the main pass. That cannot be avoided
@@ -1067,4 +1154,4 @@ reported as *"k organisations, n documents"*, never as a bare *n*.
 | 1.1 | 2026-08-16 | Pre-pilot amendments, made before any document was coded. Corrected the pilot count from "10" to nine (`A01`, `B01`–`B04`, `C01`–`C04`). Added boundary monitoring to the `t5` row, so the element the taxonomy argues hardest for is codeable. Stated that the primary κ excludes pilot documents, with a pilot-inclusive secondary. Stated the `order.py` seed (`20260812`) in the manual. Added the adjudication tie-break (third adjudicator, else default to the lower code). Added the expected bootstrap half-width (0.15–0.20) and changed "powered for" to "sized for". Specified descriptive per-organisation rates instead of cluster-bootstrap intervals at seven clusters. Added `evidence` and `codebook_version` columns to the coding sheet and made the sheet authoritative for exclusions. Documented the document-ID gaps. Reworded "frozen" as registration-with-amendment-procedure. |
 | 1.2 | 2026-08-16 | Coder independence stated as a requirement rather than a preference, and recorded as met: one team coder, one independent coder external to the team. Added the briefing rule (the independent coder works from the generated coder manual and nothing else). Coder sheets renamed from initials to `coder1`/`coder2`, so that no coder identity enters the released materials. `exclusions.csv` marked as generated by `score.py` and not to be hand-edited. |
 | 1.3 | 2026-08-17 | Pre-pilot amendment (released as "post-pilot", which was wrong — no pilot had run then and none has run at 1.4; corrected in the repository on 17 August 2026 and again here). Coder sheet labels changed from `coder1`/`coder2` to `CD` (the coder drawn from the design team) and `IC` (the independent coder), so that the label is self-documenting and identity-free, and so that the `order.py` seed — which is derived from the label — is reproducible by a third party. Naming only: no coding rule, scale, edge rule or analysis decision changed, and no code assigned under 1.2 is affected. The paper's Appendix A was corrected in the same pass to state the `t5` threshold as **any of** the four Type 5 elements rather than all four, matching section 4 of this manual; the manual is authoritative and was not changed. Documented the document-ID gaps in `SAMPLING-FRAME.md` itself rather than only pointing at it, and made `score.py` generate `exclusions.csv` from the coding sheets rather than reading it as a hand-maintained input. |
-| 1.4 | 2026-08-21 | **Pre-pilot amendment, made before any document was coded — pilot included.** Collaborator review raised eight operational ambiguities and one analysis inconsistency; all are closed here in a single pass rather than as loose amendments, because loose amendments are what this study argues against. **Focal evaluation:** nine numbered edge rules added (§1). E1 front matter counts as body text; E2 scores reported only for a baseline or comparison model are skipped; E3 aggregate rows (`Average`, `Overall`, …) are skipped; E4 unlabelled figure values do not establish the focal evaluation; E5 ties resolve left to right and **the focal evaluation is irrevocable once chosen**; E6–E9 promote the global-scope rule from prose to numbered rules, with partial scope, other-benchmark scope, and conflict handling. A focal disagreement is resolved by naming the numbered rule that decides it, and the count is reported. **One-sided exclusion (§2):** inclusion is a coded decision on both sheets and a reported statistic; agreement is computed on documents both coders included; an unresolvable one-sided exclusion defaults to **include**, the opposite default from the code-level tie-break, because exclusion is the decision with more latitude in it. **`t5` scope (§3):** stated that `t5` codes what the system could reach *during the run* whatever the resource is and whenever it was assembled, so that a retrieval index predating the run is `t5`-codable — closing a gap between the instrument and the taxonomy's prior-access/acquired-access axis. **F2 elicitation (§4):** sub-element (i) redefined — a named harness (**H**), **or** a public code artifact pinned to a version (**R**), **or** a bespoke scaffold stating all three of loop, tool set and stopping condition (**S**, three of three, a checklist and not an assessment). All five sub-elements are now recorded in `f2_notes` for **every** document in a fixed five-character format, so any alternative threshold — including the v1.3 rule — remains recomputable from the released sheets via `score.py --f2-threshold`. *This amendment makes H1 easier to falsify and H3 harder to confirm, and was adopted for that reason as well as on the merits: the v1.3 rule scored a repository pinned to a commit below a named harness, which is differential measurement error aligned with the direction of a hypothesis under test.* **Pilot (§5.2):** rebalanced from 1/4/4 to **3/3/3** across the strata (`A01 A10 A14`, `B01 B02 B03`, `C01 C16 C22`) by a stated mechanical rule, covering three genres and six of seven organisations. The previous set placed four of METR's five documents in the pilot, leaving that cluster one document in the main pass, which the primary κ would then have rested on. Count unchanged at nine; main pass unchanged at 41. Stated that a pilot which surfaces no rule defect leaves the version unmoved, and that this test is fixed before the pilot rather than decided after it. **Rates versus agreement (§5.2, §8.7):** stated explicitly that disclosure rates are computed on all included documents, pilot included, from the adjudicated sheet, and that only the primary agreement statistic excludes the pilot; rates additionally reported with the nine excluded. **Adjudication (§5.4):** a registered adjudicator, fixed in advance — a member of the design team who does **not** code, acting only after the agreement statistics are computed, resolving cells in randomised order without sight of running totals, and applying the focal edge rules mechanically to focal disagreements. Rates are reported under each coder's sheet and adjudicated, with a directional tally of adjudicated cells and the extremal pair that bounds any adjudicator's influence. The lower-code default survives for genuinely unresolvable cells. **Coder independence (§6):** the requirement is now **exceeded** — neither coder designed the taxonomy, neither is an author, and **both** are briefed from `CODEBOOK-CODER.md` and nothing else, with the full codebook read by the adjudicator rather than by a coder. Labels changed from `CD`/`IC` to **`R1`/`R2`**: `CD` named "the coder drawn from the design team", a role that no longer exists, so the label could not simply be redefined. `order.py` seeds and both coding orders change accordingly, which is free before worklists are generated and impossible after. **Statistics (§8):** the disagreement weight matrix is stated in full with its direction of bias; the category count *Q* is fixed at 4 rather than read off the observed codes, with its direction of bias also stated; **Gwet's AC2** is added under the same weights as the prevalence-robust companion to weighted κ and the divergence rule is restated as κ_w versus AC2, correcting a v1.3 inconsistency in which a weighted κ was compared against an unweighted AC1; full 4×4 confusion matrices are released; the bootstrap now reports the proportion of resamples on which κ was defined; the three denominators are separated and the reported κ is stated to be an upper bound because inclusion-disputed documents are dropped from it; the tie-break is reported under both directions. **Elsewhere:** `PROTOCOL.md` added to the frozen deposit and its stale document counts and coder-sheet naming corrected; `date_published` pre-declared for `frame.csv`; the coder-facing manual and the documents annex regenerated. |
+| 1.4 | 2026-08-21 | **Pre-pilot amendment, made before any document was coded — pilot included.** Collaborator review raised eight operational ambiguities and one analysis inconsistency; all are closed here in a single pass rather than as loose amendments, because loose amendments are what this study argues against. **Focal evaluation:** nine numbered edge rules added (§1). E1 front matter counts as body text; E2 scores reported only for a baseline or comparison model are skipped; E3 aggregate rows (`Average`, `Overall`, …) are skipped; E4 unlabelled figure values do not establish the focal evaluation; E5 ties resolve left to right and **the focal evaluation is irrevocable once chosen**; E6–E9 promote the global-scope rule from prose to numbered rules, with partial scope, other-benchmark scope, and conflict handling. A focal disagreement is resolved by naming the numbered rule that decides it, and the count is reported. **One-sided exclusion (§2):** inclusion is a coded decision on both sheets and a reported statistic; agreement is computed on documents both coders included; an unresolvable one-sided exclusion defaults to **include**, the opposite default from the code-level tie-break, because exclusion is the decision with more latitude in it. **`t5` scope (§3):** stated that `t5` codes what the system could reach *during the run* whatever the resource is and whenever it was assembled, so that a retrieval index predating the run is `t5`-codable — closing a gap between the instrument and the taxonomy's prior-access/acquired-access axis. **F2 elicitation (§4):** sub-element (i) redefined — a named harness (**H**), **or** a public code artifact pinned to a version (**R**), **or** a bespoke scaffold stating all three of loop, tool set and stopping condition (**S**, three of three, a checklist and not an assessment). All five sub-elements are now recorded in `f2_notes` for **every** document in a fixed five-character format, so any alternative threshold — including the v1.3 rule — remains recomputable from the released sheets via `score.py --f2-threshold`. *This amendment makes H1 easier to falsify and H3 harder to confirm, and was adopted for that reason as well as on the merits: the v1.3 rule scored a repository pinned to a commit below a named harness, which is differential measurement error aligned with the direction of a hypothesis under test.* **Pilot reconciliation (§5.2):** made written and asynchronous in three rounds through the study runner, with the coders **not shown each other's codes** — writing preserves the evidence about whether a rule was ambiguous, which a live discussion destroys whenever the more confident coder talks the other round, and withholding the codes closes the imitation channel that would inflate the main-pass agreement statistic. **Answering coders' questions (§5.4):** every answer goes to both coders in the same words and is logged; answers are about rules and never about cases; during the main pass a rule question is answered only with what the manual already says. **Pilot (§5.2):** rebalanced from 1/4/4 to **3/3/3** across the strata (`A01 A10 A14`, `B01 B02 B03`, `C01 C16 C22`) by a stated mechanical rule, covering three genres and six of seven organisations. The previous set placed four of METR's five documents in the pilot, leaving that cluster one document in the main pass, which the primary κ would then have rested on. Count unchanged at nine; main pass unchanged at 41. Stated that a pilot which surfaces no rule defect leaves the version unmoved, and that this test is fixed before the pilot rather than decided after it. **Rates versus agreement (§5.2, §8.7):** stated explicitly that disclosure rates are computed on all included documents, pilot included, from the adjudicated sheet, and that only the primary agreement statistic excludes the pilot; rates additionally reported with the nine excluded. **Adjudication (§5.4):** a registered adjudicator, fixed in advance — a member of the design team who does **not** code, acting only after the agreement statistics are computed, resolving cells in randomised order without sight of running totals, and applying the focal edge rules mechanically to focal disagreements. Rates are reported under each coder's sheet and adjudicated, with a directional tally of adjudicated cells and the extremal pair that bounds any adjudicator's influence. The lower-code default survives for genuinely unresolvable cells. **Coder independence (§6):** the requirement is now **exceeded** — neither coder designed the taxonomy, neither is an author, and **both** are briefed from `CODEBOOK-CODER.md` and nothing else, with the full codebook read by the adjudicator rather than by a coder. Labels changed from `CD`/`IC` to **`R1`/`R2`**: `CD` named "the coder drawn from the design team", a role that no longer exists, so the label could not simply be redefined. `order.py` seeds and both coding orders change accordingly, which is free before worklists are generated and impossible after. **Statistics (§8):** the disagreement weight matrix is stated in full with its direction of bias; the category count *Q* is fixed at 4 rather than read off the observed codes, with its direction of bias also stated; **Gwet's AC2** is added under the same weights as the prevalence-robust companion to weighted κ and the divergence rule is restated as κ_w versus AC2, correcting a v1.3 inconsistency in which a weighted κ was compared against an unweighted AC1; full 4×4 confusion matrices are released; the bootstrap now reports the proportion of resamples on which κ was defined; the three denominators are separated and the reported κ is stated to be an upper bound because inclusion-disputed documents are dropped from it; the tie-break is reported under both directions. **Elsewhere:** `PROTOCOL.md` added to the frozen deposit and its stale document counts and coder-sheet naming corrected; `date_published` pre-declared for `frame.csv`; the coder-facing manual and the documents annex regenerated. |

@@ -98,19 +98,50 @@ either of you goes any further.
 
 {pilot_table}
 
-**3. Stop and tell me when the nine are done.** Do not start the main pass yet.
-We three will sit down together, put the two sheets side by side, and go through
-every disagreement — asking, for each one, *was the rule unclear, or did one of
-us simply make a mistake?* If a rule was unclear we fix the rule and you both
-re-code the nine. If not, nothing changes and we carry on. **This is the one
-moment in the study where you two are supposed to talk to each other about the
-coding.**
+**3. Send me the nine and stop there.** Do not start the main pass yet.
+
+You and the other coder never meet and never see each other's sheet. The
+reconciliation is done in writing, through me, and it takes three short rounds:
+
+- **Round 1.** You both send me your nine. I compare them.
+- **Round 2.** I send you both the *same* list of the cells where the two sheets
+  differ — for example *"`A01` · `t3_temporal` — the two sheets differ. Which
+  rule did you apply, and was it clear? Quote the passage you coded from."* The
+  list will **not** tell you what the other coder put, or even which way the
+  disagreement went. You answer on your own, without seeing their answer.
+- **Round 3.** I read both answers. If you both applied the *same* rule and still
+  got different codes, the rule is ambiguous and I fix it — then you both re-code
+  the nine under the new version. If one of you applied the wrong rule or misread
+  the document, that is an ordinary mistake, nothing changes, and we carry on.
+  Either way I tell you both the outcome in the same words.
+
+**Why you are not shown each other's codes**, in case it feels odd: what
+calibrates you is learning which *rule* governs a case, not learning what another
+person put. If you learned the other coder's habits you might start matching
+them, and how often the two of you agree *without* coordinating is one of the
+results of this study. So if you ask me what the other one put, I will say no —
+that is the reason, and it is not personal.
 
 **4. Then work through `worklist-{coder}.md`** — your 41 documents, in the order
 given. From this point on, **do not discuss the coding with the other coder at
-all** until you have both finished. How often the two of you independently agree
-is one of the results of this study, so a conversation part-way through would
-destroy it. Ask me instead, any time.
+all** until you have both finished.
+
+**Ask me anything, any time — in both phases.** I would much rather answer than
+have you guess, and a question is never a nuisance. Two things to know about how
+I will answer, so the replies do not seem evasive:
+
+- **I answer about rules, not about particular documents.** *"What counts as a
+  named harness?"* — yes, I will quote the manual at you. *"Is `A03`'s harness
+  sentence a 1 or a 2?"* — no, that one is yours to decide. Code it, and put
+  your hesitation in the `notes` column.
+- **Every answer I give you, I give the other coder too, in the same words.** If
+  I explained a rule to one of you and not the other, your two sheets would end
+  up more alike for a reason that has nothing to do with the manual, and the
+  whole measurement would be worth less.
+
+If the honest answer is *"the manual does not cover that"*, I will say so rather
+than invent a rule mid-study. Code it as best you can and write the difficulty in
+`notes`. That note is useful data, not a failure.
 
 **5. Last of all, the re-check.** When your 41 are done, tell me and I will send
 you five documents to code a second time, without looking at what you put the
@@ -155,10 +186,14 @@ test.
 ## Timing
 
 The window is **{window}**. About 9 to 11 hours in total. **You arrange your own
-hours** — the only fixed points are that the nine pilot documents are done on the
-first day, and the re-check comes last. If the window turns out not to be enough,
-tell me on the first day rather than the last. There is room, but only if I know
-early.
+hours** — the only fixed points are that **the nine pilot documents reach me by
+the end of the first day**, and the re-check comes last. The pilot deadline is
+the one thing I cannot be flexible about: neither of you can start the main pass
+until the reconciliation is done, because if a rule turns out to need fixing, any
+main-pass document already coded would have to be done again.
+
+If the window turns out not to be enough, tell me on the first day rather than
+the last. There is room, but only if I know early.
 
 ## When you are finished
 

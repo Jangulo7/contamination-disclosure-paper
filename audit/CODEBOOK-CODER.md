@@ -630,31 +630,85 @@ Elapsed time: about nine minutes.
    organisations in each census stratum, plus the first three stratum-B
    documents.*
 
-   Then compare, discuss every disagreement, amend this codebook where a rule was
-   genuinely ambiguous, bump the version, and recode all nine under the new
-   version.
+   Then reconcile the pilot **in writing**, by the three-round procedure below,
+   amend this codebook where a rule was genuinely ambiguous, bump the version,
+   and recode all nine under the new version.
 
-   **Who runs the comparison, and what it does and does not settle.** The
-   comparison is convened by the person running the study — in this design, the
-   adjudicator (§5.4) — with both coders present. Its only question is
-   *was a rule at fault?* It is **not** adjudication, and it settles no codes:
+   #### The pilot reconciliation — written, asynchronous, three rounds
 
-   - The comparison decides whether the **codebook** changes. If a rule was at
-     fault, it is amended, the version is bumped and all nine are recoded. If no
-     rule was at fault, nothing changes and the pilot codes stand.
-   - **Cells on which the two coders still differ after the comparison are not
-     resolved here.** They go forward to adjudication at §5.4 step 7, together
-     with the main-pass cells, under exactly the same four conditions and in the
-     same shuffled order. There is one route to a final code, and this is it.
-   - The adjudicator's presence at the comparison is therefore not an exception
-     to condition 2 below. Condition 2 governs *when codes are settled*, and no
-     code is settled at the comparison.
+   The two coders never meet and never see each other's sheet. Everything passes
+   through the person running the study, who is the hub and keeps the record.
+   This is not a concession to scheduling; see "why writing beats a meeting"
+   below.
+
+   **Round 1 — collect.** Both coders finish the nine and send their sheets in.
+   Neither begins the main pass. The study runner runs `score.py` on the two
+   pilot sheets and lists every cell on which they differ, plus every difference
+   in `focal` and in `excluded`.
+
+   **Round 2 — ask, blind.** The study runner sends **both coders the same
+   list**, in this form and no other:
+
+   > `A01` · `t3_temporal` — the two sheets differ.
+   > Which rule did you apply, and was it clear? Quote the passage you coded from.
+
+   **The list does not say who coded what, and does not give either code.** A
+   coder learns only that a cell was contested, never in which direction. Each
+   answers independently, in writing, without seeing the other's answer.
+
+   **Round 3 — decide.** The study runner reads both justifications against the
+   manual and applies one test per cell:
+
+   | What the two justifications look like | What it means | What happens |
+   |---|---|---|
+   | Both cite the **same rule** and reach different codes | the rule is ambiguous | **amend** |
+   | Neither can name a governing rule | the manual has a gap | **amend** |
+   | They cite **different rules**, and one is plainly the wrong rule under the manual | coder error | no amendment |
+   | Both cite the same rule and one has simply misread the document | coder error | no amendment |
+
+   The outcome is then circulated to both coders identically: either *"rule X now
+   reads Y; please re-code the nine"*, or *"no rule changed; for your own use,
+   here is what the manual already says"*. One further round is permitted if the
+   first leaves a cell undecided; more than two rounds means the rule is broken
+   and should be amended rather than argued about.
+
+   **Why writing beats a meeting, and this is not a rationalisation.** In a live
+   discussion the more confident coder frequently talks the other round. When
+   that happens the evidence about *whether the rule was ambiguous* is destroyed
+   — you can no longer tell an ambiguous rule from a persuasive colleague, and
+   the pilot's entire purpose is exactly that distinction. Independent written
+   justifications preserve it, and they leave a record that goes into the deposit.
+
+   **Why the coders are not shown each other's codes.** What calibrates a coder
+   is learning which rule governs a case, not learning what another person put.
+   Showing the codes adds nothing to the first and opens the second: a coder who
+   learns *"the other one tends to score a stated cutoff as 1"* may imitate that
+   on the main pass, and imitation would **inflate the main-pass agreement
+   statistic**, which is this study's headline result. The pilot is excluded from
+   that statistic precisely because calibration happened on those texts; there is
+   no reason to let the calibration leak past them. If a coder asks what the
+   other one put, the answer is no, and the reason is this paragraph.
+
+   **What this does and does not settle.** Its only question is *was a rule at
+   fault?* It is **not** adjudication and it settles no codes:
+
+   - It decides whether the **codebook** changes. If a rule was at fault, it is
+     amended, the version is bumped and all nine are recoded. If not, nothing
+     changes and the pilot codes stand.
+   - **Cells on which the two coders still differ afterwards are not resolved
+     here.** They go forward to adjudication at §5.4 step 7, together with the
+     main-pass cells, under exactly the same four conditions and in the same
+     shuffled order. There is one route to a final code, and this is it.
+   - So the study runner's part in the reconciliation is not an exception to
+     condition 2 below. Condition 2 governs *when codes are settled*, and no code
+     is settled here.
 
    **The pilot is the one point where both coders must be in step.** Neither may
-   begin the main pass until the comparison has happened, because a codebook
+   begin the main pass until round 3 has been circulated, because a codebook
    amendment after main-pass coding had started would mean recoding main-pass
-   documents too. So both coders finish the nine pilot documents on the **first
-   day of the window**, and the comparison happens before either continues.
+   documents too. This is a **deadline, not a meeting**: both coders send their
+   nine by the end of the first day of the window, and rounds 2 and 3 run by
+   message.
 
    **The pilot is purposive, and that is the correct design.** A calibration
    pilot's job is to stress the rules, not to estimate anything, so it selects for
@@ -738,12 +792,45 @@ Elapsed time: about nine minutes.
 
       *What this condition does and does not forbid.* It forbids **settling any
       code** before the agreement statistics are computed and saved. It does not
-      forbid the adjudicator from running the study: convening the pilot
-      comparison (§5.2), deciding whether a rule was at fault, answering a
-      coder's question about what a rule means, or reading the script's output.
-      Those are the job of whoever runs the study, and someone has to do them.
-      The line is between *administering the instrument* and *deciding a code*,
-      and only the second is adjudication.
+      forbid the adjudicator from running the study: running the pilot
+      reconciliation (§5.2), deciding whether a rule was at fault, answering a
+      coder's question, or reading the script's output. Those are the job of
+      whoever runs the study, and someone has to do them. The line is between
+      *administering the instrument* and *deciding a code*, and only the second
+      is adjudication.
+
+      #### Answering coders' questions — the rule, in both phases
+
+      **You may always answer. Silence is not neutrality: a coder left guessing
+      produces a code that measures the guess.** Two constraints apply, and they
+      are the whole of it.
+
+      **Constraint 1 — every answer goes to both coders, in the same words, and
+      is logged.** An answer given to one coder and not the other is an
+      asymmetric calibration: it makes the two sheets more alike for a reason
+      that has nothing to do with the manual, and the agreement statistic can no
+      longer be read as evidence about the manual. Keep the questions and answers
+      in one file, dated; it goes into the deposit with everything else.
+
+      **Constraint 2 — answer about *rules*, never about *cases*.**
+
+      | Question | Answer? |
+      |---|---|
+      | *"What counts as a named harness?"* | **Yes.** Quote the manual. |
+      | *"Does front matter really count as body text?"* | **Yes.** Quote rule E1. |
+      | *"Which rule covers a score in a footnote?"* | **Yes**, if the manual covers it. If it does not, say so — that is a gap, and it is recorded. |
+      | *"Is `A03`'s harness sentence a 1 or a 2?"* | **No.** That is a code. |
+      | *"What did the other coder put for `B07`?"* | **No**, ever. |
+      | *"I think rule E5 is wrong."* | **Note it, do not act on it** mid-pass. |
+
+      **During the main pass a rule question is answered only with what the
+      manual already says.** If the honest answer is *"the manual does not cover
+      this"*, then you have found a rule gap after coding has begun, and you may
+      not quietly invent a rule: documents coded before your answer would have
+      been coded under a different instrument from those coded after. Tell both
+      coders to code it as best they can and write the difficulty in `notes`, log
+      the gap, and let adjudication and the limitations section carry it. The
+      pilot exists to catch these before this becomes the situation.
 
       *The residual this leaves.* The adjudicator sees nine documents' worth of
       codes at the pilot comparison, before the main pass. That cannot be avoided

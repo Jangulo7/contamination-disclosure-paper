@@ -209,11 +209,28 @@ Every number in the paper comes from the macro block at the top of `main.tex`
 sections follow. Report a pilot figure as a calibration result on nine
 documents, never as the study.
 
-Put the two sheets side by side. For every disagreement, ask: *was the rule
-unclear, or did one of us make a mistake?*
+**This is done in writing, through you, in three rounds. The coders never meet
+and never see each other's sheet** — see `CODEBOOK.md` §5.2 for the procedure and
+the reasoning.
 
-- Rule unclear → change the codebook, and write the change in its changelog.
-- Simple mistake → leave the codebook alone.
+1. **Collect.** Both send their nine. Run the script. List every differing cell,
+   plus every difference in `focal` and in `excluded`.
+2. **Ask, blind.** Send **both** coders the same list, saying only *"`A01` ·
+   `t3_temporal` — the two sheets differ. Which rule did you apply, and was it
+   clear? Quote the passage you coded from."* Do **not** say who coded what, and
+   do **not** give either code. Each answers independently.
+3. **Decide.** Read both justifications against the manual:
+
+| The two justifications | Means | Do |
+|---|---|---|
+| same rule cited, different codes | the rule is ambiguous | **amend** |
+| neither can name a governing rule | the manual has a gap | **amend** |
+| different rules cited, one plainly wrong | coder error | no amendment |
+| same rule, one misread the document | coder error | no amendment |
+
+Circulate the outcome to both in the same words. One further round is allowed;
+more than two means the rule is broken and should be amended rather than argued
+about.
 
 **If — and only if — a rule was at fault**, bump the codebook version to 1.5 and
 **recode all nine pilot documents** under the new rules. This is not wasted work;

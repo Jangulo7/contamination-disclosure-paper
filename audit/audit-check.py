@@ -392,8 +392,16 @@ if kit.is_dir():
             sh = (d/"START-HERE.md").read_text(encoding="utf-8")
             check(f"{c}'s instructions list all nine pilot documents in full",
                   all(f"`{x}`" in sh for x in score.PILOT))
-            check(f"{c}'s instructions state the discussion rule both ways",
-                  "supposed to talk" in sh and "do not discuss" in sh.lower())
+            check(f"{c}'s instructions say they never see the other's sheet",
+                  "never see each other's sheet" in sh)
+            check(f"{c}'s instructions forbid discussion in the main pass",
+                  "do not discuss the coding with the other coder" in sh.lower())
+            check(f"{c}'s instructions explain the three written rounds",
+                  "Round 1." in sh and "Round 2." in sh and "Round 3." in sh)
+            check(f"{c}'s instructions say questions are welcome, and how they are answered",
+                  "Ask me anything, any time" in sh
+                  and "about rules, not about particular documents" in sh
+                  and "I give the other coder too" in sh)
         if (d/f"codes-{c}.csv").is_file():
             rr = list(csv.DictReader((d/f"codes-{c}.csv").open(encoding="utf-8")))
             check(f"{c}'s sheet has 50 rows, pre-labelled and pre-versioned",
@@ -420,7 +428,17 @@ check("the codebook says discussion is required in the pilot and forbidden in th
 check("the codebook says the pilot comparison settles no codes",
       "settles no codes" in cb)
 check("unresolved pilot cells go to the same adjudication as the main pass",
-      "together\n     with the main-pass cells" in cb or "with the main-pass cells" in cb)
+      "with the\n     main-pass cells" in cb or "with the main-pass cells" in cb)
+check("the pilot reconciliation is written, asynchronous and blind",
+      "written, asynchronous, three rounds" in cb
+      and "does not say who coded what" in cb)
+check("the coders are never shown each other's codes",
+      "not shown each other's codes" in cb or "the answer is no" in cb)
+check("the rule for answering coders' questions is stated in both phases",
+      "every answer goes to both coders" in cb.lower()
+      and "never about *cases*" in cb)
+check("the coder manual carries the question rule too",
+      "Answering coders' questions" in cc)
 check("condition 2 distinguishes administering the instrument from deciding a code",
       "administering the instrument" in cb)
 check("the pilot is named as the one synchronisation point",
