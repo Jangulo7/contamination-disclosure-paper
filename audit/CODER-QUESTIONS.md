@@ -274,194 +274,87 @@ already said *"in the order given"*, and its section pointers resolve.
 
 # Texto para enviar — español (España)
 
-Esta sección es lo que se envía por correo, **con las mismas palabras a las dos
-codificadoras**, según §5.4. El resto del archivo es el registro para el depósito
-y no se envía: atribuye cada pregunta a `R1` o a `R2`, y ninguna de las dos
-necesita saber qué ha preguntado la otra.
+**Un solo correo, idéntico para las dos codificadoras**, que responde a Q1–Q4
+juntas. Se envía una vez, con el kit corregido adjunto. Los borradores separados
+por pregunta no se enviaron: se consolidaron en este.
 
-Las respuestas van sin atribución. Se dice *«ha surgido esta pregunta»*, nunca
-*«R1 preguntó»*.
+El resto de este archivo es el registro para el depósito y **no se envía**:
+atribuye cada pregunta a `R1` o a `R2`, y ninguna necesita saber qué preguntó la
+otra. Por eso el correo dice *«ha surgido»* y nunca *«R1 preguntó»*.
 
 > **Nota de concordancia:** el texto usa femenino plural (*«las dos»*,
-> *«seguras»*). Si alguna de las dos codificadoras no lo es, cambiar a
-> *«podéis estar seguros»* / *«los dos»* antes de enviar.
+> *«vosotras»*). Si alguna de las dos no lo es, cambiar antes de enviar.
+
+> **No añadir la frase retirada.** El punto 5 retira una expectativa sin
+> repetirla y sin nombrar el grupo de documentos al que se refería. Repetirla
+> para retirarla la sembraría en quien no se hubiera fijado. Comprobado
+> automáticamente.
 
 ---
 
-## Correo 1 — el manual y la sección 6
-
-**Asunto:** Manual corregido — mismas reglas, misma versión (v1.4)
+**Asunto:** Kit actualizado — usad este y descartad el anterior
 
 > Buenos días,
 >
-> Ha surgido esta pregunta y os contesto a las dos con las mismas palabras, como
-> hago siempre.
+> Os escribo a las dos con las mismas palabras, como siempre. Han surgido varias
+> preguntas estos días y todas eran acertadas: dos señalaban fallos reales. Os
+> adjunto el kit corregido. **Usad este y descartad el anterior.**
 >
-> **¿`CODEBOOK-CODER.md` es el manual o el codebook completo?** Es el manual de
-> codificación. No está «recortado» a mano: se genera automáticamente con un
-> script a partir del codebook depositado, de modo que **cada regla es idéntica a
-> la versión registrada**.
+> **Las reglas no cambian y la versión sigue siendo `v1.4`** — dejad `v1.4` en la
+> columna `codebook_version`. Vuestro orden de documentos tampoco cambia.
 >
-> **Lo que no está.** Se ha eliminado toda la capa de análisis: la sección 8
-> entera (estadísticos) y los motivos del changelog. El script da error y se
-> niega a compilar si detecta alguna frase que apunte a un resultado esperado.
-> Podéis estar seguras de que no tenéis nada de eso a la vista.
+> **1 · `CODEBOOK-CODER.md` es vuestro manual, no el codebook completo.** Se
+> genera automáticamente a partir del codebook depositado, así que cada regla es
+> idéntica a la registrada; lo que se quita es la capa de análisis (la sección 8
+> entera y los motivos del changelog). La sección 6 está a propósito: son reglas
+> de conducta — no comparéis notas, vuestra identidad no es un dato — y no
+> inclinan ningún código hacia el `0` ni hacia el `2`.
 >
-> **Lo que sí está (sección 6).** Está a propósito, porque recoge las reglas de
-> conducta: no comparéis notas, cero calibración verbal, vuestra identidad no es
-> un dato. Saber eso no inclina ningún código hacia el `0` ni hacia el `2`; no os
-> condiciona en ninguna dirección. Lo que sí comprometería vuestra independencia
-> sería conocer el resultado esperado o cómo se ponderan los desacuerdos, y eso
-> no está en vuestro archivo.
+> Dicho eso, había **siete frases** escritas pensando en el codebook completo
+> que, al copiarse, parecían referirse a vuestro manual; una llegaba a decir que
+> ningún codificador debería estar leyéndolo. Corregidas. Al principio del manual
+> tenéis la lista completa, con las dos redacciones lado a lado, para que lo
+> comprobéis en vez de fiaros de mi palabra.
 >
-> **Dicho esto, había un fallo de redacción real, y lo ha encontrado una de
-> vosotras.** Esa frase se escribió pensando en el codebook completo y se copió
-> tal cual, así que al leer «este codebook completo» en vuestro manual parecía
-> referirse a sí mismo y daba a entender que no deberíais estar leyéndolo. **No
-> eran una ni dos frases: eran siete.** La peor, en la sección 5, decía «ningún
-> codificador lee este archivo» dentro del propio archivo del codificador.
+> **2 · Las exclusiones se anotan en vuestra hoja.** El manual y el anexo decían
+> que las anotarais en `exclusions.csv`. Era incorrecto y contradecía otros tres
+> sitios. Van **en vuestra propia hoja**, en `excluded` y `exclusion_reason`.
+> `exclusions.csv` se genera *a partir de* vuestras hojas y no se edita a mano;
+> `frame.csv` contiene información que no debéis ver. No necesitáis ninguno de
+> los dos. Y **sustituir un documento excluido es tarea mía, no vuestra** — igual
+> si un enlace está caído: lo anotáis con motivo `url_dead` y me avisáis.
 >
-> **Cómo se ha corregido.** El codebook completo está registrado y depositado con
-> su huella digital, así que **no se toca**: corregirlo invalidaría el registro.
-> La corrección se hace en el script que genera vuestro manual, donde queda a la
-> vista y se puede comprobar. Una verificación automática confirma que, al
-> deshacer las correcciones, reaparece exactamente el texto del codebook
-> registrado — es decir, que **solo cambió la redacción**.
+> **3 · Vuestro orden de trabajo ya está fijado.** El anexo daba a entender que
+> lo elegíais vosotras e incluso os daba comandos para generarlo. No: está fijado
+> desde antes de empezar, es distinto para cada una, no cambia, y lo tenéis en
+> vuestro `worklist`. No hay nada que ejecutar.
 >
-> **La versión NO cambia: sigue siendo `v1.4`.** Dejad `v1.4` en la columna
-> `codebook_version`. Vuestro orden de documentos tampoco cambia. Os adjunto el
-> manual corregido; usad ese. Al principio del manual, antes de la PARTE 6,
-> tenéis la lista completa de lo que se ha reescrito, con las dos redacciones
-> lado a lado, para que podáis comprobarlo en lugar de fiaros de mi palabra.
+> **4 · `f2_notes` está aclarado.** Las cinco casillas llevan ahora su nombre, se
+> dice que el texto libre es opcional, hay un ejemplo descifrado carácter a
+> carácter, y se aclara que `-----` es una respuesta normal y correcta, no un
+> fallo por no encontrar nada.
 >
-> Codificad con tranquilidad.
-
----
-
-## Correo 2 — `exclusions.csv`, `frame.csv` y dónde se anota una exclusión
-
-**Asunto:** Las exclusiones se anotan en vuestra hoja (corregido en el manual)
-
-> Buenos días,
+> **5 · Algo que os pido que descartéis.** Revisando el anexo encontré una frase
+> que adelantaba una expectativa sobre cómo saldrían los resultados en cierto
+> grupo de documentos. No debía estar ahí y ya no está. **No os la repito**:
+> repetirla para retirarla sería sembrarla. Solo esto: si al leer el anexo os
+> quedasteis con alguna idea sobre lo que «se espera encontrar», **descartadla**.
+> No se espera nada. Registrad lo que cada documento dice, uno a uno.
 >
-> Ha surgido esta pregunta y os contesto a las dos con las mismas palabras.
->
-> **Teníais razón en que algo no cuadraba: el manual se contradecía.** La
-> sección 2 decía que anotarais la exclusión en `exclusions.csv`. **Eso era
-> incorrecto.** La sección 5 dice que la hoja manda, la propia sección 2 lo
-> repite unas líneas más abajo, y la PARTE 4 también. Tres sitios decían «la
-> hoja» y uno, heredado de antes de la v1.4, decía el archivo generado. Ya está
-> corregido en vuestro manual.
->
-> **Dónde se anota una exclusión:** en vuestra propia hoja, en las columnas
-> `excluded` y `exclusion_reason`. Donde anotáis todo lo demás.
->
-> **`exclusions.csv` es una salida, no una entrada.** Lo genera `score.py` **a
-> partir de vuestras hojas**, después de codificar, y no se edita a mano. Ahora
-> mismo está vacío: cero filas. Si os lo enviara, estaría invirtiendo el sentido
-> de los datos.
->
-> **`frame.csv` sí contiene información que no debéis ver.** Lleva una columna
-> `cluster`, que agrupa los documentos por organización, y una columna `status`,
-> que marca cuáles quedaron fuera por el tope por organización y cuáles son
-> reservas. Saber que quince documentos son de la misma organización invita a
-> codificarlos en bloque en lugar de uno a uno, que es justo lo que mide este
-> estudio; y saber que hay reservas abarata mentalmente la decisión de excluir.
-> Además forma parte del depósito registrado, que ningún codificador recibe.
->
-> **Sustituir un documento excluido no es tarea vuestra**, es mía: la lista de
-> reservas está en ese archivo que no tenéis.
->
-> **Lo que sí necesitáis ya lo tenéis:** los 50 documentos con sus enlaces, y los
-> nueve del piloto marcados, están en `ANNEX-DOCUMENTS.md`.
->
-> Un último detalle de nombres: la sección 5 llamaba a vuestra hoja
-> `coding-sheet.csv`, que es la plantilla de la que salen las dos hojas. La
-> vuestra es `codes-R1.csv` o `codes-R2.csv`, ya nombrada para cada una y ya en
-> vuestra carpeta. También corregido.
-
----
-
-## Correo 3 — `f2_notes`, y un caso que el manual no resuelve
-
-**Asunto:** `f2_notes` aclarado — y un caso que decide el piloto, no yo
-
-> Buenos días,
->
-> Ha surgido esta pregunta y os contesto a las dos con las mismas palabras.
->
-> **Sobre `f2_notes`: teníais razón, la sección era confusa.** Las cinco casillas
-> se identificaban solo por su número romano, así que para rellenar cinco
-> caracteres había que volver atrás a descifrar (i)–(v) en cada uno de los 50
-> documentos. Ya está corregido: **cada casilla lleva ahora su nombre**, se dice
-> que el texto libre después de los cinco caracteres es **opcional**, hay un
-> ejemplo descifrado carácter a carácter, y se aclara que **`-----` es una
-> respuesta normal y correcta**, no un fallo por no haber encontrado nada. Las
-> reglas no cambian.
->
-> **Y una cosa más, importante.** Hay un caso que **el manual no resuelve**, y
-> prefiero decíroslo a que lo descubráis cada una por su lado: si un repositorio
-> con su commit satisface (i) por la vía `R`, ¿cuenta ese mismo commit **también**
-> para (ii)? El ejemplo del manual sugiere que no, pero **en ninguna parte se
-> dice como regla**. Y no es menor: puede mover un código entre `1` y `2`.
->
-> **No os voy a dar una respuesta, y no es por reservarme nada.** Decidirlo yo
-> ahora sería inventar una regla que no está registrada, y hacerlo justo antes de
-> que codifiquéis es lo que este estudio critica en los demás. Codificad cada una
-> según vuestra lectura y **anotadlo en `notes`** cada vez que os ocurra.
->
-> Para esto existe exactamente el piloto: si las dos leéis la misma regla y aun
-> así codificáis distinto, la regla es ambigua, se corrige, se sube la versión y
-> recodificáis los nueve documentos bajo la nueva. **Una discrepancia anotada es
-> un resultado útil; una respuesta mía improvisada, no.**
-
----
-
-## Correo 4 — kit actualizado: el anexo apuntaba a archivos que no tenéis
-
-**Asunto:** Kit actualizado — leed este anexo, no el anterior
-
-> Buenos días,
->
-> Ha surgido esta pregunta y os contesto a las dos con las mismas palabras.
->
-> **Teníais razón otra vez: el anexo (`ANNEX-DOCUMENTS.md`) os mandaba a
-> archivos y a comandos que no tenéis.** Ya está corregido. Os adjunto el kit
-> actualizado; **usad este y descartad el anterior.**
->
-> Lo que decía mal, y lo que dice ahora:
->
-> - **El orden de trabajo.** Decía «codificad en vuestro propio orden
->   aleatorizado» y os daba dos comandos de Python para generarlo. Ni podéis
->   ejecutarlos ni os hacen falta. **Vuestro orden ya está fijado**: se decidió
->   antes de empezar, es distinto para cada una, no cambia, y lo tenéis en
->   vuestro `worklist`. Nadie elige su propio orden, y no hay nada que ejecutar
->   ni generar.
-> - **Las exclusiones.** El anexo repetía el error que ya corregimos en la
->   sección 2 del manual: decía que anotarais las sustituciones en
->   `exclusions.csv`. **Se anotan en vuestra propia hoja**, en `excluded` y
->   `exclusion_reason`, y ya está.
-> - **Sustituir un documento excluido no es tarea vuestra**, es mía. Lo mismo si
->   un enlace está caído: lo anotáis como exclusión con motivo `url_dead`, me
->   avisáis, y seguís adelante.
-> - Y una frase que aparecía repetida dos veces seguidas, ya arreglada.
->
-> **Una cosa más, y esta es importante.** Revisando el anexo he encontrado, por
-> mi parte, **una frase que no debería haber estado ahí**: adelantaba una
-> expectativa sobre cómo saldrían los resultados en uno de los grupos de
-> documentos. Eso es precisamente lo que vosotras no debéis saber, y el propio
-> sistema que genera vuestro manual está programado para rechazar frases así —
-> el anexo se genera con otro script y se coló por ahí. **Ya está eliminada, y
-> he añadido una comprobación automática que revisa todos vuestros archivos, no
-> solo el manual.**
->
-> No os voy a repetir la frase: repetirla para retirarla sería sembrarla en
-> quien no se hubiera fijado. Lo único que os pido es esto: **si al leer el
-> anexo os quedasteis con alguna idea sobre lo que “se espera encontrar” en
-> algún grupo de documentos, descartadla.** No se espera nada. Vuestro trabajo es
-> registrar lo que cada documento dice, uno a uno, y nada más.
+> **6 · Y algo que el manual no resuelve — y que no voy a resolver yo.** Si un
+> repositorio con su commit satisface (i) por la vía `R`, ¿cuenta ese mismo
+> commit **también** para (ii)? El ejemplo sugiere que no, pero no se dice como
+> regla, y puede mover un código entre `1` y `2`. **Codificad según vuestra
+> lectura y anotadlo en `notes`.** Decidirlo yo ahora sería inventar una regla
+> que no está registrada. Para esto existe el piloto: si las dos leéis lo mismo y
+> aun así codificáis distinto, la regla es ambigua, se corrige, y recodificáis los
+> nueve. Una discrepancia anotada es un resultado útil; una respuesta mía
+> improvisada, no.
 >
 > Nada de esto afecta a ningún código, porque todavía no habéis codificado nada.
 > Por eso os lo cuento ahora y no después.
 >
-> Las reglas no cambian y la versión sigue siendo `v1.4`.
+> Preguntadme lo que sea, cuando sea: prefiero contestar a que adivinéis. Cada
+> respuesta que doy a una, se la doy a la otra con las mismas palabras.
+>
+> Un saludo.
