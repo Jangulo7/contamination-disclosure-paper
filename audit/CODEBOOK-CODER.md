@@ -1265,7 +1265,7 @@ would be.
    maintained copies of the same fact drift, and the drift is invisible until
    someone recomputes a denominator.
 
-**When this happens: 22–24 August 2026.** This manual is frozen and deposited
+**When this happens: 22–25 August 2026.** This manual is frozen and deposited
 before either coder opens a document, and does not change after that except by
 the pilot rule in §5.2.
 

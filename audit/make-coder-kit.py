@@ -218,7 +218,7 @@ def main() -> int:
     if not manual.is_file():
         raise SystemExit("!! run make-coder-manual.py first")
 
-    window = "22–24 August 2026"
+    window = "22–25 August 2026"
 
     # the pilot, written out in full so nobody has to run anything
     pilot_lines = ["| # | Id | Document |", "|---|---|---|"]

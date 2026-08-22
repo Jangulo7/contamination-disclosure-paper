@@ -93,11 +93,22 @@ check("annex links resolve to frame urls",
       all(r["url"] in annex for r in draw))
 
 print("\n== 5. Dates ==")
-for f, name in ((pro,"PROTOCOL.md"), (cb,"CODEBOOK.md"), (pr,"PRE-REGISTRATION.md"), (cc,"coder manual")):
-    check(f"{name} states the 22-24 August window",
-          ("22–24 August" in f) or ("22-24 August" in f))
+# The registered window and the live window are no longer the same thing. The
+# deposit records 22–24 August and is frozen; the window was extended to 25
+# August after the pilot showed the per-document time, and the coders were told
+# so directly. Each document is checked against the window it is supposed to
+# carry, and the extension must be recorded rather than merely applied.
+REGISTERED_WINDOW, LIVE_WINDOW = "22–24 August", "22–25 August"
+for f, name, want in ((pro, "PROTOCOL.md", REGISTERED_WINDOW),
+                      (cb, "CODEBOOK.md", LIVE_WINDOW),
+                      (cc, "coder manual", LIVE_WINDOW)):
+    check(f"{name} states the {want.replace('–', '-')} window",
+          want in f or want.replace("–", "-") in f)
     check(f"{name} carries no stale 21-23 window",
           "21–23 August" not in f and "21-23 August" not in f)
+check("PRE-REGISTRATION.md keeps the registered window and records the extension",
+      REGISTERED_WINDOW in pr and LIVE_WINDOW in pr,
+      "the deposit is not rewritten; the change is a dated row")
 check("registration records the freeze preceding coding",
       "22–24 August 2026" in pr and "precede" in pr.lower())
 check("no file prescribes per-day coder hours",
@@ -211,17 +222,18 @@ print("\n== 6c. The v1.5 reduction and the partial pilot recode ==")
 # The rate denominator after v1.5: main-pass documents plus the three pilot
 # documents recoded under it. B01-B03 are recoded precisely BECAUSE stratum B
 # clusters on the paper, so excluding them would empty three clusters outright.
-RECODED = ["B01", "B02", "B03"]
+RECODED = []
 _rate_docs = [r for r in draw if r["id"] not in P or r["id"] in RECODED]
-check("rates are computed on 35 documents under v1.5",
-      len(_rate_docs) == 35, f"{len(_rate_docs)} = 32 main pass + {len(RECODED)} recoded")
-check("all 27 clusters survive into the rate denominator",
-      len({r["cluster"] for r in _rate_docs}) == 27,
-      "the partial recode exists to keep this true; without it, 24")
-check("the recoded three are exactly the clusters a full exclusion would empty",
-      sorted(RECODED) == sorted({r["cluster"] for r in draw if r["id"] in P}
-                                - {r["cluster"] for r in draw if r["id"] not in P}),
-      "mechanical, not chosen: recode what would otherwise be emptied")
+check("rates are computed on the 32 main-pass documents",
+      len(_rate_docs) == 32, f"{len(_rate_docs)} — no pilot document is recoded")
+_lost = sorted({r["cluster"] for r in draw if r["id"] in P}
+               - {r["cluster"] for r in draw if r["id"] not in P})
+check("the rate denominator is 24 clusters, and the loss is stated not absorbed",
+      len({r["cluster"] for r in _rate_docs}) == 24 and _lost == ["B01", "B02", "B03"],
+      f"lost: {_lost} — stratum B falls from 20 clusters to 17")
+check("the three lost clusters are singletons in stratum B, as recorded",
+      all(sum(1 for r in draw if r["cluster"] == c) == 1 for c in _lost),
+      "the cluster is the paper there, so exclusion empties rather than shrinks")
 check("the two worklists are the same 32-document set",
       set(re.findall(r"\*\*([A-C][0-9]+)\*\*",
                      (A.parent/"coder-kit"/"R1"/"worklist-R1.md").read_text(encoding="utf-8")))

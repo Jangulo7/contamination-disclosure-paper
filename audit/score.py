@@ -99,11 +99,17 @@ F2_YN = {"Y", "-"}
 # --------------------------------------------------------------------------
 
 # --- v1.5 -------------------------------------------------------------------
-# Three of the nine pilot documents are recoded under v1.5; six are not. Rates
-# are computed on documents coded under one boundary rule -- the 32 main-pass
-# documents plus these three. B01-B03 are the three because stratum B clusters
-# on the paper, so excluding them would empty three clusters outright.
-RECODED_UNDER_V15 = ["B01", "B02", "B03"]
+# No pilot document is recoded under v1.5. Rates are therefore computed on the
+# 32 main-pass documents alone -- the only ones coded under one boundary rule.
+#
+# The cost is exact and is not hidden: in stratum B the cluster is the paper, so
+# B01, B02 and B03 are singleton clusters and dropping them empties them.
+# Stratum B falls from 20 clusters to 17 and the rate denominator from 27
+# clusters to 24. A partial recode of those three was offered to the coders and
+# declined: pilot documents ran past 100 pages, and completing the main pass was
+# judged the larger risk. Recorded as a deviation rather than absorbed.
+RECODED_UNDER_V15 = []
+LOST_CLUSTERS = ["B01", "B02", "B03"]
 NOT_RECODED = [d for d in PILOT if d not in RECODED_UNDER_V15]
 
 REF_RE = re.compile(r"^REF:(none|[a-z0-9_]+(?:;[a-z0-9_]+)*)\b")
@@ -1525,12 +1531,12 @@ def selftest() -> int:
           f"an existing 2 is never lowered")
     ok &= good
 
-    print("\nthe rate denominator drops exactly the six not recoded")
-    good = (sorted(NOT_RECODED) == ["A01", "A10", "A14", "C01", "C16", "C22"]
-            and sorted(RECODED_UNDER_V15) == ["B01", "B02", "B03"]
-            and len(NOT_RECODED) + len(RECODED_UNDER_V15) == len(PILOT))
-    print(f"  {'PASS' if good else 'FAIL'}  recoded {RECODED_UNDER_V15}, "
-          f"excluded {NOT_RECODED}")
+    print("\nthe rate denominator drops every pilot document, and says what that costs")
+    good = (RECODED_UNDER_V15 == []
+            and sorted(NOT_RECODED) == sorted(PILOT)
+            and sorted(LOST_CLUSTERS) == ["B01", "B02", "B03"])
+    print(f"  {'PASS' if good else 'FAIL'}  no pilot document recoded; "
+          f"clusters lost: {LOST_CLUSTERS}")
     ok &= good
 
     print("\n" + ("ALL CHECKS PASSED" if ok else "FAILURES ABOVE"))
