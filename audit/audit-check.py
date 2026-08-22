@@ -22,6 +22,9 @@ pr = (A/"PRE-REGISTRATION.md").read_text(encoding="utf-8")
 pro = (A/"PROTOCOL.md").read_text(encoding="utf-8")
 sf = (A/"SAMPLING-FRAME.md").read_text(encoding="utf-8")
 cc = (A/"CODEBOOK-CODER.md").read_text(encoding="utf-8")
+
+# The codebook states the version; everything else is checked against it.
+VERSION = re.search(r"(v[0-9.]+)\s*$", cb.splitlines()[0]).group(1)
 sheet = list(csv.DictReader((A/"coding-sheet.csv").open(encoding="utf-8")))
 
 print("\n== 1. The frame ==")
@@ -104,13 +107,66 @@ check("the two orderings the design depends on are still fixed",
           for f in (pro, cb, cc)))
 
 print("\n== 6. Version consistency ==")
-check("CODEBOOK title is v1.4", cb.splitlines()[0].endswith("v1.4"))
-check("coder manual is generated at v1.4", "v1.4" in cc.splitlines()[0])
-check("changelog has a 1.4 row", "| 1.4 | 2026-08-21 |" in cb)
+check(f"CODEBOOK title states {VERSION}", cb.splitlines()[0].endswith(VERSION))
+check(f"coder manual is generated at {VERSION}",
+      cc.splitlines()[0].endswith(VERSION))
+check(f"changelog has a {VERSION[1:]} row", f"| {VERSION[1:]} | " in cb)
 check("no live CD/IC labels outside changelog rows",
       not [l for l in (cb+pro+cc).splitlines()
            if re.search(r"\bcodes-(CD|IC)\b", l) and "1.3" not in l and "1.4" not in l])
-check("README states v1.4", "**v1.4**" in (A/"README.md").read_text(encoding="utf-8"))
+check(f"README states {VERSION}",
+      f"**{VERSION}**" in (A/"README.md").read_text(encoding="utf-8"))
+
+print("\n== 6b. Coder-manual derivation repair ==")
+# CODEBOOK.md is registered and sha-pinned, so it cannot be edited to fix the
+# sentences that mis-point once derived. make-coder-manual.py repairs them at
+# derivation time instead. That is only defensible if the repair is provably
+# wording -- so check it here rather than trusting the diff was read.
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location("_mcm", A / "make-coder-manual.py")
+_mcm = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_mcm)
+DEIXIS = _mcm.DEIXIS
+
+check("the derivation repair is declared, not ad hoc", len(DEIXIS) == 7,
+      f"{len(DEIXIS)} rewrites declared in make-coder-manual.py")
+check("every rewrite still matches the registered codebook exactly once",
+      all(cb.count(o) == 1 for o, _ in DEIXIS),
+      str([o.splitlines()[0][:40] for o, _ in DEIXIS if cb.count(o) != 1]) or "7/7")
+check("every rewrite landed in the manual the coders hold",
+      all(cc.count(n) == 1 and o not in cc for o, n in DEIXIS),
+      str([n.splitlines()[0][:40] for o, n in DEIXIS
+           if cc.count(n) != 1 or o in cc]) or "7/7")
+
+# The load-bearing one: undo the seven rewrites and the manual must become the
+# codebook's own wording again. If a rule had been altered under cover of a
+# wording fix, the reversed text would not be found in CODEBOOK.md.
+_rev = cc
+for _o, _n in DEIXIS:
+    _rev = _rev.replace(_n, _o)
+check("reversing the rewrites restores the codebook's own sentences",
+      all(o in _rev and o in cb for o, _ in DEIXIS),
+      "the repair is wording only -- no rule text differs from the register")
+
+check("no self-referential phrase survives in the coder manual",
+      not [s for s in ("this file", "this codebook", "this full codebook")
+           if s in cc.lower()],
+      "'this' never re-points at the manual in the coder's hands")
+
+# Section 8 is dropped and 9 renumbered into its slot, so a NUMBER that is right
+# in the codebook can resolve here to a different section.
+_sec = lambda d: dict(re.findall(r"^## ([0-9]+)\. (.+)$", d, re.M))
+_src, _out = _sec(cb), _sec(cc)
+_moved = sorted({r for line in cc.splitlines()
+                 if not re.search(r"\b[A-Z-]+\.md\b", line)
+                 for r in re.findall(r"§([0-9]+)", line)
+                 if _src.get(r) != _out.get(r)})
+check("no cross-reference sends a coder to a different section than the codebook",
+      not _moved,
+      str({r: (_src.get(r), _out.get(r)) for r in _moved}) or "all resolve alike")
+
+check("the registered codebook itself is untouched by any of this",
+      cb.splitlines()[0].endswith(VERSION) and "1.4.1" not in cb,
+      "the repair lives in the derivation, never in the register")
 
 print("\n== 7. Statistics: independent re-derivation ==")
 Q = 4; CATS = ("0","1","2","NA")
@@ -417,7 +473,7 @@ if kit.is_dir():
             rr = list(csv.DictReader((d/f"codes-{c}.csv").open(encoding="utf-8")))
             check(f"{c}'s sheet has 50 rows, pre-labelled and pre-versioned",
                   len(rr) == 50 and all(x["coder"] == c for x in rr)
-                  and all(x["codebook_version"] == "v1.4" for x in rr))
+                  and all(x["codebook_version"] == VERSION for x in rr))
     # the kit must not become a second source of truth
     import subprocess
     for c in ("R1", "R2"):
@@ -474,7 +530,13 @@ check("the coder manual has a quick-start front matter and a full-rules part",
       _p6 is not None and cc.startswith("# Disclosure audit — coding manual")
       and "# PART 1" in cc and "# PART 2 · The cheat sheet" in cc)
 if _p6 is not None:
-    _src = {l.strip() for l in cb.splitlines()}
+    # PART 6 must be the codebook verbatim -- modulo the seven declared
+    # derivation rewrites, and nothing else. Applying them to the codebook here
+    # states that exactly: any OTHER divergence is still a stray line.
+    _cb_fixed = cb
+    for _o, _n in DEIXIS:
+        _cb_fixed = _cb_fixed.replace(_o, _n)
+    _src = {l.strip() for l in _cb_fixed.splitlines()}
     _allowed = ("## 8. Version history", "You are coding under",
                 "the deposited codebook; they are analysis notes",
                 "they are left out here so that nothing", "answer.",
@@ -592,7 +654,7 @@ for f in DEPOSIT:
     for marker in ("TODO", "TBD", "FIXME", "XXX", "<placeholder>", "[name]"):
         if marker in d: blanks.append(f"{f}:{marker}")
 check("no placeholder or TODO left in any deposit file", not blanks, str(blanks))
-check("the deposit states its own version", "v1.4" in cb.splitlines()[0])
+check("the deposit states its own version", VERSION in cb.splitlines()[0])
 check("the deposit is dated", "2026-08-21" in cb and "2026-08-21" in pr)
 check("the registration's standing claim is present and unqualified",
       "before any document was coded, pilot\nincluded" in pr

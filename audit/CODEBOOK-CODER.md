@@ -769,7 +769,7 @@ slot 5  (v)    Y  present          -  absent
 > `-----  no methods statement anywhere`
 
 `score.py` parses these five characters and can recompute F2 under any threshold
-— including the stricter *"a named harness or nothing"* rule this codebook used
+— including the stricter *"a named harness or nothing"* rule in force
 before v1.4. A reader who dislikes the threshold recomputes it rather than
 disbelieving it. That is only possible if the slots are filled in on **every**
 row, so a blank `f2_notes` is a validation error, not an omission.
@@ -851,7 +851,7 @@ would be.
 ## 5. Procedure
 
 1. Both coders read the coder manual (`CODEBOOK-CODER.md`) in full before
-   opening any document. Neither coder reads this file; see §6.
+   opening any document. Neither coder reads the full codebook; see §6.
 2. **Pilot:** each codes **nine documents** alone —
 
    | Stratum | Documents | Organisations |
@@ -866,7 +866,7 @@ would be.
    documents.*
 
    Then reconcile the pilot **in writing**, by the three-round procedure below,
-   amend this codebook where a rule was genuinely ambiguous, bump the version,
+   amend the codebook where a rule was genuinely ambiguous, bump the version,
    and recode all nine under the new version.
 
    #### The pilot reconciliation — written, asynchronous, three rounds
@@ -1021,7 +1021,7 @@ would be.
    the design team adjudicates and **does not code**. Naming the adjudicator after
    seeing which cells are contested is the same defect as choosing a tie-break
    rule then, so it is closed here. The adjudicator is the only person on the
-   study who reads this file rather than the coder manual.
+   study who reads the full codebook rather than the coder manual.
 
    Four conditions attach to the role, and all four are checkable from the
    released materials rather than taken on trust:
@@ -1105,8 +1105,9 @@ would be.
    cannot settle from the document — defaults to the **lower** code. Choosing
    this rule after seeing which cells are contested would let the disclosure rate
    be tuned; choosing it now cannot. The rule is nonetheless a *directional* one,
-   so it is neutralised rather than merely declared: see §8, "The tie-break is
-   directional, so it is reported both ways". With an adjudicator in place it
+   so it is neutralised rather than merely declared: see the statistics section
+   of the full codebook, "The tie-break is directional, so it is reported both
+   ways". With an adjudicator in place it
    should fire rarely, and the count of cells it decided is reported.
 5. Fill one row per document in `coding-sheet.csv`, one sheet per coder, saved as
    `codes-R1.csv` and `codes-R2.csv`.
@@ -1174,12 +1175,12 @@ genuinely independent. Two consequences:
   are already computed (§5.4). Had the requirement not been met, the limitations
   section would have had to say so plainly.
 - **Both coders are briefed by the manual and nothing else.** Both work from
-  `CODEBOOK-CODER.md`, generated mechanically from this codebook by
+  `CODEBOOK-CODER.md`, generated mechanically from the full codebook by
   `make-coder-manual.py`, plus the documents annex. No verbal calibration, no
   worked examples beyond those in the manual, no discussion of the hypothesis.
   Anything a coder needs to know belongs in the manual, where a reader can see
   it; anything said out loud is invisible to everyone assessing the result.
-  **The person who reads this full codebook is the adjudicator, not a coder.**
+  **The full codebook is read by the adjudicator, not by a coder.**
   Before v1.4 this rule bound only one of the two coders; extending it to both
   closes the last channel by which anything about the analysis could reach
   someone assigning codes.

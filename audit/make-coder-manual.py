@@ -152,6 +152,51 @@ differ, the sections below are what counts.
 """
 
 
+# Sentences written in the codebook's voice that must be re-pointed when they are
+# derived. In CODEBOOK.md "this file" and "this codebook" are exact: the reader
+# IS holding the codebook. Copy them unchanged into the coder manual and "this"
+# silently re-points at the manual, so a rule ABOUT the codebook reads as a rule
+# about the document in the coder's hands -- in one case as a flat instruction
+# that the reader should not be reading what they are reading.
+#
+# A coder hit exactly that on 22 August 2026: §6's "the person who reads this
+# full codebook is the adjudicator, not a coder" read, to them, as evidence they
+# had been sent the wrong file. They had not. Seven sentences carried the defect.
+#
+# These are rewrites of the SAME rule, not amendments to it. CODEBOOK.md is
+# registered and sha-pinned, so the repair belongs here, in the derivation, next
+# to the other things this script does to make a codebook into a coder manual --
+# where it is visible, diffable, and cannot be mistaken for a change of rule.
+# Each entry asserts exactly one match, so a future edit to CODEBOOK.md that
+# moves one of these sentences fails the build rather than silently skipping it.
+DEIXIS = [
+    # sec 4 -- F2 threshold history
+    ('*"a named harness or nothing"* rule this codebook used\nbefore v1.4.',
+     '*"a named harness or nothing"* rule in force\nbefore v1.4.'),
+    # sec 5.2 -- who reads what. The worst of the seven: in the coder manual this
+    # sentence tells its own reader that no coder reads it.
+    ("Neither coder reads this file; see §6.",
+     "Neither coder reads the full codebook; see §6."),
+    # sec 5.2 -- pilot reconciliation
+    ("amend this codebook where a rule was genuinely ambiguous, bump the version,",
+     "amend the codebook where a rule was genuinely ambiguous, bump the version,"),
+    # sec 5.4 -- the adjudicator's reading
+    ("The adjudicator is the only person on the\n   study who reads this file rather than the coder manual.",
+     "The adjudicator is the only person on the\n   study who reads the full codebook rather than the coder manual."),
+    # sec 5.4 -- the tie-break's cross-reference. Not deixis but the same class of
+    # fault: this script drops sec 8 and renumbers sec 9 into its place, so the
+    # NUMBER resolves here to the version history. Refer to it by name instead.
+    ('so it is neutralised rather than merely declared: see §8, "The tie-break is\n   directional, so it is reported both ways".',
+     'so it is neutralised rather than merely declared: see the statistics section\n   of the full codebook, "The tie-break is directional, so it is reported both\n   ways".'),
+    # sec 6 -- how this manual is generated
+    ("`CODEBOOK-CODER.md`, generated mechanically from this codebook by",
+     "`CODEBOOK-CODER.md`, generated mechanically from the full codebook by"),
+    # sec 6 -- the briefing rule the coder actually queried
+    ("**The person who reads this full codebook is the adjudicator, not a coder.**",
+     "**The full codebook is read by the adjudicator, not by a coder.**"),
+]
+
+
 def build_cheatsheet(text: str) -> str:
     """Build the PART 2 cheat sheet FROM the codebook, never by hand.
 
@@ -403,7 +448,7 @@ def main() -> int:
         versions = []
         for line in ch.group(1).splitlines():
             cells = [c.strip() for c in line.strip().strip("|").split("|")]
-            if len(cells) >= 3 and re.fullmatch(r"[0-9]+\.[0-9]+", cells[0]):
+            if len(cells) >= 3 and re.fullmatch(r"[0-9]+(\.[0-9]+)+", cells[0]):
                 versions.append(f"| {cells[0]} | {cells[1]} |")
         body = body[:ch.start()] + (
             "## 8. Version history\n\n"
@@ -416,6 +461,15 @@ def main() -> int:
     # Remove the remaining hypothesis-bearing sentence in the procedure section.
     body = body.replace(
         "The second is the one that tests whether the taxonomy is usable by\nanyone other than its authors.\n", "")
+
+    # Re-point the sentences that would otherwise refer to the wrong document.
+    for old, new in DEIXIS:
+        if body.count(old) != 1:
+            print(f"!! deixis rewrite matched {body.count(old)} times, expected 1:")
+            print(f"   {old.splitlines()[0][:70]}")
+            print("   CODEBOOK.md has moved this sentence. Update DEIXIS.")
+            return 1
+        body = body.replace(old, new)
 
     # Hoist the worked example out of section 4 and into PART 3. It is the most
     # useful thing a new coder can read, and it is illustration rather than
@@ -459,6 +513,47 @@ def main() -> int:
     if leaks:
         print(f"!! priming language still present: {leaks}")
         print("   Edit CODEBOOK.md or extend the filter before using this.")
+        return 1
+
+    # Two checks on the DERIVED file, both prompted by a defect a coder found in
+    # v1.4: sentences written in this codebook's voice keep their deixis when they
+    # are copied, and then point at the wrong document once a coder is holding
+    # them. Neither check can be satisfied by remembering to look.
+    #
+    # 1. Self-reference. In CODEBOOK.md "this file" and "this codebook" are exact.
+    #    In the derived manual they silently re-point at the manual itself, so a
+    #    rule ABOUT the codebook reads as a rule about what the coder is holding.
+    #    Say which document is meant by name instead.
+    SELF_REF = ("this file", "this codebook", "this full codebook")
+    hits = sorted({s for s in SELF_REF if s in out.lower()})
+    if hits:
+        print(f"!! self-referential phrase in the derived manual: {hits}")
+        print("   In CODEBOOK.md these point at the codebook; here they point at")
+        print("   the coder manual. Name the document instead of saying 'this'.")
+        return 1
+
+    # 2. Cross-references, by meaning rather than by existence. This file drops
+    #    section 8 and renumbers 9 into its place, so "§8" is still a section
+    #    here -- it is simply a DIFFERENT one, which is why checking that the
+    #    number resolves catches nothing. Compare what each referenced number is
+    #    TITLED in the codebook against what it is titled here, and fail when a
+    #    reference would land the reader somewhere else than the author meant.
+    def sections(doc):
+        return dict(re.findall(r"^## ([0-9]+)\. (.+)$", doc, re.M))
+    src_sec, out_sec = sections(text), sections(out)
+    moved = {}
+    for line in out.splitlines():
+        if re.search(r"\b[A-Z-]+\.md\b", line):   # another document's numbering
+            continue
+        for ref in re.findall(r"§([0-9]+)", line):
+            there, here = src_sec.get(ref), out_sec.get(ref)
+            if there != here:
+                moved[ref] = (there, here)
+    if moved:
+        for ref, (there, here) in sorted(moved.items()):
+            print(f"!! §{ref} means {there!r} in the codebook but {here!r} here")
+        print("   A reader following that number lands in the wrong section.")
+        print("   Refer to it by name in CODEBOOK.md, not by number.")
         return 1
 
     DST.write_text(out, encoding="utf-8")
