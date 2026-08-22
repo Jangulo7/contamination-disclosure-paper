@@ -17,11 +17,7 @@ Coder identity is a role label (`R1`, `R2`) and nothing else, consistent with §
 
 **This file is a summary, and deliberately so.** The verbatim questions and the
 covering email are private correspondence with identifiable individuals;
-publishing them would need the coders' consent under the GDPR, which was sought
-for the coding work and not for publication. The full record is retained
-unpublished and can be released if the coders consent or a reviewer asks under
-terms they agree to. Nothing material is withheld: every question, the answer
-given, and what changed as a result is below.
+publishing them would need the coders' consent under the GDPR.
 
 ## Summary — every question, the doubt, and the answer
 
