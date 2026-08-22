@@ -298,7 +298,45 @@ def build_cheatsheet(text: str) -> str:
     slot = re.search(r"```\nslot 1.+?```", text, re.S)
     if not slot:
         raise SystemExit("!! cannot find the f2_notes slot legend")
+    # The codebook's legend names each slot only by its roman numeral, which
+    # means decoding (i)-(v) again on every one of 50 rows. Name the slots here,
+    # from the codebook's own sub-element table so the names cannot drift. The
+    # legend itself is still in section 4 verbatim; this is the same block with
+    # the names filled in, not a different rule.
+    names = re.findall(r"\| \((\w+)\) \| \*\*(.+?)\*\*", sub.group(1))
+    if len(names) != 5:
+        raise SystemExit(f"!! expected 5 sub-element names, found {len(names)}")
+    puts = {"i": "`H` named harness · `R` pinned artifact · "
+                 "`S` scaffold, 3 of 3 · `-` none of the three"}
     out.append("#### `f2_notes` — five characters, on EVERY row\n")
+    out.append("Five characters, one per sub-element, in the order (i) to (v). "
+               "Then, if you want, a space and any free text. **The free text is "
+               "optional; the five characters are not.**\n")
+    out.append("| Slot | Sub-element | What to put |")
+    out.append("|---|---|---|")
+    for n, (num, name) in enumerate(names, 1):
+        out.append(f"| **{n}** | ({num}) {name} | "
+                   f"{puts.get(num, '`Y` stated · `-` not stated')} |")
+    out.append("")
+    out.append("Slot 1 is the only one with more than two options: it records "
+               "*which* route satisfied (i), because that is what the threshold "
+               "turns on. Slots 2–5 are simply stated or not.\n")
+    out.append("**One read character by character** — "
+               "`HY-YY  Inspect v0.3.42, 1 attempt, single, sec. 4.2`\n")
+    out.append("| | | |")
+    out.append("|---|---|---|")
+    for ch, num, why in (("H", "i", '"Inspect" — a named harness you could look up'),
+                         ("Y", "ii", '"v0.3.42"'),
+                         ("-", "iii", "no token, step, compute or wall-clock budget anywhere"),
+                         ("Y", "iv", '"1 attempt"'),
+                         ("Y", "v", '"single"')):
+        out.append(f"| `{ch}` | ({num}) | {why} |")
+    out.append("")
+    out.append("> **`-----` is a normal answer.** On a document that says nothing "
+               "about how the score was elicited it is the *right* one. Fill the "
+               "five characters on every row, including those — a blank "
+               "`f2_notes` is an error, `-----` is data.\n")
+    out.append("The same legend, as it appears in §4:\n")
     out.append(slot.group(0))
     fex = re.findall(r"^> (`[HRS\-][Y\-]{4}.+)$", text, re.M)
     if not fex:

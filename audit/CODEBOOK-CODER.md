@@ -128,6 +128,32 @@ Sub-element **(i)** counts if **any one** of these is true:
 
 #### `f2_notes` — five characters, on EVERY row
 
+Five characters, one per sub-element, in the order (i) to (v). Then, if you want, a space and any free text. **The free text is optional; the five characters are not.**
+
+| Slot | Sub-element | What to put |
+|---|---|---|
+| **1** | (i) Elicitation system identity | `H` named harness · `R` pinned artifact · `S` scaffold, 3 of 3 · `-` none of the three |
+| **2** | (ii) Version or commit | `Y` stated · `-` not stated |
+| **3** | (iii) Token or step budget | `Y` stated · `-` not stated |
+| **4** | (iv) Attempts allowed | `Y` stated · `-` not stated |
+| **5** | (v) Attempt resolution | `Y` stated · `-` not stated |
+
+Slot 1 is the only one with more than two options: it records *which* route satisfied (i), because that is what the threshold turns on. Slots 2–5 are simply stated or not.
+
+**One read character by character** — `HY-YY  Inspect v0.3.42, 1 attempt, single, sec. 4.2`
+
+| | | |
+|---|---|---|
+| `H` | (i) | "Inspect" — a named harness you could look up |
+| `Y` | (ii) | "v0.3.42" |
+| `-` | (iii) | no token, step, compute or wall-clock budget anywhere |
+| `Y` | (iv) | "1 attempt" |
+| `Y` | (v) | "single" |
+
+> **`-----` is a normal answer.** On a document that says nothing about how the score was elicited it is the *right* one. Fill the five characters on every row, including those — a blank `f2_notes` is an error, `-----` is data.
+
+The same legend, as it appears in §4:
+
 ```
 slot 1  (i)    H  named harness    R  pinned artifact    S  scaffold, 3 of 3    -  none
 slot 2  (ii)   Y  present          -  absent
