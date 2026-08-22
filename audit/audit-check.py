@@ -492,6 +492,19 @@ if kit.is_dir():
                   and not (set(ids) & set(score.PILOT)), f"{len(ids)} entries")
             check(f"{c}'s worklist asks them to run no commands",
                   "python" not in wl.lower())
+        # Nothing in the pack may send a coder to a file they were not given, or
+        # to a command they were told they never need to run. A coder asked for
+        # two of these files on 22 August because the annex named them.
+        if (d/"ANNEX-DOCUMENTS.md").is_file():
+            an = (d/"ANNEX-DOCUMENTS.md").read_text(encoding="utf-8")
+            absent = [f for f in ("order.py", "score.py", "exclusions.csv",
+                                  "frame.csv", "coding-sheet.csv", "python ")
+                      if f in an]
+            check(f"{c}'s annex names no file or command they do not have",
+                  not absent, str(absent) or "none")
+            check(f"{c}'s annex says the work order is already fixed",
+                  "already fixed" in an and "worklist" in an,
+                  "so nobody thinks they choose their own order")
         if (d/"START-HERE.md").is_file():
             sh = (d/"START-HERE.md").read_text(encoding="utf-8")
             check(f"{c}'s instructions list all nine pilot documents in full",

@@ -92,14 +92,13 @@ def main() -> int:
     L = [
         f"# Annex — the {len(draw)} documents", "",
         "Every document in the frame, with a live link. " + header, "",
-        "**This is a reference list, not your work order.** Code in your own randomised",
-        "order so that your fatigue does not correlate with the other coder's:", "",
-        "```bash",
-        "python audit/order.py --coder R1 --markdown > worklist-R1.md",
-        "python audit/order.py --coder R2 --markdown > worklist-R2.md",
-        "```", "",
-        "That produces the same links as a tick-list in your own sequence. Do the shared",
-        "pilot first (`--pilot`).", "",
+        "**This is a reference list, not your work order.** Your work order is your",
+        "worklist, and it is **already fixed**: it was set before coding began, it is",
+        "different for each coder, and it does not change. Work from it, and tick",
+        "documents off there.", "",
+        "The two orders are randomised on purpose, so that tiredness does not fall on",
+        "the same documents for both coders. Nobody picks their own order, and there is",
+        "nothing here for you to run or generate.", "",
         "For each document: open it, find the focal evaluation, run the keyword searches",
         "from codebook §5, then fill one row of your sheet. Roughly 8–12 minutes once you",
         "are calibrated.", "", "---", "",
@@ -116,9 +115,11 @@ def main() -> int:
         L += ["", ""]
 
     L += ["---", "", "## Reserve — stratum B only", "",
-          "Use these **in order** and only to replace an excluded stratum-B document",
-          "(codebook §2). Never pick a replacement yourself. Record every substitution in",
-          "`exclusions.csv`; the exclusion count is a number the paper reports.", "",
+          "These replace an excluded stratum-B document, taken **in order** (codebook §2).",
+          "**Replacing a document is the study runner's job, not yours** — nobody picks a",
+          "replacement of their own choosing. If you exclude a document, record it on your",
+          "own sheet in `excluded` and `exclusion_reason` and tell the study runner. The",
+          "exclusion count is a number the paper reports.", "",
           "Strata A and C are censuses, so an exclusion there simply shrinks the",
           "denominator — there is nothing to substitute.", "",
           "| ID | Document |", "|---|---|"]
@@ -127,9 +128,10 @@ def main() -> int:
 
     L += ["", "---", "", "## If a link is dead on the day", "",
           "Do not hunt for a mirror or a preprint — a different version of a document may",
-          "disclose differently, and that would quietly change what you measured. Record it",
-          "as an exclusion with reason `url_dead`, replace from the reserve if it is",
-          "stratum B, and move on.", ""]
+          "disclose differently, and that would quietly change what you measured. Record",
+          "it on your own sheet as an exclusion with reason `url_dead`, tell the study",
+          "runner, and move on. If it is a stratum B document, they replace it from the",
+          "reserve — that step is theirs, not yours.", ""]
 
     (HERE / "ANNEX-DOCUMENTS.md").write_text("\n".join(L), encoding="utf-8")
     print(f"ANNEX-DOCUMENTS.md: {len(draw)} to code "

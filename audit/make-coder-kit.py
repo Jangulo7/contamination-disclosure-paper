@@ -232,10 +232,10 @@ def main() -> int:
     for d in order.PILOT:
         annex_txt = annex_txt.replace(f"| `{d}` |", f"| `{d}` **(pilot)** |", 1)
     annex_txt = annex_txt.replace(
-        "**This is a reference list, not your work order.**",
-        "**This is a reference list, not your work order.** The nine documents "
-        "marked **(pilot)** are the ones both coders do first.\n\n"
-        "**This is a reference list, not your work order.**", 1)
+        "For each document: open it,",
+        "The nine documents marked **(pilot)** are the ones both coders do "
+        "first.\n\n"
+        "For each document: open it,", 1)
 
     if OUT.exists():
         shutil.rmtree(OUT)
