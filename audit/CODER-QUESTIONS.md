@@ -193,3 +193,148 @@ evidence behind it.
 > improvisada, no.
 
 **Sent to R2:** yes, same words, same day.
+
+---
+
+# Texto para enviar — español (España)
+
+Esta sección es lo que se envía por correo, **con las mismas palabras a las dos
+codificadoras**, según §5.4. El resto del archivo es el registro para el depósito
+y no se envía: atribuye cada pregunta a `R1` o a `R2`, y ninguna de las dos
+necesita saber qué ha preguntado la otra.
+
+Las respuestas van sin atribución. Se dice *«ha surgido esta pregunta»*, nunca
+*«R1 preguntó»*.
+
+> **Nota de concordancia:** el texto usa femenino plural (*«las dos»*,
+> *«seguras»*). Si alguna de las dos codificadoras no lo es, cambiar a
+> *«podéis estar seguros»* / *«los dos»* antes de enviar.
+
+---
+
+## Correo 1 — el manual y la sección 6
+
+**Asunto:** Manual corregido — mismas reglas, misma versión (v1.4)
+
+> Buenos días,
+>
+> Ha surgido esta pregunta y os contesto a las dos con las mismas palabras, como
+> hago siempre.
+>
+> **¿`CODEBOOK-CODER.md` es el manual o el codebook completo?** Es el manual de
+> codificación. No está «recortado» a mano: se genera automáticamente con un
+> script a partir del codebook depositado, de modo que **cada regla es idéntica a
+> la versión registrada**.
+>
+> **Lo que no está.** Se ha eliminado toda la capa de análisis: la sección 8
+> entera (estadísticos) y los motivos del changelog. El script da error y se
+> niega a compilar si detecta alguna frase que apunte a un resultado esperado.
+> Podéis estar seguras de que no tenéis nada de eso a la vista.
+>
+> **Lo que sí está (sección 6).** Está a propósito, porque recoge las reglas de
+> conducta: no comparéis notas, cero calibración verbal, vuestra identidad no es
+> un dato. Saber eso no inclina ningún código hacia el `0` ni hacia el `2`; no os
+> condiciona en ninguna dirección. Lo que sí comprometería vuestra independencia
+> sería conocer el resultado esperado o cómo se ponderan los desacuerdos, y eso
+> no está en vuestro archivo.
+>
+> **Dicho esto, había un fallo de redacción real, y lo ha encontrado una de
+> vosotras.** Esa frase se escribió pensando en el codebook completo y se copió
+> tal cual, así que al leer «este codebook completo» en vuestro manual parecía
+> referirse a sí mismo y daba a entender que no deberíais estar leyéndolo. **No
+> eran una ni dos frases: eran siete.** La peor, en la sección 5, decía «ningún
+> codificador lee este archivo» dentro del propio archivo del codificador.
+>
+> **Cómo se ha corregido.** El codebook completo está registrado y depositado con
+> su huella digital, así que **no se toca**: corregirlo invalidaría el registro.
+> La corrección se hace en el script que genera vuestro manual, donde queda a la
+> vista y se puede comprobar. Una verificación automática confirma que, al
+> deshacer las correcciones, reaparece exactamente el texto del codebook
+> registrado — es decir, que **solo cambió la redacción**.
+>
+> **La versión NO cambia: sigue siendo `v1.4`.** Dejad `v1.4` en la columna
+> `codebook_version`. Vuestro orden de documentos tampoco cambia. Os adjunto el
+> manual corregido; usad ese. Al principio del manual, antes de la PARTE 6,
+> tenéis la lista completa de lo que se ha reescrito, con las dos redacciones
+> lado a lado, para que podáis comprobarlo en lugar de fiaros de mi palabra.
+>
+> Codificad con tranquilidad.
+
+---
+
+## Correo 2 — `exclusions.csv`, `frame.csv` y dónde se anota una exclusión
+
+**Asunto:** Las exclusiones se anotan en vuestra hoja (corregido en el manual)
+
+> Buenos días,
+>
+> Ha surgido esta pregunta y os contesto a las dos con las mismas palabras.
+>
+> **Teníais razón en que algo no cuadraba: el manual se contradecía.** La
+> sección 2 decía que anotarais la exclusión en `exclusions.csv`. **Eso era
+> incorrecto.** La sección 5 dice que la hoja manda, la propia sección 2 lo
+> repite unas líneas más abajo, y la PARTE 4 también. Tres sitios decían «la
+> hoja» y uno, heredado de antes de la v1.4, decía el archivo generado. Ya está
+> corregido en vuestro manual.
+>
+> **Dónde se anota una exclusión:** en vuestra propia hoja, en las columnas
+> `excluded` y `exclusion_reason`. Donde anotáis todo lo demás.
+>
+> **`exclusions.csv` es una salida, no una entrada.** Lo genera `score.py` **a
+> partir de vuestras hojas**, después de codificar, y no se edita a mano. Ahora
+> mismo está vacío: cero filas. Si os lo enviara, estaría invirtiendo el sentido
+> de los datos.
+>
+> **`frame.csv` sí contiene información que no debéis ver.** Lleva una columna
+> `cluster`, que agrupa los documentos por organización, y una columna `status`,
+> que marca cuáles quedaron fuera por el tope por organización y cuáles son
+> reservas. Saber que quince documentos son de la misma organización invita a
+> codificarlos en bloque en lugar de uno a uno, que es justo lo que mide este
+> estudio; y saber que hay reservas abarata mentalmente la decisión de excluir.
+> Además forma parte del depósito registrado, que ningún codificador recibe.
+>
+> **Sustituir un documento excluido no es tarea vuestra**, es mía: la lista de
+> reservas está en ese archivo que no tenéis.
+>
+> **Lo que sí necesitáis ya lo tenéis:** los 50 documentos con sus enlaces, y los
+> nueve del piloto marcados, están en `ANNEX-DOCUMENTS.md`.
+>
+> Un último detalle de nombres: la sección 5 llamaba a vuestra hoja
+> `coding-sheet.csv`, que es la plantilla de la que salen las dos hojas. La
+> vuestra es `codes-R1.csv` o `codes-R2.csv`, ya nombrada para cada una y ya en
+> vuestra carpeta. También corregido.
+
+---
+
+## Correo 3 — `f2_notes`, y un caso que el manual no resuelve
+
+**Asunto:** `f2_notes` aclarado — y un caso que decide el piloto, no yo
+
+> Buenos días,
+>
+> Ha surgido esta pregunta y os contesto a las dos con las mismas palabras.
+>
+> **Sobre `f2_notes`: teníais razón, la sección era confusa.** Las cinco casillas
+> se identificaban solo por su número romano, así que para rellenar cinco
+> caracteres había que volver atrás a descifrar (i)–(v) en cada uno de los 50
+> documentos. Ya está corregido: **cada casilla lleva ahora su nombre**, se dice
+> que el texto libre después de los cinco caracteres es **opcional**, hay un
+> ejemplo descifrado carácter a carácter, y se aclara que **`-----` es una
+> respuesta normal y correcta**, no un fallo por no haber encontrado nada. Las
+> reglas no cambian.
+>
+> **Y una cosa más, importante.** Hay un caso que **el manual no resuelve**, y
+> prefiero decíroslo a que lo descubráis cada una por su lado: si un repositorio
+> con su commit satisface (i) por la vía `R`, ¿cuenta ese mismo commit **también**
+> para (ii)? El ejemplo del manual sugiere que no, pero **en ninguna parte se
+> dice como regla**. Y no es menor: puede mover un código entre `1` y `2`.
+>
+> **No os voy a dar una respuesta, y no es por reservarme nada.** Decidirlo yo
+> ahora sería inventar una regla que no está registrada, y hacerlo justo antes de
+> que codifiquéis es lo que este estudio critica en los demás. Codificad cada una
+> según vuestra lectura y **anotadlo en `notes`** cada vez que os ocurra.
+>
+> Para esto existe exactamente el piloto: si las dos leéis la misma regla y aun
+> así codificáis distinto, la regla es ambigua, se corrige, se sube la versión y
+> recodificáis los nueve documentos bajo la nueva. **Una discrepancia anotada es
+> un resultado útil; una respuesta mía improvisada, no.**

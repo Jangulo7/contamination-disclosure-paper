@@ -157,21 +157,28 @@ entitled to know what differs between your copy and the registered one.
 
 {rewrites}
 
-## And one that does change what you do
+## And three that pointed you at files you do not have
 
-§2 told you to record an exclusion in `exclusions.csv`. **That was wrong**, and it
-contradicted three other places in this manual. `exclusions.csv` is *generated*
-from your sheet afterwards; it is not yours to fill in, and you do not have it.
-§5 says so, §2's own next subsection says so, and PART 4 says so.
+These were written for someone holding the whole deposit. You hold five files, so
+they are re-pointed at what is actually in front of you.
 
-**Record an exclusion where you record everything else: on your own sheet, in
-`excluded` and `exclusion_reason`.** Replacing an excluded stratum B document is
-the study runner's step, not yours — the reserve list is in a file you do not
-have, and you are not expected to go looking for it.
+**One of them changes what you do.** §2 told you to record an exclusion in
+`exclusions.csv`. **That was wrong**, and it contradicted three other places in
+this manual: `exclusions.csv` is *generated* from your sheet afterwards, it is
+not yours to fill in, and you do not have it. §5 says so, §2's own next
+subsection says so, and PART 4 says so. **Record an exclusion where you record
+everything else: on your own sheet, in `excluded` and `exclusion_reason`.**
+Replacing an excluded stratum B document is the study runner's step, not yours —
+the reserve list is in a file you do not have, and you are not expected to go
+looking for it.
+
+**The other two are naming only.** §5 calls your sheet `coding-sheet.csv`, which
+is the template every coder's sheet is built from. Yours is `codes-R1.csv` or
+`codes-R2.csv`, already named for you and already in your folder.
 
 {misaddressed}
 
-Both were found by coders, before any document was coded.
+All of these were found by coders, before any document was coded.
 
 ---
 
@@ -233,7 +240,10 @@ DEIXIS = [
 
 # A second, separate category -- and it is NOT the deixis list, which is audited
 # on the claim that only wording differs. These are instructions addressed to a
-# reader who is not the coder, or pointing at a file the coder does not have.
+# reader who is not the coder, or naming a file the coder does not have. The
+# first entry changes which action a coder takes; the other two only name their
+# own sheet by the template's name. Same root cause: written for someone holding
+# the whole deposit, and read by someone holding five files.
 #
 # The codebook contradicts itself here. Section 2 tells the coder to "record the
 # exclusion and its reason in `exclusions.csv`". Section 5 says the sheet is
@@ -262,6 +272,15 @@ MISADDRESSED = [
      "document of their own choosing. Record the exclusion and its reason **on your own\n"
      "sheet**, in `excluded` and `exclusion_reason` (§5) — the exclusion count is itself\n"
      "a reportable number."),
+    ("5. Fill one row per document in `coding-sheet.csv`, one sheet per coder, saved as\n"
+     "   `codes-R1.csv` and `codes-R2.csv`.",
+     "5. Fill one row per document in **your own sheet** — one per coder, saved as\n"
+     "   `codes-R1.csv` and `codes-R2.csv`, both built from the `coding-sheet.csv`\n"
+     "   template. Yours is the one already named for you.",),
+    ("**Exclusions live in one place.** `coding-sheet.csv` is authoritative for\n"
+     "   `excluded` and `exclusion_reason`.",
+     "**Exclusions live in one place.** Your own sheet — `codes-R1.csv` or\n"
+     "   `codes-R2.csv` — is authoritative for `excluded` and `exclusion_reason`.",),
 ]
 
 
@@ -717,9 +736,11 @@ def main() -> int:
         "come from; it cannot fall out of step with them.\n\n"
         "Found by a coder on 22 August 2026, before any document was coded.\n\n"
         + rewrite_table(text) + "\n\n"
-        + "## Instructions addressed to the wrong reader\n\n"
-        "A separate category, and a stronger claim than the list above: these "
-        "**do**\nchange what a coder does. `CODEBOOK.md` §2 tells the coder to "
+        + "## Named for a reader who holds the whole deposit\n\n"
+        "A separate category, and for the first entry a stronger claim than the "
+        "list\nabove: it changes what a coder does. The other two name the "
+        "coder's own sheet by\nthe template's name, `coding-sheet.csv`, rather "
+        "than by the name it carries in\ntheir folder. `CODEBOOK.md` §2 tells the coder to "
         "record an\nexclusion in `exclusions.csv`, while §5 says the sheet is "
         "authoritative for\n`excluded` and `exclusion_reason` and that "
         "`exclusions.csv` is a *generated*\nartifact which \"must not be "
@@ -731,8 +752,8 @@ def main() -> int:
         "statement;\nit does not invent one. Replacement is likewise the study "
         "runner's step: the\nreserves live in `frame.csv`, which no coder has. "
         "Recorded as a dated deviation\nand disclosed to the coders in the "
-        "manual, because unlike the list above this\none changes which action "
-        "a coder takes.\n\n"
+        "manual, because the first of them changes which action a coder\n"
+        "takes and the other two name a file that is not in their folder.\n\n"
         + rewrite_table(text, MISADDRESSED) + "\n")
     print(f"wrote {REWRITES.name} ({len(DEIXIS)} deixis, "
           f"{len(MISADDRESSED)} misaddressed)")

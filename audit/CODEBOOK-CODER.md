@@ -442,23 +442,32 @@ entitled to know what differs between your copy and the registered one.
 | 6 | §6 | `CODEBOOK-CODER.md`, generated mechanically from this codebook by | `CODEBOOK-CODER.md`, generated mechanically from the full codebook by |
 | 7 | §6 | **The person who reads this full codebook is the adjudicator, not a coder.** | **The full codebook is read by the adjudicator, not by a coder.** |
 
-## And one that does change what you do
+## And three that pointed you at files you do not have
 
-§2 told you to record an exclusion in `exclusions.csv`. **That was wrong**, and it
-contradicted three other places in this manual. `exclusions.csv` is *generated*
-from your sheet afterwards; it is not yours to fill in, and you do not have it.
-§5 says so, §2's own next subsection says so, and PART 4 says so.
+These were written for someone holding the whole deposit. You hold five files, so
+they are re-pointed at what is actually in front of you.
 
-**Record an exclusion where you record everything else: on your own sheet, in
-`excluded` and `exclusion_reason`.** Replacing an excluded stratum B document is
-the study runner's step, not yours — the reserve list is in a file you do not
-have, and you are not expected to go looking for it.
+**One of them changes what you do.** §2 told you to record an exclusion in
+`exclusions.csv`. **That was wrong**, and it contradicted three other places in
+this manual: `exclusions.csv` is *generated* from your sheet afterwards, it is
+not yours to fill in, and you do not have it. §5 says so, §2's own next
+subsection says so, and PART 4 says so. **Record an exclusion where you record
+everything else: on your own sheet, in `excluded` and `exclusion_reason`.**
+Replacing an excluded stratum B document is the study runner's step, not yours —
+the reserve list is in a file you do not have, and you are not expected to go
+looking for it.
+
+**The other two are naming only.** §5 calls your sheet `coding-sheet.csv`, which
+is the template every coder's sheet is built from. Yours is `codes-R1.csv` or
+`codes-R2.csv`, already named for you and already in your folder.
 
 | # | Section | The codebook's wording | Your manual's wording |
 |---|---|---|---|
 | 1 | §2 | **Replacement rule.** An excluded document from stratum B is replaced by the next unused document from the ordered reserve list in `frame.csv` (`BR01`, `BR02`, …). Take them in order. Never substitute a document you chose yourself. Record the exclusion and its reason in `exclusions.csv` — the exclusion count is itself a reportable number. | **Replacement rule** — the study runner's step, not yours. An excluded document from stratum B is replaced by the next unused document from the ordered reserve list in `frame.csv` (`BR01`, `BR02`, …), taken in order; no one substitutes a document of their own choosing. Record the exclusion and its reason **on your own sheet**, in `excluded` and `exclusion_reason` (§5) — the exclusion count is itself a reportable number. |
+| 2 | §5 | 5. Fill one row per document in `coding-sheet.csv`, one sheet per coder, saved as `codes-R1.csv` and `codes-R2.csv`. | 5. Fill one row per document in **your own sheet** — one per coder, saved as `codes-R1.csv` and `codes-R2.csv`, both built from the `coding-sheet.csv` template. Yours is the one already named for you. |
+| 3 | §5 | **Exclusions live in one place.** `coding-sheet.csv` is authoritative for `excluded` and `exclusion_reason`. | **Exclusions live in one place.** Your own sheet — `codes-R1.csv` or `codes-R2.csv` — is authoritative for `excluded` and `exclusion_reason`. |
 
-Both were found by coders, before any document was coded.
+All of these were found by coders, before any document was coded.
 
 ---
 
@@ -1179,8 +1188,9 @@ would be.
    of the full codebook, "The tie-break is directional, so it is reported both
    ways". With an adjudicator in place it
    should fire rarely, and the count of cells it decided is reported.
-5. Fill one row per document in `coding-sheet.csv`, one sheet per coder, saved as
-   `codes-R1.csv` and `codes-R2.csv`.
+5. Fill one row per document in **your own sheet** — one per coder, saved as
+   `codes-R1.csv` and `codes-R2.csv`, both built from the `coding-sheet.csv`
+   template. Yours is the one already named for you.
 
    **Two columns beyond the codes.** `evidence` carries a locator — section,
    page, or a short quoted phrase — for **every non-zero code**, so that
@@ -1189,8 +1199,8 @@ would be.
    awkward to omit here. `codebook_version` carries the version each row was
    coded under, since the pilot is expected to bump the version mid-study.
 
-   **Exclusions live in one place.** `coding-sheet.csv` is authoritative for
-   `excluded` and `exclusion_reason`. `exclusions.csv` is a *generated* artifact,
+   **Exclusions live in one place.** Your own sheet — `codes-R1.csv` or
+   `codes-R2.csv` — is authoritative for `excluded` and `exclusion_reason`. `exclusions.csv` is a *generated* artifact,
    rebuilt from the sheet by `score.py`, and must not be hand-edited: two
    maintained copies of the same fact drift, and the drift is invisible until
    someone recomputes a denominator.

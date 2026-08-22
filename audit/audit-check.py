@@ -133,7 +133,7 @@ ALL_RW = DEIXIS + MISADDR
 # checking the whole document would fire on the very list that discloses it.
 _cc_front, _cc_rules = cc[:cc.index("# PART 6")], cc[cc.index("# PART 6"):]
 
-check("the derivation repair is declared, not ad hoc", len(ALL_RW) == 8,
+check("the derivation repair is declared, not ad hoc", len(ALL_RW) == 10,
       f"{len(DEIXIS)} wording + {len(MISADDR)} addressee, declared in "
       "make-coder-manual.py")
 check("every rewrite still matches the registered codebook exactly once",
@@ -188,11 +188,12 @@ check("no cross-reference sends a coder to a different section than the codebook
 # The deixis list claims only wording moved. This one does not: it changes which
 # action a coder takes, so it must be visibly separated rather than folded in.
 check("the two categories are kept apart, not folded together",
-      len(DEIXIS) == 7 and len(MISADDR) == 1
+      len(DEIXIS) == 7 and len(MISADDR) == 3
       and not any(o in [d for d, _ in DEIXIS] for o, _ in MISADDR),
-      f"{len(DEIXIS)} wording, {len(MISADDR)} addressed to the wrong reader")
+      f"{len(DEIXIS)} wording, {len(MISADDR)} naming/addressee — counts are\n      pinned so the exemption cannot grow without a deviation row")
 check("the change of addressee is disclosed to coders as a change of action",
-      "And one that does change what you do" in _cc_front
+      "And three that pointed you at files you do not have" in _cc_front
+      and "One of them changes what you do" in _cc_front
       and "on your own sheet" in _cc_front,
       "the manual says plainly that §2 was wrong and what to do instead")
 check("the manual no longer tells a coder to write to a generated file",

@@ -30,10 +30,12 @@ Found by a coder on 22 August 2026, before any document was coded.
 | 6 | §6 | `CODEBOOK-CODER.md`, generated mechanically from this codebook by | `CODEBOOK-CODER.md`, generated mechanically from the full codebook by |
 | 7 | §6 | **The person who reads this full codebook is the adjudicator, not a coder.** | **The full codebook is read by the adjudicator, not by a coder.** |
 
-## Instructions addressed to the wrong reader
+## Named for a reader who holds the whole deposit
 
-A separate category, and a stronger claim than the list above: these **do**
-change what a coder does. `CODEBOOK.md` §2 tells the coder to record an
+A separate category, and for the first entry a stronger claim than the list
+above: it changes what a coder does. The other two name the coder's own sheet by
+the template's name, `coding-sheet.csv`, rather than by the name it carries in
+their folder. `CODEBOOK.md` §2 tells the coder to record an
 exclusion in `exclusions.csv`, while §5 says the sheet is authoritative for
 `excluded` and `exclusion_reason` and that `exclusions.csv` is a *generated*
 artifact which "must not be hand-edited". §2's own later subsection and PART 4
@@ -44,9 +46,11 @@ their own work.
 The rewrite restores §5's rule, which is the later and authoritative statement;
 it does not invent one. Replacement is likewise the study runner's step: the
 reserves live in `frame.csv`, which no coder has. Recorded as a dated deviation
-and disclosed to the coders in the manual, because unlike the list above this
-one changes which action a coder takes.
+and disclosed to the coders in the manual, because the first of them changes which action a coder
+takes and the other two name a file that is not in their folder.
 
 | # | Section | The codebook's wording | Your manual's wording |
 |---|---|---|---|
 | 1 | §2 | **Replacement rule.** An excluded document from stratum B is replaced by the next unused document from the ordered reserve list in `frame.csv` (`BR01`, `BR02`, …). Take them in order. Never substitute a document you chose yourself. Record the exclusion and its reason in `exclusions.csv` — the exclusion count is itself a reportable number. | **Replacement rule** — the study runner's step, not yours. An excluded document from stratum B is replaced by the next unused document from the ordered reserve list in `frame.csv` (`BR01`, `BR02`, …), taken in order; no one substitutes a document of their own choosing. Record the exclusion and its reason **on your own sheet**, in `excluded` and `exclusion_reason` (§5) — the exclusion count is itself a reportable number. |
+| 2 | §5 | 5. Fill one row per document in `coding-sheet.csv`, one sheet per coder, saved as `codes-R1.csv` and `codes-R2.csv`. | 5. Fill one row per document in **your own sheet** — one per coder, saved as `codes-R1.csv` and `codes-R2.csv`, both built from the `coding-sheet.csv` template. Yours is the one already named for you. |
+| 3 | §5 | **Exclusions live in one place.** `coding-sheet.csv` is authoritative for `excluded` and `exclusion_reason`. | **Exclusions live in one place.** Your own sheet — `codes-R1.csv` or `codes-R2.csv` — is authoritative for `excluded` and `exclusion_reason`. |
