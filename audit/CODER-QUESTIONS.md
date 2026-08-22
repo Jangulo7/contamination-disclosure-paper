@@ -196,6 +196,82 @@ evidence behind it.
 
 ---
 
+## Q4 · 2026-08-22 · R1 · The annex points at files I do not have
+
+**Phase:** before the pilot. **Both coders were reading the instructions; no
+document had been coded**, and no pilot sheet had been returned.
+
+**Asked:** that `ANNEX-DOCUMENTS.md` named files and commands the coder does not
+have — following on from Q2, where the same two files were asked about.
+
+**Class:** a question about the instrument. Answerable in full.
+
+**What the annex was doing wrong.** Four things, all fixed:
+
+1. The header told coders to *"code in your own randomised order"* and gave two
+   `python audit/order.py` commands to generate a worklist, with a `--pilot`
+   flag. A coder can run none of that and needs none of it: the worklist is
+   already in their folder, and `START-HERE.md` says they need run no command.
+2. The reserve section said *"record every substitution in `exclusions.csv`"* —
+   **the same wrong instruction corrected in the manual's §2 under Q2, sitting
+   in a second document.** Correcting only the manual would have left the
+   coder's other file still saying it.
+3. The dead-link section told the coder to *"replace from the reserve"*.
+   Replacement is the study runner's step.
+4. `make-coder-kit.py` inserted the pilot sentence by repeating the sentence it
+   followed, so *"This is a reference list, not your work order"* appeared twice
+   in a row in every coder's copy.
+
+The annex prose is authored in `make-annex.py` and is **not** derived from
+`CODEBOOK.md`, so these were ordinary edits; no register text was involved, and
+the document tables — ids, links, ordering — are unchanged.
+
+### Found during the same review, and more serious than what was reported
+
+Reviewing the annex on the criteria R1's question implied surfaced a defect
+**nobody had reported**, and it is the only one found in this whole pass that
+could have moved codes in a direction that flatters the paper.
+
+The stratum A note ended: *"Expect these to be the **most** disclosed of the
+three strata."* That is the study's own stratum comparison — a reported result
+under §7 — handed in advance to the people producing it. Stratum is perfectly
+confounded with document identity, so a coder holding that expectation has a
+standing reason to read stratum A more generously, and the stratum contrast is a
+headline result.
+
+It is exactly the class of statement `make-coder-manual.py` refuses to ship: its
+`PRIMING` filter fails the manual build on *"we expect"*, *"we predict"*,
+*"rarely reported"* and thirteen more. **The annex is built by a different script
+and never passed through that filter.** The pack-level check named *"contains
+nothing that would prime the coding"* tested only that certain **files** were
+absent; it never read what the delivered files say.
+
+Both gaps are closed: `PRIMING` is hoisted to module scope and `audit-check.py`
+now runs it over **every file in each coder's pack**, plus eleven phrasings that
+state a result rather than predict one. Verified by reintroducing the sentence
+and confirming the audit fails.
+
+**Timing, stated rather than assumed.** The sentence was removed while both
+coders were still reading their instructions. No document had been coded by
+either coder, no pilot sheet existed, and no code assigned under it can be
+affected — there are none. What cannot be ruled out is that a coder **read** it,
+since reading the annex is step 2 of their instructions. The message below is
+written so that it does not repeat the sentence: restating an expectation in
+order to withdraw it would plant it in a coder who had skimmed past it.
+
+**Also fixed in the same pass.** The worklist header said *"41 documents, in your
+own order"*, which reads as a choice. The order is not a choice: it is fixed per
+coder before coding and exists so that fatigue does not fall on the same
+documents for both. It now says so, matching `START-HERE.md`.
+
+**Reviewed and unchanged:** `START-HERE.md`. It names no file or command the
+coder lacks, its exclusion instruction already matches the corrected manual, it
+already said *"in the order given"*, and its section pointers resolve.
+
+**Sent to R2:** yes, same words, same day.
+
+---
+
 # Texto para enviar — español (España)
 
 Esta sección es lo que se envía por correo, **con las mismas palabras a las dos
@@ -338,3 +414,54 @@ Las respuestas van sin atribución. Se dice *«ha surgido esta pregunta»*, nunc
 > así codificáis distinto, la regla es ambigua, se corrige, se sube la versión y
 > recodificáis los nueve documentos bajo la nueva. **Una discrepancia anotada es
 > un resultado útil; una respuesta mía improvisada, no.**
+
+---
+
+## Correo 4 — kit actualizado: el anexo apuntaba a archivos que no tenéis
+
+**Asunto:** Kit actualizado — leed este anexo, no el anterior
+
+> Buenos días,
+>
+> Ha surgido esta pregunta y os contesto a las dos con las mismas palabras.
+>
+> **Teníais razón otra vez: el anexo (`ANNEX-DOCUMENTS.md`) os mandaba a
+> archivos y a comandos que no tenéis.** Ya está corregido. Os adjunto el kit
+> actualizado; **usad este y descartad el anterior.**
+>
+> Lo que decía mal, y lo que dice ahora:
+>
+> - **El orden de trabajo.** Decía «codificad en vuestro propio orden
+>   aleatorizado» y os daba dos comandos de Python para generarlo. Ni podéis
+>   ejecutarlos ni os hacen falta. **Vuestro orden ya está fijado**: se decidió
+>   antes de empezar, es distinto para cada una, no cambia, y lo tenéis en
+>   vuestro `worklist`. Nadie elige su propio orden, y no hay nada que ejecutar
+>   ni generar.
+> - **Las exclusiones.** El anexo repetía el error que ya corregimos en la
+>   sección 2 del manual: decía que anotarais las sustituciones en
+>   `exclusions.csv`. **Se anotan en vuestra propia hoja**, en `excluded` y
+>   `exclusion_reason`, y ya está.
+> - **Sustituir un documento excluido no es tarea vuestra**, es mía. Lo mismo si
+>   un enlace está caído: lo anotáis como exclusión con motivo `url_dead`, me
+>   avisáis, y seguís adelante.
+> - Y una frase que aparecía repetida dos veces seguidas, ya arreglada.
+>
+> **Una cosa más, y esta es importante.** Revisando el anexo he encontrado, por
+> mi parte, **una frase que no debería haber estado ahí**: adelantaba una
+> expectativa sobre cómo saldrían los resultados en uno de los grupos de
+> documentos. Eso es precisamente lo que vosotras no debéis saber, y el propio
+> sistema que genera vuestro manual está programado para rechazar frases así —
+> el anexo se genera con otro script y se coló por ahí. **Ya está eliminada, y
+> he añadido una comprobación automática que revisa todos vuestros archivos, no
+> solo el manual.**
+>
+> No os voy a repetir la frase: repetirla para retirarla sería sembrarla en
+> quien no se hubiera fijado. Lo único que os pido es esto: **si al leer el
+> anexo os quedasteis con alguna idea sobre lo que “se espera encontrar” en
+> algún grupo de documentos, descartadla.** No se espera nada. Vuestro trabajo es
+> registrar lo que cada documento dice, uno a uno, y nada más.
+>
+> Nada de esto afecta a ningún código, porque todavía no habéis codificado nada.
+> Por eso os lo cuento ahora y no después.
+>
+> Las reglas no cambian y la versión sigue siendo `v1.4`.
