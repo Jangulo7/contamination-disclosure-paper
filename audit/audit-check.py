@@ -722,21 +722,38 @@ _q = A / "CODER-QUESTIONS.md"
 check("the questions-and-answers log required by §5.4 exists", _q.is_file())
 if _q.is_file():
     qt = _q.read_text(encoding="utf-8")
-    _qs = re.findall(r"^## (Q\d+) · (\d{4}-\d{2}-\d{2}) · (R[12])", qt, re.M)
-    check("every logged question is dated and attributed to a role label",
-          _qs and all(d.startswith("2026-") and c in ("R1", "R2")
-                      for _, d, c in _qs),
-          f"{len(_qs)} logged: {[q for q, _, _ in _qs]}")
-    check("every answer is recorded as having gone to both coders",
-          len(re.findall(r"\*\*Sent to R[12]:\*\* yes", qt)) >= len(_qs),
-          "§5.4: the same words to both, or the agreement statistic is not "
-          "evidence about the manual")
-    check("the log states that it is not itself sent to the coders",
-          "no se envía" in qt or "is not sent" in qt,
-          "it attributes questions by role; coders see only the answers")
-    check("Step 9's deposit list omits it, and that omission is recorded",
-          "CODER-QUESTIONS.md" not in pro
-          and "CODER-QUESTIONS.md" in pr,
+    # The published file is a SUMMARY: the verbatim questions and the covering
+    # email are private correspondence with identifiable people, and publishing
+    # them would need consent that was sought for the coding, not for release.
+    # So these check the summary table, not transcripts -- and they must not
+    # pass vacuously if the table is ever emptied.
+    _rows = re.findall(r"^\| \*\*(Q\d+b?)\*\* \| (\d{4}-\d{2}-\d{2}) \| (.+?) \|",
+                       qt, re.M)
+    check("the summary records every exchange, dated", len(_rows) >= 4,
+          f"{len(_rows)} rows: {[q for q, _, _ in _rows]}")
+    check("every row carries a date and who raised it",
+          _rows and all(d.startswith("2026-") and w.strip() for _, d, w in _rows),
+          "role labels or an explicit note that it was found in review")
+    check("the two findings nobody reported are marked as such",
+          any(q.endswith("b") for q, _, _ in _rows),
+          "a summary that shows only what was asked would overstate the coders")
+    check("§5.4's constraints are stated in the file itself",
+          "in the same words" in qt and "never about *cases*" in qt)
+    check("the file says it is a summary, and why",
+          "is a summary" in qt and "GDPR" in qt,
+          "a reader must not take it for a transcript")
+    # The full record must exist, and must not be published.
+    _full = A.parent / ".private" / "CODER-QUESTIONS-FULL.md"
+    check("the verbatim record is retained, unpublished", _full.is_file(),
+          str(_full.relative_to(A.parent)))
+    import subprocess as _sp
+    _tracked = _sp.run(["git", "ls-files", "--error-unmatch",
+                        str(_full.relative_to(A.parent))],
+                       cwd=A.parent, capture_output=True).returncode == 0
+    check("the verbatim record is NOT tracked in git", not _tracked,
+          "private correspondence stays out of the released repository")
+    check("Step 9's deposit list omits the log, and that omission is recorded",
+          "CODER-QUESTIONS.md" not in pro and "CODER-QUESTIONS.md" in pr,
           "PROTOCOL.md is frozen, so the gap is carried in the deviations table")
 
 print("\n== 16. Ready to deposit on OSF ==")
