@@ -155,9 +155,23 @@ below, both wordings side by side, so you can check that for yourself rather
 than take it on trust. Nothing here needs acting on: it is here because you are
 entitled to know what differs between your copy and the registered one.
 
-Found by a coder, before any document was coded.
-
 {rewrites}
+
+## And one that does change what you do
+
+§2 told you to record an exclusion in `exclusions.csv`. **That was wrong**, and it
+contradicted three other places in this manual. `exclusions.csv` is *generated*
+from your sheet afterwards; it is not yours to fill in, and you do not have it.
+§5 says so, §2's own next subsection says so, and PART 4 says so.
+
+**Record an exclusion where you record everything else: on your own sheet, in
+`excluded` and `exclusion_reason`.** Replacing an excluded stratum B document is
+the study runner's step, not yours — the reserve list is in a file you do not
+have, and you are not expected to go looking for it.
+
+{misaddressed}
+
+Both were found by coders, before any document was coded.
 
 ---
 
@@ -217,6 +231,40 @@ DEIXIS = [
 ]
 
 
+# A second, separate category -- and it is NOT the deixis list, which is audited
+# on the claim that only wording differs. These are instructions addressed to a
+# reader who is not the coder, or pointing at a file the coder does not have.
+#
+# The codebook contradicts itself here. Section 2 tells the coder to "record the
+# exclusion and its reason in `exclusions.csv`". Section 5 says the sheet is
+# authoritative for `excluded` and `exclusion_reason`, and that exclusions.csv is
+# a GENERATED artifact rebuilt by score.py that "must not be hand-edited".
+# Section 2's own later subsection, and PART 4, both say the sheet. Three places
+# say the sheet; one, left over from before v1.4, says the generated file. A
+# coder read that one and asked for a file that is produced FROM their work.
+#
+# The rewrite restores section 5's rule, which is the authoritative and later
+# statement -- it does not invent one. Replacement is likewise the study runner's
+# step: reserves live in frame.csv, which no coder has, and adding a document
+# means changing a worklist. Said plainly rather than left addressed to "you".
+#
+# Recorded as a dated deviation, and disclosed to coders in the manual, because
+# unlike the deixis list this one does change which action a coder takes.
+MISADDRESSED = [
+    ("**Replacement rule.** An excluded document from stratum B is replaced by the next\n"
+     "unused document from the ordered reserve list in `frame.csv` (`BR01`, `BR02`, …).\n"
+     "Take them in order. Never substitute a document you chose yourself. Record the\n"
+     "exclusion and its reason in `exclusions.csv` — the exclusion count is itself a\n"
+     "reportable number.",
+     "**Replacement rule** — the study runner's step, not yours. An excluded document\n"
+     "from stratum B is replaced by the next unused document from the ordered reserve\n"
+     "list in `frame.csv` (`BR01`, `BR02`, …), taken in order; no one substitutes a\n"
+     "document of their own choosing. Record the exclusion and its reason **on your own\n"
+     "sheet**, in `excluded` and `exclusion_reason` (§5) — the exclusion count is itself\n"
+     "a reportable number."),
+]
+
+
 def section_of(text: str, old: str) -> str:
     """Which numbered section of CODEBOOK.md a rewritten sentence sits in.
 
@@ -229,12 +277,12 @@ def section_of(text: str, old: str) -> str:
     return "§" + next(h for pos, h in reversed(heads) if pos < at)
 
 
-def rewrite_table(text: str) -> str:
-    """The seven rewrites, as a table, generated from DEIXIS itself."""
+def rewrite_table(text: str, pairs=None) -> str:
+    """A rewrite list, as a table, generated from the tables themselves."""
+    flat = lambda s: " ".join(s.split()).replace("|", "\\|")
     rows = ["| # | Section | The codebook's wording | Your manual's wording |",
             "|---|---|---|---|"]
-    for n, (old, new) in enumerate(DEIXIS, 1):
-        flat = lambda s: " ".join(s.split()).replace("|", "\\|")
+    for n, (old, new) in enumerate(DEIXIS if pairs is None else pairs, 1):
         rows.append(f"| {n} | {section_of(text, old)} | {flat(old)} | {flat(new)} |")
     return "\n".join(rows)
 
@@ -542,12 +590,14 @@ def main() -> int:
     body = body.replace(
         "The second is the one that tests whether the taxonomy is usable by\nanyone other than its authors.\n", "")
 
-    # Re-point the sentences that would otherwise refer to the wrong document.
-    for old, new in DEIXIS:
+    # Re-point the sentences that would otherwise refer to the wrong document,
+    # then the two that address the wrong reader.
+    for old, new in DEIXIS + MISADDRESSED:
         if body.count(old) != 1:
-            print(f"!! deixis rewrite matched {body.count(old)} times, expected 1:")
+            print(f"!! rewrite matched {body.count(old)} times, expected 1:")
             print(f"   {old.splitlines()[0][:70]}")
-            print("   CODEBOOK.md has moved this sentence. Update DEIXIS.")
+            print("   CODEBOOK.md has moved this sentence."
+                  " Update DEIXIS or MISADDRESSED.")
             return 1
         body = body.replace(old, new)
 
@@ -571,6 +621,7 @@ def main() -> int:
 
     out = (QUICK_START.format(version=version,
                               rewrites=rewrite_table(text),
+                              misaddressed=rewrite_table(text, MISADDRESSED),
                               cheatsheet=build_cheatsheet(text),
                               worked=worked)
            + "\n" + body.rstrip() + "\n")
@@ -665,8 +716,26 @@ def main() -> int:
         "asserted. This file is generated from the same table\nthe rewrites "
         "come from; it cannot fall out of step with them.\n\n"
         "Found by a coder on 22 August 2026, before any document was coded.\n\n"
-        + rewrite_table(text) + "\n")
-    print(f"wrote {REWRITES.name} ({len(DEIXIS)} rewrites)")
+        + rewrite_table(text) + "\n\n"
+        + "## Instructions addressed to the wrong reader\n\n"
+        "A separate category, and a stronger claim than the list above: these "
+        "**do**\nchange what a coder does. `CODEBOOK.md` §2 tells the coder to "
+        "record an\nexclusion in `exclusions.csv`, while §5 says the sheet is "
+        "authoritative for\n`excluded` and `exclusion_reason` and that "
+        "`exclusions.csv` is a *generated*\nartifact which \"must not be "
+        "hand-edited\". §2's own later subsection and PART 4\nboth say the "
+        "sheet. Three places say the sheet; one, left from before v1.4, says\n"
+        "the generated file — and a coder followed it and asked for a file "
+        "produced from\ntheir own work.\n\n"
+        "The rewrite restores §5's rule, which is the later and authoritative "
+        "statement;\nit does not invent one. Replacement is likewise the study "
+        "runner's step: the\nreserves live in `frame.csv`, which no coder has. "
+        "Recorded as a dated deviation\nand disclosed to the coders in the "
+        "manual, because unlike the list above this\none changes which action "
+        "a coder takes.\n\n"
+        + rewrite_table(text, MISADDRESSED) + "\n")
+    print(f"wrote {REWRITES.name} ({len(DEIXIS)} deixis, "
+          f"{len(MISADDRESSED)} misaddressed)")
     print(f"wrote {DST.name} ({len(out.splitlines())} lines, "
           f"{len(text.splitlines())} in source)")
     print("Give coders CODEBOOK-CODER.md. Deposit CODEBOOK.md.")

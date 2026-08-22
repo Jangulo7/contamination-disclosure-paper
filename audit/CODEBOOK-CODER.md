@@ -432,8 +432,6 @@ below, both wordings side by side, so you can check that for yourself rather
 than take it on trust. Nothing here needs acting on: it is here because you are
 entitled to know what differs between your copy and the registered one.
 
-Found by a coder, before any document was coded.
-
 | # | Section | The codebook's wording | Your manual's wording |
 |---|---|---|---|
 | 1 | §4 | *"a named harness or nothing"* rule this codebook used before v1.4. | *"a named harness or nothing"* rule in force before v1.4. |
@@ -443,6 +441,24 @@ Found by a coder, before any document was coded.
 | 5 | §5 | so it is neutralised rather than merely declared: see §8, "The tie-break is directional, so it is reported both ways". | so it is neutralised rather than merely declared: see the statistics section of the full codebook, "The tie-break is directional, so it is reported both ways". |
 | 6 | §6 | `CODEBOOK-CODER.md`, generated mechanically from this codebook by | `CODEBOOK-CODER.md`, generated mechanically from the full codebook by |
 | 7 | §6 | **The person who reads this full codebook is the adjudicator, not a coder.** | **The full codebook is read by the adjudicator, not by a coder.** |
+
+## And one that does change what you do
+
+§2 told you to record an exclusion in `exclusions.csv`. **That was wrong**, and it
+contradicted three other places in this manual. `exclusions.csv` is *generated*
+from your sheet afterwards; it is not yours to fill in, and you do not have it.
+§5 says so, §2's own next subsection says so, and PART 4 says so.
+
+**Record an exclusion where you record everything else: on your own sheet, in
+`excluded` and `exclusion_reason`.** Replacing an excluded stratum B document is
+the study runner's step, not yours — the reserve list is in a file you do not
+have, and you are not expected to go looking for it.
+
+| # | Section | The codebook's wording | Your manual's wording |
+|---|---|---|---|
+| 1 | §2 | **Replacement rule.** An excluded document from stratum B is replaced by the next unused document from the ordered reserve list in `frame.csv` (`BR01`, `BR02`, …). Take them in order. Never substitute a document you chose yourself. Record the exclusion and its reason in `exclusions.csv` — the exclusion count is itself a reportable number. | **Replacement rule** — the study runner's step, not yours. An excluded document from stratum B is replaced by the next unused document from the ordered reserve list in `frame.csv` (`BR01`, `BR02`, …), taken in order; no one substitutes a document of their own choosing. Record the exclusion and its reason **on your own sheet**, in `excluded` and `exclusion_reason` (§5) — the exclusion count is itself a reportable number. |
+
+Both were found by coders, before any document was coded.
 
 ---
 
@@ -643,11 +659,12 @@ system on a named evaluation.
 - it is a dataset release with no accompanying evaluation of any system;
 - the full text is not publicly reachable without payment or registration.
 
-**Replacement rule.** An excluded document from stratum B is replaced by the next
-unused document from the ordered reserve list in `frame.csv` (`BR01`, `BR02`, …).
-Take them in order. Never substitute a document you chose yourself. Record the
-exclusion and its reason in `exclusions.csv` — the exclusion count is itself a
-reportable number.
+**Replacement rule** — the study runner's step, not yours. An excluded document
+from stratum B is replaced by the next unused document from the ordered reserve
+list in `frame.csv` (`BR01`, `BR02`, …), taken in order; no one substitutes a
+document of their own choosing. Record the exclusion and its reason **on your own
+sheet**, in `excluded` and `exclusion_reason` (§5) — the exclusion count is itself
+a reportable number.
 
 Strata A and C are a census of a defined window, not a sample; if a document there
 is excluded it is simply dropped and the denominator shrinks. Say so in the paper.

@@ -126,42 +126,47 @@ import importlib.util as _ilu
 _spec = _ilu.spec_from_file_location("_mcm", A / "make-coder-manual.py")
 _mcm = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_mcm)
 DEIXIS = _mcm.DEIXIS
+MISADDR = _mcm.MISADDRESSED
+ALL_RW = DEIXIS + MISADDR
 # The manual now DISCLOSES the rewrites in a table above "# PART 6", quoting the
 # defective wording verbatim. So the rules region is what must be clean of it --
 # checking the whole document would fire on the very list that discloses it.
 _cc_front, _cc_rules = cc[:cc.index("# PART 6")], cc[cc.index("# PART 6"):]
 
-check("the derivation repair is declared, not ad hoc", len(DEIXIS) == 7,
-      f"{len(DEIXIS)} rewrites declared in make-coder-manual.py")
+check("the derivation repair is declared, not ad hoc", len(ALL_RW) == 8,
+      f"{len(DEIXIS)} wording + {len(MISADDR)} addressee, declared in "
+      "make-coder-manual.py")
 check("every rewrite still matches the registered codebook exactly once",
-      all(cb.count(o) == 1 for o, _ in DEIXIS),
-      str([o.splitlines()[0][:40] for o, _ in DEIXIS if cb.count(o) != 1]) or "7/7")
+      all(cb.count(o) == 1 for o, _ in ALL_RW),
+      str([o.splitlines()[0][:40] for o, _ in ALL_RW if cb.count(o) != 1])
+      or f"{len(ALL_RW)}/{len(ALL_RW)}")
 check("every rewrite landed in the manual the coders hold",
-      all(_cc_rules.count(n) == 1 and o not in _cc_rules for o, n in DEIXIS),
-      str([n.splitlines()[0][:40] for o, n in DEIXIS
-           if _cc_rules.count(n) != 1 or o in _cc_rules]) or "7/7")
+      all(_cc_rules.count(n) == 1 and o not in _cc_rules for o, n in ALL_RW),
+      str([n.splitlines()[0][:40] for o, n in ALL_RW
+           if _cc_rules.count(n) != 1 or o in _cc_rules])
+      or f"{len(ALL_RW)}/{len(ALL_RW)}")
 # The coders are told what differs rather than having to trust that it is only
 # wording, so the disclosure must be complete -- all seven, both wordings.
 _flat = lambda s: " ".join(s.split())
-check("all seven are disclosed to the coders in the manual itself",
+check("all of them are disclosed to the coders in the manual itself",
       all(_flat(o) in _flat(_cc_front) and _flat(n) in _flat(_cc_front)
-          for o, n in DEIXIS),
+          for o, n in ALL_RW),
       "the manual lists every rewrite above PART 6")
 check("the standalone rewrite list is generated and agrees",
       (A/"CODER-MANUAL-REWRITES.md").is_file()
       and all(_flat(o) in _flat((A/"CODER-MANUAL-REWRITES.md").read_text(encoding="utf-8"))
-              for o, _ in DEIXIS),
+              for o, _ in ALL_RW),
       "CODER-MANUAL-REWRITES.md -- released, not shipped to coders")
 
 # The load-bearing one: undo the seven rewrites and the manual must become the
 # codebook's own wording again. If a rule had been altered under cover of a
 # wording fix, the reversed text would not be found in CODEBOOK.md.
 _rev = _cc_rules
-for _o, _n in DEIXIS:
+for _o, _n in ALL_RW:
     _rev = _rev.replace(_n, _o)
 check("reversing the rewrites restores the codebook's own sentences",
-      all(o in _rev and o in cb for o, _ in DEIXIS),
-      "the repair is wording only -- no rule text differs from the register")
+      all(o in _rev and o in cb for o, _ in ALL_RW),
+      "each rewrite is an exact substitution -- nothing else in PART 6 moved")
 
 check("no self-referential phrase survives in the coder manual",
       not [s for s in ("this file", "this codebook", "this full codebook")
@@ -179,6 +184,21 @@ _moved = sorted({r for line in _cc_rules.splitlines()
 check("no cross-reference sends a coder to a different section than the codebook",
       not _moved,
       str({r: (_src.get(r), _out.get(r)) for r in _moved}) or "all resolve alike")
+
+# The deixis list claims only wording moved. This one does not: it changes which
+# action a coder takes, so it must be visibly separated rather than folded in.
+check("the two categories are kept apart, not folded together",
+      len(DEIXIS) == 7 and len(MISADDR) == 1
+      and not any(o in [d for d, _ in DEIXIS] for o, _ in MISADDR),
+      f"{len(DEIXIS)} wording, {len(MISADDR)} addressed to the wrong reader")
+check("the change of addressee is disclosed to coders as a change of action",
+      "And one that does change what you do" in _cc_front
+      and "on your own sheet" in _cc_front,
+      "the manual says plainly that §2 was wrong and what to do instead")
+check("the manual no longer tells a coder to write to a generated file",
+      "reason in `exclusions.csv`" not in _cc_rules
+      and "reason in `exclusions.csv`" in cb,
+      "the instruction is gone from the manual, still present in the register")
 
 check("the registered codebook itself is untouched by any of this",
       cb.splitlines()[0].endswith(VERSION) and "1.4.1" not in cb,
@@ -550,7 +570,7 @@ if _p6 is not None:
     # derivation rewrites, and nothing else. Applying them to the codebook here
     # states that exactly: any OTHER divergence is still a stray line.
     _cb_fixed = cb
-    for _o, _n in DEIXIS:
+    for _o, _n in ALL_RW:
         _cb_fixed = _cb_fixed.replace(_o, _n)
     _src = {l.strip() for l in _cb_fixed.splitlines()}
     _allowed = ("## 8. Version history", "You are coding under",
