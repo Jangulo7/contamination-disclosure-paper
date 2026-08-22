@@ -210,6 +210,16 @@ differ, the sections below are what counts.
 # where it is visible, diffable, and cannot be mistaken for a change of rule.
 # Each entry asserts exactly one match, so a future edit to CODEBOOK.md that
 # moves one of these sentences fails the build rather than silently skipping it.
+PRIMING = ("study hypothesis", "our hypothesis", "we expect", "we predict",
+           "most fields are undisclosed", "rarely reported", "prevalence paradox",
+           "flatters", "biased upward",
+           # v1.4: the changelog named H1 and H3 and the direction an
+           # amendment moved them in. Naming a hypothesis label to a coder is
+           # the same leak as naming the expectation.
+           "h1 ", "h2 ", "h3 ", "easier to falsify", "harder to confirm",
+           "predicts low", "expected result", "expected answer",
+           "direction of a hypothesis")
+
 DEIXIS = [
     # sec 4 -- F2 threshold history
     ('*"a named harness or nothing"* rule this codebook used\nbefore v1.4.',
@@ -648,15 +658,9 @@ def main() -> int:
     # Phrases, not bare words: "a fact the document does not state is undisclosed"
     # is a definition the coder needs, whereas "most fields are undisclosed" is a
     # prediction the coder must not be given.
-    PRIMING = ("study hypothesis", "our hypothesis", "we expect", "we predict",
-               "most fields are undisclosed", "rarely reported", "prevalence paradox",
-               "flatters", "biased upward",
-               # v1.4: the changelog named H1 and H3 and the direction an
-               # amendment moved them in. Naming a hypothesis label to a coder is
-               # the same leak as naming the expectation.
-               "h1 ", "h2 ", "h3 ", "easier to falsify", "harder to confirm",
-               "predicts low", "expected result", "expected answer",
-               "direction of a hypothesis")
+    # PRIMING is module-level so audit-check.py can run the same
+    # vocabulary over every file in a coder's pack, not just this one.
+
     # Checked against the DERIVED BODY, not against `out`: the neutral header is
     # a constant in this file, written deliberately, and it legitimately contains
     # the sentence "there is no expected answer".

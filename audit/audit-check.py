@@ -482,6 +482,25 @@ if kit.is_dir():
         # nothing a coder must not have
         forbidden = {"CODEBOOK.md", "PRE-REGISTRATION.md", "PROTOCOL.md",
                      "frame.csv", "score.py", "SAMPLING-FRAME.md"}
+        # The check below is about FILES. It says nothing about what the files
+        # a coder does get actually say -- and an annex note once told them to
+        # "expect these to be the most disclosed of the three strata", which is
+        # the direction of a result, handed to the people producing it. Scan the
+        # text too, using the same vocabulary the manual build refuses to ship,
+        # plus the phrasings that state a result without predicting one.
+        RESULT_TALK = ("most disclosed", "least disclosed", "more disclosed",
+                       "less disclosed", "best disclosed", "worst disclosed",
+                       "expect these", "expect to find", "you will find that",
+                       "tend to disclose", "typically disclose")
+        said = []
+        for f in sorted(d.iterdir()) if d.is_dir() else []:
+            if f.suffix not in (".md", ".csv"):
+                continue
+            low = f.read_text(encoding="utf-8").lower()
+            said += [f"{f.name}:{w}" for w in _mcm.PRIMING + RESULT_TALK
+                     if w in low]
+        check(f"{c}'s pack says nothing about how the results should come out",
+              not said, str(said) or "no expected direction anywhere in the pack")
         check(f"{c}'s pack contains nothing that would prime the coding",
               not (have & forbidden), str(sorted(have & forbidden)))
         if (d/f"worklist-{c}.md").is_file():

@@ -19,7 +19,7 @@ are calibrated.
 
 ## A · Frontier-developer system cards
 
-*15 documents.* Long documents. You are not reading them end to end — you are locating the focal evaluation (codebook §1) and then searching for six specific things. Expect these to be the *most* disclosed of the three strata.
+*15 documents.* Long documents. You are not reading them end to end — you are locating the focal evaluation (codebook §1) and then searching for six specific things.
 
 | ID | Source | Document |
 |---|---|---|

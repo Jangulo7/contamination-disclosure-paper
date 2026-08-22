@@ -90,7 +90,7 @@ is good, or whether the authors did a good job.
 |---|---|
 | `CODEBOOK-CODER.md` | **The rules.** Read Section 0 first — it is a glossary that assumes you know nothing about this topic. |
 | `ANNEX-DOCUMENTS.md` | All 50 documents, with a link for each. The nine pilot documents are marked. |
-| `worklist-{coder}.md` | Your 41 main-pass documents, in your own order, as a tick-list. |
+| `worklist-{coder}.md` | Your 41 main-pass documents, in the order set for you, as a tick-list. |
 | `codes-{coder}.csv` | **Your answer sheet.** One row per document, already filled in with the document id and your label. |
 
 ## Do it in this order
@@ -264,7 +264,8 @@ def main() -> int:
             wl.append(f"- [ ] **{r['id']}** — [{r['title']}]({r['url']})")
         (d / f"worklist-{coder}.md").write_text(
             f"# Main-pass worklist — {coder}\n\n"
-            f"{len(wl)} documents, in your own order. **Do the nine pilot "
+            f"{len(wl)} documents, in the order set for you — it is fixed, and it "
+            f"is not the other coder's. **Do the nine pilot "
             f"documents first** — they are listed in `START-HERE.md`, and they "
             f"are not in this list.\n\n"
             f"Tick each one when its row in `codes-{coder}.csv` is filled in. "

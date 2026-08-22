@@ -28,8 +28,7 @@ SECTIONS = {
     "A_system_card": (
         "A · Frontier-developer system cards",
         "Long documents. You are not reading them end to end — you are locating the "
-        "focal evaluation (codebook §1) and then searching for six specific things. "
-        "Expect these to be the *most* disclosed of the three strata.",
+        "focal evaluation (codebook §1) and then searching for six specific things.",
     ),
     "B_neurips_dnb": (
         "B · NeurIPS 2025 Datasets & Benchmarks papers",
