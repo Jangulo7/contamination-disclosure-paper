@@ -1,4 +1,4 @@
-# Annex — the 50 documents
+# Annex — the 41 documents
 
 Every document in the frame, with a live link. Verified 2026-08-12: all 77 URLs returned HTTP 200, including the 12 reserves.
 
@@ -12,26 +12,34 @@ the same documents for both coders. Nobody picks their own order, and there is
 nothing here for you to run or generate.
 
 For each document: open it, find the focal evaluation, run the keyword searches
-from codebook §5, then fill one row of your sheet. Roughly 8–12 minutes once you
-are calibrated.
+from codebook §5, then fill one row of your sheet.
+
+**A document gets at most 25 minutes.** On reaching it, code what you have
+established, write `capped` in `notes`, put the real elapsed time in `minutes`,
+and move on. Work from the §5 keyword searches rather than reading front to
+back, so that all eight variables are swept before the clock runs out.
+
+**What counts as the document.** The page linked here, plus its appendices. If
+that page is an abstract or a landing page, follow the one link that reaches the
+document itself — that is the norm in stratum B, where each link opens a
+proceedings abstract page with the PDF linked from it. Do **not** follow a link
+the document adopts as its own method, or an ordinary citation; record the
+first kind with a `REF:` token in `notes` (codebook §1 and §5).
 
 ---
 
 ## A · Frontier-developer system cards
 
-*15 documents.* Long documents. You are not reading them end to end — you are locating the focal evaluation (codebook §1) and then searching for six specific things.
+*12 documents.* Long documents. You are not reading them end to end — you are locating the focal evaluation (codebook §1) and then searching for six specific things.
 
 | ID | Source | Document |
 |---|---|---|
 | `A01` | Anthropic | [Claude Sonnet 5 System Card](https://www-cdn.anthropic.com/9e6a1044980d8c4ed85669faf9c2a8342e2e9f1e/Claude%20Sonnet%205%20System%20Card.pdf) |
 | `A02` | Anthropic | [Claude Opus 4.8 System Card](https://cdn.sanity.io/files/4zrzovbb/website/c886650a2e96fc0925c805a1a7ca77314ccbf4a6.pdf) |
 | `A03` | Anthropic | [Claude Opus 4.7 System Card](https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf) |
-| `A04` | Anthropic | [Claude Sonnet 4.6 System Card](https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf) |
-| `A05` | Anthropic | [Claude Opus 4.6 System Card](https://www-cdn.anthropic.com/0dd865075ad3132672ee0ab40b05a53f14cf5288.pdf) |
 | `A10` | OpenAI | [GPT-5.6 System Card](https://deploymentsafety.openai.com/gpt-5-6) |
 | `A11` | OpenAI | [GPT-5.5 System Card](https://openai.com/index/gpt-5-5-system-card/) |
 | `A12` | OpenAI | [GPT-5.3-Codex System Card](https://openai.com/index/gpt-5-3-codex-system-card/) |
-| `A13` | OpenAI | [Addendum to GPT-5.2 System Card: GPT-5.2-Codex](https://openai.com/index/gpt-5-2-codex-system-card/) |
 | `A14` | Google DeepMind | [Gemini 3.1 Pro Model Card](https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf) |
 | `A15` | Google DeepMind | [Gemini 3.6 Flash Model Card](https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-6-Flash-Model-Card.pdf) |
 | `A16` | Google DeepMind | [Gemini 3 Pro Model Card](https://deepmind.google/models/model-cards/gemini-3-pro/) |
@@ -70,25 +78,19 @@ are calibrated.
 
 ## C · Third-party evaluator reports
 
-*15 documents.* Shorter than the system cards. Some are reviews *of* another organisation's report rather than evaluations in their own right — if one reports no score of its own, it is an exclusion (codebook §2).
+*9 documents.* Shorter than the system cards. Some are reviews *of* another organisation's report rather than evaluations in their own right — if one reports no score of its own, it is an exclusion (codebook §2).
 
 | ID | Source | Document |
 |---|---|---|
 | `C01` | METR | [Frontier Risk Report (Feb-Mar 2026)](https://metr.org/blog/2026-05-19-frontier-risk-report/) |
 | `C02` | METR | [Review: automated R&D section, Anthropic Risk Report](https://metr.org/blog/2026-05-08-rd-section-anthropic-risk-report-feb-2026-review/) |
 | `C03` | METR | [Red-Teaming Anthropic's Internal Agent Monitoring](https://metr.org/blog/2026-03-25-red-teaming-anthropic-agent-monitoring/) |
-| `C04` | METR | [Review: Anthropic Sabotage Risk Report, Claude Opus 4.6](https://metr.org/blog/2026-03-12-sabotage-risk-report-opus-4-6-review/) |
-| `C05` | METR | [Review: Anthropic Summer 2025 Pilot Sabotage Risk Report](https://metr.org/blog/2025-10-28-sabotage-report-review/) |
 | `C16` | UK AISI | [Evaluation of OpenAI's GPT-5.5 cyber capabilities](https://www.aisi.gov.uk/blog/our-evaluation-of-openais-gpt-5-5-cyber-capabilities) |
 | `C17` | UK AISI | [Evaluation of Claude Mythos Preview's cyber capabilities](https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities) |
 | `C18` | UK AISI | [Preliminary assessment of Kimi K3's cyber capabilities](https://www.aisi.gov.uk/blog/preliminary-assessment-of-kimi-k3s-cyber-capabilities) |
-| `C19` | UK AISI | [How far behind the frontier are leading open weight models on cyber?](https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber) |
-| `C20` | UK AISI | [Pre-deployment evaluation of OpenAI's o1 model](https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model) |
 | `C22` | Apollo Research | [Measuring reward-seeking via contrastive belief updates](https://www.apolloresearch.ai/science/measuring-reward-seeking-via-contrastivebelief-updates) |
 | `C23` | Apollo Research | [Stress testing deliberative alignment for anti-scheming training](https://www.apolloresearch.ai/science/stress-testing-deliberative-alignment-for-anti-scheming-training) |
 | `C24` | Apollo Research | [Frontier models are capable of in-context scheming](https://www.apolloresearch.ai/science/frontier-models-are-capable-of-incontext-scheming) |
-| `C25` | Apollo Research | [More capable models are better at in-context scheming](https://www.apolloresearch.ai/science/more-capable-models-are-better-at-in-context-scheming) |
-| `C26` | Apollo Research | [Claude Sonnet 3.7 (often) knows when it's in alignment evaluations](https://www.apolloresearch.ai/science/claude-sonnet-37-often-knows-when-its-in-alignment-evaluations) |
 
 
 ---

@@ -192,7 +192,7 @@ test.
 
 ## Timing
 
-The window is **{window}**. About 9 to 11 hours in total. **You arrange your own
+The window is **{window}**. Budget **at most 25 minutes per document**, so the main pass is about 13 hours at the cap and usually much less. **You arrange your own
 hours** — the only fixed points are that **the nine pilot documents reach me by
 the end of the first day**, and the re-check comes last. The pilot deadline is
 the one thing I cannot be flexible about: neither of you can start the main pass
@@ -258,9 +258,15 @@ def main() -> int:
 
         # worklist, without the "go and run python" instruction
         wl = []
+        # Permute over the REGISTERED draw, then delete what the v1.5 reduction
+        # capped out -- never over the reduced set. Sampling 32 documents gives a
+        # different order, and both coders were told their order does not change.
         rng = order.random.Random(order.coder_seed(coder))
-        main_pass = [r for r in frame_rows() if r["id"] not in order.PILOT]
-        for i, r in enumerate(rng.sample(main_pass, len(main_pass)), 1):
+        main_pass = [r for r in order.load(HERE / "frame.csv")
+                     if r["id"] not in order.PILOT]
+        drawn = [r for r in rng.sample(main_pass, len(main_pass))
+                 if order.still_in_frame(r)]
+        for i, r in enumerate(drawn, 1):
             wl.append(f"- [ ] **{r['id']}** — [{r['title']}]({r['url']})")
         (d / f"worklist-{coder}.md").write_text(
             f"# Main-pass worklist — {coder}\n\n"
@@ -269,7 +275,8 @@ def main() -> int:
             f"documents first** — they are listed in `START-HERE.md`, and they "
             f"are not in this list.\n\n"
             f"Tick each one when its row in `codes-{coder}.csv` is filled in. "
-            f"Roughly 8 to 12 minutes each.\n\n" + "\n".join(wl) + "\n\n"
+            f"**At most 25 minutes each** — on reaching the cap, code what you "
+            f"have, write `capped` in `notes`, and move on.\n\n" + "\n".join(wl) + "\n\n"
             f"When every box is ticked, tell me — the five-document re-check "
             f"comes last.\n", encoding="utf-8")
 

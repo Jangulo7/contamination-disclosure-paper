@@ -1,4 +1,4 @@
-# Disclosure audit — coding manual v1.4
+# Disclosure audit — coding manual v1.5
 
 Registered before coding begins, **with a stated amendment procedure**: if a rule
 changes after the pilot, bump the version, record what changed in the changelog
@@ -187,9 +187,35 @@ others. That is the intended direction: it gives a defensible denominator, and i
 is stated in the paper as a limitation. The alternative rule,
 best-practice-anywhere, biases upward and was rejected for that reason.
 
-Code the document's appendices and any linked page it points to as its own
-methods (a linked model card counts; a general company blog does not). Do **not**
-follow citations into other papers.
+### The document boundary — what you read, and what you do not
+
+**The document is the page your worklist points at, and everything inside it.**
+Appendices are inside it. A page it links to is not, with one exception.
+
+| The link … | What to do |
+|---|---|
+| **resolves the document** — the page is an abstract, a landing page or a paywall notice, and the document itself is one click away | **Follow it.** That reaches the document; it does not enlarge it. |
+| **is adopted as the document's own method** — *"details of our methodology can be found at [URL]"* | **Do not follow.** Record `REF:` in `notes`, naming each field it would have answered. |
+| **is an ordinary citation** — bibliography, or the paper of a third-party benchmark being used | **Do not follow.** Record nothing. |
+
+**The first case is the norm here, not an edge case.** Every stratum B link opens
+a proceedings abstract page with the PDF linked from it, and `A17` is an arXiv
+abstract page. Coding those from the abstract would mean coding most of stratum B
+from a summary. Open the PDF, then read the appendices as well — **an appendix is
+part of the document, not a linked page**, and elicitation details often live
+there rather than in the body.
+
+Three cases that came up in the pilot, decided:
+
+- **A methodology page at the same publisher is outside the boundary** for `f2`
+  and `t5` — whether or not it is a model card, and whether or not it covers the
+  same model family. Code from the document; record `REF:f2` or `REF:t5`.
+- **A method sentence naming one of two reported conditions** (with-tools versus
+  without-tools, say) covers **only the condition it names** — rule E7. The other
+  condition is unknown. Do not stretch the sentence over the whole benchmark.
+- **A training cutoff given only in a linked model card is `t3 = 0`**, plus
+  `REF:t3`. The cutoff is outside the boundary, so the document has not stated
+  it.
 
 ## 2. Inclusion, exclusion, replacement
 
@@ -813,6 +839,40 @@ Elapsed time: about nine minutes.
    awkward to omit here. `codebook_version` carries the version each row was
    coded under, since the pilot is expected to bump the version mid-study.
 
+   **A document gets at most 25 minutes.** When you reach it, code what you
+   have established, write `capped` in `notes`, put the real elapsed time in
+   `minutes`, and move on. The cap is a bound on the clock, not a target: most
+   documents should finish well inside it.
+
+   **Sweep all eight variables before the clock runs out.** Work from the
+   keyword searches in §5 rather than reading front to back. A linear read runs
+   out of time in the same place every time, so the same variables would be the
+   ones left unexamined; working the searches keeps whatever the cap cuts evenly
+   spread across the row.
+
+   **`notes` begins with a `REF:` token, on every row.**
+
+   ```
+   REF:f2;t3
+   REF:none
+   REF:f2 | capped | ran out of time in the appendix
+   ```
+
+   - `REF:` comes **first** in the field, so it can be extracted with `^REF:`
+     instead of read.
+   - It names **variables**, never URLs: the fields that a page outside the
+     boundary would have answered.
+   - **`REF:none` is required** when there were no such pointers. A blank field
+     cannot be told apart from a forgotten one.
+   - Enter it **even where the code is `0` anyway**. Conditioning the record on
+     the code — or on whether the link looked as though it mattered — would make
+     it a subset chosen by the coder rather than a record.
+   - Anything else you want to say follows, separated by ` | `. The `url_dead`
+     exclusion route is unchanged.
+
+   **`codebook_version`** carries `v1.5` on every main-pass row. The nine pilot
+   rows keep the version they were coded under.
+
    **Exclusions live in one place.** `coding-sheet.csv` is authoritative for
    `excluded` and `exclusion_reason`. `exclusions.csv` is a *generated* artifact,
    rebuilt from the sheet by `score.py`, and must not be hand-edited: two
@@ -1165,3 +1225,4 @@ reported as *"k organisations, n documents"*, never as a bare *n*.
 | 1.2 | 2026-08-16 | Coder independence stated as a requirement rather than a preference, and recorded as met: one team coder, one independent coder external to the team. Added the briefing rule (the independent coder works from the generated coder manual and nothing else). Coder sheets renamed from initials to `coder1`/`coder2`, so that no coder identity enters the released materials. `exclusions.csv` marked as generated by `score.py` and not to be hand-edited. |
 | 1.3 | 2026-08-17 | Pre-pilot amendment (released as "post-pilot", which was wrong — no pilot had run then and none has run at 1.4; corrected in the repository on 17 August 2026 and again here). Coder sheet labels changed from `coder1`/`coder2` to `CD` (the coder drawn from the design team) and `IC` (the independent coder), so that the label is self-documenting and identity-free, and so that the `order.py` seed — which is derived from the label — is reproducible by a third party. Naming only: no coding rule, scale, edge rule or analysis decision changed, and no code assigned under 1.2 is affected. The paper's Appendix A was corrected in the same pass to state the `t5` threshold as **any of** the four Type 5 elements rather than all four, matching section 4 of this manual; the manual is authoritative and was not changed. Documented the document-ID gaps in `SAMPLING-FRAME.md` itself rather than only pointing at it, and made `score.py` generate `exclusions.csv` from the coding sheets rather than reading it as a hand-maintained input. |
 | 1.4 | 2026-08-21 | **Pre-pilot amendment, made before any document was coded — pilot included.** Collaborator review raised eight operational ambiguities and one analysis inconsistency; all are closed here in a single pass rather than as loose amendments, because loose amendments are what this study argues against. **Focal evaluation:** nine numbered edge rules added (§1). E1 front matter counts as body text; E2 scores reported only for a baseline or comparison model are skipped; E3 aggregate rows (`Average`, `Overall`, …) are skipped; E4 unlabelled figure values do not establish the focal evaluation; E5 ties resolve left to right and **the focal evaluation is irrevocable once chosen**; E6–E9 promote the global-scope rule from prose to numbered rules, with partial scope, other-benchmark scope, and conflict handling. A focal disagreement is resolved by naming the numbered rule that decides it, and the count is reported. **One-sided exclusion (§2):** inclusion is a coded decision on both sheets and a reported statistic; agreement is computed on documents both coders included; an unresolvable one-sided exclusion defaults to **include**, the opposite default from the code-level tie-break, because exclusion is the decision with more latitude in it. **`t5` scope (§3):** stated that `t5` codes what the system could reach *during the run* whatever the resource is and whenever it was assembled, so that a retrieval index predating the run is `t5`-codable — closing a gap between the instrument and the taxonomy's prior-access/acquired-access axis. **F2 elicitation (§4):** sub-element (i) redefined — a named harness (**H**), **or** a public code artifact pinned to a version (**R**), **or** a bespoke scaffold stating all three of loop, tool set and stopping condition (**S**, three of three, a checklist and not an assessment). All five sub-elements are now recorded in `f2_notes` for **every** document in a fixed five-character format, so any alternative threshold — including the v1.3 rule — remains recomputable from the released sheets via `score.py --f2-threshold`. *This amendment makes H1 easier to falsify and H3 harder to confirm, and was adopted for that reason as well as on the merits: the v1.3 rule scored a repository pinned to a commit below a named harness, which is differential measurement error aligned with the direction of a hypothesis under test.* **Pilot reconciliation (§5.2):** made written and asynchronous in three rounds through the study runner, with the coders **not shown each other's codes** — writing preserves the evidence about whether a rule was ambiguous, which a live discussion destroys whenever the more confident coder talks the other round, and withholding the codes closes the imitation channel that would inflate the main-pass agreement statistic. **Answering coders' questions (§5.4):** every answer goes to both coders in the same words and is logged; answers are about rules and never about cases; during the main pass a rule question is answered only with what the manual already says. **Pilot (§5.2):** rebalanced from 1/4/4 to **3/3/3** across the strata (`A01 A10 A14`, `B01 B02 B03`, `C01 C16 C22`) by a stated mechanical rule, covering three genres and six of seven organisations. The previous set placed four of METR's five documents in the pilot, leaving that cluster one document in the main pass, which the primary κ would then have rested on. Count unchanged at nine; main pass unchanged at 41. Stated that a pilot which surfaces no rule defect leaves the version unmoved, and that this test is fixed before the pilot rather than decided after it. **Rates versus agreement (§5.2, §8.7):** stated explicitly that disclosure rates are computed on all included documents, pilot included, from the adjudicated sheet, and that only the primary agreement statistic excludes the pilot; rates additionally reported with the nine excluded. **Adjudication (§5.4):** a registered adjudicator, fixed in advance — a member of the design team who does **not** code, acting only after the agreement statistics are computed, resolving cells in randomised order without sight of running totals, and applying the focal edge rules mechanically to focal disagreements. Rates are reported under each coder's sheet and adjudicated, with a directional tally of adjudicated cells and the extremal pair that bounds any adjudicator's influence. The lower-code default survives for genuinely unresolvable cells. **Coder independence (§6):** the requirement is now **exceeded** — neither coder designed the taxonomy, neither is an author, and **both** are briefed from `CODEBOOK-CODER.md` and nothing else, with the full codebook read by the adjudicator rather than by a coder. Labels changed from `CD`/`IC` to **`R1`/`R2`**: `CD` named "the coder drawn from the design team", a role that no longer exists, so the label could not simply be redefined. `order.py` seeds and both coding orders change accordingly, which is free before worklists are generated and impossible after. **Statistics (§8):** the disagreement weight matrix is stated in full with its direction of bias; the category count *Q* is fixed at 4 rather than read off the observed codes, with its direction of bias also stated; **Gwet's AC2** is added under the same weights as the prevalence-robust companion to weighted κ and the divergence rule is restated as κ_w versus AC2, correcting a v1.3 inconsistency in which a weighted κ was compared against an unweighted AC1; full 4×4 confusion matrices are released; the bootstrap now reports the proportion of resamples on which κ was defined; the three denominators are separated and the reported κ is stated to be an upper bound because inclusion-disputed documents are dropped from it; the tie-break is reported under both directions. **Elsewhere:** `PROTOCOL.md` added to the frozen deposit and its stale document counts and coder-sheet naming corrected; `date_published` pre-declared for `frame.csv`; the coder-facing manual and the documents annex regenerated. |
+| 1.5 | 2026-08-23 | **Post-pilot amendment, adopted before any main-pass document was coded and before any agreement statistic or disclosure rate was computed.** The registered pilot-close test is a decision, not a threshold — *was a rule at fault?* — and one was. **§1 document boundary.** The v1.4 rule coded *"any linked page it points to as its own methods"*, which is unbounded in practice: a linked page links further pages, and the rule did not separate a page adopted as the document's own method from an ordinary citation. Pilot coding reached roughly 115 minutes per document against an 8–12 minute reference, the excess attributable to linked pages. The boundary is now the document itself plus its appendices, with a three-case table: a link that **resolves** the document is followed (the page is an abstract or landing page and the document is one click away); a link **adopted as the document's own method** is not followed and is recorded; an **ordinary citation** is not followed and not recorded. The resolving case is stated explicitly because it is the norm rather than an edge case — every stratum B link opens a proceedings abstract page, and `A17` is an arXiv abstract page, so a literal *do-not-follow-links* reading would code most of stratum B from a summary. Appendices are stated to be inside the boundary. Three pilot questions are written in as decided cases: a same-publisher methodology page is outside the boundary for `f2` and `t5`; a method sentence naming one of two reported conditions covers only that condition (E7); a training cutoff given only in a linked model card is `t3 = 0`. **§5 25-minute cap.** A document gets at most 25 minutes, after which the coder records what is established, writes `capped` in `notes` and records actual `minutes`. It governs coder procedure, not the object measured, applies identically to both coders, is fixed before any main-pass coding, and does not depend on the document or its publisher. 25 rather than 20 so the cap bounds typical coding time instead of replacing it. The cap section requires the eight variables to be swept using the existing §5 keyword searches rather than read front to back, because a linear read truncates the same variables every time and would fill the later columns with systematic `0`s — bias by variable rather than noise. **`notes` token.** No column is added to the sheet. `notes` now begins with a fixed `REF:` token naming the *variables* a page outside the boundary would have answered — `REF:none` where there were none, entered even where the code is `0` anyway, so the record is not a subset selected by the coder. Extractable with `^REF:`. It is **not machine-validated**; format is spot-checked after the first three main-pass documents and again mid-pass. **Direction of effect, stated rather than discovered.** Both changes can only lower or leave unchanged the disclosure rates, which is the direction H1 predicts. An amendment adopted under schedule pressure that moves results toward the authors' own hypothesis is precisely the degree of freedom a registration exists to close, so it is bounded by reporting rather than by assurance: every affected rate as a primary/bounding pair under the `REF:` record, with the bounding rate forcing every cell carrying an unfollowed pointer to `1`, and reported beside its token coverage; every rate with and without capped documents; agreement recomputed excluding capped documents, labelled secondary, because the real risk is the two coders capping on *different* documents and residual disagreement becoming a measure of the clock; and the capped rate per coder and per stratum, which above roughly 20–25% is a design limit rather than a footnote. If token coverage is poor the bounding rate is suppressed and the limitation stated — never repaired by revisiting documents. **Pilot recode, in part.** The registered pilot-close procedure recodes all nine pilot documents under the new version. Three are recoded — `B01`, `B02`, `B03` — and six are not; the deviation and its reasoning are in `PRE-REGISTRATION.md`. **Frame.** The pre-registered per-organisation reduction from five to three is invoked, giving 41 documents over the same 27 clusters; it is a contingency provided for in `PROTOCOL.md`, not a deviation. Sheets, seed, weight matrix and *Q* = 4 are unchanged. |

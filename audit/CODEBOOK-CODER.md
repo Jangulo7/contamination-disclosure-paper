@@ -1,6 +1,6 @@
-# Disclosure audit — coding manual, v1.4
+# Disclosure audit — coding manual, v1.5
 
-**Put `v1.4` in the `codebook_version` column of every row.**
+**Put `v1.5` in the `codebook_version` column of every row.**
 
 ---
 
@@ -652,9 +652,35 @@ others. That is the intended direction: it gives a defensible denominator, and i
 is stated in the paper as a limitation. The alternative rule,
 best-practice-anywhere, biases upward and was rejected for that reason.
 
-Code the document's appendices and any linked page it points to as its own
-methods (a linked model card counts; a general company blog does not). Do **not**
-follow citations into other papers.
+### The document boundary — what you read, and what you do not
+
+**The document is the page your worklist points at, and everything inside it.**
+Appendices are inside it. A page it links to is not, with one exception.
+
+| The link … | What to do |
+|---|---|
+| **resolves the document** — the page is an abstract, a landing page or a paywall notice, and the document itself is one click away | **Follow it.** That reaches the document; it does not enlarge it. |
+| **is adopted as the document's own method** — *"details of our methodology can be found at [URL]"* | **Do not follow.** Record `REF:` in `notes`, naming each field it would have answered. |
+| **is an ordinary citation** — bibliography, or the paper of a third-party benchmark being used | **Do not follow.** Record nothing. |
+
+**The first case is the norm here, not an edge case.** Every stratum B link opens
+a proceedings abstract page with the PDF linked from it, and `A17` is an arXiv
+abstract page. Coding those from the abstract would mean coding most of stratum B
+from a summary. Open the PDF, then read the appendices as well — **an appendix is
+part of the document, not a linked page**, and elicitation details often live
+there rather than in the body.
+
+Three cases that came up in the pilot, decided:
+
+- **A methodology page at the same publisher is outside the boundary** for `f2`
+  and `t5` — whether or not it is a model card, and whether or not it covers the
+  same model family. Code from the document; record `REF:f2` or `REF:t5`.
+- **A method sentence naming one of two reported conditions** (with-tools versus
+  without-tools, say) covers **only the condition it names** — rule E7. The other
+  condition is unknown. Do not stretch the sentence over the whole benchmark.
+- **A training cutoff given only in a linked model card is `t3 = 0`**, plus
+  `REF:t3`. The cutoff is outside the boundary, so the document has not stated
+  it.
 
 ## 2. Inclusion, exclusion, replacement
 
@@ -1199,6 +1225,40 @@ would be.
    awkward to omit here. `codebook_version` carries the version each row was
    coded under, since the pilot is expected to bump the version mid-study.
 
+   **A document gets at most 25 minutes.** When you reach it, code what you
+   have established, write `capped` in `notes`, put the real elapsed time in
+   `minutes`, and move on. The cap is a bound on the clock, not a target: most
+   documents should finish well inside it.
+
+   **Sweep all eight variables before the clock runs out.** Work from the
+   keyword searches in §5 rather than reading front to back. A linear read runs
+   out of time in the same place every time, so the same variables would be the
+   ones left unexamined; working the searches keeps whatever the cap cuts evenly
+   spread across the row.
+
+   **`notes` begins with a `REF:` token, on every row.**
+
+   ```
+   REF:f2;t3
+   REF:none
+   REF:f2 | capped | ran out of time in the appendix
+   ```
+
+   - `REF:` comes **first** in the field, so it can be extracted with `^REF:`
+     instead of read.
+   - It names **variables**, never URLs: the fields that a page outside the
+     boundary would have answered.
+   - **`REF:none` is required** when there were no such pointers. A blank field
+     cannot be told apart from a forgotten one.
+   - Enter it **even where the code is `0` anyway**. Conditioning the record on
+     the code — or on whether the link looked as though it mattered — would make
+     it a subset chosen by the coder rather than a record.
+   - Anything else you want to say follows, separated by ` | `. The `url_dead`
+     exclusion route is unchanged.
+
+   **`codebook_version`** carries `v1.5` on every main-pass row. The nine pilot
+   rows keep the version they were coded under.
+
    **Exclusions live in one place.** Your own sheet — `codes-R1.csv` or
    `codes-R2.csv` — is authoritative for `excluded` and `exclusion_reason`. `exclusions.csv` is a *generated* artifact,
    rebuilt from the sheet by `score.py`, and must not be hand-edited: two
@@ -1316,7 +1376,7 @@ frame will otherwise read the gaps as attrition.
 
 ## 8. Version history
 
-You are coding under **v1.4**. The full reasons for each amendment are in
+You are coding under **v1.5**. The full reasons for each amendment are in
 the deposited codebook; they are analysis notes rather than coding rules, and
 they are left out here so that nothing in this manual points at an expected
 answer.
@@ -1328,3 +1388,4 @@ answer.
 | 1.2 | 2026-08-16 |
 | 1.3 | 2026-08-17 |
 | 1.4 | 2026-08-21 |
+| 1.5 | 2026-08-23 |

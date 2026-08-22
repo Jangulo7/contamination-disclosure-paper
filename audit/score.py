@@ -55,6 +55,7 @@ from __future__ import annotations
 import argparse
 import csv
 import math
+import re
 import random
 import sys
 from collections import Counter, defaultdict
@@ -96,6 +97,74 @@ F2_YN = {"Y", "-"}
 # --------------------------------------------------------------------------
 # statistics
 # --------------------------------------------------------------------------
+
+# --- v1.5 -------------------------------------------------------------------
+# Three of the nine pilot documents are recoded under v1.5; six are not. Rates
+# are computed on documents coded under one boundary rule -- the 32 main-pass
+# documents plus these three. B01-B03 are the three because stratum B clusters
+# on the paper, so excluding them would empty three clusters outright.
+RECODED_UNDER_V15 = ["B01", "B02", "B03"]
+NOT_RECODED = [d for d in PILOT if d not in RECODED_UNDER_V15]
+
+REF_RE = re.compile(r"^REF:(none|[a-z0-9_]+(?:;[a-z0-9_]+)*)\b")
+FIELD_KEYS = [k for k, _ in FIELDS]
+# The manual asks for short names -- REF:f2;t3 -- because a coder types these on
+# every row and `REF:f2_budget;t3_temporal` invites typos. Both are accepted: the
+# short alias and the sheet's own column name.
+REF_ALIAS = {k.split("_")[0]: k for k in FIELD_KEYS}
+REF_ALIAS.update({k: k for k in FIELD_KEYS})
+
+
+def parse_ref(notes: str):
+    """The `REF:` token at the head of `notes`, as a set of field keys.
+
+    Returns None when the token is missing or malformed -- which is a coverage
+    problem, not a zero. `REF:none` returns an empty set: the coder looked and
+    there were no pointers. Blank cannot be told apart from forgotten, so it is
+    None, and rows like that are counted against token coverage rather than
+    silently treated as having no pointers.
+    """
+    m = REF_RE.match((notes or "").strip())
+    if not m:
+        return None
+    body = m.group(1)
+    if body == "none":
+        return set()
+    names = body.split(";")
+    if not all(n in REF_ALIAS for n in names):
+        return None
+    return {REF_ALIAS[n] for n in names}
+
+
+def is_capped(notes: str) -> bool:
+    """Whether the 25-minute cap fired on this row (CODEBOOK.md 5)."""
+    return "capped" in (notes or "").lower().split("REF:")[-1]
+
+
+def token_coverage(codes: dict) -> tuple[int, int]:
+    """Rows carrying a well-formed REF token, out of all rows."""
+    ok = sum(parse_ref(r.get("notes", "")) is not None for r in codes.values())
+    return ok, len(codes)
+
+
+def bounding_codes(codes: dict) -> dict:
+    """Every cell with an unfollowed pointer forced to 1.
+
+    The narrowed boundary can only lower or leave a code unchanged, so the
+    observed rate is a lower bound. This is the other end: what the rate would
+    be if every pointer the coders did not follow had turned out to disclose.
+    The truth is between them, and both are reported.
+    """
+    out = {}
+    for doc, row in codes.items():
+        r = dict(row)
+        ref = parse_ref(row.get("notes", ""))
+        for key in (ref or set()):
+            if r.get(key) in {"0", ""}:
+                r[key] = "1"
+        out[doc] = r
+    return out
+
 
 def raw_agreement(pairs: list[tuple[str, str]]) -> float | None:
     if not pairs:
@@ -821,11 +890,17 @@ def main(argv=None) -> int:
     main_a = {d: v for d, v in a.items() if d not in PILOT}
     main_b = {d: v for d, v in b.items() if d not in PILOT}
     if args.pilot_inclusive:
-        primary, secondary = (a, b), (main_a, main_b)
-        plabel, slabel = "PILOT-INCLUSIVE", "main pass only"
-    else:
-        primary, secondary = (main_a, main_b), (a, b)
-        plabel, slabel = "main pass, pilot excluded", "pilot-inclusive"
+        # Under v1.5 the pilot sheets are a mixture: B01-B03 recoded under the
+        # narrowed boundary, the other six left under v1.4. An agreement figure
+        # pooled over both measures the boundary change as much as the coders.
+        print("!! --pilot-inclusive is disabled from codebook v1.5 onward.")
+        print("   Six of the nine pilot documents were not recoded under the")
+        print("   narrowed boundary, so a pilot-inclusive figure would pool two")
+        print("   boundary rules and measure the amendment, not the manual.")
+        print("   Its absence is a reported limitation, not an omission.")
+        return 2
+    primary, secondary = (main_a, main_b), (a, b)
+    plabel, slabel = "main pass, pilot excluded", "pilot-inclusive"
 
     print("=" * 88)
     print(f"INTER-CODER AGREEMENT — PRIMARY ({plabel}; "
@@ -983,6 +1058,55 @@ def main(argv=None) -> int:
             print(f"\n  up/down split {tot['up']}/{tot['down']} = "
                   f"{tot['up'] / n_dir:.0%} upward. A near-even split is a checkable")
             print("  statement; 'the adjudicator was careful' is not. Publish this table.")
+
+    # ---- v1.5: rates are computed on one boundary rule --------------------
+    v15 = {d: v for d, v in src.items() if d not in NOT_RECODED}
+    ok, tot_rows = token_coverage(v15)
+    cov = ok / tot_rows if tot_rows else 0.0
+    capped_docs = {d for d, r in v15.items() if is_capped(r.get("notes", ""))}
+    print("\n" + "=" * 88)
+    print(f"v1.5 RATE DENOMINATOR — {len(v15)} documents coded under the narrowed boundary")
+    print("=" * 88)
+    print(f"  {len(src)} adjudicated rows, less the {len(NOT_RECODED)} pilot documents not")
+    print(f"  recoded under v1.5 ({', '.join(NOT_RECODED)}). {', '.join(RECODED_UNDER_V15)}")
+    print("  were recoded and are included: stratum B clusters on the paper, so")
+    print("  dropping them would empty three clusters rather than shrink them.")
+    print(f"  REF token coverage: {ok}/{tot_rows} rows ({cov:.0%})")
+    print(f"  capped by the 25-minute rule: {len(capped_docs)}/{len(v15)} "
+          f"({len(capped_docs)/len(v15):.0%})" if v15 else "")
+    if cov < 0.95:
+        print("  !! Token coverage is below 95%. The bounding rate is SUPPRESSED:")
+        print("     a bound computed from a partial record bounds nothing. State")
+        print("     the limitation; do not repair it by revisiting documents.")
+    if v15 and len(capped_docs) / len(v15) > 0.20:
+        print("  !! More than 20% of documents were capped. At this level the cap")
+        print("     is a design limit and belongs in Limitations, not a footnote.")
+
+    print(f"\n{'field':<26}{'primary':>10}{'bounding':>10}{'no capped':>11}")
+    for key, name in FIELDS:
+        pr = rate_of(v15, key)[2]
+        bd = rate_of(bounding_codes(v15), key)[2] if cov >= 0.95 else None
+        nc = rate_of({d: v for d, v in v15.items() if d not in capped_docs}, key)[2]
+        f = lambda x: "n/a" if x is None else f"{x:.3f}"
+        print(f"  {name:<24}{f(pr):>10}{f(bd):>10}{f(nc):>11}")
+    print("\n  primary  = as coded. The narrowed boundary can only lower a code,")
+    print("             so this is a lower bound on what the documents disclose.")
+    print("  bounding = every cell carrying an unfollowed pointer forced to 1.")
+    print("             The upper end. The truth is between the two columns.")
+    print("  no capped= documents the 25-minute cap did not fire on.")
+
+    by_coder = {}
+    for label, sheet in (("R1", a), ("R2", b)):
+        cap = {d for d, r in sheet.items()
+               if d not in NOT_RECODED and is_capped(r.get("notes", ""))}
+        by_coder[label] = cap
+    print(f"\n  capped per coder: " + ", ".join(
+        f"{k} {len(v)}" for k, v in by_coder.items()))
+    both, either = by_coder["R1"] & by_coder["R2"], by_coder["R1"] | by_coder["R2"]
+    print(f"  capped by both: {len(both)}   by exactly one: {len(either) - len(both)}")
+    print("  Documents capped by only one coder are where residual disagreement")
+    print("  risks measuring the clock rather than the manual. Agreement excluding")
+    print("  every capped document is reported as a labelled secondary.")
 
     # ---- pilot-in / pilot-out robustness (CODEBOOK.md 8.11) ----------------
     no_pilot = {d: v for d, v in src.items() if d not in PILOT}
@@ -1355,6 +1479,58 @@ def selftest() -> int:
                 break
     good = other is not None and sorted(other) == sorted(PILOT) and len(PILOT) == 9
     print(f"  {'PASS' if good else 'FAIL'}  order.py PILOT = {other}")
+    ok &= good
+
+    print("\nthe v1.5 REF token parses, and refuses what it should")
+    cases = [
+        ("REF:none",                        set(),                 False, "no pointers"),
+        ("REF:f2",                          {"f2_budget"},         False, "short alias, as the manual writes it"),
+        ("REF:f2_budget",                   {"f2_budget"},         False, "full column name"),
+        ("REF:f2;t3",                       {"f2_budget", "t3_temporal"}, False, "short aliases, the manual's example"),
+        ("REF:f2_budget;t3_temporal",       {"f2_budget", "t3_temporal"}, False, "two fields"),
+        ("REF:f2_budget | capped | ran out of time in the appendix",
+                                            {"f2_budget"},         True,  "token + capped + prose"),
+        ("REF:none | capped",               set(),                 True,  "capped with no pointers"),
+        ("",                                None,                  False, "missing token"),
+        ("capped | ran out of time",        None,                  True,  "capped, but the token forgotten"),
+        ("REF:",                            None,                  False, "malformed, empty body"),
+        ("REF:f2budget",                    None,                  False, "not one of the eight"),
+        ("REF:f2_budget;nope",              None,                  False, "one good, one unknown"),
+    ]
+    for s, want_ref, want_cap, why in cases:
+        got_ref, got_cap = parse_ref(s), is_capped(s)
+        good = got_ref == want_ref and got_cap == want_cap
+        print(f"  {'PASS' if good else 'FAIL'}  {why:<28} {s[:34]!r:<38}"
+              f"{'' if good else f' -> ref={got_ref} capped={got_cap}'}")
+        ok &= good
+
+    print("\nblank and forgotten are not the same thing")
+    cov_ok, cov_n = token_coverage({"d1": {"notes": "REF:none"},
+                                    "d2": {"notes": ""},
+                                    "d3": {"notes": "REF:t3_temporal"}})
+    good = (cov_ok, cov_n) == (2, 3)
+    print(f"  {'PASS' if good else 'FAIL'}  coverage counts well-formed tokens only "
+          f"— {cov_ok}/{cov_n}")
+    ok &= good
+
+    print("\nthe bounding rate raises only cells the coder flagged")
+    src_ = {"d1": {"f2_budget": "0", "t3_temporal": "0", "notes": "REF:f2_budget"},
+            "d2": {"f2_budget": "0", "t3_temporal": "0", "notes": "REF:none"},
+            "d3": {"f2_budget": "2", "t3_temporal": "0", "notes": "REF:f2_budget"}}
+    bnd = bounding_codes(src_)
+    good = (bnd["d1"]["f2_budget"] == "1" and bnd["d1"]["t3_temporal"] == "0"
+            and bnd["d2"]["f2_budget"] == "0"
+            and bnd["d3"]["f2_budget"] == "2")
+    print(f"  {'PASS' if good else 'FAIL'}  0 with a pointer -> 1; 0 without -> 0; "
+          f"an existing 2 is never lowered")
+    ok &= good
+
+    print("\nthe rate denominator drops exactly the six not recoded")
+    good = (sorted(NOT_RECODED) == ["A01", "A10", "A14", "C01", "C16", "C22"]
+            and sorted(RECODED_UNDER_V15) == ["B01", "B02", "B03"]
+            and len(NOT_RECODED) + len(RECODED_UNDER_V15) == len(PILOT))
+    print(f"  {'PASS' if good else 'FAIL'}  recoded {RECODED_UNDER_V15}, "
+          f"excluded {NOT_RECODED}")
     ok &= good
 
     print("\n" + ("ALL CHECKS PASSED" if ok else "FAILURES ABOVE"))

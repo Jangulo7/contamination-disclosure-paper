@@ -42,9 +42,24 @@ HERE = Path(__file__).resolve().parent
 PILOT = ["A01", "A10", "A14", "B01", "B02", "B03", "C01", "C16", "C22"]
 
 
+# The v1.5 frame reduction (per-organisation cap 5 -> 3) removes documents from
+# the draw. Each coder's order must survive that by DELETION, never by
+# re-permutation: re-running the sample over 41 documents yields a different
+# order, and both the annex and START-HERE tell coders their order does not
+# change. So the permutation is still taken over the registered draw -- the 50
+# as drawn, capped_v15 rows included -- and the removed documents are dropped
+# from the result afterwards. Survivors keep their relative positions exactly.
+REGISTERED_DRAW = ("draw", "capped_v15")
+
+
 def load(frame: Path) -> list[dict]:
+    """The registered draw, for permutation. Includes rows later capped out."""
     with frame.open(encoding="utf-8") as fh:
-        return [r for r in csv.DictReader(fh) if r["status"] == "draw"]
+        return [r for r in csv.DictReader(fh) if r["status"] in REGISTERED_DRAW]
+
+
+def still_in_frame(r: dict) -> bool:
+    return r["status"] == "draw"
 
 
 def coder_seed(initials: str) -> int:
@@ -82,6 +97,8 @@ def main() -> int:
 
     main_pass = [r for r in rows if r["id"] not in PILOT]
     order = rng.sample(main_pass, len(main_pass))
+    # delete, do not re-permute
+    order = [r for r in order if still_in_frame(r)]
 
     if a.retest:
         # Drawn from what this coder actually coded, late enough in their own

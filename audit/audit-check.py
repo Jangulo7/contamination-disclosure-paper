@@ -29,22 +29,24 @@ sheet = list(csv.DictReader((A/"coding-sheet.csv").open(encoding="utf-8")))
 
 print("\n== 1. The frame ==")
 draw = [r for r in frame if r["status"] == "draw"]
-check("50 drawn documents", len(draw) == 50, f"{len(draw)}")
-check("15 capped, 12 reserve",
-      sum(r["status"]=="capped" for r in frame)==15 and sum(r["status"]=="reserve" for r in frame)==12)
+check("41 drawn documents after the v1.5 reduction", len(draw) == 41, f"{len(draw)}")
+check("15 capped at v1.0, 9 capped at v1.5, 12 reserve",
+      sum(r["status"]=="capped" for r in frame)==15
+      and sum(r["status"]=="capped_v15" for r in frame)==9
+      and sum(r["status"]=="reserve" for r in frame)==12)
 by_str = Counter(r["stratum"] for r in draw)
-check("15 A / 20 B / 15 C", by_str["A_system_card"]==15 and by_str["B_neurips_dnb"]==20
-      and by_str["C_third_party"]==15, str(dict(by_str)))
+check("12 A / 20 B / 9 C", by_str["A_system_card"]==12 and by_str["B_neurips_dnb"]==20
+      and by_str["C_third_party"]==9, str(dict(by_str)))
 clusters = {r["cluster"] for r in draw}
 check("27 clusters", len(clusters)==27, f"{len(clusters)}")
 orgs = {r["cluster"] for r in draw if not r["stratum"].startswith("B")}
 n_org_docs = sum(1 for r in draw if not r["stratum"].startswith("B"))
-check("30 documents from 7 organisations", len(orgs)==7 and n_org_docs==30,
-      f"{n_org_docs} docs, {len(orgs)} orgs")
+check("21 documents from 7 organisations", len(orgs)==7 and n_org_docs==21,
+      f"{n_org_docs} docs, {len(orgs)} orgs — still every organisation")
 check("coding-sheet.csv has exactly the drawn ids",
       [r["doc_id"] for r in sheet] == [r["id"] for r in draw])
-check("per-organisation cap never exceeded (5)",
-      max(Counter(r["cluster"] for r in draw if not r["stratum"].startswith("B")).values())==5)
+check("per-organisation cap never exceeded (3 after the reduction)",
+      max(Counter(r["cluster"] for r in draw if not r["stratum"].startswith("B")).values())==3)
 
 print("\n== 2. The cap rule, as stated ==")
 capped_ids = {r["id"] for r in frame if r["status"]=="capped"}
@@ -72,7 +74,7 @@ pil_str = Counter(next(r["stratum"] for r in draw if r["id"]==d) for d in P)
 check("pilot is 3/3/3 across strata", set(pil_str.values())=={3}, str(dict(pil_str)))
 pil_org = {next(r["cluster"] for r in draw if r["id"]==d) for d in P}
 check("pilot covers 6 of 7 organisations", len(pil_org & orgs)==6, str(sorted(pil_org & orgs)))
-check("main pass is 41", len(draw)-len(P)==41)
+check("main pass is 32", len(draw)-len(P)==32)
 mp = Counter(r["cluster"] for r in draw if r["id"] not in P and not r["stratum"].startswith("B"))
 check("every organisation keeps >=2 main-pass documents", min(mp.values())>=2, str(dict(mp)))
 # each pilot doc is the lowest id in its organisation -> survives the 5->3 cut
@@ -86,7 +88,7 @@ for f, name in ((pro,"PROTOCOL.md"), (cb,"CODEBOOK.md"), (cc,"CODEBOOK-CODER.md"
     check(f"{name} points coders at ANNEX-DOCUMENTS.md", "ANNEX-DOCUMENTS" in f)
 annex = (A/"ANNEX-DOCUMENTS.md").read_text(encoding="utf-8")
 missing = [r["id"] for r in draw if r["id"] not in annex]
-check("annex lists all 50 drawn documents", not missing, str(missing[:5]))
+check("annex lists all 41 drawn documents", not missing, str(missing[:5]))
 check("annex links resolve to frame urls",
       all(r["url"] in annex for r in draw))
 
@@ -204,6 +206,28 @@ check("the manual no longer tells a coder to write to a generated file",
 check("the registered codebook itself is untouched by any of this",
       cb.splitlines()[0].endswith(VERSION) and "1.4.1" not in cb,
       "the repair lives in the derivation, never in the register")
+
+print("\n== 6c. The v1.5 reduction and the partial pilot recode ==")
+# The rate denominator after v1.5: main-pass documents plus the three pilot
+# documents recoded under it. B01-B03 are recoded precisely BECAUSE stratum B
+# clusters on the paper, so excluding them would empty three clusters outright.
+RECODED = ["B01", "B02", "B03"]
+_rate_docs = [r for r in draw if r["id"] not in P or r["id"] in RECODED]
+check("rates are computed on 35 documents under v1.5",
+      len(_rate_docs) == 35, f"{len(_rate_docs)} = 32 main pass + {len(RECODED)} recoded")
+check("all 27 clusters survive into the rate denominator",
+      len({r["cluster"] for r in _rate_docs}) == 27,
+      "the partial recode exists to keep this true; without it, 24")
+check("the recoded three are exactly the clusters a full exclusion would empty",
+      sorted(RECODED) == sorted({r["cluster"] for r in draw if r["id"] in P}
+                                - {r["cluster"] for r in draw if r["id"] not in P}),
+      "mechanical, not chosen: recode what would otherwise be emptied")
+check("the two worklists are the same 32-document set",
+      set(re.findall(r"\*\*([A-C][0-9]+)\*\*",
+                     (A.parent/"coder-kit"/"R1"/"worklist-R1.md").read_text(encoding="utf-8")))
+      == set(re.findall(r"\*\*([A-C][0-9]+)\*\*",
+                     (A.parent/"coder-kit"/"R2"/"worklist-R2.md").read_text(encoding="utf-8"))),
+      "full crossing: both coders code every main-pass document")
 
 print("\n== 7. Statistics: independent re-derivation ==")
 Q = 4; CATS = ("0","1","2","NA")
@@ -506,8 +530,8 @@ if kit.is_dir():
         if (d/f"worklist-{c}.md").is_file():
             wl = (d/f"worklist-{c}.md").read_text(encoding="utf-8")
             ids = re.findall(r"\*\*([A-C][0-9]+)\*\*", wl)
-            check(f"{c}'s worklist is the 41 main-pass documents, none repeated",
-                  len(ids) == 41 and len(set(ids)) == 41
+            check(f"{c}'s worklist is the 32 main-pass documents, none repeated",
+                  len(ids) == 32 and len(set(ids)) == 32
                   and not (set(ids) & set(score.PILOT)), f"{len(ids)} entries")
             check(f"{c}'s worklist asks them to run no commands",
                   "python" not in wl.lower())
@@ -540,8 +564,8 @@ if kit.is_dir():
                   and "I give the other coder too" in sh)
         if (d/f"codes-{c}.csv").is_file():
             rr = list(csv.DictReader((d/f"codes-{c}.csv").open(encoding="utf-8")))
-            check(f"{c}'s sheet has 50 rows, pre-labelled and pre-versioned",
-                  len(rr) == 50 and all(x["coder"] == c for x in rr)
+            check(f"{c}'s sheet has 41 rows, pre-labelled and pre-versioned",
+                  len(rr) == 41 and all(x["coder"] == c for x in rr)
                   and all(x["codebook_version"] == VERSION for x in rr))
     # the kit must not become a second source of truth
     import subprocess
@@ -831,27 +855,67 @@ if zp.is_file():
           hashlib.sha256(zp.read_bytes()).hexdigest() == FROZEN_SHA,
           "sha256 pinned to the copy uploaded to OSF")
     import difflib
-    drift = {}
+    # Until v1.5 the only legitimate drift was appended deviation rows, and the
+    # check said so. That is no longer true: the codebook is amended under the
+    # registered pilot-close procedure and frame.csv carries the pre-registered
+    # reduction, so the working tree diverges from the deposit BY DESIGN. The
+    # invariant is not "nothing moves" -- it is that each file may move only in
+    # the one way it is allowed to, and the frozen bundle never moves at all.
+    drift, verdicts = {}, []
     for n in names:
         if n.endswith(("/", "MANIFEST.txt", "LICENSE.txt")):
             continue
+        nm = Path(n).name
         frozen = zipfile.ZipFile(zp).read(n).decode("utf-8").splitlines()
-        live = (A / Path(n).name).read_text(encoding="utf-8").splitlines()
+        live = (A / nm).read_text(encoding="utf-8").splitlines()
         if frozen == live:
+            verdicts.append((nm, True, "byte-identical to the deposit"))
             continue
         d = list(difflib.unified_diff(frozen, live, lineterm="", n=0))
-        removed = [l for l in d if l.startswith("-") and not l.startswith("---")]
         added = [l for l in d if l.startswith("+") and not l.startswith("+++")]
-        drift[Path(n).name] = (added, removed)
-    check("nothing has been removed from or rewritten in a deposited file",
-          not any(rem for _, rem in drift.values()),
-          str({k: len(v[1]) for k, v in drift.items() if v[1]}) or "no removals")
-    bad_add = {k: [a for a in add if not a.startswith("+| 2026-")]
-               for k, (add, _) in drift.items()}
-    bad_add = {k: v for k, v in bad_add.items() if v}
-    check("every change to a deposited file is a dated deviation row",
-          not bad_add, str({k: v[:1] for k, v in bad_add.items()}) or
-          f"drift confined to {sum(len(a) for a, _ in drift.values())} deviation row(s)")
+        removed = [l for l in d if l.startswith("-") and not l.startswith("---")]
+        drift[nm] = (added, removed)
+
+        if nm in ("PROTOCOL.md", "SAMPLING-FRAME.md"):
+            # Nothing licenses these to change.
+            verdicts.append((nm, False, "changed, and nothing licenses it to"))
+        elif nm == "PRE-REGISTRATION.md":
+            bad = [a for a in added if not a.startswith("+| 2026-")]
+            verdicts.append((nm, not bad and not removed,
+                             "append-only dated deviation rows"
+                             if not bad and not removed else f"non-row edit: {bad[:1] or removed[:1]}"))
+        elif nm == "CODEBOOK.md":
+            # Amendable, but only under a version bump that is recorded twice:
+            # in its own changelog and in the deviations table.
+            frozen_v = re.search(r"(v[0-9.]+)\s*$", frozen[0]).group(1)
+            bumped = VERSION != frozen_v
+            logged = f"| {VERSION[1:]} | " in cb
+            deviated = VERSION in pr or f"v{VERSION[1:]}" in pr
+            verdicts.append((nm, bumped and logged and deviated,
+                             f"amended {frozen_v} -> {VERSION}, in changelog and deviations"
+                             if bumped and logged and deviated
+                             else f"bumped={bumped} changelog={logged} deviation={deviated}"))
+        elif nm == "frame.csv":
+            # The reduction may only re-label status. No row added, removed,
+            # reordered, or edited in any other field.
+            fz = [r.split(",") for r in frozen]
+            lv = [r.split(",") for r in live]
+            same_shape = len(fz) == len(lv) and all(
+                a[0] == b[0] and a[1:-1] == b[1:-1] for a, b in zip(fz, lv))
+            moved = {(a[0], a[-1], b[-1]) for a, b in zip(fz, lv) if a[-1] != b[-1]}
+            only_cap = all(f == "draw" and t == "capped_v15" for _, f, t in moved)
+            verdicts.append((nm, same_shape and only_cap,
+                             f"{len(moved)} rows draw -> capped_v15, nothing else touched"
+                             if same_shape and only_cap
+                             else "a row was added, removed, reordered or otherwise edited"))
+        else:
+            verdicts.append((nm, False, "changed, and no rule covers it"))
+
+    for nm, ok, why in sorted(verdicts):
+        check(f"deposit drift is licensed — {nm}", ok, why)
+    check("the frozen record itself is untouched, whatever the working tree does",
+          hashlib.sha256(zp.read_bytes()).hexdigest() == FROZEN_SHA,
+          "the deposit is the record; the working tree is the living document")
 else:
     print("  SKIP  deposit bundle not built yet")
 
@@ -859,8 +923,8 @@ check("the released instrument is CC BY, not a NonCommercial variant",
       "CC BY 4.0" in rd
       and not re.search(r"NonCommercial|CC[ -]BY[ -]NC|\bNC\b", rd),
       "audit/README.md")
-check("frame.csv is the 50-document frame plus capped and reserve rows",
-      len(frame) == 77 and len(draw) == 50)
+check("frame.csv is the 41-document frame plus capped and reserve rows",
+      len(frame) == 77 and len(draw) == 41)
 
 print("\n== 17. score.py selftest ==")
 import io, contextlib

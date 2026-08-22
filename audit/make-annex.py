@@ -99,8 +99,17 @@ def main() -> int:
         "the same documents for both coders. Nobody picks their own order, and there is",
         "nothing here for you to run or generate.", "",
         "For each document: open it, find the focal evaluation, run the keyword searches",
-        "from codebook §5, then fill one row of your sheet. Roughly 8–12 minutes once you",
-        "are calibrated.", "", "---", "",
+        "from codebook §5, then fill one row of your sheet.", "",
+        "**A document gets at most 25 minutes.** On reaching it, code what you have",
+        "established, write `capped` in `notes`, put the real elapsed time in `minutes`,",
+        "and move on. Work from the §5 keyword searches rather than reading front to",
+        "back, so that all eight variables are swept before the clock runs out.", "",
+        "**What counts as the document.** The page linked here, plus its appendices. If",
+        "that page is an abstract or a landing page, follow the one link that reaches the",
+        "document itself — that is the norm in stratum B, where each link opens a",
+        "proceedings abstract page with the PDF linked from it. Do **not** follow a link",
+        "the document adopts as its own method, or an ordinary citation; record the",
+        "first kind with a `REF:` token in `notes` (codebook §1 and §5).", "", "---", "",
     ]
 
     for key in ("A_system_card", "B_neurips_dnb", "C_third_party"):

@@ -2,8 +2,8 @@ id,stratum,source,cluster,title,url,status
 A01,A_system_card,Anthropic,Anthropic,Claude Sonnet 5 System Card,https://www-cdn.anthropic.com/9e6a1044980d8c4ed85669faf9c2a8342e2e9f1e/Claude%20Sonnet%205%20System%20Card.pdf,draw
 A02,A_system_card,Anthropic,Anthropic,Claude Opus 4.8 System Card,https://cdn.sanity.io/files/4zrzovbb/website/c886650a2e96fc0925c805a1a7ca77314ccbf4a6.pdf,draw
 A03,A_system_card,Anthropic,Anthropic,Claude Opus 4.7 System Card,https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf,draw
-A04,A_system_card,Anthropic,Anthropic,Claude Sonnet 4.6 System Card,https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf,draw
-A05,A_system_card,Anthropic,Anthropic,Claude Opus 4.6 System Card,https://www-cdn.anthropic.com/0dd865075ad3132672ee0ab40b05a53f14cf5288.pdf,draw
+A04,A_system_card,Anthropic,Anthropic,Claude Sonnet 4.6 System Card,https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf,capped_v15
+A05,A_system_card,Anthropic,Anthropic,Claude Opus 4.6 System Card,https://www-cdn.anthropic.com/0dd865075ad3132672ee0ab40b05a53f14cf5288.pdf,capped_v15
 A06,A_system_card,Anthropic,Anthropic,Claude Opus 4.5 System Card,https://www.anthropic.com/claude-opus-4-5-system-card,capped
 A07,A_system_card,Anthropic,Anthropic,Claude Haiku 4.5 System Card,https://anthropic.com/claude-haiku-4-5-system-card,capped
 A08,A_system_card,Anthropic,Anthropic,Claude Sonnet 4.5 System Card,https://anthropic.com/claude-sonnet-4-5-system-card,capped
@@ -11,7 +11,7 @@ A09,A_system_card,Anthropic,Anthropic,Claude 4 System Card,https://www-cdn.anthr
 A10,A_system_card,OpenAI,OpenAI,GPT-5.6 System Card,https://deploymentsafety.openai.com/gpt-5-6,draw
 A11,A_system_card,OpenAI,OpenAI,GPT-5.5 System Card,https://openai.com/index/gpt-5-5-system-card/,draw
 A12,A_system_card,OpenAI,OpenAI,GPT-5.3-Codex System Card,https://openai.com/index/gpt-5-3-codex-system-card/,draw
-A13,A_system_card,OpenAI,OpenAI,Addendum to GPT-5.2 System Card: GPT-5.2-Codex,https://openai.com/index/gpt-5-2-codex-system-card/,draw
+A13,A_system_card,OpenAI,OpenAI,Addendum to GPT-5.2 System Card: GPT-5.2-Codex,https://openai.com/index/gpt-5-2-codex-system-card/,capped_v15
 A14,A_system_card,Google DeepMind,Google DeepMind,Gemini 3.1 Pro Model Card,https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf,draw
 A15,A_system_card,Google DeepMind,Google DeepMind,Gemini 3.6 Flash Model Card,https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-6-Flash-Model-Card.pdf,draw
 A16,A_system_card,Google DeepMind,Google DeepMind,Gemini 3 Pro Model Card,https://deepmind.google/models/model-cards/gemini-3-pro/,draw
@@ -41,8 +41,8 @@ B20,B_neurips_dnb,NeurIPS 2025 D&B,B20,EndoBench: A Comprehensive Evaluation of 
 C01,C_third_party,METR,METR,Frontier Risk Report (Feb-Mar 2026),https://metr.org/blog/2026-05-19-frontier-risk-report/,draw
 C02,C_third_party,METR,METR,"Review: automated R&D section, Anthropic Risk Report",https://metr.org/blog/2026-05-08-rd-section-anthropic-risk-report-feb-2026-review/,draw
 C03,C_third_party,METR,METR,Red-Teaming Anthropic's Internal Agent Monitoring,https://metr.org/blog/2026-03-25-red-teaming-anthropic-agent-monitoring/,draw
-C04,C_third_party,METR,METR,"Review: Anthropic Sabotage Risk Report, Claude Opus 4.6",https://metr.org/blog/2026-03-12-sabotage-risk-report-opus-4-6-review/,draw
-C05,C_third_party,METR,METR,Review: Anthropic Summer 2025 Pilot Sabotage Risk Report,https://metr.org/blog/2025-10-28-sabotage-report-review/,draw
+C04,C_third_party,METR,METR,"Review: Anthropic Sabotage Risk Report, Claude Opus 4.6",https://metr.org/blog/2026-03-12-sabotage-risk-report-opus-4-6-review/,capped_v15
+C05,C_third_party,METR,METR,Review: Anthropic Summer 2025 Pilot Sabotage Risk Report,https://metr.org/blog/2025-10-28-sabotage-report-review/,capped_v15
 C06,C_third_party,METR,METR,Summary of gpt-oss methodology review,https://metr.org/blog/2025-10-23-gpt-oss-methodology-review/,capped
 C07,C_third_party,METR,METR,GPT-5.6 Sol evaluation,https://metr.org/blog/2026-06-26-gpt-5-6-sol/,capped
 C08,C_third_party,METR,METR,GPT-5.1-Codex-Max evaluation,https://metr.org/evaluations/gpt-5-1-codex-max-report/,capped
@@ -56,14 +56,14 @@ C15,C_third_party,METR,METR,Claude 3.5 Sonnet and o1 evaluation,https://metr.org
 C16,C_third_party,UK AISI,UK AISI,Evaluation of OpenAI's GPT-5.5 cyber capabilities,https://www.aisi.gov.uk/blog/our-evaluation-of-openais-gpt-5-5-cyber-capabilities,draw
 C17,C_third_party,UK AISI,UK AISI,Evaluation of Claude Mythos Preview's cyber capabilities,https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities,draw
 C18,C_third_party,UK AISI,UK AISI,Preliminary assessment of Kimi K3's cyber capabilities,https://www.aisi.gov.uk/blog/preliminary-assessment-of-kimi-k3s-cyber-capabilities,draw
-C19,C_third_party,UK AISI,UK AISI,How far behind the frontier are leading open weight models on cyber?,https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber,draw
-C20,C_third_party,UK AISI,UK AISI,Pre-deployment evaluation of OpenAI's o1 model,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model,draw
+C19,C_third_party,UK AISI,UK AISI,How far behind the frontier are leading open weight models on cyber?,https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber,capped_v15
+C20,C_third_party,UK AISI,UK AISI,Pre-deployment evaluation of OpenAI's o1 model,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model,capped_v15
 C21,C_third_party,UK AISI,UK AISI,Pre-deployment evaluation of Anthropic's upgraded Claude 3.5 Sonnet,https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-anthropics-upgraded-claude-3-5-sonnet,capped
 C22,C_third_party,Apollo Research,Apollo Research,Measuring reward-seeking via contrastive belief updates,https://www.apolloresearch.ai/science/measuring-reward-seeking-via-contrastivebelief-updates,draw
 C23,C_third_party,Apollo Research,Apollo Research,Stress testing deliberative alignment for anti-scheming training,https://www.apolloresearch.ai/science/stress-testing-deliberative-alignment-for-anti-scheming-training,draw
 C24,C_third_party,Apollo Research,Apollo Research,Frontier models are capable of in-context scheming,https://www.apolloresearch.ai/science/frontier-models-are-capable-of-incontext-scheming,draw
-C25,C_third_party,Apollo Research,Apollo Research,More capable models are better at in-context scheming,https://www.apolloresearch.ai/science/more-capable-models-are-better-at-in-context-scheming,draw
-C26,C_third_party,Apollo Research,Apollo Research,Claude Sonnet 3.7 (often) knows when it's in alignment evaluations,https://www.apolloresearch.ai/science/claude-sonnet-37-often-knows-when-its-in-alignment-evaluations,draw
+C25,C_third_party,Apollo Research,Apollo Research,More capable models are better at in-context scheming,https://www.apolloresearch.ai/science/more-capable-models-are-better-at-in-context-scheming,capped_v15
+C26,C_third_party,Apollo Research,Apollo Research,Claude Sonnet 3.7 (often) knows when it's in alignment evaluations,https://www.apolloresearch.ai/science/claude-sonnet-37-often-knows-when-its-in-alignment-evaluations,capped_v15
 BR01,B_neurips_dnb,NeurIPS 2025 D&B,BR01,DrVD-Bench: Do Vision-Language Models Reason Like Human Doctors in Medical Image Diagnosis?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/12750d99d0faa73763108ff2bbeb54fd-Abstract-Datasets_and_Benchmarks_Track.html,reserve
 BR02,B_neurips_dnb,NeurIPS 2025 D&B,BR02,PAC Bench: Do Foundation Models Understand Prerequisites for Executing Manipulation Policies?,https://proceedings.neurips.cc/paper_files/paper/2025/hash/9ecafb09de180aaad7b7205be7eb24a4-Abstract-Datasets_and_Benchmarks_Track.html,reserve
 BR03,B_neurips_dnb,NeurIPS 2025 D&B,BR03,CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research,https://proceedings.neurips.cc/paper_files/paper/2025/hash/19138f8392f7863f483e90e1c2819fc9-Abstract-Datasets_and_Benchmarks_Track.html,reserve
