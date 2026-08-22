@@ -29,11 +29,13 @@ What each coder gets, and why:
   codes-RX.csv       their sheet, already named for them and already carrying
                      doc_id, coder and codebook_version on every row, so three
                      columns cannot be mistyped
-  CODER-MANUAL-REWRITES.md
-                     the seven sentences the derivation rewords, both wordings
-                     side by side. The codebook is registered and cannot be
-                     edited, so the repair happens in the derivation -- and a
-                     coder is told which seven rather than asked to trust it
+
+The seven sentences the derivation rewords are listed in the manual itself,
+above PART 6, because CODEBOOK.md section 6 puts what a coder needs to know in
+the manual rather than in anything said alongside it. CODER-MANUAL-REWRITES.md
+carries the same list for readers of the released instrument; it is not shipped
+to coders, who would gain a sixth file saying only what their manual already
+says.
 
 What each coder does NOT get: CODEBOOK.md (it states the analysis), the
 pre-registration, the protocol, the other coder's anything.
@@ -82,7 +84,7 @@ on some test. For each document you record, in eight boxes, whether the document
 That is all. You are not judging whether the score is correct, whether the system
 is good, or whether the authors did a good job.
 
-## Your five files
+## Your four files
 
 | File | What it is |
 |---|---|
@@ -90,7 +92,6 @@ is good, or whether the authors did a good job.
 | `ANNEX-DOCUMENTS.md` | All 50 documents, with a link for each. The nine pilot documents are marked. |
 | `worklist-{coder}.md` | Your 41 main-pass documents, in your own order, as a tick-list. |
 | `codes-{coder}.csv` | **Your answer sheet.** One row per document, already filled in with the document id and your label. |
-| `CODER-MANUAL-REWRITES.md` | The seven sentences worded differently in your manual from the deposited codebook, listed one by one. No rule differs. You do not need to read it to code. |
 
 ## Do it in this order
 
@@ -253,8 +254,6 @@ def main() -> int:
             START.format(coder=coder, pilot_table=pilot_table, window=window),
             encoding="utf-8")
         shutil.copy2(manual, d / "CODEBOOK-CODER.md")
-        shutil.copy2(HERE / "CODER-MANUAL-REWRITES.md",
-                     d / "CODER-MANUAL-REWRITES.md")
         (d / "ANNEX-DOCUMENTS.md").write_text(annex_txt, encoding="utf-8")
 
         # worklist, without the "go and run python" instruction

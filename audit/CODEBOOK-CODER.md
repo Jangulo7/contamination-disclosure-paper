@@ -401,9 +401,12 @@ the codebook, where the reader is holding it, but wrong once they are copied
 into this manual, where *"this"* would point at the document in **your** hands.
 One is a cross-reference to a section number that means something different here.
 
-**No rule, scale, threshold or edge rule differs.** The full list is below and in
-`CODER-MANUAL-REWRITES.md`, so you can see every one of them rather than take
-this on trust.
+**No rule, scale, threshold or edge rule differs.** Every one of the seven is
+below, both wordings side by side, so you can check that for yourself rather
+than take it on trust. Nothing here needs acting on: it is here because you are
+entitled to know what differs between your copy and the registered one.
+
+Found by a coder, before any document was coded.
 
 | # | Section | The codebook's wording | Your manual's wording |
 |---|---|---|---|

@@ -151,7 +151,7 @@ check("the standalone rewrite list is generated and agrees",
       (A/"CODER-MANUAL-REWRITES.md").is_file()
       and all(_flat(o) in _flat((A/"CODER-MANUAL-REWRITES.md").read_text(encoding="utf-8"))
               for o, _ in DEIXIS),
-      "CODER-MANUAL-REWRITES.md")
+      "CODER-MANUAL-REWRITES.md -- released, not shipped to coders")
 
 # The load-bearing one: undo the seven rewrites and the manual must become the
 # codebook's own wording again. If a rule had been altered under cover of a
@@ -454,9 +454,9 @@ if kit.is_dir():
     for c in ("R1", "R2"):
         d = kit / c
         need = {"START-HERE.md", "CODEBOOK-CODER.md", "ANNEX-DOCUMENTS.md",
-                "CODER-MANUAL-REWRITES.md", f"worklist-{c}.md", f"codes-{c}.csv"}
+                f"worklist-{c}.md", f"codes-{c}.csv"}
         have = {f.name for f in d.iterdir()} if d.is_dir() else set()
-        check(f"{c}'s pack has exactly the six files it should",
+        check(f"{c}'s pack has exactly the five files it should",
               have == need, f"missing {sorted(need-have)}, extra {sorted(have-need)}")
         # nothing a coder must not have
         forbidden = {"CODEBOOK.md", "PRE-REGISTRATION.md", "PROTOCOL.md",
