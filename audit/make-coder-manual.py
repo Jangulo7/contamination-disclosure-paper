@@ -28,6 +28,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SRC = HERE / "CODEBOOK.md"
 DST = HERE / "CODEBOOK-CODER.md"
+REWRITES = HERE / "CODER-MANUAL-REWRITES.md"
 
 QUICK_START = """# Disclosure audit — coding manual, {version}
 
@@ -141,6 +142,22 @@ you, I give the other, in the same words.
 
 ---
 
+# What was reworded in your copy
+
+Seven sentences below are worded differently here from the deposited codebook.
+They are the sentences that say *"this file"* or *"this codebook"* — exact in
+the codebook, where the reader is holding it, but wrong once they are copied
+into this manual, where *"this"* would point at the document in **your** hands.
+One is a cross-reference to a section number that means something different here.
+
+**No rule, scale, threshold or edge rule differs.** The full list is below and in
+`CODER-MANUAL-REWRITES.md`, so you can see every one of them rather than take
+this on trust.
+
+{rewrites}
+
+---
+
 # PART 6 · The full rules
 
 Everything below is the complete coding manual. It is generated from the
@@ -195,6 +212,28 @@ DEIXIS = [
     ("**The person who reads this full codebook is the adjudicator, not a coder.**",
      "**The full codebook is read by the adjudicator, not by a coder.**"),
 ]
+
+
+def section_of(text: str, old: str) -> str:
+    """Which numbered section of CODEBOOK.md a rewritten sentence sits in.
+
+    Located rather than labelled by hand: a hand-written section number is one
+    more thing that can quietly go stale when the codebook moves.
+    """
+    heads = [(m.start(), m.group(1)) for m in
+             re.finditer(r"^## ([0-9]+)\. ", text, re.M)]
+    at = text.index(old)
+    return "§" + next(h for pos, h in reversed(heads) if pos < at)
+
+
+def rewrite_table(text: str) -> str:
+    """The seven rewrites, as a table, generated from DEIXIS itself."""
+    rows = ["| # | Section | The codebook's wording | Your manual's wording |",
+            "|---|---|---|---|"]
+    for n, (old, new) in enumerate(DEIXIS, 1):
+        flat = lambda s: " ".join(s.split()).replace("|", "\\|")
+        rows.append(f"| {n} | {section_of(text, old)} | {flat(old)} | {flat(new)} |")
+    return "\n".join(rows)
 
 
 def build_cheatsheet(text: str) -> str:
@@ -490,6 +529,7 @@ def main() -> int:
                             "are not.", 1)
 
     out = (QUICK_START.format(version=version,
+                              rewrites=rewrite_table(text),
                               cheatsheet=build_cheatsheet(text),
                               worked=worked)
            + "\n" + body.rstrip() + "\n")
@@ -524,8 +564,14 @@ def main() -> int:
     #    In the derived manual they silently re-point at the manual itself, so a
     #    rule ABOUT the codebook reads as a rule about what the coder is holding.
     #    Say which document is meant by name instead.
+    # Both checks run on the DERIVED RULES only -- from "# PART 6" on. The front
+    # matter above it is authored in this file, and the rewrite table there
+    # deliberately QUOTES the defective wording, section number and all, so
+    # checking the whole document would fire on the very list that discloses it.
+    rules = out[out.index("# PART 6"):]
+
     SELF_REF = ("this file", "this codebook", "this full codebook")
-    hits = sorted({s for s in SELF_REF if s in out.lower()})
+    hits = sorted({s for s in SELF_REF if s in rules.lower()})
     if hits:
         print(f"!! self-referential phrase in the derived manual: {hits}")
         print("   In CODEBOOK.md these point at the codebook; here they point at")
@@ -542,7 +588,7 @@ def main() -> int:
         return dict(re.findall(r"^## ([0-9]+)\. (.+)$", doc, re.M))
     src_sec, out_sec = sections(text), sections(out)
     moved = {}
-    for line in out.splitlines():
+    for line in rules.splitlines():
         if re.search(r"\b[A-Z-]+\.md\b", line):   # another document's numbering
             continue
         for ref in re.findall(r"§([0-9]+)", line):
@@ -557,6 +603,29 @@ def main() -> int:
         return 1
 
     DST.write_text(out, encoding="utf-8")
+    REWRITES.write_text(
+        "# What the coder manual rewords, and why\n\n"
+        "`CODEBOOK.md` is registered and its deposited copy is sha-pinned, so it "
+        "cannot be\nedited. `CODEBOOK-CODER.md` is derived from it by "
+        "`make-coder-manual.py`, and the\nseven sentences below are re-pointed "
+        "as that derivation runs.\n\n"
+        "**Why they need re-pointing.** In the codebook, *\"this file\"* and "
+        "*\"this codebook\"*\nare exact: the reader is holding the codebook. "
+        "Copied unchanged into the coder\nmanual they re-point at the manual "
+        "itself, so a rule *about* the codebook reads as\na rule about the "
+        "document in the coder's hands — in one case as a flat instruction\n"
+        "that the reader should not be reading what they are reading. Number 5 "
+        "is not\ndeixis but the same class of fault: derivation drops the "
+        "codebook's §8 and\nrenumbers §9 into its place, so the *number* "
+        "resolved in the manual to the version\nhistory.\n\n"
+        "**No coding rule, scale, threshold or edge rule differs.** "
+        "`audit-check.py` §6b\nasserts that reversing these seven restores the "
+        "codebook's own sentences, so the\nclaim is checked rather than "
+        "asserted. This file is generated from the same table\nthe rewrites "
+        "come from; it cannot fall out of step with them.\n\n"
+        "Found by a coder on 22 August 2026, before any document was coded.\n\n"
+        + rewrite_table(text) + "\n")
+    print(f"wrote {REWRITES.name} ({len(DEIXIS)} rewrites)")
     print(f"wrote {DST.name} ({len(out.splitlines())} lines, "
           f"{len(text.splitlines())} in source)")
     print("Give coders CODEBOOK-CODER.md. Deposit CODEBOOK.md.")

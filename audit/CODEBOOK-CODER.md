@@ -393,6 +393,30 @@ you, I give the other, in the same words.
 
 ---
 
+# What was reworded in your copy
+
+Seven sentences below are worded differently here from the deposited codebook.
+They are the sentences that say *"this file"* or *"this codebook"* — exact in
+the codebook, where the reader is holding it, but wrong once they are copied
+into this manual, where *"this"* would point at the document in **your** hands.
+One is a cross-reference to a section number that means something different here.
+
+**No rule, scale, threshold or edge rule differs.** The full list is below and in
+`CODER-MANUAL-REWRITES.md`, so you can see every one of them rather than take
+this on trust.
+
+| # | Section | The codebook's wording | Your manual's wording |
+|---|---|---|---|
+| 1 | §4 | *"a named harness or nothing"* rule this codebook used before v1.4. | *"a named harness or nothing"* rule in force before v1.4. |
+| 2 | §5 | Neither coder reads this file; see §6. | Neither coder reads the full codebook; see §6. |
+| 3 | §5 | amend this codebook where a rule was genuinely ambiguous, bump the version, | amend the codebook where a rule was genuinely ambiguous, bump the version, |
+| 4 | §5 | The adjudicator is the only person on the study who reads this file rather than the coder manual. | The adjudicator is the only person on the study who reads the full codebook rather than the coder manual. |
+| 5 | §5 | so it is neutralised rather than merely declared: see §8, "The tie-break is directional, so it is reported both ways". | so it is neutralised rather than merely declared: see the statistics section of the full codebook, "The tie-break is directional, so it is reported both ways". |
+| 6 | §6 | `CODEBOOK-CODER.md`, generated mechanically from this codebook by | `CODEBOOK-CODER.md`, generated mechanically from the full codebook by |
+| 7 | §6 | **The person who reads this full codebook is the adjudicator, not a coder.** | **The full codebook is read by the adjudicator, not by a coder.** |
+
+---
+
 # PART 6 · The full rules
 
 Everything below is the complete coding manual. It is generated from the

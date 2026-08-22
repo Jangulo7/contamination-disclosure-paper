@@ -126,6 +126,10 @@ import importlib.util as _ilu
 _spec = _ilu.spec_from_file_location("_mcm", A / "make-coder-manual.py")
 _mcm = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_mcm)
 DEIXIS = _mcm.DEIXIS
+# The manual now DISCLOSES the rewrites in a table above "# PART 6", quoting the
+# defective wording verbatim. So the rules region is what must be clean of it --
+# checking the whole document would fire on the very list that discloses it.
+_cc_front, _cc_rules = cc[:cc.index("# PART 6")], cc[cc.index("# PART 6"):]
 
 check("the derivation repair is declared, not ad hoc", len(DEIXIS) == 7,
       f"{len(DEIXIS)} rewrites declared in make-coder-manual.py")
@@ -133,14 +137,26 @@ check("every rewrite still matches the registered codebook exactly once",
       all(cb.count(o) == 1 for o, _ in DEIXIS),
       str([o.splitlines()[0][:40] for o, _ in DEIXIS if cb.count(o) != 1]) or "7/7")
 check("every rewrite landed in the manual the coders hold",
-      all(cc.count(n) == 1 and o not in cc for o, n in DEIXIS),
+      all(_cc_rules.count(n) == 1 and o not in _cc_rules for o, n in DEIXIS),
       str([n.splitlines()[0][:40] for o, n in DEIXIS
-           if cc.count(n) != 1 or o in cc]) or "7/7")
+           if _cc_rules.count(n) != 1 or o in _cc_rules]) or "7/7")
+# The coders are told what differs rather than having to trust that it is only
+# wording, so the disclosure must be complete -- all seven, both wordings.
+_flat = lambda s: " ".join(s.split())
+check("all seven are disclosed to the coders in the manual itself",
+      all(_flat(o) in _flat(_cc_front) and _flat(n) in _flat(_cc_front)
+          for o, n in DEIXIS),
+      "the manual lists every rewrite above PART 6")
+check("the standalone rewrite list is generated and agrees",
+      (A/"CODER-MANUAL-REWRITES.md").is_file()
+      and all(_flat(o) in _flat((A/"CODER-MANUAL-REWRITES.md").read_text(encoding="utf-8"))
+              for o, _ in DEIXIS),
+      "CODER-MANUAL-REWRITES.md")
 
 # The load-bearing one: undo the seven rewrites and the manual must become the
 # codebook's own wording again. If a rule had been altered under cover of a
 # wording fix, the reversed text would not be found in CODEBOOK.md.
-_rev = cc
+_rev = _cc_rules
 for _o, _n in DEIXIS:
     _rev = _rev.replace(_n, _o)
 check("reversing the rewrites restores the codebook's own sentences",
@@ -149,14 +165,14 @@ check("reversing the rewrites restores the codebook's own sentences",
 
 check("no self-referential phrase survives in the coder manual",
       not [s for s in ("this file", "this codebook", "this full codebook")
-           if s in cc.lower()],
+           if s in _cc_rules.lower()],
       "'this' never re-points at the manual in the coder's hands")
 
 # Section 8 is dropped and 9 renumbered into its slot, so a NUMBER that is right
 # in the codebook can resolve here to a different section.
 _sec = lambda d: dict(re.findall(r"^## ([0-9]+)\. (.+)$", d, re.M))
 _src, _out = _sec(cb), _sec(cc)
-_moved = sorted({r for line in cc.splitlines()
+_moved = sorted({r for line in _cc_rules.splitlines()
                  if not re.search(r"\b[A-Z-]+\.md\b", line)
                  for r in re.findall(r"§([0-9]+)", line)
                  if _src.get(r) != _out.get(r)})
@@ -438,9 +454,9 @@ if kit.is_dir():
     for c in ("R1", "R2"):
         d = kit / c
         need = {"START-HERE.md", "CODEBOOK-CODER.md", "ANNEX-DOCUMENTS.md",
-                f"worklist-{c}.md", f"codes-{c}.csv"}
+                "CODER-MANUAL-REWRITES.md", f"worklist-{c}.md", f"codes-{c}.csv"}
         have = {f.name for f in d.iterdir()} if d.is_dir() else set()
-        check(f"{c}'s pack has exactly the five files it should",
+        check(f"{c}'s pack has exactly the six files it should",
               have == need, f"missing {sorted(need-have)}, extra {sorted(have-need)}")
         # nothing a coder must not have
         forbidden = {"CODEBOOK.md", "PRE-REGISTRATION.md", "PROTOCOL.md",
