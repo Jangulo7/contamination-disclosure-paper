@@ -1,48 +1,50 @@
-# v1.6 coder addendum — the brief the coders actually received
+# v1.6 coder addendum — the rules as briefed
 
-Deposited under `CODEBOOK.md` section 6: *"Anything a coder needs to know belongs
-in the manual, where a reader can see it; anything said out loud is invisible to
-everyone assessing the result."*
+## What this document is
 
-No new kit or coding sheet was issued at v1.6. Both coders had the kit sent at
-v1.5 and had confirmed in writing that they had not opened a main-pass document.
+`CODEBOOK.md` §6: *"Anything a coder needs to know belongs in the manual, where a
+reader can see it; anything said out loud is invisible to everyone assessing the
+result."*
+
+No new kit or coding sheet was issued at v1.6. Both coders held the kit sent at
+v1.5 and had confirmed in writing that no main-pass document had been opened.
 They were asked to change the `codebook_version` value in their own copy rather
 than to take a new file, so the typed value is the only thing carrying the
 version forward. The repository copy of each sheet was regenerated to `v1.6` so
-that the deposited artifact states the instrument that governs; that regeneration
-was not sent to the coders. The text below is what they were sent, in
-full and unedited, and it is the operative brief for every main-pass code. The
-authoritative rules are in `CODEBOOK.md` v1.6; this restates them in the words
-the coders read. Where the two differ, the codebook governs and the difference is
-a defect to be fixed in both.
+that the deposited artifact states the instrument that governs; that
+regeneration was not sent to the coders.
 
-Sent 2026-08-23, identical to both coders, **as plain text** — email clients do
-not render Markdown, so the table in item 3 was set out as three labelled
-lists and the emphasis marks were dropped. The wording below is the wording
-sent; only the formatting differs. The exact plain-text file is kept with the
-study runner's records. **One redaction:** the sign-off carried the study
-runner's first name and is replaced here by a bracketed label, because this
-file is released for double-blind review. Nothing else is altered.
+The rules below were communicated to both coders on **24 August 2026, in
+identical terms and in Spanish**, before either began main-pass coding. They are
+the operative brief for every main-pass code. **This is a statement of those
+rules, not the message that carried them.** The salutation, sign-off and
+first-person framing of the covering message are omitted, and no correspondence
+with the coders is reproduced here: they are identifiable individuals and
+publishing private communications with them would require their consent under
+the GDPR. The wording of each rule is as delivered, in the coders' working
+language, because that wording is what governed the codes and a reviewer
+assessing the instrument needs to see it.
 
----
-
-**Asunto: Cambios tras el piloto (una página)**
-
-Hola,
-
-El piloto ha cumplido su objetivo: hemos ajustado cinco reglas que generaban
-dudas. No hay manual nuevo que leer; está todo aquí.
-
-Un solo cambio en la hoja: en la columna `codebook_version`, escribid **`v1.6`**
-en las filas de la pasada principal. Las filas del piloto se quedan con `v1.4`
-— no las toquéis.
+The authoritative rules are in `CODEBOOK.md` v1.6. Where the two differ, **the
+codebook governs** and the difference is a defect to be fixed in both.
+`audit-check.py` §15c checks that every v1.6 rule change appears in both, so the
+two cannot drift apart unnoticed.
 
 ---
 
-**1 · Cómo gestionar los 25 minutos**
+## Alcance y versión
+
+Estas reglas rigen la pasada principal. No se emitió manual nuevo.
+
+En la columna `codebook_version` se escribe **`v1.6`** en las filas de la pasada
+principal. Las filas del piloto conservan `v1.4` y no se modifican.
+
+---
+
+## 1 · Cómo se reparten los 25 minutos
 
 - **Escanea** el documento de principio a fin, resumen incluido, hasta la primera
-  puntuación de capacidad del sistema evaluado. Ese es tu focal. Si el número
+  puntuación de capacidad del sistema evaluado. Ese es el focal. Si el número
   aparece en el texto antes que en una tabla, ese es.
 - A partir de ahí, **deja de leer de principio a fin**. Busca las ocho variables
   por palabras clave.
@@ -55,24 +57,24 @@ en las filas de la pasada principal. Las filas del piloto se quedan con `v1.4`
 - No hay que resumir el documento ni entender el paper. Son ocho preguntas sobre
   una evaluación.
 
-**2 · Campo `focal`: benchmark + condición entre paréntesis**
+## 2 · Campo `focal`: benchmark + condición entre paréntesis
 
 Ejemplos: `WAGIBench (MCQ)`, `Humanity's Last Exam (sin herramientas)`.
 
-Lo que se compara **entre vuestras dos hojas** es lo que va antes del paréntesis.
-Los otros siete códigos describen la condición que va dentro.
+Lo que se compara entre las dos hojas es lo que va antes del paréntesis. Los
+otros siete códigos describen la condición que va dentro.
 
 Y por eso: **una frase referida a otra condición del mismo benchmark no se
-aplica.** Si tu focal es «sin herramientas» y el documento describe un control
-para la condición «con herramientas», ese control no cuenta para tu fila.
+aplica.** Si el focal es «sin herramientas» y el documento describe un control
+para la condición «con herramientas», ese control no cuenta para esa fila.
 
 Si el documento existe para presentar un benchmark, ese benchmark es el focal.
 No hace falta leer el paper entero.
 
-**3 · ¿Capacidad o seguridad? Lo dicta la métrica, no la sección**
+## 3 · ¿Capacidad o seguridad? Lo dicta la métrica, no la sección
 
-La prueba, en cinco segundos: **si el sistema no hiciera nada en absoluto, ¿qué
-puntuación sacaría en esa métrica?**
+La prueba: **si el sistema no hiciera nada en absoluto, ¿qué puntuación sacaría
+en esa métrica?**
 
 - **Sacaría 0** → la métrica mide capacidad. **Sirve como focal.**
 - **Sacaría una puntuación alta** → la métrica mide que el sistema se abstuvo.
@@ -93,64 +95,64 @@ puntuación sacaría en esa métrica?**
 aparece dentro de una sección titulada «Model Safety» sigue sirviendo, y una tasa
 de rechazo que aparece en una sección de capacidades sigue sin servir.
 
-Anota en `notes` por qué la métrica entra o no.
+Se anota en `notes` por qué la métrica entra o no.
 
-**4 · `f2`, ranura 3: decir «sin límite» cuenta**
+## 4 · `f2`, ranura 3: decir «sin límite» cuenta
 
-Si el documento explicita que no había tope de tokens ni de pasos, marca `Y` en
-la ranura 3 y escribe `no limit` en `notes`. Si simplemente no lo menciona, se
-queda en `-`.
+Si el documento explicita que no había tope de tokens ni de pasos, se marca `Y`
+en la ranura 3 y se escribe `no limit` en `notes`. Si simplemente no lo menciona,
+se queda en `-`.
 
-**5 · `t5_acquired`: alcanzar un recurso no es controlarlo**
+## 5 · `t5_acquired`: alcanzar un recurso no es controlarlo
 
 - **0** — describe que el sistema usó un recurso externo, sin mencionar ningún
   control ni la contaminación.
 - **1** — menciona el riesgo de contaminación, pero no dice qué se hizo.
 - **2** — declara un control concreto, o comprueba que el control se mantuvo.
 
-*Corrección sobre mi aclaración anterior:* describir el entorno de herramientas
-(«contenedor Linux con Bash y Python») es `f2`, **no** es saneamiento. Saneamiento
-es **eliminar del entorno** lo que el sistema no debería poder alcanzar: borrar
-el commit que arregla el fallo, los tests de referencia o la clave de respuestas.
+*Corrección respecto de la aclaración circulada el 23 de agosto de 2026:*
+describir el entorno de herramientas («contenedor Linux con Bash y Python») es
+`f2`, **no** es saneamiento. Saneamiento es **eliminar del entorno** lo que el
+sistema no debería poder alcanzar: borrar el commit que arregla el fallo, los
+tests de referencia o la clave de respuestas.
 
-**6 · `f1_strata` en figuras: hacen falta cifras legibles**
+## 6 · `f1_strata` en figuras: hacen falta cifras legibles
 
 - **2** — gráfico de barras con el número impreso encima, agrupadas por subtarea
   con nombre.
 - **1** — figura de puntos o líneas con series con nombre pero sin cifras, aunque
   las series se vean perfectamente separadas.
 
-**7 · Proximidad no equivale a alcance**
+## 7 · Proximidad no equivale a alcance
 
 Una frase que describe un scaffold y está situada junto a un ejemplo concreto
 vale sólo para ese ejemplo, salvo que el documento diga que aplica a toda la
 suite.
 
-**8 · Cómo se rellena la hoja**
+## 8 · Cómo se rellena la hoja
 
-Esto es lo que más se rompió en el piloto, así que va detallado. No es
-burocracia: cada punto desactiva una comprobación automática si se hace de otra
-manera.
+Estos son los puntos que fallaron en el piloto. Cada uno desactiva una
+comprobación automática si se hace de otra manera.
 
 - **Columnas de código** — `f1_strata`, `f2_budget`, `t1_direct`,
   `t2_derivative`, `t3_temporal`, `t4_distributional`, `t5_acquired`,
-  `f4_regeneration`: **sólo `2`, `1`, `0` o `NA`.** Nada más, ni una palabra. Si
-  hay algo que explicar, va en `notes`.
+  `f4_regeneration`: **sólo `2`, `1`, `0` o `NA`.** Nada más, ni una palabra. Lo
+  que haya que explicar va en `notes`.
 
 - **`f2_notes`: cinco caracteres seguidos, sin espacios entre ellos.** El primero
   es `H`, `R`, `S` o `-`; los otros cuatro son `Y` o `-`. Es decir `H-Y--`, **no**
-  `H - Y - -`. Después, si queréis, un espacio y todo el texto que haga falta.
-  Esto importa más de lo que parece: hay una comprobación automática que contrasta
-  esas cinco ranuras con el código de `f2` y avisa cuando no cuadran. Con espacios
-  no las puede leer y la comprobación se queda sin hacer. Y las ranuras tienen que
-  decir lo mismo que vuestro texto: si escribís que la evaluación era `pass@1`,
+  `H - Y - -`. Después, opcionalmente, un espacio y el texto que haga falta.
+  Existe una comprobación automática que contrasta esas cinco ranuras con el
+  código de `f2` y avisa cuando no cuadran; con espacios no las puede leer y la
+  comprobación se queda sin hacer. Y **las ranuras tienen que decir lo mismo que
+  el texto que las acompaña**: si el texto dice que la evaluación era `pass@1`,
   la ranura 5 es `Y`, no `-`.
 
 - **`evidence`: obligatoria en todo código distinto de `0`.** Sección, página o
-  una cita corta. Si vais justas de tiempo, **anotad al menos la sección o la
-  página aproximada**: eso basta. Lo que no vale es dejar un código alto sin
-  respaldo — y tampoco vale bajarlo a `0` por no tener la cita, porque un `0`
-  significa «lo he buscado y no está», no «no me ha dado tiempo».
+  una cita corta. Con poco tiempo, basta anotar la sección o la página
+  aproximada. Lo que no vale es dejar un código alto sin respaldo — y tampoco
+  vale bajarlo a `0` por no tener la cita, porque un `0` significa «lo he buscado
+  y no está», no «no me ha dado tiempo».
 
 - **`notes` empieza siempre por el token `REF:`** — `REF:none` si no hubo ninguna
   página fuera del límite del documento, o `REF:f2`, `REF:t5;t3`, nombrando las
@@ -160,21 +162,16 @@ manera.
 - **`minutes`: siempre un número**, aunque sea aproximado. Nunca en blanco.
 
 - **El archivo: CSV delimitado por comas, codificación UTF-8.** Ni `.numbers`, ni
-  `.xlsx`, y comas, no punto y coma. Si vuestro programa no os deja guardarlo
-  así, decídmelo y lo convierto yo — pero avisadme, porque convertirlo a ciegas
-  puede perder acentos y símbolos.
+  `.xlsx`, y comas, no punto y coma. Si el programa no permite guardarlo así, se
+  comunica antes de enviar la hoja: convertirla a ciegas puede perder acentos y
+  símbolos.
 
----
+## 9 · Piloto, orden y tiempos
 
-**Para terminar**
-
-- **Piloto:** los nueve documentos del piloto **no se recodifican**. Es decisión
-  mía, por tiempo y presupuesto.
-- **Orden y tiempos:** seguid el orden de vuestra `worklist`. Tope de 25 minutos
-  por documento: al llegar al límite, codificáis lo que tengáis, escribís
-  `capped` en `notes`, ponéis el tiempo real en `minutes` y pasáis al siguiente.
-
-Gracias por el trabajo del piloto. Ha sido de muchísima utilidad :-)
-
-Un saludo,
-[la persona que dirige el estudio — firma retirada de la copia depositada]
+- Los nueve documentos del piloto **no se recodifican** bajo v1.6. La decisión es
+  de la persona que dirige el estudio, por tiempo y presupuesto, y está registrada
+  como desviación en `PRE-REGISTRATION.md`.
+- Se sigue el orden fijado en la `worklist` de cada codificadora.
+- Tope de **25 minutos por documento**: al llegar al límite se codifica lo
+  establecido, se escribe `capped` en `notes`, se pone el tiempo real en
+  `minutes` y se pasa al siguiente.

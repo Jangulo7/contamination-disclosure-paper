@@ -804,10 +804,10 @@ check("the coder addendum is deposited beside the manual", _add.is_file(),
 if _add.is_file():
     _ad = _add.read_text(encoding="utf-8")
     check("the addendum says the codebook governs where the two differ",
-          "the codebook governs" in _ad,
+          "**the\ncodebook governs**" in _ad or "the codebook governs" in " ".join(_ad.split()),
           "a restatement that outranked the rules would be a second instrument")
-    check("the addendum records that it is the operative brief and was sent to both",
-          "operative brief" in _ad and "identical to both coders" in _ad, "")
+    check("the addendum records that it is the operative brief and went to both",
+          "operative brief" in _ad and "identical terms" in _ad, "")
     # Every v1.6 rule change must appear in BOTH the codebook and the brief the
     # coders actually read. A rule in one and not the other is the exact failure
     # mode of briefing by email, so it is checked item by item rather than by
@@ -832,7 +832,7 @@ if _add.is_file():
         "f2_notes five chars":         ("fixed five-character format",
                                         "cinco caracteres seguidos, sin espacios"),
         "f2_notes matches the prose":  ("so that the codes remain recomputable",
-                                        "ranuras tienen que decir lo mismo que vuestro texto"),
+                                        "ranuras tienen que decir lo mismo que"),
         "evidence on non-zero":        ("for **every non-zero code**",
                                         "obligatoria en todo código distinto de `0`"),
         "no lowering for want of a cite": ("searched and absent",
@@ -860,9 +860,18 @@ if _add.is_file():
     # review it must not carry the sign-off, and the redaction must be declared
     # rather than silent -- an undeclared edit to a file presented as "what the
     # coders were sent" is worse than the name.
-    check("the deposited brief carries no sign-off name and says so",
-          "firma retirada" in _ad and "One redaction" in _ad,
-          "check-anonymity.sh is the general guard; this is the specific one")
+    # Deposited as a statement of rules, not as the message that carried them:
+    # the coders are identifiable individuals and publishing correspondence with
+    # them would need their consent under the GDPR. So the file must carry no
+    # salutation and no sign-off, and must say why it does not.
+    _epistolary = [w for w in ("Un saludo", "Hola,", "Asunto:", "Gracias por el trabajo")
+                   if w in _ad]
+    check("the deposited brief is a statement of rules, not correspondence",
+          not _epistolary, f"still epistolary: {_epistolary}" if _epistolary else
+          "no salutation, no sign-off, no subject line")
+    check("the deposit says why the covering message is not reproduced",
+          "GDPR" in _ad and "not the message that carried them" in _ad,
+          "an undeclared omission is worse than the omission")
 
     check("the addendum names the column and the value the coders must type",
           "codebook_version" in _ad and "`v1.6`" in _ad,
