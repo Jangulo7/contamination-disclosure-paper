@@ -16,7 +16,11 @@ authoritative rules are in `CODEBOOK.md` v1.6; this restates them in the words
 the coders read. Where the two differ, the codebook governs and the difference is
 a defect to be fixed in both.
 
-Sent 2026-08-23, identical to both coders.
+Sent 2026-08-23, identical to both coders, **as plain text** — email clients do
+not render Markdown, so the table in item 3 was set out as three labelled
+lists and the emphasis marks were dropped. The wording below is the wording
+sent; only the formatting differs. The exact plain-text file is kept with the
+study runner's records.
 
 ---
 
