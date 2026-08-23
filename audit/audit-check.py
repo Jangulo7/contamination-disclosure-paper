@@ -892,10 +892,23 @@ if zp.is_file():
             # Nothing licenses these to change.
             verdicts.append((nm, False, "changed, and nothing licenses it to"))
         elif nm == "PRE-REGISTRATION.md":
+            # What this can check, and what it cannot. A frozen-vs-live diff
+            # sees deposited content disappearing and it sees new content
+            # arriving. It does NOT see a row added after the freeze being
+            # edited later: both versions are absent from the deposit, so the
+            # edit shows up as nothing at all. So the guarantee here is exactly
+            # one thing -- **no registered row can be altered or removed, and
+            # everything new is a dated row.** Post-freeze rows are the living
+            # record; what tracks their history is git, not this check, and
+            # claiming otherwise would be claiming a guarantee that does not
+            # exist. (Found by self-testing this branch and getting zero
+            # removals when a post-freeze row had just been rewritten.)
+            lost = [l for l in removed if l[1:] in set(frozen)]
             bad = [a for a in added if not a.startswith("+| 2026-")]
-            verdicts.append((nm, not bad and not removed,
-                             "append-only dated deviation rows"
-                             if not bad and not removed else f"non-row edit: {bad[:1] or removed[:1]}"))
+            verdicts.append((nm, not lost and not bad,
+                             f"{len(added)} dated rows added; no registered row altered"
+                             if not lost and not bad
+                             else f"registered content altered: {(lost or bad)[:1]}"))
         elif nm == "CODEBOOK.md":
             # Amendable, but only under a version bump that is recorded twice:
             # in its own changelog and in the deviations table.

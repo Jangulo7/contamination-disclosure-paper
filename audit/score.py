@@ -105,9 +105,10 @@ F2_YN = {"Y", "-"}
 # The cost is exact and is not hidden: in stratum B the cluster is the paper, so
 # B01, B02 and B03 are singleton clusters and dropping them empties them.
 # Stratum B falls from 20 clusters to 17 and the rate denominator from 27
-# clusters to 24. A partial recode of those three was offered to the coders and
-# declined: pilot documents ran past 100 pages, and completing the main pass was
-# judged the larger risk. Recorded as a deviation rather than absorbed.
+# clusters to 24. A partial recode of those three was NOT asked of the coders:
+# one had already said she could not commit further time, and the other is paid
+# from a budget with nothing left in it. A resourcing decision by the study
+# runner, recorded as a deviation rather than absorbed.
 RECODED_UNDER_V15 = []
 LOST_CLUSTERS = ["B01", "B02", "B03"]
 NOT_RECODED = [d for d in PILOT if d not in RECODED_UNDER_V15]
