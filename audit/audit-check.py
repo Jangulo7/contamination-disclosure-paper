@@ -961,6 +961,17 @@ if _draw.is_file():
     _leak = [w for w in ("0/6", "1/6", "did not resubmit", "will not send",
                          "R1`'s `B0", "R2`'s `A1", "five dashes")
              if w in _flatpr]
+    # A row that grows past a few hundred words has stopped being a deviation
+    # entry and become a diary. The published table is read by a reviewer; the
+    # long working versions live untracked, outside the deposit.
+    import re as _re
+    _long = [(d, len(b.split())) for d, b in
+             _re.findall(r"^\| (2026-\d\d-\d\d) \| (.*) \|$", pr, _re.M)
+             if len(b.split()) > 320]
+    check("no deviation row has grown into a diary entry",
+          not _long, f"over 320 words: {_long}" if _long else
+          "longest row is within house style")
+
     check("no result, per-coder cell verdict or coder conduct in the deviations",
           not _leak, f"present: {_leak}" if _leak else
           "what changed, why, and what it cost -- nothing else")
