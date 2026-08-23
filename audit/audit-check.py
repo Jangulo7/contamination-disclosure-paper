@@ -726,8 +726,8 @@ PRACTICE = [
     # rewritten; what it may no longer do is stand alone.
     ("the blanket timing claim is present AND corrected by a dated row",
      lambda: "before any document was coded, pilot" in pr
-             and "false since 2026-08-23" in pr
-             and "not defended by timing" in pr),
+             and "was true when written and false from v1.5" in pr
+             and "defended instead by the" in pr),
     ("the post-pilot entries name what defends them instead of timing",
      lambda: "§5.2" in pr and "was a rule at fault" in pr),
     ("the narrower claim that survives the correction is made checkable",
@@ -926,21 +926,20 @@ check("the deposit is dated", "2026-08-21" in cb and "2026-08-21" in pr)
 _flatpr = " ".join(pr.split())
 check("the registration's blanket timing claim carries its correction",
       "before any document was coded, pilot included" in _flatpr
-      and "It is left in place because the registered text is not rewritten"
-      in _flatpr,
+      and "it is left in place, because registered text is not rewritten" in _flatpr,
       "corrected by a dated row, not by editing the frozen text")
 # Anything the registered text promises to report must either still be
 # producible, or be recorded as not produced. These four were neither until
 # 2026-08-24: the file promised them and nothing said they had not happened.
 for _what, _needle in (
         ("the pilot recode that did not happen",
-         "**No pilot document was recoded**, at either v1.5 or v1.6"),
+         "none was recoded, at v1.5 or v1.6"),
         ("the pilot-inclusive secondary that is not reported",
-         "refuses to compute one from v1.5 onward"),
+         "refuses to compute one from v1.5"),
         ("the main pass being 32 where the registration says 41",
-         "as run the main pass is **32**"),
+         "as run it is 32"),
         ("the superseded \"one coder from the design team\" claim",
-         "has been false since 2026-08-21")):
+         "false since 2026-08-21")):
     check(f"{_what} is recorded as such", _needle in _flatpr, "")
 _draw = A / "TEST-RETEST-DRAW.md"
 check("the test-retest draw is recorded before any main-pass sheet exists",
@@ -957,17 +956,20 @@ if _draw.is_file():
     check("the coders are not told the draw until they deliver",
           "neither will be until" in _d,
           "a coder who knew would have reason to code those five differently")
-check("the test-retest decision and its reason are recorded",
-      "it is **kept**" in " ".join(pr.split())
-      and "cannot be told apart from unstable coding" in " ".join(pr.split()), "")
-check("the pilot sheets are recorded as final, with the parsing rules fixed",
-      "are final as returned" in " ".join(pr.split())
-      and "before adjudication" in " ".join(pr.split()),
+# A deviations table is read by a reviewer, not kept as a lab notebook. It
+    # must not carry results, per-coder cell verdicts, or coders' conduct.
+    _leak = [w for w in ("0/6", "1/6", "did not resubmit", "will not send",
+                         "R1`'s `B0", "R2`'s `A1", "five dashes")
+             if w in _flatpr]
+    check("no result, per-coder cell verdict or coder conduct in the deviations",
+          not _leak, f"present: {_leak}" if _leak else
+          "what changed, why, and what it cost -- nothing else")
+check("the pilot sheets are recorded as standing, with the parsing rules fixed",
+      "stand as returned" in _flatpr and "before adjudication" in _flatpr,
       "rules chosen with no code in view")
-check("the unperformed test-retest is flagged, with its cost stated",
-      "has not been performed and is at risk" in _flatpr
-      and "without an intra-coder ceiling" in _flatpr,
-      "recorded as not done, which is a different claim from withdrawn")
+check("the reduced test-retest is recorded with its cost",
+      "performed by one coder only" in _flatpr
+      and "not the study's" in _flatpr, "")
 check("the deposit names the coding window", "22–24 August 2026" in pr)
 check("PROTOCOL.md is inside its own freeze list",
       "`PROTOCOL.md`" in pro and "freeze list" in pro.lower())
