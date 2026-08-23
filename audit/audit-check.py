@@ -813,28 +813,28 @@ if _add.is_file():
     # mode of briefing by email, so it is checked item by item rather than by
     # counting.
     _items = {
-        "focal is the benchmark":      ("E10", "benchmark + condición"),
-        "condition governs the codes": ("E11", "condición del paréntesis"),
-        "benchmark paper":             ("E12", "presenta un benchmark"),
-        "capability vs safety":        ("E13", "no la sección"),
+        "focal is the benchmark":      ("E10", "benchmark + condición entre paréntesis"),
+        "condition governs the codes": ("E11", "otros siete códigos describen la condición"),
+        "other condition excluded":    ("Statements scoped to a *different* condition",
+                                        "otra condición del mismo benchmark no se aplica"),
+        "benchmark paper":             ("E12", "existe para presentar un benchmark"),
+        "capability vs safety":        ("E13", "Lo dicta la métrica, no la sección"),
         "F2 (iii) no limit":           ("no limit", "no limit"),
-        "T5 reach is not a control":   ("reach is not a control", "alcanzar algo no es controlarlo"),
+        "T5 reach is not a control":   ("reach is not a control", "alcanzar un recurso no es controlarlo"),
         "sanitisation is not scaffold":("environment sanitisation is not the tool environment",
                                         "no** es saneamiento"),
-        "F1 figures need values":      ("read off\nthe page", "cifras legibles"),
-        "adjacency is not scope":      ("Adjacency is not scope", "Estar al lado no es tener alcance"),
-        "search the whole document":   ("Searching the whole document is fast", "todo** el documento"),
+        "F1 figures need values":      ("read off the page", "cifras legibles"),
+        "adjacency is not scope":      ("Adjacency is not scope", "Proximidad no equivale a alcance"),
+        "search the whole document":   ("searches run over the **whole document**",
+                                        "Busca en todo el documento"),
     }
+    _flatcb, _flatad = " ".join(cb.split()), " ".join(_ad.split())
     _missing = [k for k, (incb, inad) in _items.items()
-                if incb.replace("\n", " ") not in " ".join(cb.split())
-                or inad not in _ad]
+                if " ".join(incb.split()) not in _flatcb
+                or " ".join(inad.split()) not in _flatad]
     check("every v1.6 rule change is in both the codebook and the coder brief",
           not _missing, f"missing from one side: {_missing}" if _missing else
           f"{len(_items)} items matched in both")
-    # The sheet was not reissued, so the ONLY thing that carries the version
-    # forward is the coders typing it. The brief must therefore say so
-    # explicitly and name the column. (The addendum may mention v1.5 -- it
-    # describes the kit they kept -- so the string alone proves nothing.)
     check("the addendum names the column and the value the coders must type",
           "codebook_version" in _ad and "`v1.6`" in _ad,
           "the sheet was not reissued, so the typed value is the only carrier")
