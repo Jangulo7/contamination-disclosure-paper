@@ -719,8 +719,20 @@ PRACTICE = [
      lambda: "No other subgroup analysis is planned" in pr),
     ("every deviation is dated, with a reason, in one table",
      lambda: "## 9. Deviations" in pr and pr.count("| 2026-08-") >= 15),
-    ("the standing claim about timing is present and unqualified",
-     lambda: "before any document was coded, pilot" in pr),
+    # This used to require the blanket claim -- "ALL of the entries below were
+    # made before any document was coded" -- to be present and unqualified. True
+    # until 2026-08-21, false from v1.5, so the check was holding a false
+    # sentence in the deposit. The sentence stays, because registered text is not
+    # rewritten; what it may no longer do is stand alone.
+    ("the blanket timing claim is present AND corrected by a dated row",
+     lambda: "before any document was coded, pilot" in pr
+             and "false since 2026-08-23" in pr
+             and "not defended by timing" in pr),
+    ("the post-pilot entries name what defends them instead of timing",
+     lambda: "§5.2" in pr and "was a rule at fault" in pr),
+    ("the narrower claim that survives the correction is made checkable",
+     lambda: "no disclosure rate and no agreement statistic has been computed"
+             in " ".join(pr.split())),
     ("coders are blind to the hypotheses, by construction not by promise",
      lambda: "CODEBOOK-CODER.md" in cb and "generated" in cb
              and "priming" in (A/"make-coder-manual.py").read_text(encoding="utf-8")),
@@ -911,9 +923,29 @@ for f in DEPOSIT:
 check("no placeholder or TODO left in any deposit file", not blanks, str(blanks))
 check("the deposit states its own version", VERSION in cb.splitlines()[0])
 check("the deposit is dated", "2026-08-21" in cb and "2026-08-21" in pr)
-check("the registration's standing claim is present and unqualified",
-      "before any document was coded, pilot\nincluded" in pr
-      or "before any document was coded, pilot included" in pr.replace("\n", " "))
+_flatpr = " ".join(pr.split())
+check("the registration's blanket timing claim carries its correction",
+      "before any document was coded, pilot included" in _flatpr
+      and "It is left in place because the registered text is not rewritten"
+      in _flatpr,
+      "corrected by a dated row, not by editing the frozen text")
+# Anything the registered text promises to report must either still be
+# producible, or be recorded as not produced. These four were neither until
+# 2026-08-24: the file promised them and nothing said they had not happened.
+for _what, _needle in (
+        ("the pilot recode that did not happen",
+         "**No pilot document was recoded**, at either v1.5 or v1.6"),
+        ("the pilot-inclusive secondary that is not reported",
+         "refuses to compute one from v1.5 onward"),
+        ("the main pass being 32 where the registration says 41",
+         "as run the main pass is **32**"),
+        ("the superseded \"one coder from the design team\" claim",
+         "has been false since 2026-08-21")):
+    check(f"{_what} is recorded as such", _needle in _flatpr, "")
+check("the unperformed test-retest is flagged, with its cost stated",
+      "has not been performed and is at risk" in _flatpr
+      and "without an intra-coder ceiling" in _flatpr,
+      "recorded as not done, which is a different claim from withdrawn")
 check("the deposit names the coding window", "22–24 August 2026" in pr)
 check("PROTOCOL.md is inside its own freeze list",
       "`PROTOCOL.md`" in pro and "freeze list" in pro.lower())
