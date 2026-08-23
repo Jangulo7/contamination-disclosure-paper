@@ -823,8 +823,6 @@ if _add.is_file():
                                         "si el sistema no hiciera nada en absoluto"),
         "heading never decides":       ("A section heading never decides",
                                         "El epígrafe de la sección no decide nunca"),
-        "checkpoint hides codes":      ("prints none of them",
-                                        "columnas de códigos no las miro"),
         "F2 (iii) no limit":           ("no limit", "no limit"),
         "T5 reach is not a control":   ("reach is not a control", "alcanzar un recurso no es controlarlo"),
         "sanitisation is not scaffold":("environment sanitisation is not the tool environment",

@@ -889,9 +889,11 @@ Elapsed time: about nine minutes.
       from the primary κ, the adjudicator enters no codes on either independent
       sheet, and the directional tally in condition 4 is what makes any residual
       influence on the rates visible.
-   2b. **The mid-pass calibration checkpoint does not expose codes.** The
-      checkpoint after the first three main-pass documents needs the clock and
-      the sheet format, not the codes. The condition above justifies the
+   2b. **Reading a sheet before the agreement statistics exist does not expose
+      codes.** The mid-pass checkpoint after the first three main-pass documents
+      was withdrawn — see `PRE-REGISTRATION.md` — but the constraint it was
+      built under still governs any sheet read early: what such a reading needs
+      is the clock and the sheet format, not the codes. The condition above justifies the
       adjudicator's sight of pilot codes on the grounds that it cannot be
       avoided and reaches nothing that counts; neither holds for main-pass
       documents, which enter both the rates and the primary kappa. The coders
