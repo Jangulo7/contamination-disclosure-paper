@@ -823,6 +823,8 @@ if _add.is_file():
                                         "si el sistema no hiciera nada en absoluto"),
         "heading never decides":       ("A section heading never decides",
                                         "El epígrafe de la sección no decide nunca"),
+        "checkpoint hides codes":      ("prints none of them",
+                                        "columnas de códigos no las miro"),
         "F2 (iii) no limit":           ("no limit", "no limit"),
         "T5 reach is not a control":   ("reach is not a control", "alcanzar un recurso no es controlarlo"),
         "sanitisation is not scaffold":("environment sanitisation is not the tool environment",
@@ -842,6 +844,21 @@ if _add.is_file():
     check("the addendum names the column and the value the coders must type",
           "codebook_version" in _ad and "`v1.6`" in _ad,
           "the sheet was not reissued, so the typed value is the only carrier")
+
+_cp = A / "checkpoint.py"
+check("the calibration checkpoint tool exists", _cp.is_file(), "checkpoint.py")
+if _cp.is_file():
+    _c = _cp.read_text(encoding="utf-8")
+    # The whole point of the tool is that a code value never reaches stdout.
+    # Anything that prints a CODES element by value defeats it.
+    _leaks = [l.strip() for l in _c.splitlines()
+              if l.strip().startswith("print(") and "CODES" in l]
+    check("checkpoint.py never prints a code value", not _leaks, str(_leaks[:1]))
+    check("checkpoint.py reports the missing-locator COUNT, not which cells",
+          "missing = sum(" in _c and "for p in problems" in _c,
+          "naming the cells would name the non-zero ones")
+    check("checkpoint.py states its own residual",
+          "RESIDUAL, STATED RATHER THAN HIDDEN" in _c, "")
 
 check("no sheet or worklist was reissued at v1.6",
       not any((A / "coder-kit").rglob("*v1.6*")),

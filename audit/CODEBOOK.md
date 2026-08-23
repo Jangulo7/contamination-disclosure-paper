@@ -889,6 +889,21 @@ Elapsed time: about nine minutes.
       from the primary κ, the adjudicator enters no codes on either independent
       sheet, and the directional tally in condition 4 is what makes any residual
       influence on the rates visible.
+   2b. **The mid-pass calibration checkpoint does not expose codes.** The
+      checkpoint after the first three main-pass documents needs the clock and
+      the sheet format, not the codes. The condition above justifies the
+      adjudicator's sight of pilot codes on the grounds that it cannot be
+      avoided and reaches nothing that counts; neither holds for main-pass
+      documents, which enter both the rates and the primary kappa. The coders
+      therefore send the whole file — asking a coder to excerpt columns invites
+      the wrong ones — and it is read by `checkpoint.py`, which reads the eight
+      code columns and prints none of them, reporting minutes, cap breaches,
+      malformed `f2_notes`, a missing `REF:` token, and the **count** of
+      non-zero codes lacking an evidence locator, never which. *The residual:*
+      `f2_notes` is printed in full because it is the thing being checked, and
+      it constrains the `f2` code. That is a large reduction in exposure, not
+      its elimination, and the checkpoint output is kept with the deviation
+      record so a reader can see exactly what was looked at.
    3. **Adjudicate blind to running totals.** Cells are resolved in randomised
       order rather than grouped by stratum or by field, so that no stratum-level
       or field-level rate is visible while cells are being resolved.

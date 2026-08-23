@@ -136,9 +136,13 @@ alto sin respaldo — y tampoco vale bajarlo a `0` por no tener la cita, porque 
 - **Orden y tiempos:** seguid el orden de vuestra `worklist`. Tope de 25 minutos
   por documento: al llegar al límite, codificáis lo que tengáis, escribís
   `capped` en `notes`, ponéis el tiempo real en `minutes` y pasáis al siguiente.
-- **Control rápido:** cuando llevéis tres documentos de esta fase, mandadme sólo
-  las columnas `minutes` y `notes` de esos tres. Son dos minutos y no es una
-  entrega, es sólo para comprobar los tiempos.
+- **Control rápido:** cuando llevéis tres documentos de esta fase, mandadme el
+  archivo tal cual — no hace falta que recortéis nada. No es una entrega: sólo
+  miro los tiempos y el formato. **Las columnas de códigos no las miro**, ni
+  ahora ni hasta que estén las dos hojas completas; para asegurarlo el fichero
+  pasa por un script que me enseña los tiempos y los fallos de formato y me
+  oculta los códigos. Así vuestro criterio sigue siendo vuestro y nadie os está
+  mirando por encima del hombro mientras codificáis.
 - **Formato:** guardad siempre como **CSV delimitado por comas, codificación
   UTF-8**.
 
