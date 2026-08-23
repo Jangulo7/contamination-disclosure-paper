@@ -942,6 +942,28 @@ for _what, _needle in (
         ("the superseded \"one coder from the design team\" claim",
          "has been false since 2026-08-21")):
     check(f"{_what} is recorded as such", _needle in _flatpr, "")
+_draw = A / "TEST-RETEST-DRAW.md"
+check("the test-retest draw is recorded before any main-pass sheet exists",
+      _draw.is_file() and "before any main-pass document was returned" in
+      _draw.read_text(encoding="utf-8"),
+      "a deterministic draw still has to be timestamped to be checkable")
+if _draw.is_file():
+    _d = _draw.read_text(encoding="utf-8")
+    check("the draw names the documents for both coders",
+          all(x in _d for x in ("A18", "A02", "B16", "B11", "B12",
+                                "A03", "B05", "B19", "B06", "B15")), "")
+    check("the draw is regenerable by a third party",
+          "order.py --coder R1 --retest" in _d, "")
+    check("the coders are not told the draw until they deliver",
+          "neither will be until" in _d,
+          "a coder who knew would have reason to code those five differently")
+check("the test-retest decision and its reason are recorded",
+      "it is **kept**" in " ".join(pr.split())
+      and "cannot be told apart from unstable coding" in " ".join(pr.split()), "")
+check("the pilot sheets are recorded as final, with the parsing rules fixed",
+      "are final as returned" in " ".join(pr.split())
+      and "before adjudication" in " ".join(pr.split()),
+      "rules chosen with no code in view")
 check("the unperformed test-retest is flagged, with its cost stated",
       "has not been performed and is at risk" in _flatpr
       and "without an intra-coder ceiling" in _flatpr,
