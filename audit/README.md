@@ -18,7 +18,7 @@ and deposited with a timestamp on 21 August.
 | If you want to … | Read |
 |---|---|
 | see the 50 documents themselves | **`ANNEX-DOCUMENTS.md`** — the complete list, with links |
-| judge the coding rules | `CODEBOOK.md` — the coding manual, **v1.5**, authoritative for every rule |
+| judge the coding rules | `CODEBOOK.md` — the coding manual, **v1.6**, authoritative for every rule |
 | check what was fixed before coding | `PRE-REGISTRATION.md` — the frozen design, with every amendment dated in §9 |
 | see what a coder actually received | `CODEBOOK-CODER.md` — the whole of **both** coders' briefing |
 | run the study yourself | `PROTOCOL.md` — step by step, with time estimates |

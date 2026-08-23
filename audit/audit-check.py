@@ -792,6 +792,59 @@ if _q.is_file():
           "CODER-QUESTIONS.md" not in pro and "CODER-QUESTIONS.md" in pr,
           "PROTOCOL.md is frozen, so the gap is carried in the deviations table")
 
+print("\n== 15c. The v1.6 coder addendum ==")
+# No new kit or coding sheet was issued at v1.6; the coders were briefed by
+# email. CODEBOOK.md section 6 says anything a coder needs to know must be where
+# a reader can see it, so the brief is deposited verbatim. The risk this creates
+# is drift: the email and the codebook can say different things and nobody would
+# notice. These checks are the only thing standing against that.
+_add = A / "V16-ADDENDUM-CODERS.md"
+check("the coder addendum is deposited beside the manual", _add.is_file(),
+      str(_add.name))
+if _add.is_file():
+    _ad = _add.read_text(encoding="utf-8")
+    check("the addendum says the codebook governs where the two differ",
+          "the codebook governs" in _ad,
+          "a restatement that outranked the rules would be a second instrument")
+    check("the addendum records that it is the operative brief and was sent to both",
+          "operative brief" in _ad and "identical to both coders" in _ad, "")
+    # Every v1.6 rule change must appear in BOTH the codebook and the brief the
+    # coders actually read. A rule in one and not the other is the exact failure
+    # mode of briefing by email, so it is checked item by item rather than by
+    # counting.
+    _items = {
+        "focal is the benchmark":      ("E10", "benchmark + condición"),
+        "condition governs the codes": ("E11", "condición del paréntesis"),
+        "benchmark paper":             ("E12", "presenta un benchmark"),
+        "capability vs safety":        ("E13", "no la sección"),
+        "F2 (iii) no limit":           ("no limit", "no limit"),
+        "T5 reach is not a control":   ("reach is not a control", "alcanzar algo no es controlarlo"),
+        "sanitisation is not scaffold":("environment sanitisation is not the tool environment",
+                                        "no** es saneamiento"),
+        "F1 figures need values":      ("read off\nthe page", "cifras legibles"),
+        "adjacency is not scope":      ("Adjacency is not scope", "Estar al lado no es tener alcance"),
+        "search the whole document":   ("Searching the whole document is fast", "todo** el documento"),
+    }
+    _missing = [k for k, (incb, inad) in _items.items()
+                if incb.replace("\n", " ") not in " ".join(cb.split())
+                or inad not in _ad]
+    check("every v1.6 rule change is in both the codebook and the coder brief",
+          not _missing, f"missing from one side: {_missing}" if _missing else
+          f"{len(_items)} items matched in both")
+    # The sheet was not reissued, so the ONLY thing that carries the version
+    # forward is the coders typing it. The brief must therefore say so
+    # explicitly and name the column. (The addendum may mention v1.5 -- it
+    # describes the kit they kept -- so the string alone proves nothing.)
+    check("the addendum names the column and the value the coders must type",
+          "codebook_version" in _ad and "`v1.6`" in _ad,
+          "the sheet was not reissued, so the typed value is the only carrier")
+
+check("no sheet or worklist was reissued at v1.6",
+      not any((A / "coder-kit").rglob("*v1.6*")),
+      "coders kept the v1.5 kit; only the codebook_version value changes")
+check("v1.5 governed no coded row, and the changelog says so",
+      "No document was coded under v1.5" in cb, "")
+
 print("\n== 16. Ready to deposit on OSF ==")
 DEPOSIT = ["CODEBOOK.md", "PROTOCOL.md", "PRE-REGISTRATION.md",
            "SAMPLING-FRAME.md", "frame.csv"]

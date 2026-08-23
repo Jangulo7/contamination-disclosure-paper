@@ -1,6 +1,6 @@
-# Disclosure audit — coding manual, v1.5
+# Disclosure audit — coding manual, v1.6
 
-**Put `v1.5` in the `codebook_version` column of every row.**
+**Put `v1.6` in the `codebook_version` column of every row.**
 
 ---
 
@@ -636,14 +636,51 @@ rule rather than against a judgement.
    focal-specific one wins. Record in `evidence` which one you used, with its
    locator.
 
-Record the focal evaluation's name in the `focal` column. If two coders picked
+**What level, and what counts — E10 to E13.**
+
+10. **E10 · The focal evaluation is a benchmark, not a reported cell.** Record in
+    `focal` the name of the **benchmark**, not the individual score you read it
+    from. Where a benchmark reports several conditions (with tools / without
+    tools), several tasks (Task 1 / Task 2) or several tiers (practitioner /
+    expert), the benchmark is the focal evaluation and the conditions sit
+    *inside* it. Write the benchmark name, then in parentheses the condition the
+    first qualifying score came from — `WAGIBench (MCQ)`, `Humanity's Last Exam
+    (no tools)`. **The name before the parenthesis is what two coders must agree
+    on.** *Why this level and not the reported cell:* `f1_strata` asks whether
+    the focal score is broken down by sub-population, and its `2` clause counts
+    per-task breakdowns of a multi-task benchmark. If the focal were a single
+    reported cell, `f1_strata` would be structurally `0` in every document and
+    the variable would measure nothing.
+11. **E11 · Which condition the other seven codes describe.** The parenthesised
+    condition is the one E5 selected — first, left to right, irrevocable.
+    Statements scoped to that condition apply. Statements scoped to a *different*
+    condition of the same benchmark do not (E7). A statement scoped to the
+    benchmark as a whole applies (E6).
+12. **E12 · A paper that introduces a benchmark.** Where the document exists to
+    present a benchmark, that benchmark is the focal evaluation, and the first
+    qualifying score selects the condition under E5. **Do not read the whole
+    paper to characterise the benchmark**: the eight codes describe the focal
+    condition, and the 25-minute cap applies unchanged.
+13. **E13 · Capability or safety is a property of the metric, never of the
+    section.** The rule box excludes safety-refusal rates, red-team pass rates,
+    latency and cost. Where a metric's label leaves it unclear, apply this test
+    and record the answer in `notes`: **does a higher score mean the system did
+    more of the task, or that it did less of something unwanted?** *More of the
+    task* is a capability benchmark and is eligible as focal. *Less of something
+    unwanted* — refusals, violations, unsafe completions, attacks withstood — is
+    not, whatever section it appears under. **A section heading never decides
+    this.** Where a metric combines both — an "avoidance and correctness" score —
+    it **is** a capability benchmark, because part of the score rewards doing the
+    task.
+
+Record the focal evaluation under E10 in the `focal` column. If two coders picked
 different focal evaluations, that is itself a disagreement to reconcile, and it
 is visible rather than hidden inside the field codes.
 
 **A focal disagreement is resolved by rule, not by preference.** Because the
 focal choice decides what every other code in the row is about, it is the single
 largest discretionary lever in this study, and it is closed the same way
-everything else is: the adjudicator applies the rule box and E1–E9, records in
+everything else is: the adjudicator applies the rule box and E1–E13, records in
 `notes` which numbered rule decided it, and nothing else enters. The count of
 focal disagreements and how each was resolved is reported.
 
@@ -681,6 +718,10 @@ Three cases that came up in the pilot, decided:
 - **A training cutoff given only in a linked model card is `t3 = 0`**, plus
   `REF:t3`. The cutoff is outside the boundary, so the document has not stated
   it.
+- **Adjacency is not scope** — rule E7. A sentence describing a scaffold, a
+  budget or a control that sits beside one named example applies to **that
+  example only**, unless the document says it applies to the suite. Being
+  printed next to something does not extend a statement over it.
 
 ## 2. Inclusion, exclusion, replacement
 
@@ -800,6 +841,16 @@ a single aggregate?*
 **Edge rule.** Reporting several *different benchmarks* is not stratification.
 Stratification is *within* the population of one reported score.
 
+**Edge rule — figures.** `2` requires per-stratum values **a reader can read off
+the page**: a table, or a figure with labelled values. A figure showing named
+series without readable values establishes that a breakdown exists but does not
+give the scores, and is `1`.
+
+> *Decided case — `2`.* A bar chart whose bars carry printed numbers, grouped by
+> named sub-task.
+> *Decided case — `1`.* A scatter or dot figure with named series and no printed
+> values, even where the series are visibly separated.
+
 ### F2 · Elicitation budget
 
 *Could a competent third party reproduce the conditions under which the score was
@@ -819,6 +870,13 @@ from the released sheets alone.
 | (iii) | **Token or step budget** | a token cap, step cap, wall-clock or compute budget per item or per run |
 | (iv) | **Attempts allowed** | how many attempts the system was given |
 | (v) | **Attempt resolution** | how attempts were combined — best-of-*n*, majority vote, single, pass@*k* |
+
+**Sub-element (iii) and an explicitly stated absence of a limit.** A document
+stating that the system had **no** token, step or wall-clock limit **satisfies
+(iii)**. The sub-element asks whether a reader can reproduce the budget under
+which the score was elicited; *"no limit"* is a reproducible budget and *"not
+stated"* is not. Record `Y` in slot 3 and write `no limit` in `notes`. A limit
+that is simply unstated stays `-`.
 
 **Sub-element (i) has three routes, and any one of them satisfies it.**
 
@@ -905,6 +963,28 @@ control, and `0` means the type is not addressed.
 to avoid contamination" with no mechanism is `1` on `t1` and `0` on `t2`–`t5`. Do
 not spread a vague claim across all five types; that inflates every rate and is
 the single easiest way for two coders to diverge.
+
+**Edge rule — reach is not a control.** `t5` codes the disclosure of a
+**control** over what the system could reach, not the disclosure that it could
+reach something. The channel's existence is what the code already assumes;
+saying it existed adds nothing.
+
+- A passage describing the system using an external resource, stating no control
+  over it and raising no contamination concern, is **`0`**.
+- A passage naming the risk with no mechanism is **`1`**.
+- Only a stated control, or a stated check that a control held, is **`2`**.
+
+> *Decided case — `0`.* "During the evaluation, external APIs that let the model
+> compare sequences against public databases imposed rate limits on our agent's
+> requests, so three subtasks could not be completed." This describes the channel
+> and an incidental degradation of it. No control, no contamination framing.
+>
+> *Decided case — environment sanitisation is not the tool environment.*
+> Describing the **scaffold** — "a Linux container with Bash and Python" — is
+> sub-element (i) of `f2` by route S, **not** `t5`. Environment sanitisation
+> means removing from the environment what the system should not reach: deleting
+> the fixing commit or the reference tests from a checkout, clearing git history,
+> stripping the answer key from a container image, resetting between items.
 
 **Edge rule.** Type 5 is a property of the *run*. A benchmark author's assurance
 that the data is private does not code as `t5`; only statements about what the
@@ -1256,7 +1336,7 @@ would be.
    - Anything else you want to say follows, separated by ` | `. The `url_dead`
      exclusion route is unchanged.
 
-   **`codebook_version`** carries `v1.5` on every main-pass row. The nine pilot
+   **`codebook_version`** carries `v1.6` on every main-pass row. The nine pilot
    rows keep the version they were coded under.
 
    **Exclusions live in one place.** Your own sheet — `codes-R1.csv` or
@@ -1292,6 +1372,33 @@ three days turns out not to be enough, say so on the 22nd rather than on the
 document yourself, and nothing may be added to it — the list was closed on
 12 August and is part of the registration. Your own worklist, the same documents
 in your own randomised order as a tick-list, comes from `order.py` (§5.3).
+
+**Order of operations inside the 25 minutes. Three steps, and they do not
+merge.**
+
+1. **Find the focal by reading order** — not by searching, and not by jumping to
+   the first table. Front to back from the first page after the contents, front
+   matter included (E1). Stop at the first capability benchmark score for the
+   system under test (E2, E3, E13). It is usually in the abstract, the executive
+   summary, a key-results box or the first results table — but **if a number
+   appears in prose before any table, that number is the focal.** This step is
+   short.
+2. **Gather evidence by search** — not by reading. Once the focal is fixed,
+   **stop reading the document front to back** and run the keyword searches below
+   for all eight variables. This is what stops the cap truncating the same
+   variables in every document, and it is faster than reading.
+3. **Three places an applicable statement can live, and all three count**:
+   attached to the focal evaluation; scoped to **all** evaluations anywhere in
+   the document, appendices included (E6); or scoped to a named subset the
+   document says the focal belongs to (E7). **The searches are what find the
+   second and third.** A sentence forty pages from the focal score still applies
+   if it is scoped to all evaluations — that is common, and it is why the
+   searches run over the **whole document** rather than over the focal's section.
+   Searching the whole document is fast; reading it is not.
+
+**What a coder does not have to do.** Characterise the document, summarise the
+benchmark, or understand the paper's contribution. Eight questions about one
+evaluation, answered from what is written.
 
 **Search discipline.** Use full-text search for a fixed keyword list before
 coding each field, so that a `0` means "searched and absent", not "skimmed and
@@ -1376,7 +1483,7 @@ frame will otherwise read the gaps as attrition.
 
 ## 8. Version history
 
-You are coding under **v1.5**. The full reasons for each amendment are in
+You are coding under **v1.6**. The full reasons for each amendment are in
 the deposited codebook; they are analysis notes rather than coding rules, and
 they are left out here so that nothing in this manual points at an expected
 answer.
@@ -1389,3 +1496,4 @@ answer.
 | 1.3 | 2026-08-17 |
 | 1.4 | 2026-08-21 |
 | 1.5 | 2026-08-23 |
+| 1.6 | 2026-08-23 |
