@@ -664,14 +664,19 @@ rule rather than against a judgement.
 13. **E13 · Capability or safety is a property of the metric, never of the
     section.** The rule box excludes safety-refusal rates, red-team pass rates,
     latency and cost. Where a metric's label leaves it unclear, apply this test
-    and record the answer in `notes`: **does a higher score mean the system did
-    more of the task, or that it did less of something unwanted?** *More of the
-    task* is a capability benchmark and is eligible as focal. *Less of something
+    and record the answer in `notes`: **if the system did nothing at all, what
+    would it score on this metric?** *Zero* — the metric measures capability, and
+    it is eligible as focal. *A high score* — the metric measures abstention, and
+    it is not. *Part of the score* — the metric sums "did not do the wrong thing"
+    with "completed the task" — it **is** eligible, because part of the score
+    rewards doing the task. Worked through: accuracy, `pass@1` and tasks-solved
+    score zero and are eligible; refusal rate, `not_unsafe`, attacks-withstood
+    and violations-avoided score high and are not. *Less of something
     unwanted* — refusals, violations, unsafe completions, attacks withstood — is
     not, whatever section it appears under. **A section heading never decides
-    this.** Where a metric combines both — an "avoidance and correctness" score —
-    it **is** a capability benchmark, because part of the score rewards doing the
-    task.
+    this**: a capability metric printed under a heading called "Model Safety" is
+    still eligible, and a refusal rate printed under a capabilities heading is
+    still not.
 
 Record the focal evaluation under E10 in the `focal` column. If two coders picked
 different focal evaluations, that is itself a disagreement to reconcile, and it

@@ -65,15 +65,29 @@ No hace falta leer el paper entero.
 
 **3 · ¿Capacidad o seguridad? Lo dicta la métrica, no la sección**
 
-¿Una puntuación más alta significa que hizo **más parte de la tarea**, o que hizo
-**menos de algo malo**?
+La prueba, en cinco segundos: **si el sistema no hiciera nada en absoluto, ¿qué
+puntuación sacaría en esa métrica?**
 
-- Más de la tarea → sirve como focal.
-- Menos de algo malo (rechazos, violaciones, ataques resistidos) → no sirve,
-  esté en la sección que esté.
-- Mezcla de las dos («evitación + corrección») → **sí** sirve.
+- **Sacaría 0** → la métrica mide capacidad. **Sirve como focal.**
+- **Sacaría una puntuación alta** → la métrica mide que el sistema se abstuvo.
+  **No sirve.**
+- **Sacaría una parte** — la métrica suma «no hizo lo indebido» + «completó la
+  tarea» → **sí sirve**, porque parte de la puntuación premia hacer la tarea.
 
-Anota en `notes` cuál de los tres casos aplicaste.
+| Métrica | Sin hacer nada sacaría… | ¿Sirve como focal? |
+|---|---|---|
+| Aciertos, `pass@1`, % de tareas resueltas | 0 | **Sí** |
+| Horizonte temporal, tareas completadas | 0 | **Sí** |
+| Tasa de rechazo, `not_unsafe`, % de respuestas seguras | alta | No |
+| Ataques resistidos, tasa de defensa con éxito | alta | No |
+| Violaciones evitadas | alta | No |
+| «evitación + corrección» y similares | una parte | **Sí** |
+
+**El epígrafe de la sección no decide nunca.** Una métrica de capacidad que
+aparece dentro de una sección titulada «Model Safety» sigue sirviendo, y una tasa
+de rechazo que aparece en una sección de capacidades sigue sin servir.
+
+Anota en `notes` por qué la métrica entra o no.
 
 **4 · `f2`, ranura 3: decir «sin límite» cuenta**
 
