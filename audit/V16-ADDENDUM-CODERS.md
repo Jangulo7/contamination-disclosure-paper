@@ -120,12 +120,43 @@ Una frase que describe un scaffold y está situada junto a un ejemplo concreto
 vale sólo para ese ejemplo, salvo que el documento diga que aplica a toda la
 suite.
 
-**8 · `evidence` obligatoria en todo código distinto de `0`**
+**8 · Cómo se rellena la hoja**
 
-Sección, página o una cita corta. Si vas justa de tiempo, **anota al menos la
-sección o la página aproximada**: eso basta. Lo que no vale es dejar un código
-alto sin respaldo — y tampoco vale bajarlo a `0` por no tener la cita, porque un
-`0` significa «lo he buscado y no está», no «no me ha dado tiempo».
+Esto es lo que más se rompió en el piloto, así que va detallado. No es
+burocracia: cada punto desactiva una comprobación automática si se hace de otra
+manera.
+
+- **Columnas de código** — `f1_strata`, `f2_budget`, `t1_direct`,
+  `t2_derivative`, `t3_temporal`, `t4_distributional`, `t5_acquired`,
+  `f4_regeneration`: **sólo `2`, `1`, `0` o `NA`.** Nada más, ni una palabra. Si
+  hay algo que explicar, va en `notes`.
+
+- **`f2_notes`: cinco caracteres seguidos, sin espacios entre ellos.** El primero
+  es `H`, `R`, `S` o `-`; los otros cuatro son `Y` o `-`. Es decir `H-Y--`, **no**
+  `H - Y - -`. Después, si queréis, un espacio y todo el texto que haga falta.
+  Esto importa más de lo que parece: hay una comprobación automática que contrasta
+  esas cinco ranuras con el código de `f2` y avisa cuando no cuadran. Con espacios
+  no las puede leer y la comprobación se queda sin hacer. Y las ranuras tienen que
+  decir lo mismo que vuestro texto: si escribís que la evaluación era `pass@1`,
+  la ranura 5 es `Y`, no `-`.
+
+- **`evidence`: obligatoria en todo código distinto de `0`.** Sección, página o
+  una cita corta. Si vais justas de tiempo, **anotad al menos la sección o la
+  página aproximada**: eso basta. Lo que no vale es dejar un código alto sin
+  respaldo — y tampoco vale bajarlo a `0` por no tener la cita, porque un `0`
+  significa «lo he buscado y no está», no «no me ha dado tiempo».
+
+- **`notes` empieza siempre por el token `REF:`** — `REF:none` si no hubo ninguna
+  página fuera del límite del documento, o `REF:f2`, `REF:t5;t3`, nombrando las
+  variables que esa página habría contestado. Se pone incluso cuando el código
+  acaba siendo `0`.
+
+- **`minutes`: siempre un número**, aunque sea aproximado. Nunca en blanco.
+
+- **El archivo: CSV delimitado por comas, codificación UTF-8.** Ni `.numbers`, ni
+  `.xlsx`, y comas, no punto y coma. Si vuestro programa no os deja guardarlo
+  así, decídmelo y lo convierto yo — pero avisadme, porque convertirlo a ciegas
+  puede perder acentos y símbolos.
 
 ---
 
@@ -136,8 +167,6 @@ alto sin respaldo — y tampoco vale bajarlo a `0` por no tener la cita, porque 
 - **Orden y tiempos:** seguid el orden de vuestra `worklist`. Tope de 25 minutos
   por documento: al llegar al límite, codificáis lo que tengáis, escribís
   `capped` en `notes`, ponéis el tiempo real en `minutes` y pasáis al siguiente.
-- **Formato:** guardad siempre como **CSV delimitado por comas, codificación
-  UTF-8**.
 
 Gracias por el trabajo del piloto. Ha sido de muchísima utilidad :-)
 

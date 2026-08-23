@@ -824,6 +824,23 @@ if _add.is_file():
         "heading never decides":       ("A section heading never decides",
                                         "El epígrafe de la sección no decide nunca"),
         "F2 (iii) no limit":           ("no limit", "no limit"),
+        # The pilot's defects were all format. Without the withdrawn mid-pass
+        # spot-check the brief is the only thing standing between them and 32
+        # documents, so each is anchored to the brief individually.
+        "code cells take 0/1/2/NA":    ("holds exactly one of `2`, `1`, `0` or `NA`",
+                                        "sólo `2`, `1`, `0` o `NA`"),
+        "f2_notes five chars":         ("fixed five-character format",
+                                        "cinco caracteres seguidos, sin espacios"),
+        "f2_notes matches the prose":  ("so that the codes remain recomputable",
+                                        "ranuras tienen que decir lo mismo que vuestro texto"),
+        "evidence on non-zero":        ("for **every non-zero code**",
+                                        "obligatoria en todo código distinto de `0`"),
+        "no lowering for want of a cite": ("searched and absent",
+                                        "no me ha dado tiempo"),
+        "REF: token":                  ("REF:none", "empieza siempre por el token `REF:`"),
+        "minutes always a number":     ("put the real elapsed time in\n   `minutes`",
+                                        "siempre un número"),
+        "utf-8 comma csv":             ("", "CSV delimitado por comas, codificación UTF-8"),
         "T5 reach is not a control":   ("reach is not a control", "alcanzar un recurso no es controlarlo"),
         "sanitisation is not scaffold":("environment sanitisation is not the tool environment",
                                         "no** es saneamiento"),

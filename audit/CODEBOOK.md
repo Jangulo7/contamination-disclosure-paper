@@ -314,6 +314,15 @@ Each default closes the looser option.
 
 ## 3. The scale
 
+**A code cell holds exactly one of `2`, `1`, `0` or `NA`, and nothing else.** Not
+a code with a parenthetical, not a range, not a sentence. Anything a coder wants
+to say about a cell goes in `evidence` or in `notes`, which are free text for
+that reason. A cell holding prose is not a weaker code, it is an unparseable one:
+it cannot enter a confusion matrix, so it silently leaves the cell out of the
+agreement statistic for that variable. (Written in at v1.6 after a pilot sheet
+returned `NA (fixed MCQ prompt scored offline…)` in a code column. The rule was
+implied everywhere and stated nowhere.)
+
 Every field and every contamination type is coded on the same three-point scale.
 
 | Code | Meaning |
