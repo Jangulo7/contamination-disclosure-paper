@@ -54,6 +54,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import unicodedata
 import math
 import re
 import random
@@ -707,19 +708,74 @@ def inclusion_agreement(sa: dict, sb: dict) -> dict:
                 rate=((len(both_in) + len(both_out)) / n if n else None))
 
 
+# Two coders never type the same string, so verbatim string equality measures
+# typing, not agreement. What matters is whether the two rows describe the same
+# BENCHMARK. The rate is therefore reported twice: verbatim, which contains no
+# judgement at all, and benchmark-level, which contains exactly the mechanical
+# rule below plus the explicitly listed adjudicator decisions, and nothing else.
+
+def focal_head(s: str) -> str:
+    """The benchmark name, with the sub-score qualifier removed.
+
+    Coders write the benchmark and then narrow it: "WAGIBench, discriminative
+    task (MCQ) 84%", "HLE (No tools) 44,4%", "Long-form virology tasks (Task 1)".
+    Everything from the first comma, parenthesis, colon or dash onward is the
+    qualifier, not the benchmark. Accents, case and punctuation are stripped
+    because they carry no information about which benchmark was chosen."""
+    s = unicodedata.normalize("NFKD", s or "")
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    s = s.replace("\u00b4", "'").replace("\u2019", "'")
+    s = re.split(r"[,(:;]| - | -- |\u2013|\u2014", s, maxsplit=1)[0]
+    s = re.sub(r"[^a-z0-9 ]+", " ", s.lower())
+    return " ".join(s.split())
+
+
+# Pairs the mechanical rule cannot merge because the two coders named the
+# benchmark by different words, judged the same benchmark by the adjudicator.
+# Each is a decision recorded so a reader can check it against the document.
+# A pair that is not listed counts as a DISAGREEMENT: silence is never read as
+# agreement, and this list may only ever be added to with a stated reason.
+FOCAL_SAME = {
+    # doc_id: (reason)
+    "B02": "R2's \"Detect Task\" is one of BountyBench's three task types "
+           "(detect / exploit / patch), so both rows are BountyBench.",
+    "C16": "R2 names the suite (\"Advanced cyber tasks, Expert level, AISI "
+           "CTF-format\") and R1 names its tier (\"Expert-level tasks\"); "
+           "the document has one such suite.",
+}
+
+
 def focal_agreement(sa: dict, sb: dict) -> dict:
     """A focal disagreement is not one cell: it means the whole row describes a
     different evaluation. Counted and named, and resolved by naming the numbered
-    edge rule that decides it (CODEBOOK.md section 1)."""
+    edge rule that decides it (CODEBOOK.md section 1).
+
+    Returns both rates. `diff` is the benchmark-level residue -- the documents
+    where the two coders really did choose different benchmarks."""
     def norm(s):
         return " ".join((s or "").lower().split())
+
     docs = sorted(d for d in set(sa) & set(sb)
                   if not sa[d]["_excluded"] and not sb[d]["_excluded"])
-    diff = [(d, sa[d]["focal"], sb[d]["focal"]) for d in docs
-            if norm(sa[d]["focal"]) != norm(sb[d]["focal"])]
+
+    verbatim, by_rule, by_decision, diff = [], [], [], []
+    for d in docs:
+        x, y = sa[d]["focal"], sb[d]["focal"]
+        if norm(x) == norm(y):
+            verbatim.append(d)
+        elif focal_head(x) and focal_head(x) == focal_head(y):
+            by_rule.append((d, x, y))
+        elif d in FOCAL_SAME:
+            by_decision.append((d, x, y, FOCAL_SAME[d]))
+        else:
+            diff.append((d, x, y))
+
     blank = [d for d in docs if not norm(sa[d]["focal"]) or not norm(sb[d]["focal"])]
-    return dict(n=len(docs), diff=diff, blank=blank,
-                rate=((len(docs) - len(diff)) / len(docs) if docs else None))
+    n = len(docs)
+    return dict(n=n, diff=diff, blank=blank,
+                verbatim=verbatim, by_rule=by_rule, by_decision=by_decision,
+                rate=((n - len(diff)) / n if n else None),
+                rate_verbatim=(len(verbatim) / n if n else None))
 
 
 def parse_f2_notes(s: str) -> str | None:
@@ -871,12 +927,31 @@ def main(argv=None) -> int:
     print("FOCAL-EVALUATION AGREEMENT  (CODEBOOK.md section 1, rules E1-E9)")
     print("=" * 88)
     print(f"  documents included by both    {foc['n']}")
-    print(f"  same focal evaluation         {foc['n'] - len(foc['diff'])}"
-          f"   ({fmt(foc['rate'], 3)})")
+    print(f"  same benchmark                {foc['n'] - len(foc['diff'])}"
+          f"   ({fmt(foc['rate'], 3)})   <- the rate to report")
+    print(f"  identical string              {len(foc['verbatim'])}"
+          f"   ({fmt(foc['rate_verbatim'], 3)})   (typing, not agreement)")
     if foc["blank"]:
         print(f"  !! focal blank on            {foc['blank']}")
-    for d, x, y in foc["diff"]:
-        print(f"    {d}  R1: {x[:34]:<34}  R2: {y[:34]}")
+
+    if foc["by_rule"]:
+        print("\n  Same benchmark, different granularity -- merged mechanically by")
+        print("  dropping the sub-score qualifier. The eight codes still describe")
+        print("  different reported scores; that is a granularity question for")
+        print("  section 1, not a focal disagreement.")
+        for d, x, y in foc["by_rule"]:
+            print(f"    {d}  R1: {x[:34]:<34}  R2: {y[:34]}")
+    if foc["by_decision"]:
+        print("\n  Same benchmark by ADJUDICATOR DECISION -- the mechanical rule")
+        print("  could not merge these; each reason is recorded in FOCAL_SAME and")
+        print("  is checkable against the document.")
+        for d, x, y, why in foc["by_decision"]:
+            print(f"    {d}  R1: {x[:34]:<34}  R2: {y[:34]}")
+            print(f"         because: {why}")
+    if foc["diff"]:
+        print("\n  DIFFERENT BENCHMARK -- a real focal disagreement:")
+        for d, x, y in foc["diff"]:
+            print(f"    {d}  R1: {x[:34]:<34}  R2: {y[:34]}")
     if foc["diff"]:
         print("\n  A focal disagreement means the two rows describe DIFFERENT")
         print("  evaluations, so it is not one cell. Resolve each by applying the")
