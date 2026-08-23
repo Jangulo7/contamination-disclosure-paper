@@ -20,7 +20,9 @@ Sent 2026-08-23, identical to both coders, **as plain text** — email clients d
 not render Markdown, so the table in item 3 was set out as three labelled
 lists and the emphasis marks were dropped. The wording below is the wording
 sent; only the formatting differs. The exact plain-text file is kept with the
-study runner's records.
+study runner's records. **One redaction:** the sign-off carried the study
+runner's first name and is replaced here by a bracketed label, because this
+file is released for double-blind review. Nothing else is altered.
 
 ---
 
@@ -175,4 +177,4 @@ manera.
 Gracias por el trabajo del piloto. Ha sido de muchísima utilidad :-)
 
 Un saludo,
-Johanna
+[la persona que dirige el estudio — firma retirada de la copia depositada]

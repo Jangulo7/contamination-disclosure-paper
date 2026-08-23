@@ -856,6 +856,14 @@ if _add.is_file():
     check("every v1.6 rule change is in both the codebook and the coder brief",
           not _missing, f"missing from one side: {_missing}" if _missing else
           f"{len(_items)} items matched in both")
+    # The brief was written as an email and signed. Deposited for double-blind
+    # review it must not carry the sign-off, and the redaction must be declared
+    # rather than silent -- an undeclared edit to a file presented as "what the
+    # coders were sent" is worse than the name.
+    check("the deposited brief carries no sign-off name and says so",
+          "firma retirada" in _ad and "One redaction" in _ad,
+          "check-anonymity.sh is the general guard; this is the specific one")
+
     check("the addendum names the column and the value the coders must type",
           "codebook_version" in _ad and "`v1.6`" in _ad,
           "the sheet was not reissued, so the typed value is the only carrier")
