@@ -910,6 +910,53 @@ check("no sheet or worklist was reissued at v1.6",
 check("v1.5 governed no coded row, and the changelog says so",
       "No document was coded under v1.5" in cb, "")
 
+print("\n== 15d. Nothing public carries a result, a person, or a private exchange ==")
+# Standing rule from the study runner, 2026-08-24. The tracked tree is what a
+# reviewer and the public see. It carries the INSTRUMENT and the record of what
+# changed. It does not carry results or preliminary results, conclusions,
+# personal information, or internal communications. Each of those has a place --
+# results go in the paper once the study is finished, correspondence stays
+# unpublished under the GDPR -- and none of those places is here.
+import re as _r3
+_TRACKED = _r3.split(r"\s+", _sh("git ls-files").strip()) if callable(globals().get("_sh")) else None
+if _TRACKED is None:
+    import subprocess as _sp
+    _TRACKED = _sp.run(["git", "ls-files"], capture_output=True, text=True,
+                       cwd=str(A.parent)).stdout.split()
+_RULES = (
+    # Attributed figures only. The registered text explains the prevalence
+    # paradox with an illustrative "a kappa of 0.2 beside 94% raw agreement",
+    # which is a worked example and not a result of this study.
+    ("a preliminary result",
+     r"\b\d/[69] (cells|documents|agree)"
+     r"|(our|the) (agreement|κ|kappa) (was|came back|came out)"
+     r"|(this|our|the) (pilot|study) (returned|showed|yielded|gave|produced) \b\d"
+     r"|(observed|measured|resulting) (κ|kappa|agreement) (was|of) 0\.\d"),
+    ("a coder tied to a document and a verdict",
+     r"`?R[12]`?'s `?[ABC]\d\d\b|R[12] (coded|recorded|put) `?[ABC]\d\d\b"),
+    ("a coder's conduct",
+     r"(did not|would not|will not) (resubmit|recode|send)"
+     r"|(declined|refused) to (recode|resubmit|continue)"),
+    ("timing attributed to the pilot in figures",
+     r"pilot (times|coding) (of|reached) (roughly )?\d+"),
+    ("a reproduced private message",
+     r"^Asunto:|^Un saludo,|^Hola[, ]"),
+)
+_found = []
+for _f in _TRACKED:
+    if not _f.endswith((".md", ".csv")):
+        continue
+    _fp = A.parent / _f
+    if not _fp.is_file():
+        continue
+    _txt = _fp.read_text(encoding="utf-8", errors="ignore")
+    for _label, _pat in _RULES:
+        for _m in _r3.finditer(_pat, _txt, _r3.M):
+            _found.append(f"{_f}:{_txt[:_m.start()].count(chr(10))+1} {_label} — {_m.group(0)[:40]!r}")
+check("no tracked file carries a result, a coder verdict, conduct, or a message",
+      not _found, "; ".join(_found[:3]) if _found else
+      f"{len(_TRACKED)} tracked files scanned against 5 rules")
+
 print("\n== 16. Ready to deposit on OSF ==")
 DEPOSIT = ["CODEBOOK.md", "PROTOCOL.md", "PRE-REGISTRATION.md",
            "SAMPLING-FRAME.md", "frame.csv"]
@@ -958,9 +1005,15 @@ if _draw.is_file():
           "a coder who knew would have reason to code those five differently")
 # A deviations table is read by a reviewer, not kept as a lab notebook. It
     # must not carry results, per-coder cell verdicts, or coders' conduct.
-    _leak = [w for w in ("0/6", "1/6", "did not resubmit", "will not send",
-                         "R1`'s `B0", "R2`'s `A1", "five dashes")
-             if w in _flatpr]
+    # Patterns, not literals: a guard list that spells out the exact strings it
+    # removed republishes them in the checker.
+    import re as _re2
+    _leak = [m.group(0) for _p in (
+                r"\b\d/[69]\b",                    # a per-variable agreement count
+                r"`?R[12]`?'s `?[ABC]\d\d",         # a coder tied to a document
+                r"(did not|would not|will not) (resubmit|send|recode)",
+                r"(declined|refused) to (recode|resubmit)")
+             for m in _re2.finditer(_p, _flatpr)]
     # A row that grows past a few hundred words has stopped being a deviation
     # entry and become a diary. The published table is read by a reviewer; the
     # long working versions live untracked, outside the deposit.
