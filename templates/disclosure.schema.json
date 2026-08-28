@@ -1,0 +1,442 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jangulo.com/disclosure/disclosure.schema.json",
+  "title": "Contamination Disclosure v1.1",
+  "description": "Schema for a Contamination Disclosure record: four fields to publish alongside a benchmark score. CC BY 4.0. 'unknown' is a valid entry throughout and is deliberately permitted by this schema.",
+  "type": "object",
+  "required": [
+    "disclosure_version",
+    "benchmark",
+    "strata_reported",
+    "elicitation_budget",
+    "contamination_controls",
+    "regeneration"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "disclosure_version": {
+      "type": "string",
+      "const": "1.1",
+      "description": "Version of the Contamination Disclosure specification this record conforms to. v1.0 (talk, 29 July 2026) had a four-type taxonomy; v1.1 adds Type 5, acquired."
+    },
+    "benchmark": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string"
+        },
+        "doi": {
+          "type": "string",
+          "description": "Bare DOI (10.x/...) or a doi.org URL.",
+          "pattern": "^$|^(10\\.\\d{4,9}/\\S+|https?://(dx\\.)?doi\\.org/10\\.\\d{4,9}/\\S+)$"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "system_under_test": {
+      "type": "string",
+      "description": "Model or system identifier, including version. A score without a versioned system identifier is not reproducible."
+    },
+    "evaluation_date": {
+      "type": "string",
+      "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "strata_reported": {
+      "type": "object",
+      "required": [
+        "reported"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "reported": {
+          "type": "boolean",
+          "description": "Whether per-stratum scores are reported. false is an answer, not an omission."
+        },
+        "strata": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "aggregate_only": {
+          "type": "boolean"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "pre_registered": {
+          "type": "boolean"
+        },
+        "scores": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "n": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "score": {
+                "type": "number"
+              },
+              "ci95": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$comment": "If strata are reported, at least one stratum must be named.",
+          "if": {
+            "properties": {
+              "reported": {
+                "const": true
+              }
+            },
+            "required": [
+              "reported"
+            ]
+          },
+          "then": {
+            "properties": {
+              "strata": {
+                "minItems": 1
+              }
+            },
+            "required": [
+              "strata"
+            ]
+          }
+        },
+        {
+          "$comment": "aggregate_only: true is inconsistent with reported: true.",
+          "if": {
+            "properties": {
+              "aggregate_only": {
+                "const": true
+              }
+            },
+            "required": [
+              "aggregate_only"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reported": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "elicitation_budget": {
+      "type": "object",
+      "required": [
+        "harness",
+        "attempts_allowed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "harness": {
+          "type": "string",
+          "description": "Harness name and version, or a commit hash for a custom harness. An empty string is permitted but means the score is not reproducible."
+        },
+        "token_budget": {
+          "type": [
+            "string",
+            "integer"
+          ],
+          "description": "Per-item budget cap. String form allows notes such as '100k cap; 34k mean consumed'."
+        },
+        "attempts_allowed": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt_resolution": {
+          "type": "string",
+          "enum": [
+            "",
+            "single",
+            "best_of_n",
+            "majority_vote",
+            "first_success",
+            "other"
+          ]
+        },
+        "scaffold_notes": {
+          "type": "string"
+        },
+        "decoding": {
+          "type": "string"
+        },
+        "still_rising_at_max_budget": {
+          "$ref": "#/$defs/tristate",
+          "description": "true means the reported score is a lower bound on capability, not a ceiling."
+        }
+      },
+      "allOf": [
+        {
+          "$comment": "More than one attempt requires stating how attempts were resolved.",
+          "if": {
+            "properties": {
+              "attempts_allowed": {
+                "minimum": 2
+              }
+            },
+            "required": [
+              "attempts_allowed"
+            ]
+          },
+          "then": {
+            "required": [
+              "attempt_resolution"
+            ],
+            "properties": {
+              "attempt_resolution": {
+                "enum": [
+                  "best_of_n",
+                  "majority_vote",
+                  "first_success",
+                  "other"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "contamination_controls": {
+      "type": "object",
+      "required": [
+        "direct",
+        "derivative",
+        "temporal",
+        "distributional",
+        "acquired"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "direct": {
+          "$ref": "#/$defs/control_status"
+        },
+        "derivative": {
+          "$ref": "#/$defs/control_status"
+        },
+        "temporal": {
+          "$ref": "#/$defs/control_status"
+        },
+        "distributional": {
+          "$ref": "#/$defs/control_status"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "acquired": {
+          "$ref": "#/$defs/control_status",
+          "description": "Contamination acquired DURING evaluation (retrieval, tool use, environment access). Unlike types 1-4 this is a property of the run, not of the benchmark, and cannot be certified by the benchmark author."
+        },
+        "network_access_during_eval": {
+          "$ref": "#/$defs/tristate",
+          "description": "Did the system under test have network or web-search access during evaluation? Required context for the 'acquired' field."
+        },
+        "environment_sanitised": {
+          "$ref": "#/$defs/tristate",
+          "description": "Were future commits, reflogs, solution files, config artifacts pruned from the task environment before the run? Relevant to acquired level 5a."
+        },
+        "transcripts_reviewed": {
+          "$ref": "#/$defs/tristate",
+          "description": "Were agent transcripts/trajectories reviewed for tool calls reaching benchmark artifacts or solutions? This is the primary detection method for acquired contamination."
+        },
+        "boundary_integrity_monitored": {
+          "$ref": "#/$defs/tristate",
+          "description": "Was the isolation boundary itself watched? Egress monitoring, canaries or honeytokens planted in the answer key, and post-run verification that the boundary was still intact. This records what was done, not whether it worked. Relevant to acquired level 5c, where network isolation is the control being defeated and transcript review of the system's own trace cannot establish that the boundary held."
+        }
+      },
+      "allOf": [
+        {
+          "$comment": "A 'controlled' claim must be substantiated in notes.",
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "direct": {
+                    "const": "controlled"
+                  }
+                },
+                "required": [
+                  "direct"
+                ]
+              },
+              {
+                "properties": {
+                  "derivative": {
+                    "const": "controlled"
+                  }
+                },
+                "required": [
+                  "derivative"
+                ]
+              },
+              {
+                "properties": {
+                  "temporal": {
+                    "const": "controlled"
+                  }
+                },
+                "required": [
+                  "temporal"
+                ]
+              },
+              {
+                "properties": {
+                  "distributional": {
+                    "const": "controlled"
+                  }
+                },
+                "required": [
+                  "distributional"
+                ]
+              },
+              {
+                "properties": {
+                  "acquired": {
+                    "const": "controlled"
+                  }
+                },
+                "required": [
+                  "acquired"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "notes"
+            ],
+            "properties": {
+              "notes": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Claiming acquired contamination is controlled requires stating whether transcripts were reviewed and whether the boundary was monitored.",
+          "if": {
+            "properties": {
+              "acquired": {
+                "const": "controlled"
+              }
+            },
+            "required": [
+              "acquired"
+            ]
+          },
+          "then": {
+            "required": [
+              "transcripts_reviewed",
+              "boundary_integrity_monitored"
+            ]
+          }
+        }
+      ]
+    },
+    "regeneration": {
+      "type": "object",
+      "required": [
+        "procedure_published"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "procedure_published": {
+          "type": "boolean"
+        },
+        "procedure_url": {
+          "type": "string"
+        },
+        "artifact_only": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "$comment": "If the procedure is published, a location is required.",
+          "if": {
+            "properties": {
+              "procedure_published": {
+                "const": true
+              }
+            },
+            "required": [
+              "procedure_published"
+            ]
+          },
+          "then": {
+            "required": [
+              "procedure_url"
+            ],
+            "properties": {
+              "procedure_url": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "control_status": {
+      "type": "string",
+      "enum": [
+        "controlled",
+        "not_controlled",
+        "unknown",
+        "n/a"
+      ],
+      "description": "'unknown' is valid and expected: nobody evaluating a closed model can verify its pretraining corpus. 'not_controlled' is a real answer, not a failure."
+    },
+    "tristate": {
+      "description": "true | false | unknown | n/a. 'unknown' and 'n/a' are valid, expected answers.",
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unknown",
+            "n/a"
+          ]
+        }
+      ]
+    }
+  }
+}

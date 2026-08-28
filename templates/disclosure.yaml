@@ -1,0 +1,53 @@
+# Contamination Disclosure v1.1 — https://jangulo.com/disclosure
+# CC BY 4.0. Filled-in forms are yours; no attribution required for a completed form.
+# Validate with: templates/disclosure.schema.json
+#
+# "unknown" is a valid entry. So is "not_controlled". Declare what you don't know.
+
+disclosure_version: "1.1"
+
+benchmark:
+  name: ""
+  version: ""
+  doi: ""                     # or url:
+system_under_test: ""         # model / system id, including version
+evaluation_date: ""           # YYYY-MM-DD
+
+strata_reported:
+  reported: true              # false is an answer; make it visible
+  strata: []                  # e.g. ["disease_category_A", "..."]
+  aggregate_only: false
+  definition: ""              # what defines a stratum
+  pre_registered: false
+  scores: {}                  # optional: {stratum_name: {n: 0, score: 0.0, ci95: [0.0, 0.0]}}
+
+elicitation_budget:
+  harness: ""                 # e.g. "inspect-ai 0.3.x", "lm-eval-harness 0.4.x"
+  token_budget: ""            # per-item cap; note mean consumed if known
+  attempts_allowed: 1
+  attempt_resolution: ""      # e.g. "single", "best_of_n", "majority_vote"
+  scaffold_notes: ""          # tools, agent loop, retrieval on/off
+  decoding: ""                # temperature / top-p / reasoning effort
+  still_rising_at_max_budget: "unknown"   # true | false | unknown
+                                          # true  => the reported score is a LOWER BOUND
+
+contamination_controls:
+  # Types 1-4 are training-time: properties of the benchmark and the corpus.
+  direct: "unknown"           # controlled | not_controlled | unknown | n/a
+  derivative: "unknown"
+  temporal: "unknown"
+  distributional: "unknown"
+  # Type 5 is evaluation-time: a property of THIS run, not of the benchmark.
+  # No benchmark author can answer this for you.
+  acquired: "unknown"
+  network_access_during_eval: "unknown"   # true | false | unknown
+  environment_sanitised: "unknown"        # future commits/reflogs/solution files pruned?
+  transcripts_reviewed: "unknown"         # were trajectories checked for answer-seeking?
+  boundary_integrity_monitored: ""
+  notes: ""
+
+regeneration:
+  procedure_published: false
+  procedure_url: ""
+  artifact_only: true
+  notes: ""

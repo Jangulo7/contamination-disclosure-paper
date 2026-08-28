@@ -1,0 +1,108 @@
+perfect agreement
+  PASS  raw: got 1.000 want 1.000
+  PASS  kappa: got 1.000 want 1.000
+  PASS  AC1: got 1.000 want 1.000
+  PASS  PABAK: got 1.000 want 1.000
+
+hand-computed 2x2 (po=0.70, pe=0.50), Q fixed at 4
+  PASS  raw: got 0.700 want 0.700
+  PASS  kappa: got 0.400 want 0.400
+  PASS  AC1: got 0.641 want 0.641
+  PASS  AC2: got 0.801 want 0.801
+  PASS  PABAK: got 0.600 want 0.600
+
+the weight matrix is the one the codebook states
+  PASS  all 10 distinct weights, symmetric
+  PASS  T_v = 6.0 over Q = 4 (AC2 chance term is 1.50x AC1's, not 1x)
+
+AC2 reduces EXACTLY to AC1 under identity weights
+  PASS  identity-weighted AC2 == AC1 on 4 datasets
+
+AC2 exceeds AC1 when the disagreements are all near-misses
+  PASS  AC1=0.641 AC2=0.794 (adjacent disagreements are worth half a disagreement, not a whole one)
+
+Q is the registered scale, so an unused category cannot move AC1
+  PASS  AC1 matches the closed form with Q=4: got 0.641 want 0.641
+  PASS  PABAK also uses Q=4, not the observed count
+
+single category (a field nobody discloses)
+  PASS  raw: got 1.000 want 1.000
+  PASS  kappa undefined: got n/a want n/a
+  PASS  AC1: got 1.000 want 1.000
+  PASS  AC2: got 1.000 want 1.000
+  PASS  PABAK: got 1.000 want 1.000
+
+codes outside the registered scale are refused, not silently scored
+  PASS  gwet_ac raises on an out-of-scale code
+
+prevalence paradox: the case this study will actually hit
+  raw=0.94 kappa=-0.031 AC1=0.939
+  PASS  94% agreement, kappa near zero, AC1 intact
+
+linear-weighted kappa separates near-misses from far-misses
+  near-miss  raw=0.75 kw=0.704 unweighted=0.619
+  far-miss   raw=0.75 kw=0.467 unweighted=0.619
+  PASS  weighted separates them; raw and unweighted cannot
+
+NA is a disagreement against a numeric code, not a dropped cell
+  PASS  raw: got 0.500 want 0.500
+  PASS  NA weights: vs numeric = 1.0, vs NA = 0.0
+
+clustering widens the interval when documents cluster by organisation
+  Wilson (ignores clustering) [0.30, 0.70]
+  20 independent clusters     [0.30, 0.70]  k=20
+  2 organisation clusters     [0.00, 1.00]  k=2
+  PASS  clustered interval is the widest, as it must be
+
+the framing trigger fires on a clustered contrast spanning zero
+  raw gap +60%, clustered CI [-40%, +100%], k_A=2 k_B=10
+  PASS  a large raw gap on 2 clusters does NOT survive
+
+Wilson interval, 0/13 (a rate of zero still has an upper bound)
+  PASS  [0.000, 0.228]
+
+the bootstrap reports how often kappa was defined, never hides it
+  PASS  no interval when kappa is never defined
+  PASS  interval carries its coverage: defined on 87% of resamples
+
+the extremal sheets really do bound every resolution
+  low=0.000 high=1.000 over 16 possible resolutions
+  PASS  no resolution escapes the envelope
+
+the adjudication tally counts what it says it counts
+  PASS  disputed/to_R1/to_R2/to_neither/up/down/na
+
+the F2 sub-element record parses, and recomputes both thresholds
+  PASS  6 records + 6 malformed
+  PASS  a pinned repo + 2 sub-elements: v1.4 = 2, v1.3 = 1 — the differential error the amendment removes
+
+the confusion matrix is complete and totals the sample
+  PASS  4x4 cells, totals n, off-diagonals placed
+
+the pilot set here and in order.py are the same nine documents
+  PASS  order.py PILOT = ['A01', 'A10', 'A14', 'B01', 'B02', 'B03', 'C01', 'C16', 'C22']
+
+the v1.5 REF token parses, and refuses what it should
+  PASS  no pointers                  'REF:none'                            
+  PASS  short alias, as the manual writes it 'REF:f2'                              
+  PASS  full column name             'REF:f2_budget'                       
+  PASS  short aliases, the manual's example 'REF:f2;t3'                           
+  PASS  two fields                   'REF:f2_budget;t3_temporal'           
+  PASS  token + capped + prose       'REF:f2_budget | capped | ran out o'  
+  PASS  capped with no pointers      'REF:none | capped'                   
+  PASS  missing token                ''                                    
+  PASS  capped, but the token forgotten 'capped | ran out of time'            
+  PASS  malformed, empty body        'REF:'                                
+  PASS  not one of the eight         'REF:f2budget'                        
+  PASS  one good, one unknown        'REF:f2_budget;nope'                  
+
+blank and forgotten are not the same thing
+  PASS  coverage counts well-formed tokens only — 2/3
+
+the bounding rate raises only cells the coder flagged
+  PASS  0 with a pointer -> 1; 0 without -> 0; an existing 2 is never lowered
+
+the rate denominator drops every pilot document, and says what that costs
+  PASS  no pilot document recoded; clusters lost: ['B01', 'B02', 'B03']
+
+ALL CHECKS PASSED

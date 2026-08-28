@@ -1,1 +1,10 @@
 doc_id,coder,reason,replaced_by
+B03,R1,Es una revisión sistemática de evaluaciones LLMs,
+B03,R2,"Systematic review of 445 benchmarks, reports no numeric score for any AI system of its own. Matches the exclusion rule in the manual's Section 2: Exclude if any of: it reports no score (a position paper, a survey, a checklist, a framework document, a methodology review),it is a dataset release with no accompanying evaluation of any system, the full text is not publicly reachable without payment or registration.The paper's own reproducibility checklist confirms it: Experimental result reproducibility: If the paper reports results from any computational experiments, check if the release includes: Answer: NA. Justification: The paper does not include experiments.",
+B08,R1,"Rule: ""Exclude if any of:it is a dataset release with no accompanying evaluation of any system""",
+C01,R1,Evaluación general del estado del arte,
+C02,R1,"Rule: ""Exclude if any of: it reports no score""",
+C02,R2,"reports no score of its own - pure narrative/methodological review of Anthropic's survey and reasoning, no independent numeric benchmark or capability result for any system",
+C03,R1,"Rule: ""Exclude if any of: it reports no score""",
+C03,R2,"reports no score — describes a three-week red-teaming exercise on Anthropic's internal monitoring systems and lists vulnerabilities found, but no numeric performance result for any system on any evaluation appears anywhere on the page",
+C22,R1,"Blog sin mediciones, ni metodologias Rule: ""Exclude if any of: it reports no score""",

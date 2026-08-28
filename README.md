@@ -121,7 +121,7 @@ X appears in the compiled PDF, a number is missing.**
 Fill them from:
 
 ```bash
-python3 audit/score.py --coder audit/codes-CD.csv --coder audit/codes-IC.csv \
+python3 audit/score.py --coder audit/codes-R1.csv --coder audit/codes-R2.csv \
                        --adjudicated audit/codes-final.csv --write-exclusions --latex
 ```
 
@@ -132,15 +132,19 @@ Appendix A.
 
 ## Open items
 
-- [ ] **Fill the results macro block** in `main.tex` from `score.py` output, and
-      set `\coderName` for the camera-ready
+- [x] ~~**Fill the results macro block** in `main.tex` from `score.py` output~~ —
+      done 2026-08-28; set `\coderName` for the camera-ready
+- [ ] **Restore `examples/`** at camera-ready. Removed before submission: the two
+      worked examples carry real figshare DOIs that identify the authors. The
+      anonymised mirror carries sanitised copies with placeholder DOIs.
 - [ ] **Confirm the `huggingface2026timeline` bib entry** — title, date and URL
       were reconstructed and carry an `AUTHOR TODO`
 - [x] ~~**Sync Figure 2(a)** with `examples/*.yaml`~~ — done 2026-08-17 against
-      `examples/genoagent-standard.yaml`. It had diverged on four of eight
+      the standard worked example. It had diverged on four of eight
       entries, including claiming a published generator where the example is
       artifact-only. If the example changes, change the figure with it.
-- [ ] **Create the anonymised mirror** and replace the placeholder URL in
+- [x] ~~**Create the anonymised mirror**~~ — built 2026-08-28 in `.anon-mirror/`
+      (gitignored; push to a separate anonymous repository). Replace the placeholder URL in
       §Availability (there is a `TODO BEFORE SUBMITTING` block at that line).
       It must carry the *specification* as well as `audit/`: §4 and checklist
       items 5 and 13 claim a JSON Schema and a validator that reviewers can open

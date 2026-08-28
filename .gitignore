@@ -86,3 +86,14 @@ __pycache__/
 # each folder is addressed to one named person and is sent to them directly.
 coder-kit/
 worklist-*.md
+
+# Anonymised review mirror: built locally, pushed to a separate anonymous
+# repository. Never commit it beside the named repo.
+.anon-mirror/
+
+# Worked examples carry real figshare DOIs that identify the authors.
+# Restored at camera-ready.
+examples/
+
+__pycache__/
+.pytest_cache/

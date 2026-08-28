@@ -1,0 +1,38 @@
+Contamination Disclosure v1 and a Five-Type Taxonomy of Benchmark Contamination
+Copyright (c) 2026 Johanna Angulo
+
+This work is licensed under the Creative Commons Attribution 4.0 International
+License (CC BY 4.0).
+
+Full legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, link to the license, and
+indicate if changes were made.
+
+-------------------------------------------------------------------------------
+ATTRIBUTION CARVE-OUT
+-------------------------------------------------------------------------------
+
+Filled-in disclosure forms are yours. You do NOT need to attribute this
+repository when publishing a completed disclosure form alongside your own
+results.
+
+Attribution is asked for when you reproduce or adapt the SPECIFICATION itself --
+the field definitions, the taxonomy, or the schema.
+
+If you wish to attribute anyway, one line suffices:
+
+    Contamination Disclosure v1 - CC BY 4.0 - jangulo.com/disclosure
+
+-------------------------------------------------------------------------------
+NOTE FOR THE REPOSITORY MAINTAINER
+-------------------------------------------------------------------------------
+
+GitHub will not display a licence badge or populate the repository's licence
+field from this stub. Before or shortly after making the repository public, use
+GitHub's licence picker (Add file -> Create new file -> type "LICENSE" ->
+"Choose a license template" -> "Creative Commons Attribution 4.0 International")
+to insert the full CC BY 4.0 legal code, then re-append the ATTRIBUTION CARVE-OUT
+section above to the end of the file. Delete this note once done.
