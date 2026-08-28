@@ -93,10 +93,6 @@ coder-kit/
 !coder-kit/*/START-HERE.md
 worklist-*.md
 
-# Anonymised review mirror: built locally, pushed to a separate anonymous
-# repository. Never commit it beside the named repo.
-.anon-mirror/
-
 __pycache__/
 .pytest_cache/
 
