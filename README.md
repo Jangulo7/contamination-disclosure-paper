@@ -2,8 +2,7 @@
 
 Code and data for the paper. It carries the disclosure specification and the
 audit instrument, with the completed coding sheets, the adjudication log and the
-analysis script, so that every number the paper reports can be recomputed rather
-than taken on trust.
+analysis script. Every number the paper reports can be recomputed from them.
 
 > **Do not name the public specification repository in this file, in the
 > repository description, or in any file that reaches the anonymised mirror.**
