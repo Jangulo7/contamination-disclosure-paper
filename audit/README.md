@@ -29,6 +29,14 @@ and deposited with a timestamp on 21 August.
 | see every adjudication decision | `adjudication-log.csv` — one row per disputed cell, with the reason |
 | check the statistics before trusting them | `selftest.txt` — `score.py --selftest` output |
 
+## A note on language
+
+`codes-R1.csv` carries one coder's working notes in Spanish, released unedited as
+the registration requires of the raw sheets. The adjudicated record
+(`codes-final.csv`) and `adjudication-log.csv` are in English; `codes-final.csv`
+carries a `source_coder` column recording which sheet each evidence locator came
+from, because the adjudicated codes are not the coders' codes.
+
 ## Reproducing the reported numbers
 
 ```bash
