@@ -80,11 +80,11 @@ def test_benchmark_name_must_be_non_empty(validator, doc):
 @pytest.mark.parametrize(
     "doi,ok",
     [
-        ("10.6084/m9.figshare.32814449", True),
-        ("https://doi.org/10.6084/m9.figshare.32814449", True),
+        ("10.5555/example.benchmark.1", True),
+        ("https://doi.org/10.5555/example.benchmark.1", True),
         ("", True),
-        ("figshare.32814449", False),
-        ("doi:10.6084/m9", False),
+        ("example.benchmark.1", False),
+        ("doi:10.5555/x", False),
     ],
 )
 def test_doi_pattern(validator, doc, doi, ok):
