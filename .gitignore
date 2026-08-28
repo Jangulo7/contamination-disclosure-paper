@@ -97,9 +97,8 @@ worklist-*.md
 # repository. Never commit it beside the named repo.
 .anon-mirror/
 
-# Worked examples carry real figshare DOIs that identify the authors.
-# Restored at camera-ready.
-examples/
-
 __pycache__/
 .pytest_cache/
+
+# Author-facing working notes; 4open.science serves README.md as the landing page.
+MAINTAINER.md

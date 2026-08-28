@@ -1,0 +1,70 @@
+# Worked example — Rare-Disease Cohort Benchmark (hard)
+# Contamination Disclosure v1.1
+#
+# NOTE: scores are ILLUSTRATIVE PLACEHOLDERS, not measured results.
+# The benchmark and its contamination status are real; the DOI is a
+# placeholder while the paper is under double-blind review.
+# This file validates against templates/disclosure.schema.json.
+#
+# Read alongside cohort-standard.yaml. The standard/hard delta is the
+# Type 4 (distributional) measurement. The elicitation budget must be identical
+# across the two runs or the delta is uninterpretable.
+
+disclosure_version: "1.1"
+
+benchmark:
+  name: "Rare-Disease Cohort Benchmark (hard)"
+  version: "1.0"
+  doi: "10.5555/anonymous.benchmark.hard"
+system_under_test: "PLACEHOLDER-model-id vX.Y"
+evaluation_date: "2026-08-02"
+
+strata_reported:
+  reported: true
+  strata: ["stratum_1", "stratum_2", "stratum_3", "stratum_4"]
+  aggregate_only: false
+  definition: "Published stratification variable of the rare-disease cohort; identical to the standard variant"
+  pre_registered: true
+  scores:
+    stratum_1: { n: 412, score: 0.00, ci95: [0.00, 0.00] }
+    stratum_2: { n: 388, score: 0.00, ci95: [0.00, 0.00] }
+    stratum_3: { n: 147, score: 0.00, ci95: [0.00, 0.00] }
+    stratum_4: { n: 100, score: 0.00, ci95: [0.00, 0.00] }
+
+elicitation_budget:
+  harness: "PLACEHOLDER: inspect-ai 0.3.x @ commit abc1234 — IDENTICAL to standard run"
+  token_budget: "PLACEHOLDER: 100k per-item cap — IDENTICAL to standard run"
+  attempts_allowed: 1
+  attempt_resolution: "single"
+  scaffold_notes: "Agent loop; literature retrieval DISABLED. Configuration identical to the standard run."
+  decoding: "temperature 0"
+  still_rising_at_max_budget: "unknown"
+
+contamination_controls:
+  direct: "controlled"
+  derivative: "not_controlled"
+  temporal: "unknown"
+  distributional: "controlled"
+  acquired: "controlled"
+  network_access_during_eval: false
+  environment_sanitised: "n/a"
+  transcripts_reviewed: true
+  boundary_integrity_monitored: false
+  notes: >-
+    Distributional: phenotype-similar distractors sharing clinical presentation with
+    the true candidate, diverging only on evidence requiring integration across
+    phenotype, inheritance pattern and variant consequence. Report the standard/hard
+    delta per stratum, not only in aggregate. A Type 4 control is orthogonal to
+    Types 1-3, not cumulative: derivative contamination remains uncontrolled here
+    because the source literature is public. Acquired: retrieval and network access
+    disabled; transcripts reviewed, no answer-seeking tool calls found. This is a
+    per-run claim, not a property of the benchmark.
+
+regeneration:
+  procedure_published: false
+  procedure_url: ""
+  artifact_only: true
+  notes: >-
+    PLACEHOLDER. The distractor-sampling rule is the part of the procedure that most
+    needs publishing: the hard variant ages fastest because its distractor set
+    depends on what the literature currently supports.

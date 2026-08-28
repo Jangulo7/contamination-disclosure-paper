@@ -1,0 +1,64 @@
+# Worked example — Rare-Disease Cohort Benchmark (standard)
+# Contamination Disclosure v1.1
+#
+# NOTE: scores are ILLUSTRATIVE PLACEHOLDERS, not measured results.
+# The benchmark and its contamination status are real; the DOI is a
+# placeholder while the paper is under double-blind review.
+# This file validates against templates/disclosure.schema.json.
+
+disclosure_version: "1.1"
+
+benchmark:
+  name: "Rare-Disease Cohort Benchmark (standard)"
+  version: "1.0"
+  doi: "10.5555/anonymous.benchmark.standard"
+system_under_test: "PLACEHOLDER-model-id vX.Y"
+evaluation_date: "2026-08-02"
+
+strata_reported:
+  reported: true
+  strata: ["stratum_1", "stratum_2", "stratum_3", "stratum_4"]
+  aggregate_only: false
+  definition: "Published stratification variable of the rare-disease cohort"
+  pre_registered: true
+  scores:
+    stratum_1: { n: 412, score: 0.00, ci95: [0.00, 0.00] }
+    stratum_2: { n: 388, score: 0.00, ci95: [0.00, 0.00] }
+    stratum_3: { n: 147, score: 0.00, ci95: [0.00, 0.00] }
+    stratum_4: { n: 100, score: 0.00, ci95: [0.00, 0.00] }
+
+elicitation_budget:
+  harness: "PLACEHOLDER: inspect-ai 0.3.x @ commit abc1234"
+  token_budget: "PLACEHOLDER: 100k per-item cap"
+  attempts_allowed: 1
+  attempt_resolution: "single"
+  scaffold_notes: "Agent loop; literature retrieval DISABLED during scoring"
+  decoding: "temperature 0"
+  still_rising_at_max_budget: "unknown"
+
+contamination_controls:
+  direct: "controlled"
+  derivative: "not_controlled"
+  temporal: "unknown"
+  distributional: "not_controlled"
+  acquired: "controlled"
+  network_access_during_eval: false
+  environment_sanitised: "n/a"
+  transcripts_reviewed: true
+  boundary_integrity_monitored: false
+  notes: >-
+    Direct: scored split not published with labels; canary string embedded.
+    Derivative: all items derive from PubMed-indexed case reports, which must be
+    assumed present in any web-scale corpus; source identifiers published with the
+    dataset. Temporal: model cutoffs are self-reported and unverifiable.
+    Distributional: not controlled in this variant by design — see the hard variant
+    (10.5555/anonymous.benchmark.hard); the standard/hard delta is the Type 4 measurement.
+    Acquired: retrieval and network access disabled for the scoring run; transcripts
+    reviewed for tool calls reaching benchmark artifacts, none found. Note this is a
+    per-run claim and does not transfer to any other evaluation of this benchmark.
+
+regeneration:
+  procedure_published: false
+  procedure_url: ""
+  artifact_only: true
+  notes: "PLACEHOLDER: state the date after which scores will be treated as non-comparable."
