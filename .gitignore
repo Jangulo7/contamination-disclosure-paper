@@ -85,6 +85,12 @@ __pycache__/
 # entirely from tracked files, and operational rather than reviewer-facing —
 # each folder is addressed to one named person and is sent to them directly.
 coder-kit/
+# ...except the per-coder worklists and briefings: audit-check.py reads the
+# worklists, and the briefing is what the checklist says was released.
+!coder-kit/R1/
+!coder-kit/R2/
+!coder-kit/*/worklist-*.md
+!coder-kit/*/START-HERE.md
 worklist-*.md
 
 # Anonymised review mirror: built locally, pushed to a separate anonymous
