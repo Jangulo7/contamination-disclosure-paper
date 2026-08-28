@@ -1,9 +1,9 @@
-# Contamination Disclosure — manuscript
+# Benchmark Contamination: A Taxonomy by Defeated Mitigation — code and data
 
-**Private.** This repository holds the manuscript and the audit instrument. It is
-deliberately separate from the public specification repository, so that an
-unsubmitted draft cannot leak into a public release and so that the double-blind
-submission cannot be de-anonymised through commit history.
+Code and data for the paper. It carries the disclosure specification and the
+audit instrument, with the completed coding sheets, the adjudication log and the
+analysis script, so that every number the paper reports can be recomputed rather
+than taken on trust.
 
 > **Do not name the public specification repository in this file, in the
 > repository description, or in any file that reaches the anonymised mirror.**
