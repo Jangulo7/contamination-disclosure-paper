@@ -10,14 +10,16 @@ Released under CC BY 4.0.
 
 ## Start here
 
-**The 50 audited documents are enumerated, with a live link for each, in
-`ANNEX-DOCUMENTS.md`.** The list was closed on 12 August 2026 and is part of the
-registration. Coding ran **22–24 August 2026**, after the codebook was frozen
+**The 41 audited documents are enumerated, with a live link for each, in
+`ANNEX-DOCUMENTS.md`.** The registered frame held 50; a sample-cut rule fixed
+in `PROTOCOL.md` reduced it to 41 before any coding, leaving the cluster count
+unchanged at 27. `frame.csv` records the status of every row. The list was
+closed on 12 August 2026 and is part of the registration. Coding ran **22–24 August 2026**, after the codebook was frozen
 and deposited with a timestamp on 21 August.
 
 | If you want to … | Read |
 |---|---|
-| see the 50 documents themselves | **`ANNEX-DOCUMENTS.md`** — the complete list, with links |
+| see the 41 documents themselves | **`ANNEX-DOCUMENTS.md`** — the complete list, with links |
 | judge the coding rules | `CODEBOOK.md` — the coding manual, **v1.6**, authoritative for every rule |
 | check what was fixed before coding | `PRE-REGISTRATION.md` — the frozen design, with every amendment dated in §9 |
 | see what a coder actually received | `CODEBOOK-CODER.md` — the whole of **both** coders' briefing |

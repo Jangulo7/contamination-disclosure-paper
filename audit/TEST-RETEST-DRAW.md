@@ -20,12 +20,13 @@ to take on trust unless the output is timestamped before the data exist.
 Coded **last**, after the coder's own 32, without looking at the earlier sheet,
 saved as `codes-R1-retest.csv` / `codes-R2-retest.csv`.
 
-**Status: one coder only, not yet requested.** The registered design is one
-test-retest per coder; as run it is performed by **one**, on coder time — see
-`PRE-REGISTRATION.md`, 2026-08-24. The five documents for each coder are listed
-above because the draw is deterministic and was recorded before any main-pass
-sheet existed; only one of the two rows will be used, and which coder is recorded
-when the request is made, after that coder has delivered their 32.
+**Status: complete, `R1` only.** The registered design is one test-retest per
+coder; as run it is performed by **one**, on coder time — see
+`PRE-REGISTRATION.md`, 2026-08-24. `R1` re-coded the five documents above on
+2026-08-27, after delivering the main pass and without consulting the earlier
+sheet, saved as `codes-R1-retest.csv`. The `R2` row is listed because the draw is
+deterministic and was recorded before any main-pass sheet existed; it was not
+used, and no `codes-R2-retest.csv` exists.
 
 Neither coder has been told which documents these are, and neither will be until
 their main pass is delivered — a coder who knew which five would be re-coded

@@ -21,13 +21,23 @@ excluding references and appendices.
 ## Layout
 
 ```
-main.tex            the paper
-checklist.tex       NeurIPS paper checklist, \input at the end of main.tex
-references.bib      bibliography (verified; see below)
-main.bbl            tracked for arXiv, which does not run BibTeX
+audit/              the released audit instrument, with the completed results
+templates/          disclosure template, JSON Schema, YAML skeleton
+docs/validate.py    the validator
+tests/              validator and schema test suite (80 tests)
+TAXONOMY.md         the five types
+DISCLOSURE.md       the four fields
+LICENSE             CC BY 4.0
 neurips_2026.sty    the official style; do not edit
-audit/              the released audit instrument (see audit/PROTOCOL.md)
 ```
+
+The manuscript itself (`main.tex`, `checklist.tex`, `references.bib`,
+`main.bbl`) is **not tracked here** — it lives in the Overleaf working copy under
+`.private/`, which is gitignored, so an unsubmitted draft cannot leak. Two
+directories are also gitignored and must stay that way: `.anon-mirror/` (the
+review mirror; it must never sit beside the named repository) and `examples/`
+(the two worked examples carry real figshare DOIs that identify the authors;
+restored at camera-ready).
 
 ## The anonymity toggle
 
@@ -105,8 +115,10 @@ Both figures are TikZ, so the source is self-contained: no external image file
 travels with `main.tex`. For arXiv, upload `main.tex`, `main.bbl` and
 `neurips_2026.sty`, and switch the package option to `[preprint]`.
 
-**`main.bbl` is tracked, and is currently behind `references.bib`.** Run `bibtex`
-before trusting it; regenerate it whenever `references.bib` changes.
+**`main.bbl` lives with the manuscript, not here.** It is regenerated whenever
+`references.bib` changes; under the anonymous package option it must exclude the
+named self-citation entries, so regenerate it *after* setting the option, never
+before.
 
 ---
 
@@ -152,18 +164,24 @@ Appendix A.
       then fill in the named self-citation entry in `references.bib` (the one
       `\specref` resolves to when not anonymous)
 - [ ] **Recompile and check the page count** — the body must end on page 8. If it
-      runs over, trim in this order: §5.1 positioning (Table 2 carries it),
-      Figure 2(b) to the appendix, the elicitation paragraph in §4
+      runs over, trim in this order: the readability-versus-disclosure paragraph
+      in §5 (Table `tab:strata` carries it), then the mention-versus-complete
+      sentences, then §5.1 positioning (Table 2 carries it). Keep the
+      prevalence-versus-unreliability paragraph: it is load-bearing for the
+      reliability result.
 
 ## The audit instrument
 
 `audit/` is released with the paper and is the thing the paper's fourth
 contribution *is*. Two documents govern it:
 
-- **`audit/CODEBOOK.md`** — the coding manual, currently **v1.3**. Registered
+- **`audit/CODEBOOK.md`** — the coding manual, currently **v1.6**. Registered
   with a stated amendment procedure: change a rule, bump the version, record it
-  in the changelog at the bottom, recode the pilot under the new version.
-  Authoritative for every coding rule.
+  in the changelog at the bottom, recode the pilot under the new version. The
+  main pass was coded under v1.6; the pilot rows remain at v1.4 because the
+  registered recode was not carried out, which is recorded as a deviation in
+  `PRE-REGISTRATION.md` §9 and handled by `score.py`. Authoritative for every
+  coding rule.
 - **`audit/PROTOCOL.md`** — how to actually run it, step by step, with time
   estimates.
 
