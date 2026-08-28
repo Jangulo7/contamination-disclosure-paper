@@ -31,13 +31,10 @@ LICENSE             CC BY 4.0
 neurips_2026.sty    the official style; do not edit
 ```
 
-The manuscript itself (`main.tex`, `checklist.tex`, `references.bib`,
-`main.bbl`) is **not tracked here** — it lives in the Overleaf working copy under
-`.private/`, which is gitignored, so an unsubmitted draft cannot leak. Two
-directories are also gitignored and must stay that way: `.anon-mirror/` (the
-review mirror; it must never sit beside the named repository) and `examples/`
-(the two worked examples carry real figshare DOIs that identify the authors;
-restored at camera-ready).
+The manuscript is not tracked here. Two directories are gitignored and must stay
+that way: `.anon-mirror/`, the review mirror, which must never sit beside the
+named repository; and `examples/`, whose two worked examples carry real figshare
+DOIs that identify the authors, restored at camera-ready.
 
 ## The anonymity toggle
 

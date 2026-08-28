@@ -26,6 +26,8 @@ and deposited with a timestamp on 21 August.
 | run the study yourself | `PROTOCOL.md` — step by step, with time estimates |
 | check the sample | `SAMPLING-FRAME.md` and `frame.csv` |
 | reproduce the numbers | `score.py` (see below) |
+| see every adjudication decision | `adjudication-log.csv` — one row per disputed cell, with the reason |
+| check the statistics before trusting them | `selftest.txt` — `score.py --selftest` output |
 
 ## Reproducing the reported numbers
 
