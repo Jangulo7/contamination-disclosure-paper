@@ -31,10 +31,10 @@ LICENSE             CC BY 4.0
 neurips_2026.sty    the official style; do not edit
 ```
 
-The manuscript is not tracked here. Two directories are gitignored and must stay
-that way: `.anon-mirror/`, the review mirror, which must never sit beside the
-named repository; and `examples/`, whose two worked examples carry real figshare
-DOIs that identify the authors, restored at camera-ready.
+Two directories are gitignored and must stay that way: `.anon-mirror/`, the
+review mirror, which must never sit beside the named repository; and
+`examples/`, whose two worked examples carry real figshare DOIs that identify the
+authors, restored at camera-ready.
 
 ## The anonymity toggle
 
@@ -112,10 +112,9 @@ Both figures are TikZ, so the source is self-contained: no external image file
 travels with `main.tex`. For arXiv, upload `main.tex`, `main.bbl` and
 `neurips_2026.sty`, and switch the package option to `[preprint]`.
 
-**`main.bbl` lives with the manuscript, not here.** It is regenerated whenever
-`references.bib` changes; under the anonymous package option it must exclude the
-named self-citation entries, so regenerate it *after* setting the option, never
-before.
+**Regenerate `main.bbl` whenever `references.bib` changes.** Under the anonymous
+package option it must exclude the named self-citation entries, so regenerate it
+*after* setting the option, never before.
 
 ---
 
