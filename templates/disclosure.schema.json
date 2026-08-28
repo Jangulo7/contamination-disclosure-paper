@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://jangulo.com/disclosure/disclosure.schema.json",
+  "$id": "disclosure.schema.json",
   "title": "Contamination Disclosure v1.1",
   "description": "Schema for a Contamination Disclosure record: four fields to publish alongside a benchmark score. CC BY 4.0. 'unknown' is a valid entry throughout and is deliberately permitted by this schema.",
   "type": "object",

@@ -1,6 +1,6 @@
 # Contamination Disclosure v1.1 — the four fields
 
-**Version 1.1 · CC BY 4.0 · J. Angulo, 2026**
+**Version 1.1 · CC BY 4.0 · 2026**
 
 Four fields to publish alongside any benchmark score. None of them requires new
 research. All of them require saying more than a number.

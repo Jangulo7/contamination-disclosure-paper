@@ -1,6 +1,6 @@
 # A five-type taxonomy of benchmark contamination
 
-**Version 1.1 · CC BY 4.0 · J. Angulo, 2026**
+**Version 1.1 · CC BY 4.0 · 2026**
 
 Benchmark contamination is usually discussed as a single failure — the test items
 got into the training corpus — and mitigated with a single remedy: hold out a

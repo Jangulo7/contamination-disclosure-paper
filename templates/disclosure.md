@@ -1,5 +1,5 @@
 <!--
-Contamination Disclosure v1.1 — https://jangulo.com/disclosure
+Contamination Disclosure v1.1
 CC BY 4.0. You do NOT need to attribute this repository when publishing a
 filled-in form alongside your own results. Delete this comment block if you like.
 
@@ -9,7 +9,7 @@ Fill in what you know; declare what you don't.
 
 ## Contamination Disclosure
 
-*Contamination Disclosure v1.1 · CC BY 4.0 · jangulo.com/disclosure*
+*Contamination Disclosure v1.1 · CC BY 4.0*
 
 **Benchmark:** <name> <version> (<DOI or URL>)
 **System under test:** <model / system id, including version>
