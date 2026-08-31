@@ -1,5 +1,10 @@
 # Benchmark Contamination: A Taxonomy by Defeated Mitigation — code and data
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22182948.svg)](https://doi.org/10.5281/zenodo.22182948)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
+The disclosure specification and the audit instrument, with the completed coding sheets...
+
 The disclosure specification and the audit instrument, with the completed coding
 sheets, the adjudication log and the analysis script. Every number the paper
 reports can be recomputed from them.
