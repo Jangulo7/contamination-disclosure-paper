@@ -111,10 +111,10 @@ Start at [`audit/README.md`](audit/README.md).
 
 To cite this code and data specifically, use the Zenodo DOI: [10.5281/zenodo.22182948](https://doi.org/10.5281/zenodo.22182948).
 
-## Related work by the author
+## Related work
 
-- *Coverage, Not Faithfulness: A Monitor's Recall Can Be an Artifact of the Evaluation's Serving Configuration*, [Zenodo 22847509](https://zenodo.org/records/22847509)
-- `safety-eval-pipeline`: safety evaluation with reproducible conditions and a release gate that fails, [Zenodo 22182741](https://zenodo.org/records/22182741)
+Type 5 asks what the model could reach during evaluation. A follow-up study asks the mirror question, what the *evaluator* can see:
+[*Coverage, Not Faithfulness: A Monitor's Recall Can Be an Artifact of the Evaluation's Serving Configuration*](https://zenodo.org/records/22847509).
 
 ## Licence
 
