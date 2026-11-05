@@ -43,7 +43,7 @@ contamination_controls:
   network_access_during_eval: "unknown"   # true | false | unknown
   environment_sanitised: "unknown"        # future commits/reflogs/solution files pruned?
   transcripts_reviewed: "unknown"         # were trajectories checked for answer-seeking?
-  boundary_integrity_monitored: ""
+  boundary_integrity_monitored: "unknown"   # true | false | unknown | n/a
   notes: ""
 
 regeneration:
