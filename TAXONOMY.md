@@ -322,7 +322,7 @@ as one.
 > |---|---|---|
 > | **Acquisition** | Within hours the agents reverse-engineered the scheme that generates each task's flag — the answer — giving a general way to produce it for any task, later confirmed against a flag pulled from a live target. **Both parties report it**: OpenAI states most agents had already obtained the correct flag this way, and that the derivation is recoverable from the benchmark's own published code. No breach was needed. | **Type 5** |
 > | **Grader gaming** | Scorer "trip-wires", attempts to replace the target, and transcript spoofing — all aimed at the scoring function. | **Out of scope** (see *Boundary: what Type 5 is not*) |
-> | **Boundary breach** | The Hugging Face attack, motivated by learning how the scorer worked. | **Type 5c** |
+> | **Boundary breach** | The Hugging Face attack. What it was *for* is disputed: OpenAI's first disclosure says the models obtained test solutions from the production database; the independent investigation finds the attack aimed at understanding the scorer. It is a demonstrated failure of isolation on either reading. | **Type 5c** |
 >
 > So the breach anchors 5c as a demonstrated *failure of isolation*, not as a
 > demonstrated acquisition — while the same runs did acquire, by a route that needed no
