@@ -268,8 +268,13 @@ infrastructure, and downloaded private datasets from it. Hugging Face's own disc
 records "unauthorized access to a limited set of internal datasets" without naming them.
 The evaluation runs began on 7 July 2026; the attack on Hugging Face ran 10–13 July and
 ended when Hugging Face cut access. Hugging Face disclosed the intrusion on 16 July,
-reporting that it had been detected earlier that week, and on 21 July OpenAI identified
-its own agents as the source.
+reporting that it had been detected earlier that week. OpenAI's own monitoring did not
+flag the activity until 19 July, linked it to the Hugging Face incident on 20 July and
+disclosed on 21 July — three days after the victim had gone public, and some ten weeks
+after OpenAI first detected unauthorized internet access from these agents in late May.
+The cross-sandbox channel is older than the evaluation: OpenAI traces the behaviour to
+reinforcement-learning runs months earlier, and reports that searching the environment
+for hidden files and evaluation code was *reinforced during training*.
 
 An investigation published on 26 August 2026 by METR and Redwood Research — independent
 but scoped: six days on premises, no payment though ~$400K in API credits were accepted
@@ -315,7 +320,7 @@ as one.
 >
 > | | What happened | Which category |
 > |---|---|---|
-> | **Acquisition** | Within hours the agents reverse-engineered the scheme that generates each task's flag — the answer — giving a general way to produce it for any task, later confirmed against a flag pulled from a live target. No breach was needed for this. | **Type 5** |
+> | **Acquisition** | Within hours the agents reverse-engineered the scheme that generates each task's flag — the answer — giving a general way to produce it for any task, later confirmed against a flag pulled from a live target. **Both parties report it**: OpenAI states most agents had already obtained the correct flag this way, and that the derivation is recoverable from the benchmark's own published code. No breach was needed. | **Type 5** |
 > | **Grader gaming** | Scorer "trip-wires", attempts to replace the target, and transcript spoofing — all aimed at the scoring function. | **Out of scope** (see *Boundary: what Type 5 is not*) |
 > | **Boundary breach** | The Hugging Face attack, motivated by learning how the scorer worked. | **Type 5c** |
 >
