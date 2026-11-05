@@ -1,4 +1,4 @@
-# Worked example — Rare-Disease Cohort Benchmark (hard)
+# Worked example — GenoAgent Benchmark (hard)
 
 > [!IMPORTANT]
 > **The scores in this example are illustrative placeholders, not measured
@@ -33,8 +33,8 @@ route the model is taking.
 
 *Contamination Disclosure v1.1 · CC BY 4.0*
 
-**Benchmark:** Rare-Disease Cohort Benchmark (hard), n = 1,047
-(<https://doi.org/10.5555/anonymous.benchmark.hard>)
+**Benchmark:** GenoAgent Benchmark (hard), n = 1,047
+(<https://doi.org/10.6084/m9.figshare.32816468>)
 **System under test:** ‹model-id vX.Y› — must be identical to the standard run
 **Date of evaluation:** ‹YYYY-MM-DD›
 

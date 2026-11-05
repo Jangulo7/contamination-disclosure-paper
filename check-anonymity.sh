@@ -2,6 +2,15 @@
 # Scan the repository -- and optionally a compiled PDF -- for strings that would
 # de-anonymise a double-blind submission.
 #
+# SUPERSEDED for this repository, and kept on purpose. The paper was accepted at
+# the NeurIPS 2026 TAE workshop and the camera-ready names its authors, so the
+# repository is deliberately de-anonymised: it now carries the author list, the
+# public OSF registration, the Zenodo archive and the real benchmark DOIs in the
+# worked examples. Running this script against the current tree therefore EXITS 1,
+# and that is the correct result. It is retained so the anonymisation discipline
+# applied during review is auditable, and so it can be reused for a future
+# double-blind submission built from this tree.
+#
 #   ./check-anonymity.sh
 #   ./check-anonymity.sh .private/paper/main.pdf
 #

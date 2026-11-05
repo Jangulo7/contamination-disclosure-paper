@@ -75,6 +75,8 @@ The audit uses the Python standard library only: no network, no dependencies. Th
 
 Forty-one documents in three strata, coded independently by two coders external to the design team, against a codebook frozen before any document was opened. Agreement was computed before adjudication, and the adjudicated sheet is used only for the disclosure rates.
 
+The protocol and analysis were **registered on OSF before any coding**, on 21 August 2026, and the registration is public: [10.17605/OSF.IO/Q6W9A](https://doi.org/10.17605/OSF.IO/Q6W9A). The files below are the working copies; the registration is the frozen record they are checked against.
+
 - [`audit/PRE-REGISTRATION.md`](audit/PRE-REGISTRATION.md) fixes the design and records every deviation with a date.
 - [`audit/adjudication-log.csv`](audit/adjudication-log.csv) has one row per disputed cell, with the reason it was settled that way.
 - [`audit/CODEBOOK.md`](audit/CODEBOOK.md) (v1.6) is the authoritative coding manual. [`audit/CODEBOOK-CODER.md`](audit/CODEBOOK-CODER.md) is derived from it by `make-coder-manual.py`, with the hypotheses and statistics removed so that coders were not primed toward the result. [`audit/CODER-MANUAL-REWRITES.md`](audit/CODER-MANUAL-REWRITES.md) records every sentence the derivation changes.
