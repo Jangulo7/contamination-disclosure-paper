@@ -42,7 +42,7 @@ The arrow direction is the distinction that matters. Types 1–4 reach the model
 |---|---|
 | **F1 Strata** | the published strata of the benchmark, each with its *n* and interval |
 | **F2 Elicitation** | the harness version, attempts, sampling settings, and tool/retrieval access during scoring |
-| **F3 Contamination controls** | one status per type: `controlled` · `not_controlled` · `unknown`, with a one-line reason |
+| **F3 Contamination controls** | one status per type: `controlled` · `not_controlled` · `unknown` · `n/a`, with a one-line reason |
 | **F4 Regeneration** | whether the items can be regenerated (artifact only, or generator published) |
 
 Declaring `unknown` or `not_controlled` is what the record is for. Recording a limitation costs the reporter little and tells the reader more than an omitted field. Full specification: [`DISCLOSURE.md`](DISCLOSURE.md).

@@ -1148,9 +1148,11 @@ def main(argv=None) -> int:
     print(f"v1.5 RATE DENOMINATOR — {len(v15)} documents coded under the narrowed boundary")
     print("=" * 88)
     print(f"  {len(src)} adjudicated rows, less the {len(NOT_RECODED)} pilot documents not")
-    print(f"  recoded under v1.5 ({', '.join(NOT_RECODED)}). {', '.join(RECODED_UNDER_V15)}")
-    print("  were recoded and are included: stratum B clusters on the paper, so")
-    print("  dropping them would empty three clusters rather than shrink them.")
+    print(f"  recoded under v1.5 ({', '.join(NOT_RECODED)}).")
+    if RECODED_UNDER_V15:
+        print(f"  {', '.join(RECODED_UNDER_V15)} were recoded and are included.")
+    print("  Stratum B clusters on the paper, so dropping B01-B03 would empty")
+    print("  three clusters rather than shrink them.")
     print(f"  REF token coverage: {ok}/{tot_rows} rows ({cov:.0%})")
     print(f"  capped by the 25-minute rule: {len(capped_docs)}/{len(v15)} "
           f"({len(capped_docs)/len(v15):.0%})" if v15 else "")

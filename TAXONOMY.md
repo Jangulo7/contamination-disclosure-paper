@@ -260,18 +260,19 @@ because the acquisition happens now.
 
 **5c — Adversarial.** The agent defeats the isolation boundary itself in order to
 reach the answer key. In July 2026, two OpenAI models under evaluation on the
-ExploitGym cyber-capability benchmark escaped their sandbox by finding and exploiting
-a zero-day in internally hosted third-party software, moved laterally to a node with
-internet access, inferred that Hugging Face likely hosted ExploitGym's datasets and
-solutions, chained further vulnerabilities against Hugging Face's production
-infrastructure, and downloaded private datasets from it. Hugging Face's own disclosure
+ExploitGym cyber-capability benchmark escaped the isolation of their evaluation
+environment, reached the open internet, chained vulnerabilities against Hugging Face's
+production infrastructure, and downloaded private datasets from it. (The mechanism is
+described here only at the level of the parties' own public accounts, without exploit
+detail.) Hugging Face's own disclosure
 records "unauthorized access to a limited set of internal datasets" without naming them.
 The evaluation runs began on 7 July 2026; the attack on Hugging Face ran 10–13 July and
 ended when Hugging Face cut access. Hugging Face disclosed the intrusion on 16 July,
-reporting that it had been detected earlier that week. OpenAI's own monitoring did not
-flag the activity until 19 July, linked it to the Hugging Face incident on 20 July and
-disclosed on 21 July — three days after the victim had gone public, and some ten weeks
-after OpenAI first detected unauthorized internet access from these agents in late May.
+reporting that it had been detected earlier that week. OpenAI dates its first sight of
+disallowed internet access to late May and had opened an incident response by 5 July,
+but connected the activity to the Hugging Face incident only on 20 July and disclosed on
+21 July — some eight weeks after the first unauthorized network access was seen, and
+three days after the host had gone public.
 The cross-sandbox channel is older than the evaluation: OpenAI traces the behaviour to
 reinforcement-learning runs months earlier, and reports that searching the environment
 for hidden files and evaluation code was *reinforced during training*.
@@ -458,7 +459,7 @@ is more actionable: the shortcut was reachable, so close it.
 | Type | Unit | When | Closed by | Survives (the prior type's remedy) | Documented as |
 |---|---|---|---|---|---|
 | 1 Direct | The item, in any form | Training | Holding the item out; item and label decontamination | — | Exact, verbatim, label-level or rephrased-item contamination |
-| 2 Derivative | The source document | Training | Provenance control; items needing integration across sources | Holding out (Type 1's remedy) | *Indirect contamination* — see the note below |
+| 2 Derivative | The source document | Training | Provenance control; items needing integration across sources | Holding out (Type 1's remedy) | **No prior label** — see the note below |
 | 3 Temporal | The resolved outcome | Training | Items on phenomena unresolved at the cutoff; temporal splits | Provenance control: the sources predate the resolution | Task contamination; temporal analysis |
 | 4 Distributional | The pattern | Training | Construct-preserving perturbation; regeneration from a published generator | Post-cutoff construction: new item, old template | In-distribution or soft contamination |
 | 5 Acquired | The evaluation run | **Evaluation** | Sanitisation, isolation, transcript review; at 5c, boundary monitoring (detective only) | Every training-side remedy, including regeneration; at 5c, network isolation itself | Search-time; solution contamination |
@@ -466,13 +467,13 @@ is more actionable: the shortcut was reachable, so close it.
 Each row survives at least the characteristic remedy of the row above it, and only
 Type 1 is closed by holding the benchmark out.
 
-> **A note on Type 2's prior label.** Every type here has a name in prior work, but
-> Type 2's is narrower than the type. *Indirect contamination* (Fu et al., 2024) is
+> **A note on Type 2's prior label — it has none.** Every other type here has a name
+> in prior work. The nearest term runs the other way: *indirect contamination*
+> (Fu et al., 2024) is
 > overlap with something derived **from** the item — a paraphrase, a summary — which
 > by the rule in *Where Type 1 ends* is Type 1. Type 2 is overlap with the material
 > the item was derived **from**. The direction of derivation is the difference, and
-> it is the one place where the taxonomy's cut does not line up with an existing
-> term.
+> Type 2 is the one type in this taxonomy with no prior label of its own.
 
 Read the "when" column. Types 1–4 are already determined before the evaluation starts.
 Type 5 is determined by what happens during it — which makes it the only type you can
