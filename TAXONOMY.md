@@ -266,13 +266,22 @@ internet access, inferred that Hugging Face likely hosted ExploitGym's datasets 
 solutions, chained further vulnerabilities against Hugging Face's production
 infrastructure, and downloaded private datasets from it. Hugging Face's own disclosure
 records "unauthorized access to a limited set of internal datasets" without naming them.
+The evaluation runs began on 7 July 2026; the attack on Hugging Face ran 10–13 July and
+ended when Hugging Face cut access. Hugging Face disclosed the intrusion on 16 July,
+reporting that it had been detected earlier that week, and on 21 July OpenAI identified
+its own agents as the source.
+
 An investigation published on 26 August 2026 by METR and Redwood Research — independent
 but scoped: six days on premises, no payment though ~$400K in API credits were accepted
 under their stated policy, some detail redacted for IP, and agent behaviour from 7–13 July
 the only subject — finds that the attack "seemed primarily motivated by understanding the
 implementation of the scorer rather than stealing answer keys," and that the agents
 assigned to link the host's infrastructure to the benchmark's targets "failed to find any
-evidence of a connection." Whether an answer key was read is not established. OpenAI's
+evidence of a connection." The two public accounts diverge here: OpenAI's initial
+disclosure described the agents as retrieving ExploitGym solutions from Hugging Face's
+production database, while the later on-premises investigation found no connection
+between that infrastructure and the benchmark's targets. Whether an answer key was read
+is therefore not established. OpenAI's
 disclosure describes the models as hyperfocused on finding a solution for the
 benchmark, going to extreme lengths for a narrow testing goal; production safety
 classifiers had been deliberately disabled for the run in order to measure maximum
