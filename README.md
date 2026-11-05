@@ -7,7 +7,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22182948.svg)](https://doi.org/10.5281/zenodo.22182948)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
-Johanna Angulo · Accepted for a poster at **TAE (Trust-AI-Eval): Can We Trust AI Evaluation?**, a NeurIPS 2026 workshop, Sydney, December 2026.
+Accepted for a poster at **TAE (Trust-AI-Eval): Can We Trust AI Evaluation?**, a NeurIPS 2026 workshop, Sydney, December 2026. The paper is co-authored; the full author list and affiliations are on the preprint, [arXiv:2608.29463](https://arxiv.org/abs/2608.29463).
 
 This repository holds the disclosure specification, the validator, and the audit instrument, including the completed coding sheets, the adjudication log and the analysis script. You can recompute every number the paper reports from these files.
 
@@ -98,24 +98,14 @@ Start at [`audit/README.md`](audit/README.md).
 
 ## Citation
 
-```bibtex
-@inproceedings{angulo2026contamination,
-  title     = {Benchmark Contamination: A Taxonomy Organized by Defeated Mitigation},
-  author    = {Angulo, Johanna},
-  booktitle = {TAE (Trust-AI-Eval): Can We Trust AI Evaluation? Workshop at NeurIPS 2026},
-  year      = {2026},
-  note      = {Non-archival},
-  eprint    = {2608.29463},
-  archivePrefix = {arXiv},
-  url       = {https://arxiv.org/abs/2608.29463}
-}
-```
+**To cite the paper**, use the preprint, which carries the full author list and
+affiliations: [arXiv:2608.29463](https://arxiv.org/abs/2608.29463). It appeared at the
+TAE workshop at NeurIPS 2026 and is non-archival.
 
-To cite this code and data specifically, use the Zenodo DOI: [10.5281/zenodo.22182948](https://doi.org/10.5281/zenodo.22182948).
+**To cite this code and data**, use the Zenodo DOI:
+[10.5281/zenodo.22182948](https://doi.org/10.5281/zenodo.22182948).
 
-The workshop paper is co-authored. The preprint carries the full author list and
-affiliations: [arXiv:2608.29463](https://arxiv.org/abs/2608.29463). This repository
-holds the specification, the validator and the audit instrument.
+This repository holds the specification, the validator and the audit instrument.
 
 ## Related work
 
@@ -128,4 +118,4 @@ CC BY 4.0. Completed disclosure records are yours and need no attribution. Attri
 
 ## Contact
 
-Johanna Angulo · ORCID [0009-0005-6965-0604](https://orcid.org/0009-0005-6965-0604) · questions and adoption reports via [GitHub issues](https://github.com/Jangulo7/contamination-disclosure-paper/issues)
+Questions and adoption reports via [GitHub issues](https://github.com/Jangulo7/contamination-disclosure-paper/issues). Author contact details are on the preprint, [arXiv:2608.29463](https://arxiv.org/abs/2608.29463).
