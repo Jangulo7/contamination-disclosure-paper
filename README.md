@@ -4,7 +4,7 @@
 
 [![Accepted at TAE @ NeurIPS 2026](https://img.shields.io/badge/NeurIPS%202026-TAE%20Workshop%20·%20Poster-0E6E78.svg)](https://openreview.net/forum?id=KF6ghXBmSP)
 [![arXiv](https://img.shields.io/badge/arXiv-2608.29463-b31b1b.svg)](https://arxiv.org/abs/2608.29463)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22182948.svg)](https://doi.org/10.5281/zenodo.22182948)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22182947.svg)](https://doi.org/10.5281/zenodo.22182947)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 Accepted for a poster at **TAE (Trust-AI-Eval): Can We Trust AI Evaluation?**, a NeurIPS 2026 workshop, Sydney, December 2026. The paper is co-authored; the full author list and affiliations are on the preprint, [arXiv:2608.29463](https://arxiv.org/abs/2608.29463).
@@ -103,7 +103,7 @@ affiliations: [arXiv:2608.29463](https://arxiv.org/abs/2608.29463). It appeared 
 TAE workshop at NeurIPS 2026 and is non-archival.
 
 **To cite this code and data**, use the Zenodo DOI:
-[10.5281/zenodo.22182948](https://doi.org/10.5281/zenodo.22182948).
+[10.5281/zenodo.22182947](https://doi.org/10.5281/zenodo.22182947).
 
 This repository holds the specification, the validator and the audit instrument.
 

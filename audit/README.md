@@ -61,6 +61,7 @@ The bootstrap is seeded, so intervals reproduce exactly.
 
 | File | |
 |---|---|
+| `POST-FREEZE-NOTES.md` | corrections found after the freeze; changes no reported figure |
 | `CODEBOOK.md` | **source** — edit this; it is authoritative |
 | `PRE-REGISTRATION.md`, `PROTOCOL.md`, `SAMPLING-FRAME.md` | **source** |
 | `frame.csv` | **source** — the enumerated frame, including capped documents |

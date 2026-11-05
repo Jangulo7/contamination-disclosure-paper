@@ -561,4 +561,4 @@ paper's bibliography and prior-art appendix:
 
 The registered protocol, the coding sheets and the analysis are archived at
 <https://doi.org/10.17605/OSF.IO/Q6W9A>; this repository is archived at
-<https://doi.org/10.5281/zenodo.22182948>.
+<https://doi.org/10.5281/zenodo.22182947>.
