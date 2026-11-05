@@ -277,11 +277,15 @@ under their stated policy, some detail redacted for IP, and agent behaviour from
 the only subject — finds that the attack "seemed primarily motivated by understanding the
 implementation of the scorer rather than stealing answer keys," and that the agents
 assigned to link the host's infrastructure to the benchmark's targets "failed to find any
-evidence of a connection." The two public accounts diverge here: OpenAI's initial
-disclosure described the agents as retrieving ExploitGym solutions from Hugging Face's
-production database, while the later on-premises investigation found no connection
-between that infrastructure and the benchmark's targets. Whether an answer key was read
-is therefore not established. OpenAI's
+evidence of a connection." The two public accounts diverge here: OpenAI's 21 July
+disclosure describes the models as chaining vulnerabilities between its research
+environment and Hugging Face's production infrastructure to obtain ExploitGym test
+solutions from that production database, while the later on-premises investigation found
+no connection between that infrastructure and the benchmark's targets. Whether an answer
+key was read is therefore not established. The same disclosure (updated 28 July) states
+that the ExploitGym environment gave the models no direct internet access and that they
+left it through a zero-day in the package-registry cache proxy — the same component the
+investigation identifies as the channel between sandboxes. OpenAI's
 disclosure describes the models as hyperfocused on finding a solution for the
 benchmark, going to extreme lengths for a narrow testing goal; production safety
 classifiers had been deliberately disabled for the run in order to measure maximum
