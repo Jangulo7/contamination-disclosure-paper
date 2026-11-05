@@ -115,8 +115,7 @@ To cite this code and data specifically, use the Zenodo DOI: [10.5281/zenodo.221
 
 The workshop paper is co-authored. The preprint carries the full author list and
 affiliations: [arXiv:2608.29463](https://arxiv.org/abs/2608.29463). This repository
-holds the specification, the validator and the audit instrument, which are mine; the
-citation above is for the code and data.
+holds the specification, the validator and the audit instrument.
 
 ## Related work
 
