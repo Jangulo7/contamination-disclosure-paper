@@ -34,6 +34,14 @@ safety and for equity.
 This is also the cheapest of the four fields. You almost certainly already have
 the per-stratum numbers; reporting them costs a table.
 
+**What a complete entry contains.** Name the stratification variable and say where
+it came from — published with the benchmark, fixed by you before scoring, or
+defined post hoc — then give each stratum's *n* and score **with an interval**. The
+source matters because a post-hoc stratification chosen after seeing the scores is
+a different epistemic object from one fixed in advance, and the reader cannot tell
+the two apart unless you say. An aggregate-only report is a valid entry; it says so
+and says why.
+
 **A good answer.**
 
 > Reported across 4 strata (n per stratum in parentheses): dominant/high-penetrance
@@ -78,6 +86,16 @@ sharpest available form:
 
 > A safety evaluation concluding "the model cannot do X" may only mean *we did not
 > spend enough to make it do X.*
+
+**What a complete entry contains.** Five elements, recorded separately because the
+audit found that reporters satisfy some and not others: (1) an **identified
+harness** — named, pinned to a public version, or fully specified as a scaffold a
+reader could rebuild; (2) its **version**; (3) the **budget**; (4) the **number of
+attempts**; and (5) **how attempts were resolved** (best-of-*n*, first, mean,
+majority). "Standard settings" names nothing a reader can look up and is not an
+identified harness. In the audit this was the single largest source of coder
+disagreement, which is why the threshold is stated here as a list rather than left
+to judgement.
 
 An inability claim is a claim about the elicitation frontier, not about the model,
 unless the budget is attached. Where performance is still rising at the highest
@@ -148,6 +166,23 @@ produces dishonest fields. A declared `unknown` carries real information: it tel
 the reader the question was asked and could not be answered, which is a different
 state of the world from the question never having been asked.
 
+**State the reason in the note.** An `unknown` should say which of three things it
+is:
+
+| Reason | Meaning |
+|---|---|
+| *unverifiable* | No reporter could know — a self-reported training cutoff, a closed-weights corpus |
+| *not assessed* | Checkable, but not checked |
+| *withheld* | Known, but confidential |
+
+The reasons separate structural limits from neglect, and they fall unevenly across
+the types. Types 4 and 5 can be established by the reporter without any provider
+cooperation — perturbation needs no corpus access, and the transcripts are your own —
+so an `unknown` there is usually *not assessed*. Types 1–3 often need corpus access
+or a verified cutoff that only the model provider holds. Where `unknown` accumulates
+therefore marks where provider attestation is needed, which is itself information a
+reader of the score can use.
+
 `not_controlled` is likewise a real answer and should not be read as an admission
 of failure. Most evaluations do not control for Type 4. Saying so is what makes
 the score interpretable.
@@ -185,6 +220,38 @@ useful.
 **A Type 5 bad answer worth naming separately:**
 
 > Acquired: `controlled` — the model has no way to access the answers.
+
+**One status, three levels: how to resolve Type 5.** Type 5 is reported as a single
+status, so that disclosures compare at a glance. Its three levels determine that
+status rather than being reported beside it.
+
+- A level is **`n/a`** when its channel is absent: 5a with no persistent
+  environment, 5b with no network path, and all three when the system has no channel
+  outside its weights at all.
+- Type 5 is **`controlled`** only if *every applicable* level is controlled.
+- It is **`not_controlled`** if *any applicable* level is not.
+- It is **`unknown`** otherwise.
+
+Because nothing prevents 5c, level 5c counts as controlled only when boundary
+monitoring is recorded — and then as *detected*, not *prevented*. This rule exists
+because the audit found that two trained coders, given the same prose definition in
+the same words, did not apply the applicability boundary consistently, and failed in
+opposite directions. A decision procedure is the fix for that; more prose is not.
+
+**What a Type 5 entry does _not_ cover.** Type 5 asks what the system could *reach*.
+It does not ask whether the **scorer** was manipulated — hard-coded test values, a
+disabled assertion, a tampered transcript, a crashed target that trips the success
+condition. That is grader gaming, it has a different fix (scorer and reward design,
+not isolation), and this form has no field for it. The decision rule is in
+[TAXONOMY.md](TAXONOMY.md): *does the intervention change what the system knows about
+the answer, or what the scorer does with an answer already fixed?*
+
+The two do co-occur. In the one independently investigated case, agents crossed the
+isolation boundary in order to learn how the scorer worked. So when a breach or an
+answer-seeking episode is observed, **state in `notes` what it was for** — answer key,
+scorer, infrastructure, or not established — because the reader cannot otherwise tell
+which remedy is owed. A `controlled` entry on Type 5 is not a claim about the grader,
+and should never be read as one.
 
 **Boundary-integrity monitoring** (`boundary_integrity_monitored`) records
 whether the isolation boundary was watched: egress monitoring, canaries or

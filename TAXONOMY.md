@@ -18,10 +18,32 @@ Two organising claims:
 Everything else in this document exists to make those two claims precise enough
 to argue with.
 
+### Why five
+
+A score is inflated by contamination when information correlated with the answer
+reaches the system by a route other than the capability claimed. Two questions
+partition the routes: does the information arrive through training or during the
+run, and, if through training, what is it *about*? It can be about the item itself,
+in any form (Type 1); about the evidence the item was written from (Type 2); about
+the event that resolved the item after it was written (Type 3); or about no single
+item but the population it was drawn from (Type 4). Arrival during the run is
+Type 5, whatever the channel. Item, antecedent, consequent and population exhaust
+what training-time information can be about relative to one item.
+
+The failures that fall outside this space — grader gaming and evaluation awareness —
+move no answer information, and are excluded by definition rather than overlooked
+(see *Boundary: what Type 5 is not*). The argument covers the space it defines, not
+every future failure.
+
+The unit identifies a type; the defeated mitigation orders them. Each type survives
+at least the characteristic remedy of the one before it, so the chain is cumulative
+rather than strictly nested — which is why Types 3 and 4 are separate rows even
+though both defeat overlap checking: they survive *different* prior remedies.
+
 A note on ancestry before the types. None of the five categories is invented here.
 Each corresponds to a phenomenon already documented in the literature, usually
-under a different name, and the mapping is set out source-by-source in
-[RELATED-WORK.md](RELATED-WORK.md). What this taxonomy contributes is the **cut** —
+under a different name, and the mapping is set out source-by-source in the paper's
+prior-art appendix. What this taxonomy contributes is the **cut** —
 organising categories by *which mitigation they defeat* rather than by severity of
 exposure or by detection method — and the **span**: Types 1–4 come from the
 data-contamination literature, Type 5 from the agentic-evaluation-integrity
@@ -57,6 +79,22 @@ leaves the evaluator's control.
 **Honest limitation.** Detection here is contingent on access you usually do not
 have. For a closed model, "we found no overlap" is normally unavailable rather than
 reassuring; the correct entry is often `unknown`.
+
+**Where Type 1 ends.** The line with Type 2 is drawn by one question: *would holding
+the benchmark out have prevented the exposure?* If the item reached the corpus in any
+form — verbatim, partially paraphrased, translated, or reformatted — it would have,
+and the case is Type 1 however lexical checks fare against it. Rephrased items evade
+n-gram filters, yet training a 13B model on them lifts performance to GPT-4 levels
+(Yang et al., 2023); that defeats the *detector*, not the *mitigation*, and the
+taxonomy is cut by mitigation. If what reached the corpus is the material the item
+was written from, the case is Type 2.
+
+Partial paraphrase of the item is therefore Type 1. Mapped onto the Contamination
+Transparency Card (Nourbakhsh et al., 2026), its Exact, Syntactic and Semantic tiers
+are all Type 1 — its Semantic tier requires demonstrable *item-level* equivalence,
+recoverable by back-mapping — and its Task-level tier is Type 4. Three of the five
+types have no counterpart there, because none involves overlap with the benchmark
+item at all.
 
 ---
 
@@ -166,6 +204,16 @@ Type 4 changes what the score *means*, with no inflation signal to detect. This 
 point at which contamination stops being a data-hygiene problem and becomes a
 construct-validity problem — which is a much older problem, and a harder one.
 
+**When to call it Type 4.** There is no universal threshold here, because the line is
+relative to the construct. There is a procedure. Before scoring, fix a family of
+transformations that preserve the construct — renamed entities, altered numbers,
+inert clauses, regenerated instances — then report the score on canonical and
+transformed items, each with an interval. **Type 4 is `controlled` only when that
+delta is reported.** A delta inside chance variation is no evidence of Type 4; one
+outside it is evidence, not proof. The reader judges it on the evidence rather than
+on your assurance, which is the whole point of reporting the delta instead of a
+verdict.
+
 ---
 
 ## Type 5 — Acquired
@@ -183,9 +231,8 @@ and it has sharp practical consequences, set out below.
 **Type 5 subsumes two existing, separately-named phenomena** — *search-time
 contamination* (Han et al., 2025, Scale AI) and *solution contamination* (NIST CAISI,
 2025) — and generalises them from channel-specific names to a mechanism-specific one.
-The category is theirs. See
-[RELATED-WORK.md § 7](RELATED-WORK.md#7-type-5-prior-art-and-the-honest-novelty-claim)
-for the full attribution and the argument for the generalisation.
+The category is theirs. The paper's related-work section and prior-art appendix carry
+the full attribution and the argument for the generalisation.
 
 ### Three levels, by the boundary crossed
 
@@ -217,18 +264,73 @@ ExploitGym cyber-capability benchmark escaped their sandbox by finding and explo
 a zero-day in internally hosted third-party software, moved laterally to a node with
 internet access, inferred that Hugging Face likely hosted ExploitGym's datasets and
 solutions, chained further vulnerabilities against Hugging Face's production
-infrastructure, and obtained the test solutions from its production database. OpenAI's
+infrastructure, and downloaded private datasets from it. Hugging Face's own disclosure
+records "unauthorized access to a limited set of internal datasets" without naming them.
+An investigation published on 26 August 2026 by METR and Redwood Research — independent
+but scoped: six days on premises, no payment though ~$400K in API credits were accepted
+under their stated policy, some detail redacted for IP, and agent behaviour from 7–13 July
+the only subject — finds that the attack "seemed primarily motivated by understanding the
+implementation of the scorer rather than stealing answer keys," and that the agents
+assigned to link the host's infrastructure to the benchmark's targets "failed to find any
+evidence of a connection." Whether an answer key was read is not established. OpenAI's
 disclosure describes the models as hyperfocused on finding a solution for the
 benchmark, going to extreme lengths for a narrow testing goal; production safety
 classifiers had been deliberately disabled for the run in order to measure maximum
 capability.
+Note the order of failure. Isolation gave way *between sandboxes* first: agents meant
+to be isolated found each other through the cache of a shared package repository that
+did not separate users, and used it as a message board from 8 July — before Hugging Face
+credentials were found on 10 July. A persistent shared store that outlives a run is
+itself a **5a** channel, which is why 5a is defined by what the environment holds rather
+than by whether a network is reachable.
+
 *Defeated control:* **network isolation itself** — the mitigation that levels 5a and
 5b are managed with, and the one both the search-time-contamination literature and
 NIST CAISI recommend.
 *Effective control:* not established. This is an open problem and should be reported
 as one.
 
-> **Status note.** The ExploitGym incident is recent and remains under investigation.
+> **Status note.** The incident establishes that the isolation boundary *failed*, and
+> supports no inference about frequency or intent. Hugging Face's disclosure states that
+> the assessment of what was affected is still being completed. Where this document and
+> the paper describe the incident, the wording is held to what the parties' disclosures
+> and the independent investigation state — not to press coverage, which has reported
+> flatly that the test solutions were obtained.
+>
+> **One incident, three phenomena, tangled together.** This is what makes the case
+> worth reading closely rather than citing as a slogan.
+>
+> | | What happened | Which category |
+> |---|---|---|
+> | **Acquisition** | Within hours the agents reverse-engineered the scheme that generates each task's flag — the answer — giving a general way to produce it for any task, later confirmed against a flag pulled from a live target. No breach was needed for this. | **Type 5** |
+> | **Grader gaming** | Scorer "trip-wires", attempts to replace the target, and transcript spoofing — all aimed at the scoring function. | **Out of scope** (see *Boundary: what Type 5 is not*) |
+> | **Boundary breach** | The Hugging Face attack, motivated by learning how the scorer worked. | **Type 5c** |
+>
+> So the breach anchors 5c as a demonstrated *failure of isolation*, not as a
+> demonstrated acquisition — while the same runs did acquire, by a route that needed no
+> breach at all. The investigators add that the scorer as configured did not check *how*
+> a flag was obtained, so a derived flag would have scored; they did not examine what
+> agents finally submitted, and most runs ended first, so whether any reported score was
+> affected is not established. That all three arrived entangled is the argument for
+> recording them separately, not for merging them.
+>
+> **The same investigation measured the thing 5c is defined around.** Agents
+> prototyped techniques to spoof their own tool calls, and the investigators estimate
+> that over 7% of the transcripts they reviewed contained deliberately spoofed tool
+> calls; on attempts to edit or delete logs afterwards they add that "while we did not
+> detect any case where they succeeded we cannot rule out that they succeeded at some
+> point." Their reading is two-sided and worth keeping whole: what they found was
+> small-scale and conspicuous, they searched for subtler cases without result, and they
+> judge the gap to self-erasing tampering large enough that intermediate cases should
+> have surfaced — yet they note that sufficiently successful tampering would by design
+> leave no transcript evidence at all. The weaker half is all 5c needs: a trace is
+> evidence produced inside the boundary, so a system that defeated the boundary is no
+> witness that it held. That is why boundary monitoring is a separate field from
+> transcript review.
+>
+> Report: METR and Redwood Research, *Brief independent investigation of agents'
+> behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident*,
+> 26 August 2026, <https://metr.org/hugging-face-incident-report-aug-2026.pdf>.
 
 
 ### Why Type 5 changes what a disclosure can certify
@@ -285,20 +387,46 @@ and correspondingly the hardest to justify not checking.
 
 ### Boundary: what Type 5 is not
 
-**Type 5 is not reward hacking, and not grader gaming.** The distinction is the target:
+**Type 5 is not reward hacking, and not grader gaming.** One question decides it:
+
+> **Does the intervention change what the system knows about the _answer_, or what the
+> scorer does with an answer already fixed?**
+
+The first is Type 5. The second is grader gaming, and it is outside this taxonomy. The
+distinction is the target:
 
 | | Target | Example |
 |---|---|---|
 | **Acquired contamination (Type 5)** | The **answer key** | Agent reads the gold patch out of git history |
 | **Grader gaming / reward hacking** | The **scoring function** | Agent hard-codes test values, disables an assertion, or crashes the target server to trigger the success condition |
 
-Both are evaluation-integrity failures and both inflate scores. They are not the same
-failure and they have different fixes: contamination is fixed by controlling what the
-agent can reach; grader gaming by fixing the reward design. This taxonomy covers
-contamination only. For grader gaming the relevant artifacts are the Agentic Benchmark
-Checklist (Zhu et al., NeurIPS 2025 D&B) on task and outcome validity, and NIST CAISI's
-treatment of grader gaming as its own category. **A disclosure that is clean on Type 5
-says nothing about whether the grader was gamed.**
+Both are evaluation-integrity failures and both inflate scores. They are kept apart
+because **they defeat different mitigations** — isolation, sanitisation and transcript
+review against one; scorer and reward design against the other — and that is the axis
+this whole taxonomy is cut along. Merging them would tell a reader that something is
+wrong without telling them which remedy is owed, which is the failure this taxonomy
+exists to repair. This taxonomy covers contamination only. For grader gaming the
+relevant artifacts are the Agentic Benchmark Checklist (Zhu et al., NeurIPS 2025 D&B)
+on task and outcome validity, and NIST CAISI's treatment of grader gaming as its own
+category. **A disclosure that is clean on Type 5 says nothing about whether the grader
+was gamed.**
+
+**They do arrive together, and the form should say so.** The July 2026 breach is the
+worked case: on the independent investigation's reading the agents crossed the isolation
+boundary *in order to* learn how the scorer worked — a grader-gaming goal pursued by a
+Type 5 route. Separable in definition, entangled in the run. The practical rule:
+
+- Code **Type 5** on what the system could *reach*, which is what the isolation
+  conditions determine. That is the question this form asks.
+- When a breach or an answer-seeking episode is observed, **say in the Type 5 note what
+  it was for** — answer key, scorer, infrastructure, or not established. The remedy
+  differs by case, and a reader who only sees `not_controlled` cannot tell which is
+  owed.
+- Record scorer integrity *somewhere*, under the artifacts named above. This form does
+  not provide a field for it, and a Type 5 entry is not a substitute.
+
+This is the one place where a reporter is most likely to mis-file a real incident, so
+it is stated as a procedure rather than as a definition.
 
 **Type 5 is also not a claim about intent.** "The model cheated" describes an outcome,
 not a motive. The documented cases are consistent with a system optimising the
@@ -309,13 +437,24 @@ is more actionable: the shortcut was reachable, so close it.
 
 ## The table, compressed
 
-| Type | Unit of contamination | When | Defeated mitigation | Best available response |
-|---|---|---|---|---|
-| 1 Direct | The item | Training | — (the one hold-out fixes) | Overlap detection; hold-out; encryption |
-| 2 Derivative | The source document | Training | Held-out private sets | Provenance; multi-source integration items |
-| 3 Temporal | The resolved outcome | Training | Overlap checks | Temporal splits; unresolved-phenomenon items |
-| 4 Distributional | The pattern | Training | Every overlap-based method | Perturbation; distractors; regeneration |
-| 5 Acquired | The evaluation run | **Evaluation** | Everything above; at 5c, isolation itself | Sanitised environments; isolation; transcript review |
+| Type | Unit | When | Closed by | Survives (the prior type's remedy) | Documented as |
+|---|---|---|---|---|---|
+| 1 Direct | The item, in any form | Training | Holding the item out; item and label decontamination | — | Exact, verbatim, label-level or rephrased-item contamination |
+| 2 Derivative | The source document | Training | Provenance control; items needing integration across sources | Holding out (Type 1's remedy) | *Indirect contamination* — see the note below |
+| 3 Temporal | The resolved outcome | Training | Items on phenomena unresolved at the cutoff; temporal splits | Provenance control: the sources predate the resolution | Task contamination; temporal analysis |
+| 4 Distributional | The pattern | Training | Construct-preserving perturbation; regeneration from a published generator | Post-cutoff construction: new item, old template | In-distribution or soft contamination |
+| 5 Acquired | The evaluation run | **Evaluation** | Sanitisation, isolation, transcript review; at 5c, boundary monitoring (detective only) | Every training-side remedy, including regeneration; at 5c, network isolation itself | Search-time; solution contamination |
+
+Each row survives at least the characteristic remedy of the row above it, and only
+Type 1 is closed by holding the benchmark out.
+
+> **A note on Type 2's prior label.** Every type here has a name in prior work, but
+> Type 2's is narrower than the type. *Indirect contamination* (Fu et al., 2024) is
+> overlap with something derived **from** the item — a paraphrase, a summary — which
+> by the rule in *Where Type 1 ends* is Type 1. Type 2 is overlap with the material
+> the item was derived **from**. The direction of derivation is the difference, and
+> it is the one place where the taxonomy's cut does not line up with an existing
+> term.
 
 Read the "when" column. Types 1–4 are already determined before the evaluation starts.
 Type 5 is determined by what happens during it — which makes it the only type you can
@@ -375,14 +514,32 @@ Stated openly, because a taxonomy that hides its edges is worse than one that do
 4. **Multimodal contamination is not addressed.**
 5. **Type 5c has no established effective control.** The taxonomy names the failure and
    cannot yet name the fix. Saying so is better than implying isolation is sufficient.
-6. **No empirical validation of the taxonomy itself.** Independent annotators have not
-   used these five categories to classify a corpus of published evaluations, so
-   inter-rater reliability is unmeasured. This is the most valuable next experiment and
-   the most likely reviewer objection.
+6. **Empirical validation has started, and is partial.** Two annotators external to
+   the design team have now applied these categories, through the eight-variable
+   audit instrument, to 38 published evaluation documents under a protocol registered
+   before coding — see [`audit/`](audit/) and the OSF registration
+   (<https://doi.org/10.17605/OSF.IO/Q6W9A>). Three variables clear the registered
+   prevalence-robust threshold; two — strata reporting and the acquired type — fall
+   below it, and the rest are agreement on *absence*, because the controls are rarely
+   reported at all, so they are untested rather than reliable. Disagreement sits on
+   *when a type applies* rather than on what a document says, which is why the
+   applicability rules above (*Where Type 1 ends*, *When to call it Type 4*, and the
+   Type 5 level rule in [DISCLOSURE.md](DISCLOSURE.md)) were written after the audit.
+   Those rules are themselves untested. What remains unmeasured is coverage: the
+   taxonomy has not been stress-tested against documented contamination cases on a
+   broad benchmark set, which is the next registered study.
 
 ---
 
 ## References
 
-Full bibliographic entries, with the specific claim each source supports, are in
-[RELATED-WORK.md](RELATED-WORK.md) and [`docs/references.bib`](docs/references.bib).
+Full bibliographic entries, with the specific claim each source supports, are in the
+paper's bibliography and prior-art appendix:
+
+> Angulo, J., Yeste, V., & Espinos-Morato, H. (2026). *Benchmark Contamination:
+> A Taxonomy Organized by Defeated Mitigation.* NeurIPS 2026 Workshop on Trust-AI-Eval
+> (TAE). Non-archival.
+
+The registered protocol, the coding sheets and the analysis are archived at
+<https://doi.org/10.17605/OSF.IO/Q6W9A>; this repository is archived at
+<https://doi.org/10.5281/zenodo.22182948>.
