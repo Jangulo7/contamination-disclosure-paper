@@ -1,4 +1,4 @@
-# Worked example — GenoAgent Benchmark (hard)
+# Worked example — Phenotype-Similar Distractor Variant (hard)
 # Contamination Disclosure v1.1
 #
 # NOTE: scores are ILLUSTRATIVE PLACEHOLDERS, not measured results.
@@ -13,9 +13,9 @@
 disclosure_version: "1.1"
 
 benchmark:
-  name: "GenoAgent Benchmark (hard)"
-  version: "1.0"
-  doi: "10.6084/m9.figshare.32816468"
+  name: "A Phenotype-Similar Distractor Variant of the Stratified Rare-Disease Cohort for Literature-Based Causal Gene Prioritisation (n=1,047)"
+  version: "v10"
+  doi: "10.6084/m9.figshare.32816468.v10"
 system_under_test: "PLACEHOLDER-model-id vX.Y"
 evaluation_date: "2026-08-02"
 

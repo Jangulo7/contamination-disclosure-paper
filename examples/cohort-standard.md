@@ -1,4 +1,4 @@
-# Worked example — GenoAgent Benchmark (standard)
+# Worked example — Stratified Rare-Disease Benchmark Cohort (standard variant)
 
 > [!IMPORTANT]
 > **The scores in this example are illustrative placeholders, not measured
@@ -24,8 +24,8 @@ is the Type 4 measurement.
 
 *Contamination Disclosure v1.1 · CC BY 4.0*
 
-**Benchmark:** GenoAgent Benchmark, standard variant, n = 1,047
-(<https://doi.org/10.6084/m9.figshare.32814449>)
+**Benchmark:** A Stratified Rare-Disease Benchmark Cohort for Literature-Based Causal Gene Prioritisation (n=1,047)
+(<https://doi.org/10.6084/m9.figshare.32814449.v9>)
 **System under test:** ‹model-id vX.Y›
 **Date of evaluation:** ‹YYYY-MM-DD›
 

@@ -1,4 +1,4 @@
-# Worked example — GenoAgent Benchmark (standard)
+# Worked example — Stratified Rare-Disease Benchmark Cohort (standard variant)
 # Contamination Disclosure v1.1
 #
 # NOTE: scores are ILLUSTRATIVE PLACEHOLDERS, not measured results.
@@ -9,9 +9,9 @@
 disclosure_version: "1.1"
 
 benchmark:
-  name: "GenoAgent Benchmark (standard)"
-  version: "1.0"
-  doi: "10.6084/m9.figshare.32814449"
+  name: "A Stratified Rare-Disease Benchmark Cohort for Literature-Based Causal Gene Prioritisation (n=1,047)"
+  version: "v9"
+  doi: "10.6084/m9.figshare.32814449.v9"
 system_under_test: "PLACEHOLDER-model-id vX.Y"
 evaluation_date: "2026-08-02"
 
@@ -52,7 +52,7 @@ contamination_controls:
     assumed present in any web-scale corpus; source identifiers published with the
     dataset. Temporal: model cutoffs are self-reported and unverifiable.
     Distributional: not controlled in this variant by design — see the hard variant
-    (10.6084/m9.figshare.32816468); the standard/hard delta is the Type 4 measurement.
+    (10.6084/m9.figshare.32816468.v10); the standard/hard delta is the Type 4 measurement.
     Acquired: retrieval and network access disabled for the scoring run; transcripts
     reviewed for tool calls reaching benchmark artifacts, none found. Note this is a
     per-run claim and does not transfer to any other evaluation of this benchmark.

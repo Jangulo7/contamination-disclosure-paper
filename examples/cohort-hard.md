@@ -1,4 +1,4 @@
-# Worked example — GenoAgent Benchmark (hard)
+# Worked example — Phenotype-Similar Distractor Variant (hard)
 
 > [!IMPORTANT]
 > **The scores in this example are illustrative placeholders, not measured
@@ -33,8 +33,8 @@ route the model is taking.
 
 *Contamination Disclosure v1.1 · CC BY 4.0*
 
-**Benchmark:** GenoAgent Benchmark (hard), n = 1,047
-(<https://doi.org/10.6084/m9.figshare.32816468>)
+**Benchmark:** A Phenotype-Similar Distractor Variant of the Stratified Rare-Disease Cohort for Literature-Based Causal Gene Prioritisation (n=1,047)
+(<https://doi.org/10.6084/m9.figshare.32816468.v10>)
 **System under test:** ‹model-id vX.Y› — must be identical to the standard run
 **Date of evaluation:** ‹YYYY-MM-DD›
 
